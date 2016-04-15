@@ -4,4 +4,4 @@
 Homestead.yaml
 Homestead.json
 .env
-
+/config/l2pconfig.php
