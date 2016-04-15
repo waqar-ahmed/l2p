@@ -1,6 +1,12 @@
 # l2p
 
-First you need to execute this url:
+Add your client id in 
+
+```
+l2p/config/l2pconfig.php
+```
+
+Then you need to execute this url:
 
 ```
 localhost/(your-directory)/l2p/public/rest/auth/requestUserCode
