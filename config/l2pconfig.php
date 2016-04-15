@@ -3,7 +3,7 @@
 return [
 
 	// Application id to initiate communication with L2P server
-	'client_id' => 'mQSZ0xgOuYww3EiRdqmhYMCG6t3sHcsfIWxPXAs7Z3v2LperWuIQaV0qMHlTKHhm.apps.rwth-aachen.de',
+	'client_id' => '',
 	
 	// l2P Urls available to requests
 	'base_url' => 'https://oauth.campus.rwth-aachen.de/',
