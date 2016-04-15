@@ -1,6 +1,6 @@
 # l2p
 
-Add your client id in 
+Add your client id in :
 
 ```
 l2p/config/l2pconfig.php
