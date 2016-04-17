@@ -1,7 +1,6 @@
 # l2p
 
--(Make sure you already have composer installed)
--(And Don't commit your client id)
+-(Make sure you already have composer installed and make sure you don't commit your client id)
 
 First, Add your client id in :
 
