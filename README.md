@@ -30,5 +30,5 @@ If user verified the app then you will get the access token as a result of this 
 
 After then if you request this url, it will give you the course list
 ```
-http://localhost/laravel/l2p/public/rest/course
+http://localhost/(your-directory)/l2p/public/rest/course
 ```
