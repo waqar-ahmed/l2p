@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::get('/rest/auth/requestUserCode', 'AuthController@requestUserCode');
 Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
+Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');
 Route::resource('/rest/auth', 'AuthController');
 Route::resource('/rest/course', 'CourseController');

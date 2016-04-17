@@ -6,8 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Services\CourseManager;
+
 class CourseController extends Controller
 {
+
+    private $courseManager;
+
+    function __construct()
+    {
+        $this->courseManager = new CourseManager();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +26,7 @@ class CourseController extends Controller
     public function index()
     {
         //
-        return "this is index";
+        return $this->courseManager->getAllCourses();
     }
 
     /**
@@ -27,6 +37,7 @@ class CourseController extends Controller
     public function create()
     {
         //
+        echo "creat";
     }
 
     /**

@@ -24,7 +24,10 @@ class RequestManager
 		$response = $this->client->request('POST', $sub_url, [
             'form_params' => $params
         ]);
+
+        $code = $response->getStatusCode();
         $body = $response->getBody(true);
-        return $body;
+
+        return array('code' => $code, 'body' => $body);
 	}
 }

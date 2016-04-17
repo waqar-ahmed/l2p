@@ -15,6 +15,8 @@ use \Config;
 use App\devicetoken;
 
 use App\Services\RequestManager;
+use App\Services\TokenManager;
+use App\Services\CourseManager;
 
 use GuzzleHttp\Client;
 use Guzzle\Http\EntityBody;
@@ -26,10 +28,12 @@ class AuthController extends Controller
 
     protected $requestManager; 
     protected $responseJson;
+    protected $tokenManager;
 
     public function __construct()
     {
-        $this->requestManager = new RequestManager();   
+        $this->requestManager = new RequestManager(); 
+        $this->tokenManager = new TokenManager();   
     }
 
     /**
@@ -51,25 +55,20 @@ class AuthController extends Controller
         ];
 
         // Execute the post request and get the verification url and user code
-        $this->responseJson = $this->requestManager->executePostRequest(Config::get('l2pconfig.user_code_url'), $params);
         
+        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.user_code_url'), $params);
+            
+        if($result['code'] != 200)
+        {
+            return json_encode(array('code'=>code, 'error'=>'Error executing request'));
+        }
+
+        $this->responseJson = $result['body'];
+
         // Since it is json object, so decode it to array
         $this->responseJson = (array)json_decode($this->responseJson);
 
-        //Save device code into database so we can use that to verify whether user authorized app or not
-        $token = new devicetoken;
-        $token->user_id = 1;
-        $token->device_code = $this->responseJson['device_code'];
-
-        // If user already exist then update database else insert record
-        if($token->exists())
-        {
-            devicetoken::where('user_id', 1)->update(['device_code' => $this->responseJson['device_code']]);
-        }
-        else
-        {
-            $token->save();
-        }
+        $this->tokenManager->saveDeviceToken($this->responseJson);
 
         // Create a complete verification url with user code
         $redirectUrl = $this->responseJson['verification_url'] .'?q=verify&d=' . $this->responseJson['user_code'];
@@ -80,6 +79,11 @@ class AuthController extends Controller
 
     public function requestAccessToken()
     {
+       echo 'not implemented';
+    }
+
+    public function verifyRequest()
+    {
         // Get device code and check whether user verify the app or not
         $code = devicetoken::where('user_id', 1)->first();
 
@@ -89,10 +93,20 @@ class AuthController extends Controller
                 'grant_type'=>'device'
         ];
 
-        // Execute the post request and get the verification url and user code
-        return $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params);
+        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
         
+        if($result['code'] != 200)
+        {
+            return json_encode(array('code'=>$result['code'], 'error'=>'Error executing request'));
+        } 
+
+        $this->tokenManager->saveAccessAndRefreshToken($result['body']);
+        
+        // Execute the post request and get the verification url and user code
+        return $result['body'];  
     }
+
+
 
     /**
      * Show the form for creating a new resource.
