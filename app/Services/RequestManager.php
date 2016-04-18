@@ -30,4 +30,17 @@ class RequestManager
 
         return array('code' => $code, 'body' => $body);
 	}
+
+	public function executeNewPostRequest($url, $sub_url, $params)
+	{
+		$client = new Client(["base_uri" => $url, 'timeout'  => 2.0]);
+		$response = $client->request('POST', $sub_url, [
+            'form_params' => $params
+        ]);
+
+        $code = $response->getStatusCode();
+        $body = $response->getBody(true);
+
+        return array('code' => $code, 'body' => $body);
+	}
 }

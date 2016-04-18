@@ -109,7 +109,7 @@ class TokenManager
 		}
 		else
 		{
-			return requestNewAccessToken();
+			return $this->requestNewAccessToken();
 		}
 	}
 
@@ -124,14 +124,14 @@ class TokenManager
                 'grant_type'=>'refresh_token'
         ];
 
-        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.use_refresh_token_url'), $params); 
+        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
 
         if($result['code'] != 200)
         {
             return json_encode(array('code'=>$result['code'], 'error'=>'Error executing request'));
         }
 
-        saveAccessToken($result['body']);
+        $this->saveAccessToken($result['body']);
 
         $result = (array)json_decode($result['body']);
         return $result['access_token'];
