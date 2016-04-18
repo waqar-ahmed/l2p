@@ -12,5 +12,5 @@ return [
 	'use_refresh_token_url' => 'oauth2/oauth2.svc/token',
 
 	// User controls on request
-	'scope' => 'l2p.rwth userinfo.rwth',
+	'scope' => 'l2p2013.rwth userinfo.rwth',
 ];

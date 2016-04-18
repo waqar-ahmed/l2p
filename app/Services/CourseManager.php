@@ -21,7 +21,7 @@ class CourseManager
 
 	public function getAllCourses()
 	{
-		//$response = $this->client->request('GET', 'viewAllCourseInfo', ['query' => 'accessToken=QIpgtW1LlZsoz4fhOKxcMX2qvvmLKHNHSelfdSgiA4iGbqLcaYvH49uJNxGqgJ0l']);
+		//$response = $this->client->request('GET', 'viewAllCourseInfo', ['query' => 'accessToken=klllqu3cBbOh2ZB0rVrw4r1Jn5TyJnsXFZtsWKfOGua2fEUCSTlRi9Zlul6HrpwW']);
 		$response = $this->client->request('GET', 'viewAllCourseInfo', ['query' => ['accessToken' => $this->tokenManager->getAccessToken()]]);
 		$body = $response->getBody();
 		return $body;
