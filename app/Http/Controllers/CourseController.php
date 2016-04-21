@@ -28,17 +28,76 @@ class CourseController extends Controller
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');
     }
     
-    public function viewAllCourseEvents($sem, $cid) {
+    public function viewAllCourseEvents($sem=Null, $cid) {
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseEvents', ['cid'=>$cid]);
     }
     
-    public function viewAllCourseInfoBySemester($sem, $cid){
+    public function viewAllCourseInfoBySemester($sem=Null, $cid){
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfoBySemester', ['semester'=>$sem]);
     }
     
-    public function viewAllAnnouncementCount($sem, $cid) {
+    public function viewAllAnouncementCount($sem=Null, $cid) {
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllAnnouncementCount', ['cid'=>$cid]);
     }
+    
+    public function viewAllAnouncements($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllAnnouncements', ['cid'=>$cid]);
+    }
+    
+    public function viewActiveFeatures($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewActiveFeatures', ['cid'=>$cid]);
+    }
+    
+    public function viewAllAssignments($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllAssignments', ['cid'=>$cid]);
+    }
+    
+    public function viewAllCounts($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllDiscussionItemCount($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllDiscussionItemCount', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllDiscussionItems($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllDiscussionItems', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllDiscussionRootItems($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllDiscussionRootItems', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllEmails($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllHyperlinkCount($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllHyperlinkCount', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllHyperlinks($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllHyperlinks', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllLearningMaterials($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllLearningMaterials', ['cid'=>$cid]);
+    }       
+    
+    public function viewAllLearningObjects($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllLearningObjects', ['cid'=>$cid]);
+    }   
+    
+    public function viewAllLiteratures($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllLiterature', ['cid'=>$cid]);
+    }   
+    
+    public function viewAllLiteraturesCount($sem=Null, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllLiteratureCount', ['cid'=>$cid]);
+    }   
+    
+    
+    
     /**
      * Show the form for creating a new resource.
      *
