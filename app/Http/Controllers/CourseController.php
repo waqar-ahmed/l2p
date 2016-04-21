@@ -3,32 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-
 use App\Services\CourseManager;
 
 class CourseController extends Controller
 {
-
+    CONST GET = 'GET';    
     private $courseManager;
 
     function __construct()
     {
         $this->courseManager = new CourseManager();
+    }   
+    
+    public function viewCourse($sem, $cid){
+        return view('single_course', array('semester'=>$sem, 'cid'=>$cid));
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        return $this->courseManager->getAllCourses();
+    
+    public function viewAllCouseInfo(){
+        $allCourses = $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfo');
+        return view('all_courses', array('all_courses' => $allCourses));
     }
-
+    
+    public function viewAllCourseInfoByCurrentSemester() {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');
+    }
+    
+    public function viewAllCourseEvents($sem, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseEvents', ['cid'=>$cid]);
+    }
+    
+    public function viewAllCourseInfoBySemester($sem, $cid){
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfoBySemester', ['semester'=>$sem]);
+    }
+    
+    public function viewAllAnnouncementCount($sem, $cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllAnnouncementCount', ['cid'=>$cid]);
+    }
     /**
      * Show the form for creating a new resource.
      *

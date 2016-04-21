@@ -3,9 +3,6 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\Response;
 
 class CourseManager
 {
@@ -23,7 +20,12 @@ class CourseManager
 	{
 		//$response = $this->client->request('GET', 'viewAllCourseInfo', ['query' => 'accessToken=klllqu3cBbOh2ZB0rVrw4r1Jn5TyJnsXFZtsWKfOGua2fEUCSTlRi9Zlul6HrpwW']);
 		$response = $this->client->request('GET', 'viewAllCourseInfo', ['query' => ['accessToken' => $this->tokenManager->getAccessToken()]]);
-		$body = $response->getBody();
-		return $body;
+		return json_decode($response->getBody(), true);		
 	}
+        
+        public function sendRestRequest($method, $uri, $query = []) {
+            $query += ['accessToken' => $this->tokenManager->getAccessToken()];            
+            $response = $this->client->request($method, $uri, ['query' => $query]);
+            return json_decode($response->getBody(), true);		            
+        }
 }
