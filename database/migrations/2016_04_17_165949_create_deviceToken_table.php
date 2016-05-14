@@ -12,7 +12,7 @@ class CreateDeviceTokenTable extends Migration
      */
     public function up()
     {
-        Schema::create('devicetokens', function (Blueprint $table) {
+        Schema::create('device_tokens', function (Blueprint $table) {
             //
             $table->increments('id');
             $table->integer('user_id');
@@ -32,9 +32,9 @@ class CreateDeviceTokenTable extends Migration
      */
     public function down()
     {
-        Schema::table('devicetokens', function (Blueprint $table) {
+        Schema::table('device_tokens', function (Blueprint $table) {
             //
-            Schema::drop('devicetokens');
+            Schema::drop('device_tokens');
         });
     }
 }

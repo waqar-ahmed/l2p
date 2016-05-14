@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/rest/auth/requestUserCode', 'AuthController@requestUserCode');
 Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
 Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');
@@ -44,7 +40,5 @@ Route::group(['prefix' => '/course/{sem}/{cid}'], function () {
     Route::get('all_learning_materials', 'CourseController@viewAllLearningMaterials');
     Route::get('all_learning_objects', 'CourseController@viewAllLearningObjects');
     Route::get('all_literatures', 'CourseController@viewAllLiteratures');
-    Route::get('all_literatures_count', 'CourseController@viewAllLiteraturesCount');
-    
-    
+    Route::get('all_literatures_count', 'CourseController@viewAllLiteraturesCount');        
 });

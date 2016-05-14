@@ -12,7 +12,7 @@ class CreateRefreshTokenTable extends Migration
      */
     public function up()
     {
-        Schema::create('refreshtokens', function (Blueprint $table) {
+        Schema::create('refresh_tokens', function (Blueprint $table) {
             //
             $table->increments('id');
             $table->integer('user_id');
@@ -29,9 +29,9 @@ class CreateRefreshTokenTable extends Migration
      */
     public function down()
     {
-        Schema::table('refreshtokens', function (Blueprint $table) {
+        Schema::table('refresh_tokens', function (Blueprint $table) {
             //
-             Schema::drop('refreshtokens');
+             Schema::drop('refresh_tokens');
         });
     }
 }

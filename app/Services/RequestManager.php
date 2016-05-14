@@ -5,9 +5,6 @@ namespace App\Services;
 use \Config;
 
 use GuzzleHttp\Client;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\Response;
 
 class RequestManager
 {
@@ -21,26 +18,23 @@ class RequestManager
 
 	public function executePostRequest($sub_url, $params)
 	{
-		$response = $this->client->request('POST', $sub_url, [
-            'form_params' => $params
-        ]);
+            $response = $this->client->request('POST', $sub_url, [
+            'form_params' => $params ]);
 
-        $code = $response->getStatusCode();
-        $body = $response->getBody(true);
+            $code = $response->getStatusCode();
+            $body = $response->getBody(true);
 
-        return array('code' => $code, 'body' => $body);
+            return array('code' => $code, 'body' => $body);
 	}
 
 	public function executeNewPostRequest($url, $sub_url, $params)
 	{
-		$client = new Client(["base_uri" => $url, 'timeout'  => 2.0]);
-		$response = $client->request('POST', $sub_url, [
-            'form_params' => $params
-        ]);
+            $client = new Client(["base_uri" => $url, 'timeout'  => 2.0]);
+            $response = $client->request('POST', $sub_url, ['form_params' => $params]);
 
-        $code = $response->getStatusCode();
-        $body = $response->getBody(true);
+            $code = $response->getStatusCode();
+            $body = $response->getBody(true);
 
-        return array('code' => $code, 'body' => $body);
+            return array('code' => $code, 'body' => $body);
 	}
 }

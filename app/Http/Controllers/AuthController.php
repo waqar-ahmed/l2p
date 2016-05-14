@@ -3,25 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Illuminate\Http\RedirectResponse;
-
 use Illuminate\Support\Facades\Redirect;
-
-use App\Http\Requests;
-
 use \Config;
-
-use App\devicetoken;
-
+use App\DeviceToken;
 use App\Services\RequestManager;
 use App\Services\TokenManager;
-use App\Services\CourseManager;
-
-use GuzzleHttp\Client;
-use Guzzle\Http\EntityBody;
 // use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\Response;
+
 
 class AuthController extends Controller
 {
@@ -85,7 +73,7 @@ class AuthController extends Controller
     public function verifyRequest()
     {
         // Get device code and check whether user verify the app or not
-        $code = devicetoken::where('user_id', 1)->first();
+        $code = DeviceToken::where('user_id', 1)->first();
 
         $params = [
                 'client_id' => Config::get('l2pconfig.client_id'), 
