@@ -9,18 +9,22 @@
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+  	
   	<!-- Angular Material Library -->
   	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-  	<!-- // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+  	
+  	<!-- Angular Routing Library -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+  	
   	<!-- My Application script files  -->
-  	<script type="text/javascript" src="scripts/app.js"></script>
+  	<script src="scripts/app.js"></script>
   	<script src="scripts/controllers/AppCtrl.js"></script>
-  	<!-- // <script type="text/javascript" src="scripts/controllers/mainCtrl.js"></script> -->
   	<script src="scripts/controllers/homeCtrl.js"></script>
   	<script src="scripts/controllers/testCtrl.js"></script>
 
   	<!-- My Application stylesheets -->
+  	<link rel="stylesheet" href="styles/style.css">
+
 </head>
 <body ng-app="BlankApp" ng-cloak>
  <div layout="row" ng-controller="AppCtrl">
@@ -112,16 +116,13 @@
        
       </md-toolbar>
       <md-content flex md-scroll-y>
+
+      	<!-- This is a place where your content will be loaded -->
         <ui-view layout="column" layout-fill layout-padding>
-        
         </ui-view>
+        
       </md-content>
     </div>
  </div>
   </body>
 </html>
-
-<!--
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
--->
