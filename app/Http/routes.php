@@ -20,12 +20,12 @@ Route::get('/courses', 'CourseController@viewAllCouseInfo');
 Route::get('/current_semester', 'CourseController@viewAllCourseInfoByCurrentSemester');
 Route::get('/course_events_all', 'CourseController@viewAllCourseEvents');
 
-Route::get('/course/{sem}/{cid}', 'CourseController@viewCourse');
+Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
+Route::get('/course/{cid}', 'CourseController@viewCourse');
 
-Route::group(['prefix' => '/course/{sem}/{cid}'], function () {
+Route::group(['prefix' => '/course/{cid}'], function () {
     Route::get('all_anouncements_count', 'CourseController@viewAllAnouncementCount');
-    Route::get('all_course_events', 'CourseController@viewAllCourseEvents');
-    Route::get('all_course_info_by_sem', 'CourseController@viewAllCourseInfoBySemester');
+    Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
     Route::get('active_features', 'CourseController@viewActiveFeatures');
     Route::get('all_anouncements', 'CourseController@viewAllAnouncements');
     Route::get('all_assignments', 'CourseController@viewAllAssignments');

@@ -15,7 +15,7 @@ and open the template in the editor.
         <?php if ($all_courses["Status"]): ?>        
         <ol>
             <?php foreach ($all_courses["dataSet"] as $course):?>
-                <li><?php echo "<a href='/course/" . $course["semester"] . "/" . 
+                <li><?php echo "<a href='/course/" . 
                         $course["uniqueid"] . "'>" . $course["courseTitle"] . 
                         "</a>"?></li>
             <?php endforeach; ?>

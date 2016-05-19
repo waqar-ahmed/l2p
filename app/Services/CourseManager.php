@@ -19,6 +19,6 @@ class CourseManager
         public function sendRestRequest($method, $uri, $query = []) {
             $query += ['accessToken' => $this->tokenManager->getAccessToken()];            
             $response = $this->client->request($method, $uri, ['query' => $query]);
-            return json_decode($response->getBody(), true);		            
+            return $response->getBody();		            
         }
 }
