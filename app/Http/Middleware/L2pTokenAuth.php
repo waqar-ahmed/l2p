@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Cookie;
 
-class AuthMiddleWare
+class L2pTokenAuth
 {
     /**
      * Handle an incoming request.
@@ -15,6 +16,10 @@ class AuthMiddleWare
      */
     public function handle($request, Closure $next)
     {
+        $value = Cookie::get('atoken');
+        if(is_null($value)) {
+            return redirect('/');
+        }
         return $next($request);
     }
 }

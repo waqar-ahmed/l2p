@@ -8,8 +8,8 @@ use \Config;
 use App\DeviceToken;
 use App\Services\RequestManager;
 use App\Services\TokenManager;
-// use Guzzle\Http\Message\Request;
-
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -56,13 +56,13 @@ class AuthController extends Controller
         // Since it is json object, so decode it to array
         $this->responseJson = (array)json_decode($this->responseJson);
 
-        $this->tokenManager->saveDeviceToken($this->responseJson);
+        $this->tokenManager->saveDeviceToken($this->responseJson);                
 
         // Create a complete verification url with user code
         $redirectUrl = $this->responseJson['verification_url'] .'?q=verify&d=' . $this->responseJson['user_code'];
 
         // Redirect user to verification url
-        return Redirect::to($redirectUrl);   
+        return Redirect::to($redirectUrl)->withCookie(cookie()->forever('dtoken', $this->responseJson['device_code']));   
     }
 
     public function requestAccessToken()
@@ -84,18 +84,33 @@ class AuthController extends Controller
         $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
         
         if($result['code'] != 200)
-        {
+        {            
             return json_encode(array('code'=>$result['code'], 'error'=>'Error executing request'));
         } 
 
         $this->tokenManager->saveAccessAndRefreshToken($result['body']);
         
-        // Execute the post request and get the verification url and user code
-        return $result['body'];  
+        
+        // Execute the post request and get the verification url and user code        
+        $resultJson = json_decode($result['body'], true);
+        $access_token = $resultJson['access_token'];
+        $response = new Response($result['body']);
+        $response->withCookie(cookie()->forever('atoken', $access_token));        
+        return $response;
     }
 
-
-
+    public function authenticateUser() {
+        $dtoken = Cookie::get('dtoken');
+        if (is_null($dtoken)) {
+            return "false";
+        } else {
+            $user = DeviceToken::where('device_code', $dtoken)->user();
+            if (is_null($user)) {
+                echo "no user";
+            }
+        }
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

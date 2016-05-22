@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\CourseManager;
 
 class CourseController extends Controller
@@ -23,7 +22,7 @@ class CourseController extends Controller
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfoBySemester', ['semester'=>$sem]);
     }
     
-    public function viewAllCouseInfo(){
+    public function viewAllCouseInfo(){        
         $allCourses = $this->courseManager->sendRestRequest(self::GET, 'viewAllCourseInfo');
         return view('all_courses', array('all_courses' => $allCourses));
     }
@@ -95,4 +94,52 @@ class CourseController extends Controller
     public function viewAllLiteraturesCount($cid) {
         return $this->courseManager->sendRestRequest(self::GET, 'viewAllLiteratureCount', ['cid'=>$cid]);
     }         
+    
+    public function viewAllMediaLibraries($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllMediaLibraries', ['cid'=>$cid]);
+    }
+    
+    public function viewAllMediaLibraryCount($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllMediaLibraryCount', ['cid'=>$cid]);
+    }
+    
+    public function viewAllSharedDocumentCount($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllSharedDocumentCount', ['cid'=>$cid]);
+    }
+    
+    public function viewAllSharedDocuments($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllSharedDocuments', ['cid'=>$cid]);
+    }
+    
+    public function viewAllWikiCount($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllWikiCount', ['cid'=>$cid]);
+    }
+    
+    public function viewAllWikis($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAllWikis', ['cid'=>$cid]);
+    }
+    
+    public function viewAvailableGroupsInGroupWorkspace($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewAvailableGroupsInGroupWorkspace', ['cid'=>$cid]);
+    }
+    
+    public function viewCourseEvents($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewCourseEvents', ['cid'=>$cid]);
+    }
+    
+    public function viewCourseInfo($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewCourseInfo', ['cid'=>$cid]);
+    }
+    
+    public function viewExamResults($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewExamResults', ['cid'=>$cid]);
+    }
+
+    public function viewExamResultsStatistics($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewExamResultsStatistics', ['cid'=>$cid]);
+    }
+    
+    public function viewGradeBook($cid) {
+        return $this->courseManager->sendRestRequest(self::GET, 'viewGradeBook', ['cid'=>$cid]);
+    }
 }

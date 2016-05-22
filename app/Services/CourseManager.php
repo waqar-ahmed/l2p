@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\json_decode;
 
 class CourseManager
 {
@@ -19,6 +20,6 @@ class CourseManager
         public function sendRestRequest($method, $uri, $query = []) {
             $query += ['accessToken' => $this->tokenManager->getAccessToken()];            
             $response = $this->client->request($method, $uri, ['query' => $query]);
-            return $response->getBody();		            
+            return json_decode($response->getBody(), true);		            
         }
 }

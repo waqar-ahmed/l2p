@@ -35,7 +35,7 @@ class TokenManager {
     }
 
     public function saveAccessAndRefreshToken($result) {
-        echo "saving";
+//        echo "saving";
         $this->saveAccessToken($result);
         $this->saveRefreshToken($result);
     }
