@@ -4,13 +4,12 @@ namespace App\Services;
 
 use App\DeviceToken;
 use App\AccessToken;
-use App\RefreshToken;
 use App\Services\RequestManager;
 use \Config;
 
 class TokenManager {
 
-    protected $requestManager;
+    protected $requestManager;    
 
     function __construct() {
         $this->requestManager = new RequestManager();
@@ -19,7 +18,7 @@ class TokenManager {
     public function saveDeviceToken($result) {
         //Save device code into database so we can use that to verify whether user authorized app or not
         $token = new DeviceToken;
-        $token->user_id = 1;
+        
         $token->device_code = $result['device_code'];
         $token->user_code = $result['user_code'];
         $token->verification_url = $result['verification_url'];
@@ -27,89 +26,84 @@ class TokenManager {
         $token->interval = $result['interval'];
 
         // If user already exist then update database else insert record
-        if ($token->exists()) {
-            devicetoken::where('user_id', 1)->update(['device_code' => $result['device_code']]);
-        } else {
-            $token->save();
-        }
-    }
+//        if ($token->exists()) {
+//            devicetoken::where('user_id', 1)->update(['device_code' => $result['device_code']]);
+//        } else {
+        $token->save();
+//        }
+    }   
 
-    public function saveAccessAndRefreshToken($result) {
-//        echo "saving";
-        $this->saveAccessToken($result);
-        $this->saveRefreshToken($result);
-    }
-
-    private function saveAccessToken($result) {
-        $result = (array) json_decode($result);
-
-        if ($result['access_token'] != null) {
-            $code = AccessToken::where('user_id', 1)->first();
-            if ($code != null) {
-                AccessToken::where('user_id', 1)->update(['access_token' => $result['access_token']]);
-                echo "update";
-            } else {
+    public function saveAccessToken($result, $oldToken = null) {
+        $result = json_decode($result, true);
+        if ($result['status'] == 'ok') {
+            if (is_null($oldToken)) {
                 $token = new AccessToken;
-                $token->user_id = 1;
                 $token->access_token = $result['access_token'];
+                $token->refresh_token = $result['refresh_token'];
                 $token->token_type = $result['token_type'];
                 $token->expires_in = $result['expires_in'];
 
                 $token->save();
-                echo 'saved';
+                return $token;
             }
-        }
+            
+            $oldToken->access_token = $result['access_token'];
+            $oldToken->save();
+            return $oldToken;            
+        }        
+        //TODO: handle this null, write log, authorization pending error        
+        return null; 
     }
-
-    private function saveRefreshToken($result) {
-
-        $result = (array) json_decode($result);
-
-        if ($result['refresh_token'] != null) {
-            $code = RefreshToken::where('user_id', 1)->first();
-            if ($code != null) {
-                RefreshToken::where('user_id', 1)->update(['refresh_token' => $result['refresh_token']]);
-            } else {
-                $token = new RefreshToken;
-                $token->user_id = 1;
-                $token->refresh_token = $result['refresh_token'];
-
-                $token->save();
-            }
-        }
-    }
-
-    //Get access token saved in the databse
-    public function getAccessToken() {
-        $token = AccessToken::where('user_id', 1)->first();
-
+    
+    //Check if access token is expired or not. if expired return new access token
+    public function checkAccessToken($token) {
         if (!$this->isTokenExpires($token['updated_at'], $token['expires_in'])) {
-            return $token['access_token'];
+            return $token;
         } else {
-            return $this->requestNewAccessToken();
+            return $this->refreshAccessToken($token);
         }
+    }
+    
+    //Request new access token 
+    public function requestNewAccessToken($deviceToken) {        
+        $params = [
+                'client_id' => Config::get('l2pconfig.client_id'), 
+                'code' => $deviceToken['device_code'],
+                'grant_type'=>'device'
+        ];
+
+        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
+        
+        if($result['code'] != 200)
+        {                        
+            return null;
+            //TODO: log this error;
+        } 
+
+        $accessToken = $this->saveAccessToken($result['body']);                        
+        
+        $deviceToken->access_token_id = $accessToken['id'];
+        $deviceToken->save();
+        return $accessToken;
     }
 
     // In case if access token expires, then use this url to request new access token using refresh token
-    private function requestNewAccessToken() {
-        $token = RefreshToken::where('user_id', 1)->first();
-
+    public function refreshAccessToken($oldToken) {
         $params = [
             'client_id' => Config::get('l2pconfig.client_id'),
-            'refresh_token' => $token['refresh_token'],
+            'refresh_token' => $oldToken['refresh_token'],
             'grant_type' => 'refresh_token'
         ];
 
         $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params);
 
         if ($result['code'] != 200) {
-            return json_encode(array('code' => $result['code'], 'error' => 'Error executing request'));
+                        
+            return null;
+            //TODO: log this error;
         }
 
-        $this->saveAccessToken($result['body']);
-
-        $result = (array) json_decode($result['body']);
-        return $result['access_token'];
+        return $this->saveAccessToken($result['body'], $oldToken);
     }
 
     // Check whether the access token is expired or not

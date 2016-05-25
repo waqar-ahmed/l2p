@@ -9,11 +9,11 @@ class DeviceToken extends Model
     protected $table = 'device_tokens';
     
     protected $fillable = [
-        'device_token', 'user_code', 'verification_url', 'expires_in', 
+        'device_code', 'user_code', 'verification_url', 'expires_in', 
         'interval',        
     ];
     
-    public function user() {
-        return $this->belongsTo('App\User');
+    public function accessToken() {
+        return $this->belongsTo('App\AccessToken', 'access_token_id');
     }
 }

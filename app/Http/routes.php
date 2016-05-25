@@ -10,12 +10,15 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function() {
+    echo 'welcome';    
+});
 
 Route::get('/rest/auth/requestUserCode', 'AuthController@requestUserCode');
 Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
 Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
 
-//    Route::get('/logout', '');
+Route::get('/logout', 'AuthController@logout');
 //    Route::get('/login', '');
 //    Route::post('/login', '');
 

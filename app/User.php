@@ -1,12 +1,11 @@
-                                                                                                            <?php
+<?php
 
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
-{
-    protected $table = 'access_tokens';
+{   
     /**
      * The attributes that are mass assignable.
      *

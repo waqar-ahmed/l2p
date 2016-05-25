@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Cookie;
+use Auth;
 
 class L2pTokenAuth
 {
@@ -15,9 +15,9 @@ class L2pTokenAuth
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        $value = Cookie::get('atoken');
-        if(is_null($value)) {
+    {        
+        if(!Auth::check()) {
+            echo  'unauthorized';
             return redirect('/');
         }
         return $next($request);
