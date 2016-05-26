@@ -36,8 +36,8 @@
         <div layout="column" class="md-toolbar-tools-bottom inset">
           <user-avatar></user-avatar>
           <span></span>
-          <div>Donald Trump</div>
-          <div>Trump@whitehouse.gov</div>
+          <div>Firstname Lastname</div>
+          <div>email@domainname.com</div>
         </div>
       </md-toolbar>
       <md-list>
@@ -77,10 +77,12 @@
             <ng-md-icon icon="menu"></ng-md-icon>
           </md-button>
           <h3>
-            L2P - Home
+            Dashboard
           </h3>
           <span flex></span>
- 
+          <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+            <ng-md-icon icon="search"></ng-md-icon>
+          </md-button>
           <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
             <ng-md-icon icon="more_vert"></ng-md-icon>
           </md-button>

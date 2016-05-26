@@ -1,5 +1,6 @@
 var app = angular.module('BlankApp', ['ngMaterial','ngMdIcons','ui.router']);
 
+
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
     $stateProvider

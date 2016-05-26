@@ -4,19 +4,19 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
  	$scope.menu = [
      {
-      link : 'courses',
-      title: 'courses',
+      link : 'test',
+      title: 'Test',
       icon: 'test'
     },
     {
       link : '',
-      title: 'previous semester',
-      icon: 'previous semester'
+      title: 'Dashboard',
+      icon: 'dashboard'
     },
     {
       link : '',
-      title: 'schedule',
-      icon: 'schedule'
+      title: 'Friends',
+      icon: 'group'
     },
     {
       link : '',
@@ -38,34 +38,34 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   ];
   $scope.activity = [
       {
-        what: 'Data Mining',
-        who: 'Exercise 1',
+        what: 'Brunch this weekend?',
+        who: 'Ali Conners',
         when: '3:08PM',
-        notes: "12345678.pdf"
+        notes: " I'll be in your neighborhood doing errands"
       },
       {
-        what: 'Web Technology',
-        who: 'Exercise 2',
-        when: '3:09PM',
-        notes: "87654321.pdf"
+        what: 'Summer BBQ',
+        who: 'to Alex, Scott, Jennifer',
+        when: '3:08PM',
+        notes: "Wish I could come out but I'm out of town this weekend"
       },
       {
-        what: 'MALO',
-        who: 'Lecture 3',
-        when: '4:08PM',
-        notes: "159753.pdf"
+        what: 'Oui Oui',
+        who: 'Sandra Adams',
+        when: '3:08PM',
+        notes: "Do you have Paris recommendations? Have you ever been?"
       },
       {
-        what: 'BWL',
-        who: 'Lecture 2',
-        when: '9:08PM',
-        notes: "123453453.pdf"
+        what: 'Birthday Gift',
+        who: 'Trevor Hansen',
+        when: '3:08PM',
+        notes: "Have any ideas of what we should get Heidi for her birthday?"
       },
       {
-        what: 'French Course',
-        who: 'Sample Exam 2',
-        when: '7:08PM',
-        notes: "5674334.pdf"
+        what: 'Recipe to try',
+        who: 'Brian Holt',
+        when: '3:08PM',
+        notes: "We should eat this: Grapefruit, Squash, Corn, and Tomatillo tacos"
       },
     ];
   $scope.alert = '';
