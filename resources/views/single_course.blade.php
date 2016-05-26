@@ -30,6 +30,23 @@ and open the template in the editor.
             echo "<li><a href='/course/" . $cid . "/all_learning_objects'>view all learning objects(not active)</a></li>";            
             echo "<li><a href='/course/" . $cid . "/all_literatures'>view all literatures(not active)</a></li>";            
             echo "<li><a href='/course/" . $cid . "/all_literatures_count'>view all literatures count(not active)</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_media_libraries'>view all media libraries</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_media_library_count'>view all media library count</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_shared_document_count'>view all shared document count</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_shared_documents'>view all shared documents</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_wiki_count'>view all wiki count</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/all_wikis'>view all wikis</a></li>";                        
+            echo "<li><a href=''>view announcement(not working, item_id needed)</a></li>";                        
+            echo "<li><a href=''>view assignment(not working, item_id needed)</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/available_groups_in_group_workspace'>view all available groups</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/course_events'>view course events</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/course_info'>view course info</a></li>";                        
+            echo "<li><a href=''>view discussion item(not working, item_id needed)</a></li>";                        
+            echo "<li><a href=''>view email(not working, item_id needed)</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/exam_results'>view exam results(not active)</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/exam_results_statistics'>view exam results statistics(not active)</a></li>";                        
+            echo "<li><a href='/course/" . $cid . "/grade_book'>view grade book(not active)</a></li>";                        
+            
         ?>
         </ol>
     </body>

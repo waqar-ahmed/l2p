@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
-class AuthMiddleWare
+class L2pTokenAuth
 {
     /**
      * Handle an incoming request.
@@ -14,7 +15,11 @@ class AuthMiddleWare
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {        
+        if(!Auth::check()) {
+            echo  'unauthorized';
+            return redirect('/');
+        }
         return $next($request);
     }
 }
