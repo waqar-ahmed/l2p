@@ -42,7 +42,7 @@ After then if you request this url, it will give you the course list
 http://localhost/(your-directory)/l2p/public/rest/course
 ```
 
-For Mac
+For Mac and Windows:
 
 First run this command in terminal to generate a key
 ```
