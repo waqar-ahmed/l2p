@@ -8,4 +8,6 @@ Homestead.yaml
 Homestead.json
 .env
 /config/l2pconfig.php
+/config/database.php
 /nbproject/private/
+composer.lock
