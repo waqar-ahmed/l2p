@@ -41,3 +41,16 @@ After then if you request this url, it will give you the course list
 ```
 http://localhost/(your-directory)/l2p/public/rest/course
 ```
+
+For Mac and Windows:
+
+First run this command in terminal to generate a key
+```
+php artisan key:generate
+```
+Then use this command to run server
+
+```
+php artisan serve
+```
+

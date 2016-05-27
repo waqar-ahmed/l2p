@@ -14,6 +14,12 @@ Route::get('/', function() {
     echo 'welcome';    
 });
 
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'HomeController@index'
+]);
+
+
 Route::get('/rest/auth/requestUserCode', 'AuthController@requestUserCode');
 Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
 Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
