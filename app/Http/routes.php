@@ -10,9 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', function() {
-    echo 'welcome';    
-});
 
 Route::get('/', [
     'as' => 'home',
@@ -20,9 +17,9 @@ Route::get('/', [
 ]);
 
 
-Route::get('/rest/auth/requestUserCode', 'AuthController@requestUserCode');
-Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
-Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
+Route::get('/request_user_code', 'AuthController@requestUserCode');
+//Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
+//Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
 
 Route::get('/logout', 'AuthController@logout');
 //    Route::get('/login', '');
