@@ -26,9 +26,19 @@
     <script src="scripts/controllers/coursesCtrl.js"></script>
     <script src="scripts/controllers/singlecourseCtrl.js"></script>
 
+    <!-- My Application module files  -->
+    <script src="scripts/modules/treeView.js"></script>
+
 
   	<!-- My Application stylesheets -->
   	<link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/treeView.css">
+    <link rel="stylesheet" href="styles/course.css">
+    <link rel="stylesheet" href="styles/singlecourse.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" />
+    <![endif]-->
 
 </head>
 <body ng-app="L2pLabApp" ng-cloak>
@@ -38,7 +48,7 @@
         <span flex></span>
         <div layout="column" class="md-toolbar-tools-bottom inset" layout-align="center center">
           <div class="homeimage">
-            <img src="imgs/favicon.ico"></img>
+            <img src="images/favicon.ico"></img>
           </div>
           <span flex></span>
 <!--           <div class="inset" ng-show="!loggedin">
@@ -61,7 +71,7 @@
             <div class="inset">
               <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
             </div>
-            <div class="inset" ng-click="onMenuSelect(item.link)">{{item.title}}
+            <div class="inset" ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
             </div>
           </md-item-content>
         </a>
@@ -82,16 +92,16 @@
     </md-list>
     </md-sidenav>
     <div layout="column" class="relative" layout-fill role="main">
-      <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+     <!--  <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
         <ng-md-icon icon="add"></ng-md-icon>
-      </md-button>
+      </md-button> -->
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
           <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
             <ng-md-icon icon="menu"></ng-md-icon>
           </md-button>
           <h3>
-            L2P - Home
+            {{navbartitle}}
           </h3>
           <span flex></span>
 

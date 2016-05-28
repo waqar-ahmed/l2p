@@ -2,6 +2,9 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
+
+  $scope.navbartitle = "L2p - Home";
+
  	$scope.menu = [
       {
       link : 'dashboard',
@@ -99,8 +102,9 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
 
 
-  $scope.onMenuSelect = function(link){
+  $scope.onMenuSelect = function(link,title){
     console.log("on menu select" + link);
+    $scope.navbartitle = "L2p - " + title;
     $location.path("/" + link);
     $mdSidenav("left").close();
   };
