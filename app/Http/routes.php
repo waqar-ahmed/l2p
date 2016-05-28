@@ -17,7 +17,7 @@ Route::get('/', [
 ]);
 
 
-Route::get('/request_user_code', 'AuthController@requestUserCode');
+Route::get('/login', 'AuthController@requestUserCode');
 //Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
 //Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
 

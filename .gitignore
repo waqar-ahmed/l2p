@@ -1,3 +1,4 @@
+*.orig
 /nbproject/project.xml
 /nbproject/project.properties
 /_ide_helper.php
