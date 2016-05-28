@@ -26,9 +26,19 @@
     <script src="scripts/controllers/coursesCtrl.js"></script>
     <script src="scripts/controllers/singlecourseCtrl.js"></script>
 
+    <!-- My Application module files  -->
+    <script src="scripts/modules/treeView.js"></script>
+
 
   	<!-- My Application stylesheets -->
   	<link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/treeView.css">
+    <link rel="stylesheet" href="styles/course.css">
+    <link rel="stylesheet" href="styles/singlecourse.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" />
+    <![endif]-->
 
 </head>
 <body ng-app="L2pLabApp" ng-cloak>
@@ -50,7 +60,7 @@
             <div class="inset">
               <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
             </div>
-            <div class="inset" ng-click="onMenuSelect(item.link)">{{item.title}}
+            <div class="inset" ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
             </div>
           </md-item-content>
         </a>
@@ -80,7 +90,7 @@
             <ng-md-icon icon="menu"></ng-md-icon>
           </md-button>
           <h3>
-            L2P - Home
+            {{navbartitle}}
           </h3>
           <span flex></span>
  
