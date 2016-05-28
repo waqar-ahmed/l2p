@@ -1,4 +1,4 @@
-var app = angular.module('BlankApp', ['ngMaterial','ngMdIcons','ui.router']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router']);
 
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
@@ -11,9 +11,20 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
         })
         .state('test', {
             url: '/test',
-            templateUrl: 'templates/test.html',
+            templateUrl: 'templates/courses.html',
             controller: 'testCtrl'
         })
+        .state('courses', {
+            url: '/courses',
+            templateUrl: 'templates/courses.html',
+            controller: 'coursesCtrl'
+        })
+        .state('singlecourse', {
+            url: '/singlecourse/:id',
+            templateUrl: 'templates/singlecourse.html',
+            controller: 'singlecourseCtrl'
+        })
+        
 }]);
 
 

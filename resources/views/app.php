@@ -23,12 +23,15 @@
   	<script src="scripts/controllers/AppCtrl.js"></script>
   	<script src="scripts/controllers/homeCtrl.js"></script>
   	<script src="scripts/controllers/testCtrl.js"></script>
+    <script src="scripts/controllers/coursesCtrl.js"></script>
+    <script src="scripts/controllers/singlecourseCtrl.js"></script>
+
 
   	<!-- My Application stylesheets -->
   	<link rel="stylesheet" href="styles/style.css">
 
 </head>
-<body ng-app="BlankApp" ng-cloak>
+<body ng-app="L2pLabApp" ng-cloak>
  <div layout="row" ng-controller="AppCtrl">
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
       <md-toolbar class="md-tall md-hue-2">
@@ -85,14 +88,14 @@
             <ng-md-icon icon="more_vert"></ng-md-icon>
           </md-button>
         </div>
-        <md-tabs md-stretch-tabs class="md-primary" md-selected="data.selectedIndex">
+       <!--  <md-tabs md-stretch-tabs class="md-primary" md-selected="data.selectedIndex">
           <md-tab id="tab1" aria-controls="tab1-content">
             Latest
           </md-tab>
           <md-tab id="tab2" aria-controls="tab2-content">
             Favorites
           </md-tab>
-        </md-tabs>
+        </md-tabs> -->
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
