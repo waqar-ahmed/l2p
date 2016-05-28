@@ -3,37 +3,42 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
     $mdSidenav(menuId).toggle();
   };
  	$scope.menu = [
-     {
+      {
+      link : 'dashboard',
+      title: 'Dashboard',
+      icon: 'dashboard'
+    },
+    {
       link : 'courses',
-      title: 'courses',
-      icon: 'test'
+      title: 'Courses',
+      icon: 'import_contacts'
     },
-    {
-      link : '',
-      title: 'previous semester',
-      icon: 'previous semester'
+  {
+      link : 'previous semester',
+      title: 'Previous Semesters',
+      icon: 'my_library_books'
     },
-    {
-      link : '',
-      title: 'schedule',
-      icon: 'schedule'
-    },
-    {
-      link : '',
-      title: 'Messages',
-      icon: 'message'
+  {
+      link : 'schedule',
+      title: 'Schedule',
+      icon: 'date_range'
     }
   ];
   $scope.admin = [
     {
-      link : '',
-      title: 'Trash',
-      icon: 'delete'
-    },
-    {
-      link : 'showListBottomSheet($event)',
+      link : 'settings',
       title: 'Settings',
       icon: 'settings'
+    },
+  {
+      link : 'about',
+      title: 'About',
+      icon: 'copyright'
+    },
+  {
+      link : 'contact',
+      title: 'Contact',
+      icon: 'send'
     }
   ];
   $scope.activity = [
@@ -79,7 +84,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       $scope.alert = clickedItem.name + ' clicked!';
     });
   };
-  
+
   $scope.showAdd = function(ev) {
     $mdDialog.show({
       controller: DialogController,
@@ -109,7 +114,7 @@ app.controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
     { name: 'Copy', icon: 'copy' },
     { name: 'Print this page', icon: 'print' },
   ];
-  
+
   $scope.listItemClick = function($index) {
     var clickedItem = $scope.items[$index];
     $mdBottomSheet.hide(clickedItem);

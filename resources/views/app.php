@@ -3,21 +3,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<!-- Angular Material style sheet -->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-  
+
 	<!-- Angular Material requires Angular.js Libraries -->
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-	
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
-  	
+
   	<!-- Angular Material Library -->
 	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-  	
+
   	<!-- Angular Routing Library -->
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
-  	
+
   	<!-- My Application script files  -->
   	<script src="scripts/app.js"></script>
   	<script src="scripts/controllers/AppCtrl.js"></script>
@@ -36,11 +36,20 @@
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
       <md-toolbar class="md-tall md-hue-2">
         <span flex></span>
-        <div layout="column" class="md-toolbar-tools-bottom inset">
-          <user-avatar></user-avatar>
-          <span></span>
-          <div>Donald Trump</div>
-          <div>Trump@whitehouse.gov</div>
+        <div layout="column" class="md-toolbar-tools-bottom inset" layout-align="center center">
+          <div class="homeimage">
+            <img src="imgs/favicon.ico"></img>
+          </div>
+          <span flex></span>
+<!--           <div class="inset" ng-show="!loggedin">
+            <a class="inset md-hue-1" ng-href="https://oauth.campus.rwth-aachen.de/manage" target="_blank">Click me to authorize</a>
+          </div> -->
+          <div class="inset">Donal Trump</div>
+        </div>
+        <div layout="row" layout-align="end end">
+          <md-button ng-click="logout()">
+            <ng-md-icon icon="logout"></ng-md-icon>
+          </md-button>
         </div>
       </md-toolbar>
       <md-list>
@@ -83,7 +92,7 @@
             L2P - Home
           </h3>
           <span flex></span>
- 
+
           <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
             <ng-md-icon icon="more_vert"></ng-md-icon>
           </md-button>
@@ -116,14 +125,14 @@
             <ng-md-icon icon="more_vert"></ng-md-icon>
           </md-button>
         </div>
-       
+
       </md-toolbar>
       <md-content flex md-scroll-y>
 
       	<!-- This is a place where your content will be loaded -->
         <ui-view layout="column" layout-fill layout-padding>
         </ui-view>
-        
+
       </md-content>
     </div>
  </div>
