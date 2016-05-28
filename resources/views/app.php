@@ -44,12 +44,14 @@
 <!--           <div class="inset" ng-show="!loggedin">
             <a class="inset md-hue-1" ng-href="https://oauth.campus.rwth-aachen.de/manage" target="_blank">Click me to authorize</a>
           </div> -->
-          <div class="inset">Donal Trump</div>
-        </div>
-        <div layout="row" layout-align="end end">
-          <md-button ng-click="logout()">
-            <ng-md-icon icon="logout"></ng-md-icon>
-          </md-button>
+          <div layout="row" layout-align="start center">
+            <div class="inset" flex-offset="20" flex="60">Donald Trump</div>
+            <div flex>
+              <md-button ng-click="logout()">
+                <ng-md-icon icon="logout"></ng-md-icon>
+              </md-button>
+            </div>
+          </div>
         </div>
       </md-toolbar>
       <md-list>
@@ -72,7 +74,7 @@
             <div class="inset">
               <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
             </div>
-            <div class="inset">{{item.title}}
+            <div class="inset"ng-click="onMenuSelect(item.link)">{{item.title}}
             </div>
           </md-item-content>
         </a>

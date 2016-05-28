@@ -102,6 +102,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.onMenuSelect = function(link){
     console.log("on menu select" + link);
     $location.path("/" + link);
+    $mdSidenav("left").close();
   };
 
 

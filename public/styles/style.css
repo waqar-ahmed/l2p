@@ -38,7 +38,7 @@ md-sidenav {
 }
 /*toolbar style*/
 .md-toolbar-tools-bottom {
-  font-size: small;
+  font-size: medium;
   & :last-child {
     opacity: 0.8;
   }
@@ -69,8 +69,8 @@ md-list-item.md-3-line md-divider[md-inset] {
 }
 
 .homeimage img{
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: 32px;
   -webkit-border-radius: 32px;
   -moz-border-radius: 32px;
