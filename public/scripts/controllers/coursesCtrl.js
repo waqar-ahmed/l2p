@@ -19,12 +19,13 @@ app.controller('coursesCtrl', function($scope,$location) {
     },
     {
       id : '5',
-      title: 'L2p Lab Developement',
+      title: 'L2p Lab development',
     },
     {
       id : '6',
       title: 'Satisfiability Checking',
-    },
+    }
+    
   ];
 
   $scope.gotoCourse = function(id){
