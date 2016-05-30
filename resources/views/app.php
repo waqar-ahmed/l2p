@@ -89,9 +89,9 @@
           <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
             <ng-md-icon icon="menu"></ng-md-icon>
           </md-button>
-          <h3>
-            {{navbartitle}}
-          </h3>
+          <span class="main_title"> {{navbartitle}}</span>
+            
+          </h5>
           <span flex></span>
  
           <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
