@@ -33,13 +33,15 @@ app.config(function($mdThemingProvider) {
   var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
     'contrastDefaultColor': 'light',
     'contrastDarkColors': ['50'],
-    '50': 'ffffff'
+	'100':'00549f',
+    '50':'ffffff'
   });
   $mdThemingProvider.definePalette('customBlue', customBlueMap);
   $mdThemingProvider.theme('default')
     .primaryPalette('customBlue', {
-      'default': '500',
-      'hue-1': '50'
+      'default': '100',
+      'hue-1': '50',
+	  'hue-2': '100'
     })
     .accentPalette('pink');
   $mdThemingProvider.theme('input', 'default')
