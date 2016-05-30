@@ -1,4 +1,21 @@
-  <div class="inset" hide-sm></div>
+  <div ng-controller="AppCtrl" ng-cloak>
+  <md-content>
+	<section 
+		<div layout="row">
+			<div flex><md-button class="md-raised md-primary">Courses</md-button></div>
+			<div flex><md-button class="md-raised md-primary">Calendar</md-button> </div>
+			<div flex><md-button class="md-raised md-primary">Past</md-button></div>
+		</div> 
+	</section>
+	
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+	  <h2 class=".md-body-1"> <font color="#0091ea">Latest Update</font> </h2>
+    </section>
+ 
+  </md-content>
+</div>
+
+<div class="inset" hide-sm></div>
             <ng-switch on="data.selectedIndex" class="tabpanel-container">
               <div role="tabpanel"
                    id="tab1-content"
