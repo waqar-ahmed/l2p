@@ -27,6 +27,9 @@
   	<!-- My Application stylesheets -->
   	<link rel="stylesheet" href="styles/style.css">
 
+    <!-- My Application services -->
+    <script src="scripts/services/courseService.js"></script>
+
 </head>
 <body ng-app="BlankApp" ng-cloak>
  <div layout="row" ng-controller="AppCtrl">
