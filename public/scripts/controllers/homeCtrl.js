@@ -1,11 +1,13 @@
 app.controller('homeCtrl', function($scope, courseService, $location){
 
-	var REQUEST_USER_CODE = "rest/auth/requestUserCode";
+	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
+	var LOGIN_USER = "login";
+
 
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
 	.then(function(res){
-		if(res == "true")
+		if(res.trim() == "true")
 		{
 			console.log("user is authenticated");
 			getAllCourses();
@@ -20,7 +22,7 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 
 	// Redirect user to request user code page so user can verify all courses
 	requestUserCode = function(){
-		window.location = REQUEST_USER_CODE;
+		window.location = LOGIN_USER;
 	}
 
 	getAllCourses = function(){
@@ -33,7 +35,5 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 			console.log("Error occured : " + err);
 		});
 	}
-
-
 
 });	
