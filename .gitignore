@@ -9,3 +9,4 @@ Homestead.json
 .env
 /config/l2pconfig.php
 /nbproject/private/
+*.orig

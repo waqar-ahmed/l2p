@@ -5,19 +5,13 @@ namespace App\Http\Controllers;
 use App\Services\CourseManager;
 use Auth;
 
-class CourseController extends Controller
+class CourseController extends L2pController
 {
-    CONST GET = 'GET';    
-    private $courseManager;
-
-    function __construct()
-    {
-        $this->courseManager = new CourseManager();
-    }   
+    CONST GET = 'GET';       
     
     private function sendRestRequest($method, $uri, $query = []) {        
         $query += ['accessToken' => Auth::user()->access_token];            
-        return $this->courseManager->sendRestRequest($method, $uri, $query);                
+        return $this->sendRequest($method, $uri, $query);                
     }
     
     public function viewCourse($cid){
@@ -30,7 +24,7 @@ class CourseController extends Controller
     
     public function viewAllCouseInfo(){                
         $allCourses = $this->sendRestRequest(self::GET, 'viewAllCourseInfo');
-        return view('all_courses', array('all_courses' => $allCourses));
+        return $allCourses;
     }
     
     public function viewAllCourseInfoByCurrentSemester() {
@@ -148,4 +142,47 @@ class CourseController extends Controller
     public function viewGradeBook($cid) {
         return $this->sendRestRequest(self::GET, 'viewGradeBook', ['cid'=>$cid]);
     }
+    
+    public function viewHyperLink($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewHyperlink', ['cid'=>$cid, 'itemid'=>$itemId]);               
+    }
+    
+    public function viewLearningMaterial($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewLearningMaterial', ['cid'=>$cid, 'itemid'=>$itemId]);               
+    }
+    
+    public function viewLearningMaterialCount($cid) {
+        return $this->sendRestRequest(self::GET, 'viewLearningMaterial', ['cid'=>$cid]);                               
+    }
+    
+    public function viewLearningObject($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewLearningObject', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
+    }
+    
+    public function viewLiterature($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewLiterature', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
+    }
+    
+    public function viewMediaLibrary($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewMediaLibrary', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
+    }
+    
+    public function viewMyGroupWorkspace($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewMyGroupWorkspace', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
+    }
+    
+    public function viewUserRole($cid) {
+        return $this->sendRestRequest(self::GET, 'viewUserRole', ['cid'=>$cid]);                                       
+    }
+    
+    public function viewWiki($cid, $itemId) {
+        return $this->sendRestRequest(self::GET, 'viewWiki', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
+    }
+    
+    public function viewWikiVersion($cid, $itemId, $versionId) {
+        return $this->sendRestRequest(self::GET, 'viewWikiVersion', ['cid'=>$cid, 'itemid'=>$itemId, 'versionid'=>$versionId]);                                       
+    }
+    
+    
+    
 }

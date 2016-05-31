@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use \Config;
+use \App\Services\L2pRequestManager;
+use App\Services\L2pTokenManager;
 use App\DeviceToken;
 use App\AccessToken;
-use App\Services\RequestManager;
-use App\Services\TokenManager;
 use Illuminate\Support\Facades\Cookie;
 use Auth;
 
@@ -23,21 +23,11 @@ class AuthController extends Controller
     const STATUS_TRUE = 'true';
     
 
-    public function __construct()
+    public function __construct(L2pRequestManager $requestManager, L2pTokenManager $tokenManager)
     {
-        $this->requestManager = new RequestManager(); 
-        $this->tokenManager = new TokenManager();   
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+        $this->requestManager = $requestManager; 
+        $this->tokenManager = $tokenManager;   
+    }    
 
     public function requestUserCode()
     {
@@ -49,7 +39,7 @@ class AuthController extends Controller
 
         // Execute the post request and get the verification url and user code
         
-        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.user_code_url'), $params);
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.user_code_url'), ['form_params' =>$params]);
             
         if($result['code'] != 200)
         {
@@ -76,7 +66,7 @@ class AuthController extends Controller
                 'grant_type'=>'device'
         ];
 
-        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params); 
         
         if($result['code'] != 200)
         {            
