@@ -11,20 +11,9 @@
 |
 */
 
-Route::get('/', [
-    'as' => 'home',
-    'uses' => 'HomeController@index'
-]);
-
 
 Route::get('/login', 'AuthController@requestUserCode');
-//Route::get('/rest/auth/requestAccessToken', 'AuthController@requestAccessToken');
-//Route::get('/rest/auth/verifyRequest', 'AuthController@verifyRequest');    
-
 Route::get('/logout', 'AuthController@logout');
-//    Route::get('/login', '');
-//    Route::post('/login', '');
-
 Route::get('/authenticate', 'AuthController@authenticateUser');
 
 Route::group(['middleware'=>'l2pApi'], function() {        

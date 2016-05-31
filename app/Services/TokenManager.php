@@ -4,15 +4,15 @@ namespace App\Services;
 
 use App\DeviceToken;
 use App\AccessToken;
-use App\Services\RequestManager;
-use \Config;
+use App\Services\L2pRequestManager;
+use Config;
 
-class TokenManager {
+class TokenManager implements L2pTokenManager {
 
     protected $requestManager;    
 
-    function __construct() {
-        $this->requestManager = new RequestManager();
+    function __construct(L2pRequestManager $requestManager) {
+        $this->requestManager = $requestManager;
     }
 
     public function saveDeviceToken($result) {
@@ -24,30 +24,25 @@ class TokenManager {
         $token->verification_url = $result['verification_url'];
         $token->expires_in = $result['expires_in'];
         $token->interval = $result['interval'];
-
-        // If user already exist then update database else insert record
-//        if ($token->exists()) {
-//            devicetoken::where('user_id', 1)->update(['device_code' => $result['device_code']]);
-//        } else {
+        
         $token->save();
-//        }
     }   
 
     public function saveAccessToken($result, $oldToken = null) {
-        $result = json_decode($result, true);
-        if ($result['status'] == 'ok') {
+        $resultJson = json_decode($result, true);
+        if ($resultJson['status'] == 'ok') {
             if (is_null($oldToken)) {
                 $token = new AccessToken;
-                $token->access_token = $result['access_token'];
-                $token->refresh_token = $result['refresh_token'];
-                $token->token_type = $result['token_type'];
-                $token->expires_in = $result['expires_in'];
+                $token->access_token = $resultJson['access_token'];
+                $token->refresh_token = $resultJson['refresh_token'];
+                $token->token_type = $resultJson['token_type'];
+                $token->expires_in = $resultJson['expires_in'];
 
                 $token->save();
                 return $token;
             }
             
-            $oldToken->access_token = $result['access_token'];
+            $oldToken->access_token = $resultJson['access_token'];
             $oldToken->save();
             return $oldToken;            
         }        
@@ -72,7 +67,7 @@ class TokenManager {
                 'grant_type'=>'device'
         ];
 
-        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params); 
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), ['form_params' =>$params]); 
         
         if($result['code'] != 200)
         {                        
@@ -95,7 +90,7 @@ class TokenManager {
             'grant_type' => 'refresh_token'
         ];
 
-        $result = $this->requestManager->executePostRequest(Config::get('l2pconfig.access_token_url'), $params);
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), ['form_params' =>$params]);
 
         if ($result['code'] != 200) {
                         

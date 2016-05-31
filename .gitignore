@@ -11,4 +11,5 @@ Homestead.json
 /config/l2pconfig.php
 /config/database.php
 /nbproject/private/
+*.orig
 composer.lock

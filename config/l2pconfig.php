@@ -13,5 +13,7 @@ return [
 
 	// User controls on request
 	'scope' => 'l2p2013.rwth userinfo.rwth',
+    
+        'api_url' => 'https://www3.elearning.rwth-aachen.de/_vti_bin/L2PServices/api.svc/v1/',
 ];
 
