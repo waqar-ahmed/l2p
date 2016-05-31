@@ -30,7 +30,8 @@ class CourseController extends Controller
     
     public function viewAllCouseInfo(){                
         $allCourses = $this->sendRestRequest(self::GET, 'viewAllCourseInfo');
-        return view('all_courses', array('all_courses' => $allCourses));
+        return $allCourses;
+        //return view('all_courses', array('all_courses' => $allCourses));
     }
     
     public function viewAllCourseInfoByCurrentSemester() {
