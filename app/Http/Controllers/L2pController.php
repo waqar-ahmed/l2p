@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use \App\Services\L2pRequestManager;
+use App\Services\L2pRequestManager;
+use Config;
 
 /**
  * Description of MyController
@@ -19,7 +20,7 @@ class L2pController extends Controller {
     }
     
     protected function sendRequest($method, $uri, $query = []) {
-        $response = $this->requestManager->executeRequest($method, $uri, ['query' => $query], 'https://www3.elearning.rwth-aachen.de/_vti_bin/L2PServices/api.svc/v1/');
+        $response = $this->requestManager->executeRequest($method, $uri, ['query' => $query], Config::get('l2pconfig.api_url'));
         return json_decode($response['body'], true);	            
     }
 }

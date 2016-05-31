@@ -5,7 +5,7 @@ namespace App\Services;
 use App\DeviceToken;
 use App\AccessToken;
 use App\Services\L2pRequestManager;
-use \Config;
+use Config;
 
 class TokenManager implements L2pTokenManager {
 
