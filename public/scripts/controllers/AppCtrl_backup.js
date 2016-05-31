@@ -2,78 +2,70 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
-
-  $scope.navbartitle = "L2p - Home";
-
  	$scope.menu = [
-      {
-      link : 'dashboard',
+     {
+      link : 'test',
+      title: 'Test',
+      icon: 'test'
+    },
+    {
+      link : '',
       title: 'Dashboard',
       icon: 'dashboard'
     },
     {
-      link : 'courses',
-      title: 'Courses',
-      icon: 'import_contacts'
+      link : '',
+      title: 'Friends',
+      icon: 'group'
     },
-  {
-      link : 'previous semester',
-      title: 'Previous Semesters',
-      icon: 'my_library_books'
-    },
-  {
-      link : 'schedule',
-      title: 'Schedule',
-      icon: 'date_range'
+    {
+      link : '',
+      title: 'Messages',
+      icon: 'message'
     }
   ];
   $scope.admin = [
     {
-      link : 'settings',
+      link : '',
+      title: 'Trash',
+      icon: 'delete'
+    },
+    {
+      link : 'showListBottomSheet($event)',
       title: 'Settings',
       icon: 'settings'
-    },
-  {
-      link : 'about',
-      title: 'About',
-      icon: 'copyright'
-    },
-  {
-      link : 'contact',
-      title: 'Contact',
-      icon: 'send'
     }
   ];
   $scope.activity = [
       {
-        what: 'Data Mining',
-        who: 'Exercise 1',
+        what: 'Brunch this weekend?',
+        who: 'Ali Conners',
         when: '3:08PM',
-        notes: "12345678.pdf"
+        notes: " I'll be in your neighborhood doing errands"
       },
       {
-        what: 'Web Technology',
-        who: 'Exercise 2',
-        when: '3:09PM',
-        notes: "87654321.pdf"
+        what: 'Summer BBQ',
+        who: 'to Alex, Scott, Jennifer',
+        when: '3:08PM',
+        notes: "Wish I could come out but I'm out of town this weekend"
       },
       {
-        what: 'MALO',
-        who: 'Lecture 3',
-        when: '4:08PM',
-        notes: "159753.pdf"
+        what: 'Oui Oui',
+        who: 'Sandra Adams',
+        when: '3:08PM',
+        notes: "Do you have Paris recommendations? Have you ever been?"
       },
       {
-        what: 'BWL',
-        who: 'Lecture 2',
-        when: '9:08PM',
-        notes: "123453453.pdf"
+        what: 'Birthday Gift',
+        who: 'Trevor Hansen',
+        when: '3:08PM',
+        notes: "Have any ideas of what we should get Heidi for her birthday?"
       },
       {
-        what: 'French Course',
-        who: 'Sample Exam 2',
-        when: '7:08PM',
-        notes: "5674334.pdf"
+        what: 'Recipe to try',
+        who: 'Brian Holt',
+        when: '3:08PM',
+        notes: "We should eat this: Grapefruit, Squash, Corn, and Tomatillo tacos"
       },
     ];
   $scope.alert = '';
@@ -87,7 +79,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       $scope.alert = clickedItem.name + ' clicked!';
     });
   };
-
+  
   $scope.showAdd = function(ev) {
     $mdDialog.show({
       controller: DialogController,
@@ -102,11 +94,9 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
 
 
-  $scope.onMenuSelect = function(link,title){
+  $scope.onMenuSelect = function(link){
     console.log("on menu select" + link);
-    $scope.navbartitle = "L2p - " + title;
     $location.path("/" + link);
-    $mdSidenav("left").close();
   };
 
 
@@ -119,7 +109,7 @@ app.controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
     { name: 'Copy', icon: 'copy' },
     { name: 'Print this page', icon: 'print' },
   ];
-
+  
   $scope.listItemClick = function($index) {
     var clickedItem = $scope.items[$index];
     $mdBottomSheet.hide(clickedItem);

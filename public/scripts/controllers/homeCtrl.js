@@ -34,4 +34,6 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 		});
 	}
 
+
+
 });	

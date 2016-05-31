@@ -1,0 +1,28 @@
+
+  <div style="margin-top:5px; border: 1px solid;">
+  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2016</b></md-subheader>
+  
+  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+  {{outerIndex + 1}} - {{course.title}}
+  <hr> 
+  </div>
+  </div>
+
+  <div style="margin-top:30px; border: 1px solid;">
+  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Winter Semester 2015/2016</b></md-subheader>
+  
+  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+  {{outerIndex + 1}} - {{course.title}}
+  <hr> 
+  </div>
+  </div>
+
+  <div style="margin-top:30px; border: 1px solid;">
+  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2015</b></md-subheader>
+  
+  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+  {{outerIndex + 1}} - {{course.title}}
+  <hr> 
+  </div>
+  </div>
+  

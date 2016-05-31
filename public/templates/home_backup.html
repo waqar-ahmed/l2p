@@ -1,22 +1,3 @@
-<table width=auto border="0">
-<tr>
-<td style="width:33%;">
-Quick Menu
-</td>
-</tr>
-
-<tr>
-<td style="background-color:#EEEEEE;width:33%;">
-<center>courses</center>
-</td>
-<td style="background-color:#EEEEEE;height:33%;width:33%;">
-<center>previous semesters</center></td>
-<td style="background-color:#EEEEEE;height:33%;width:33%;">
-<center>calendar</center></td>
-</tr>
- 
-</table>
-
   <div class="inset" hide-sm></div>
             <ng-switch on="data.selectedIndex" class="tabpanel-container">
               <div role="tabpanel"
@@ -25,10 +6,10 @@ Quick Menu
                    ng-switch-when="0"
                    md-swipe-left="next()"
                    md-swipe-right="previous()"
-                   layout="row" layout-align="center center"> 
-                   <md-card flex-gt-sm="90" flex-gt-md="80">
+                   layout="row" layout-align="center center">
+                  <md-card flex-gt-sm="90" flex-gt-md="80">
                     <md-card-content>
-                      <h2>What's new</h2>
+                      <h2>Activity</h2>
                       <md-list>
                         <md-item ng-repeat="item in activity | filter:search">
                           <md-item-content>

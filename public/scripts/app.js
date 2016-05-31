@@ -1,4 +1,5 @@
-var app = angular.module('BlankApp', ['ngMaterial','ngMdIcons','ui.router']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','AxelSoft']);
+
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
@@ -10,9 +11,20 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
         })
         .state('test', {
             url: '/test',
-            templateUrl: 'templates/test.html',
+            templateUrl: 'templates/courses.html',
             controller: 'testCtrl'
         })
+        .state('courses', {
+            url: '/courses',
+            templateUrl: 'templates/courses.html',
+            controller: 'coursesCtrl'
+        })
+        .state('singlecourse', {
+            url: '/singlecourse/:id',
+            templateUrl: 'templates/singlecourse.html',
+            controller: 'singlecourseCtrl'
+        })
+        
 }]);
 
 
@@ -21,13 +33,15 @@ app.config(function($mdThemingProvider) {
   var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
     'contrastDefaultColor': 'light',
     'contrastDarkColors': ['50'],
-    '50': 'ffffff'
+	'100':'00549f',
+    '50':'ffffff'
   });
   $mdThemingProvider.definePalette('customBlue', customBlueMap);
   $mdThemingProvider.theme('default')
     .primaryPalette('customBlue', {
-      'default': '500',
-      'hue-1': '50'
+      'default': '100',
+      'hue-1': '50',
+	  'hue-2': '100'
     })
     .accentPalette('pink');
   $mdThemingProvider.theme('input', 'default')

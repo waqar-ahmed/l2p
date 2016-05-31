@@ -29,6 +29,24 @@ md-sidenav .md-avatar {
   width: 64px;
 }
 
+md-sidenav {
+  fill: #00549f;
+  ng-md-icon {
+    position: relative;
+    top: 5px; // adjust for svg viewbox
+  }
+}
+/*toolbar style*/
+.md-toolbar-tools-bottom {
+  font-size: medium;
+  & :last-child {
+    opacity: 0.8;
+  }
+}
+md-toolbar:not(.md-hue-1),
+.md-fab {
+  fill: #fff;
+}
 /* More closely matches https://www.google.com/design/spec/components/lists.html#lists-specs */
 md-list-item.md-3-line md-divider[md-inset] {
   left: 70px;
@@ -49,3 +67,14 @@ md-list-item.md-3-line md-divider[md-inset] {
   opacity: 0;
   overflow: hidden;
 }
+
+.homeimage img{
+  width: 48px;
+  height: 48px;
+  border-radius: 32px;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  background-color:white;
+  padding:6px;
+  }
+

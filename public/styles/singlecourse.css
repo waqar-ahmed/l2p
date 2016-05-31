@@ -1,0 +1,37 @@
+* {margin: 0; padding: 0;}
+
+.singlecourse div {
+  margin: 20px;
+}
+
+.singlecourse ul {
+  list-style-type: none;
+  width: auto;
+}
+
+.singlecourse h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+.singlecourse li img {
+  float: left;
+  margin: 0 15px 0 0;
+  width: 100px;
+  height: 100px;
+}
+
+.singlecourse li p {
+}
+
+.singlecourse li {
+  padding: 10px;
+  overflow: auto;
+  border: 1px solid #e4e4e4;
+  margin: 5px;
+
+}
+
+.singlecourse li:hover {
+  background: #eee;
+  cursor: pointer;
+}
