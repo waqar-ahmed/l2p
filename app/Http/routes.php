@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'HomeController@index'
+]);
+
 
 Route::get('/login', 'AuthController@requestUserCode');
 Route::get('/logout', 'AuthController@logout');
