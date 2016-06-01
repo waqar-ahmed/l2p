@@ -1,0 +1,20 @@
+<md-dialog flex="50">
+    <md-content class="md-padding" layout="column">
+	    <md-input-container>
+	    	<label>Title</label>
+	    	<input type="text" ng-model="email.subject" ng-disabled="true">
+		</md-input-container>
+		  <md-input-container>
+	    	<label>Recipient</label>
+	    	<input type="text" ng-model="email.recipient" ng-disabled="true">
+		</md-input-container>
+		  <md-input-container>
+	    	<label>Content</label>
+          	<textarea rows="8" md-select-on-focus ng-disabled="true" ng-model="email.content"></textarea>
+		</md-input-container>
+	</md-content>
+	<div layout="row" layout-align="end center">
+		<p flex="65" flex-offset="5" style="font-size:13px; color:black;">created by {{email.createdBy}} at {{email.createdDate}}</p>
+		<md-button ng-click="back()" class="md-primary md-raised" style="margin-bottom:10px;">close</md-button>
+	</div>
+</md-dialog>

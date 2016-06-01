@@ -24,7 +24,7 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })
-        
+
 }]);
 
 
@@ -46,4 +46,18 @@ app.config(function($mdThemingProvider) {
     .accentPalette('pink');
   $mdThemingProvider.theme('input', 'default')
         .primaryPalette('grey')
+});
+
+app.service('tempdata', function(){
+  var savedata = {};
+
+  var addData = function(inputdata){
+    savedata = inputdata;
+  }
+
+  var getData = function(){
+    return savedata;
+  }
+
+  return {addData, getData};
 });

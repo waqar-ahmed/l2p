@@ -79,8 +79,8 @@
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse">
-						<ul ng-repeat="email in emails">
-							<li on-click="test()">
+						<ul ng-repeat="email in emails" ng-click="chooseEmail(email); viewEmail()">
+							<li>
 								<h3>{{email.subject}}</h3>
 								<p>Recipient: {{email.recipient}}</p>
 								<p>Created by: {{email.createdBy}}</p>

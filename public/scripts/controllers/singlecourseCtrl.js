@@ -1,4 +1,4 @@
-app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog) {
+app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog,tempdata) {
 
 	console.log("course ID: " + $stateParams.id);
 
@@ -45,18 +45,21 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog) {
 	$scope.emails = [
 	{
 		subject: 'This is an Email',
+		content : 'hello',
 		recipient: 'Students, Managers',
 		createdBy: 'L2P',
 		createdDate: '30/05/16 20:00',
 	},
 	{
-		subject: 'The second Emial',
+		subject: 'The second Email',
+		content : 'hi',
 		recipient: 'Extra Users',
 		createdBy: 'L2P',
 		createdDate: '30/05/16 20:00',
 	},
 	{
 		subject: 'Test Emails',
+		content : 'how about you',
 		recipient: 'Students',
 		createdBy: 'L2P',
 		createdDate: '30/05/16 20:00',
@@ -72,6 +75,11 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog) {
 	},
 	];
 
+
+	$scope.chooseEmail = function(email){
+		tempdata.addData(email);
+	};
+
 	$scope.test = function(){
 	    $mdDialog.show(
 	      $mdDialog.alert()
@@ -80,4 +88,22 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog) {
 	        .ok('Nice!')
 	    );
 	};
+
+	$scope.viewEmail = function(){
+	    $mdDialog.show({
+	    	controller: EmailDialogController,
+	      	templateUrl:'templates/viewemail.html',
+	      	parent: angular.element(document.body),
+	      	clickOutsideToClose:true
+	    });
+	};
+
+	function EmailDialogController($scope, $mdDialog, tempdata) {
+		$scope.email = tempdata.getData();
+	  	$scope.back = function() {
+	    	$mdDialog.hide();
+	  	};
+	};
+
+
 });
