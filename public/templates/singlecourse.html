@@ -1,7 +1,15 @@
 <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
 <div ng-cloak>
+	<div class="fabbutton">
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
+	   open
+	   </md-button>
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
+	   delete
+	   </md-button>
+  	</div>
 	<md-content>
-		<md-tabs md-dynamic-height md-border-bottom>
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
 			<md-tab label="Learning Material">
 				<md-content class="md-padding">
 					<h3>Learning Material</h3>
@@ -26,7 +34,7 @@
 								<p>Due Date :       2/5/16  10:00</p>
 								<p>Total Points:    5.0</p>
 							</li>
-							
+
 							<li>
 								<img src="../images/pdf_icon.png" >
 								<h3>Assignment 2</h3>
@@ -71,24 +79,12 @@
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse">
-						<ul>
-							<li>
-								<h3>This is an Email</h3>
-								<p>Recipient: Students, Managers</p>
-								<p>Created by: L2P</p>
-								<p>Created Date: 30/05/16 20:00</p>
-							</li>
-							<li>
-								<h3>The second Emial</h3>
-								<p>Recipient: Extra Users</p>
-								<p>Created by: L2P</p>
-								<p>Created Date: 30/05/16 20:00</p>
-							</li>
-							<li>
-								<h3>Test Emails</h3>
-								<p>Recipient: Students</p>
-								<p>Created by: L2P</p>
-								<p>Created Date: 30/05/16 20:00</p>
+						<ul ng-repeat="email in emails">
+							<li on-click="test()">
+								<h3>{{email.subject}}</h3>
+								<p>Recipient: {{email.recipient}}</p>
+								<p>Created by: {{email.createdBy}}</p>
+								<p>Created Date: {{email.createdDate}}</p>
 							</li>
 						</ul>
 					</div>
@@ -96,17 +92,15 @@
 			</md-tab>
 			<md-tab label="Announcements">
 				<md-content class="md-padding" layout ="column">
-					<md-card>
+					<md-card ng-repeat="announcement in announcements">
 						<md-card-title>
 							<md-card-title-text>
-								<span class="md-headline">This is an announcement.</span>
-								<span class="md-subhead">Created by L2P at 30/05/16 20:00</span>
+								<span class="md-headline">{{announcement.title}}</span>
+								<span class="md-subhead">Created by {{announcement.createdBy}} at {{announcement.createdDate}}</span>
 							</md-card-title-text>
 						</md-card-title>
 						<md-card-content>
-							<p>
-							The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request.
-							</p>
+							<p>{{announcement.content}}</p>
 						</md-card-content>
 					</md-card>
 				</md-content>

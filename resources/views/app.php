@@ -31,6 +31,7 @@
 
 
   	<!-- My Application stylesheets -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
   	<link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/treeView.css">
     <link rel="stylesheet" href="styles/course.css">

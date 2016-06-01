@@ -4,7 +4,7 @@
     <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
       <b>{{defaultSemester.name}}</b>
     </md-subheader>
-    <md-input-container>
+    <md-input-container style="margin-top:20px;">
       <label style="font-size: 20px;">Semester</label>
         <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
           <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
