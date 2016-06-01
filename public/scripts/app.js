@@ -9,13 +9,13 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/home.html',
             controller: 'homeCtrl'
         })
-        .state('test', {
-            url: '/test',
-            templateUrl: 'templates/courses.html',
-            controller: 'testCtrl'
-        })
         .state('courses', {
             url: '/courses',
+            templateUrl: 'templates/courses.html',
+            controller: 'coursesCtrl'
+        })
+        .state('previous_semester', {
+            url: '/previous',
             templateUrl: 'templates/courses.html',
             controller: 'coursesCtrl'
         })
@@ -33,7 +33,7 @@ app.config(function($mdThemingProvider) {
   var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
     'contrastDefaultColor': 'light',
     'contrastDarkColors': ['50'],
-	'100':'00549f',
+	  '100':'00549f',
     '50':'ffffff'
   });
   $mdThemingProvider.definePalette('customBlue', customBlueMap);
@@ -41,7 +41,7 @@ app.config(function($mdThemingProvider) {
     .primaryPalette('customBlue', {
       'default': '100',
       'hue-1': '50',
-	  'hue-2': '100'
+	    'hue-2': '100'
     })
     .accentPalette('pink');
   $mdThemingProvider.theme('input', 'default')

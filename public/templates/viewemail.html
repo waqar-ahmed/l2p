@@ -1,4 +1,7 @@
 <md-dialog flex="50">
+	<md-toolbar class="md-padding">
+		<h3>Details</h3>
+	</md-toolbar>
     <md-content class="md-padding" layout="column">
 	    <md-input-container>
 	    	<label>Title</label>
@@ -14,7 +17,7 @@
 		</md-input-container>
 	</md-content>
 	<div layout="row" layout-align="end center">
-		<p flex="65" flex-offset="5" style="font-size:13px; color:black;">created by {{email.createdBy}} at {{email.createdDate}}</p>
+		<p flex="grow" style="font-size:13px; color:black;" class="md-padding">created by {{email.createdBy}} at {{email.createdDate}}</p>
 		<md-button ng-click="back()" class="md-primary md-raised" style="margin-bottom:10px;">close</md-button>
 	</div>
 </md-dialog>
