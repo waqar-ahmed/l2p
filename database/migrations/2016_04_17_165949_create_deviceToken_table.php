@@ -15,7 +15,7 @@ class CreateDeviceTokenTable extends Migration
         Schema::create('device_tokens', function (Blueprint $table) {
             //
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('access_token_id')->nullable();
             $table->string('device_code');
             $table->string('user_code');
             $table->string('verification_url');
