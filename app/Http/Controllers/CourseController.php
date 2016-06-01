@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CourseManager;
 use Auth;
 
 class CourseController extends L2pController
@@ -18,13 +17,17 @@ class CourseController extends L2pController
         return view('single_course', array('cid'=>$cid));
     }
     
-    public function viewAllCourseInfoBySemester($sem){
+    public function viewAllCourseInfoBySemester($sem){        
         return $this->sendRestRequest(self::GET, 'viewAllCourseInfoBySemester', ['semester'=>$sem]);
     }
     
+    public function _viewAllCourseInfo() {
+        $allCourses = $this->sendRestRequest(self::GET, 'viewAllCourseInfo');        
+        return view('all_courses', array('all_courses' => $allCourses));
+    }
+    
     public function viewAllCouseInfo(){                
-        $allCourses = $this->sendRestRequest(self::GET, 'viewAllCourseInfo');
-        return $allCourses;
+        return $this->sendRestRequest(self::GET, 'viewAllCourseInfo');        
         //return view('all_courses', array('all_courses' => $allCourses));
     }
     

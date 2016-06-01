@@ -28,5 +28,5 @@ class AccessToken extends Authenticatable
         static::deleting(function($accessToken) { // before delete() method call this
              $accessToken->deviceToken()->delete();             
         });
-    }
+    }        
 }

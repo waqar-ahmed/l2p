@@ -17,7 +17,7 @@ class L2pTokenAuth
     public function handle($request, Closure $next)
     {        
         if(!Auth::check()) {           
-            return redirect('/');
+            return redirect()->route('home');
         }
         return $next($request);
     }

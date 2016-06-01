@@ -15,5 +15,5 @@ class DeviceToken extends Model
     
     public function accessToken() {
         return $this->belongsTo('App\AccessToken', 'access_token_id');
-    }
+    }        
 }

@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use \Config;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 
 class RequestManagerGuzzle implements L2pRequestManager {
 
@@ -12,38 +15,29 @@ class RequestManagerGuzzle implements L2pRequestManager {
 
     function __construct() {
         $this->client = new Client(["base_uri" => Config::get('l2pconfig.base_url'), 'timeout' => 2.0]);
-    }
+    }    
 
-    public function executePostRequest($sub_url, $params) {
-        $response = $this->client->request('POST', $sub_url, [
-            'form_params' => $params]);
-
-        $code = $response->getStatusCode();
-        $body = $response->getBody(true);
-
-        return array('code' => $code, 'body' => $body);
-    }
-
-    public function executeNewPostRequest($url, $sub_url, $params) {
-        $client = new Client(["base_uri" => $url, 'timeout' => 2.0]);
-        $response = $client->request('POST', $sub_url, ['form_params' => $params]);
-
-        $code = $response->getStatusCode();
-        $body = $response->getBody(true);
-
-        return array('code' => $code, 'body' => $body);
-    }
-
-    public function executeRequest($method, $subUrl, $params, $url = null) {
+    /*
+     * Send http requests to url
+     */
+    public function executeRequest($method, $subUrl, $params, $url = null, $timeout = 2.0) {
         if(isset($url)) {
-            $this->client = new Client(["base_uri" => $url, 'timeout' => 6.0]);
+            $this->client = new Client(["base_uri" => $url, 'timeout' => $timeout]);
         }
-        $response = $this->client->request($method, $subUrl, $params);
-
-        $code = $response->getStatusCode();
-        $body = $response->getBody(true);
-
-        return array('code' => $code, 'body' => $body);
+        try {
+            $response =  $this->client->request($method, $subUrl, $params);        
+            return array('code' => $response->getStatusCode(), 'body' => $response->getBody(), 
+                'reason_phrase' => $response->getReasonPhrase(), 'headers' => $response->getHeaders());
+        } catch (TransferException $e) {
+            //TODO: Log exceptions here
+//            echo Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                $response =  $e->getResponse();
+                return array('code' => $response->getStatusCode(), 'body' => $response->getBody(), 
+                'reason_phrase' => $response->getReasonPhrase(), 'headers' => $response->getHeaders());//              
+            }
+        }
+        return array('code' => 101, 'reason_phrase' => 'Error occurred while sending a request to server');
     }
 
 }

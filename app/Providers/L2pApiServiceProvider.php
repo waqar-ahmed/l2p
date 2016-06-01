@@ -12,8 +12,7 @@ use Illuminate\Support\ServiceProvider;
 class L2pApiServiceProvider extends ServiceProvider{
     
     public function register() {
-        $this->app->bind('App\Services\L2pRequestManager', 'App\Services\RequestManagerGuzzle');
-        $this->app->bind('App\Services\L2pTokenManager', 'App\Services\TokenManager');
+        $this->app->bind('App\Services\L2pRequestManager', 'App\Services\RequestManagerGuzzle');        
     }
 
 }
