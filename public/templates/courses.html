@@ -1,28 +1,37 @@
 
-  <div style="margin-top:5px; border: 1px solid;">
-  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2016</b></md-subheader>
-  
+<div style="margin-top:5px;">
+  <div layout="row" ng-model="defaultSemester" flex="95">
+    <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
+      <b>{{defaultSemester.name}}</b>
+    </md-subheader>
+    <md-input-container>
+      <label style="font-size: 20px;">Semester</label>
+        <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
+          <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
+        </md-select>
+    </md-input-container>
+  </div>
   <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
   {{outerIndex + 1}} - {{course.title}}
-  <hr> 
+  <hr width="95%">
   </div>
   </div>
 
-  <div style="margin-top:30px; border: 1px solid;">
+ <!--  <div style="margin-top:30px; border: 1px solid;">
   <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Winter Semester 2015/2016</b></md-subheader>
-  
+
   <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
   {{outerIndex + 1}} - {{course.title}}
-  <hr> 
+  <hr>
   </div>
   </div>
 
   <div style="margin-top:30px; border: 1px solid;">
   <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2015</b></md-subheader>
-  
+
   <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
   {{outerIndex + 1}} - {{course.title}}
-  <hr> 
+  <hr>
   </div>
   </div>
-  
+ -->
