@@ -5,7 +5,7 @@ app.controller('coursesCtrl', function($scope,$location) {
       id : '1',
       title: 'Elearning',
     },
-	{	
+	{
       id : '2',
       title: 'Functional Programming',
     },
@@ -26,6 +26,30 @@ app.controller('coursesCtrl', function($scope,$location) {
       title: 'Satisfiability Checking',
     }
     
+  ];
+
+  $scope.defaultSemester = {
+        id : '1',
+        abbre: 'SS2016',
+        name: 'Courses - Summer Semester 2016',
+      };
+
+  $scope.semesters = [
+    {
+      id : '1',
+      abbre: 'SS2016',
+      name: 'Courses - Summer Semester 2016',
+    },
+    {
+      id : '2',
+      abbre: 'WS2015',
+      name: 'Courses - Winter Semester 2016',
+    },
+    {
+      id : '3',
+      abbre: 'SS2015',
+      name: 'Courses - Summer Semester 2015',
+    },
   ];
 
   $scope.gotoCourse = function(id){

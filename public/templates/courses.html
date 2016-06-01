@@ -1,22 +1,34 @@
 <div class="listdemoListControls">
 
-    <md-list style="height:20px !important;" flex>
-
+<div style="margin-top:5px;">
+    <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
+      <div layout="row" layout-align="end center" ng-model="defaultSemester">
+        <h3 flex="grow" style="margin-right:10px;"><b>{{defaultSemester.name}}</b></h3>
+          <md-input-container>
+            <label style="font-size: 20px;">Semester</label>
+            <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
+              <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
+            </md-select>
+          </md-input-container>
+      </div>
+    </md-subheader>
+ <md-divider ng-if="!$last"></md-divider>
             
-            <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: #666;"><b>Courses - Summer Semester 2016</b>
+ <!--  <div style="margin-top:30px; border: 1px solid;">
             </md-subheader> 
 
       <md-list-item ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+  <hr>
 
             <md-checkbox style="display:none;"></md-checkbox>
 
                 <span class="numberCircle">{{outerIndex + 1}}</span> <span class="course_title">{{course.title}}</span>
       
-             <md-divider></md-divider>
+  <hr>
 
             <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
     </md-list-item>
 
     </md-list>
 </div>
-    
+ -->
