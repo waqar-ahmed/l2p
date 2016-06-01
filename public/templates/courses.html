@@ -1,19 +1,19 @@
 
 <div style="margin-top:5px;">
-  <div layout="row" ng-model="defaultSemester" flex="95">
     <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
-      <b>{{defaultSemester.name}}</b>
+      <div layout="row" layout-align="end center" ng-model="defaultSemester">
+        <h2 flex="grow"><b>{{defaultSemester.name}}</b></h2>
+          <md-input-container>
+            <label style="font-size: 20px;">Semester</label>
+            <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
+              <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
+            </md-select>
+          </md-input-container>
+      </div>
     </md-subheader>
-    <md-input-container style="margin-top:20px;">
-      <label style="font-size: 20px;">Semester</label>
-        <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
-          <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
-        </md-select>
-    </md-input-container>
-  </div>
   <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
   {{outerIndex + 1}} - {{course.title}}
-  <hr width="95%">
+ <md-divider ng-if="!$last"></md-divider>
   </div>
   </div>
 
