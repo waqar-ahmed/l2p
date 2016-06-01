@@ -7,7 +7,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
 
  	$scope.menu = [
       {
-      link : 'dashboard',
+      link : '',
       title: 'Dashboard',
       icon: 'dashboard'
     },
@@ -17,7 +17,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       icon: 'import_contacts'
     },
   {
-      link : 'previous semester',
+      link : 'previous',
       title: 'Previous Semesters',
       icon: 'my_library_books'
     },
