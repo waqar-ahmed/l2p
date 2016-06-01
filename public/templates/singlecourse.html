@@ -1,91 +1,110 @@
-  <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
-
+<md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
 <div ng-cloak>
+	<div class="fabbutton">
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
+	   add
+	   </md-button>
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
+	   delete
+	   </md-button>
+  	</div>
+	<md-content>
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
+			<md-tab label="Learning Material">
+				<md-content class="md-padding">
+					<h3>Learning Material</h3>
+					<div class="row">
+						<div class="span6">
+							<div style="padding: 5px; border: 0px solid #aaa;">
+								<div>Root</div>
+								<div tree-view="structure" tree-view-options="options3"></div>
+							</div>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="Assignments">
+				<md-content class="md-padding">
+					<div class="singlecourse">
+						<ul>
+							<li>
+								<img src="images/pdf_icon.png">
+								<h3>Assignment 1</h3>
+								<p>Published Date : 22/4/16 20:00</p>
+								<p>Due Date :       2/5/16  10:00</p>
+								<p>Total Points:    5.0</p>
+							</li>
 
-  <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Learning Material">
-        <md-content class="md-padding">
-          <h3>Learning Material</h3>
-          <div class="row">
-        <div class="span6">
-          <div style="padding: 5px; border: 0px solid #aaa;">
-            <div>Root</div>
-            <div tree-view="structure" tree-view-options="options3"></div>
-          </div>
-        </div>
-      </div>
-        </md-content>
-      </md-tab>
-      <md-tab label="Assignments">
-        <md-content class="md-padding">
+							<li>
+								<img src="images/pdf_icon.png" >
+								<h3>Assignment 2</h3>
+								<p>Published Date : 22/4/16 20:00</p>
+								<p>Due Date :       2/5/16  10:00</p>
+								<p>Total Points:    5.0</p>
+							</li>
 
-  <div class="singlecourse">
-    <ul>
-      <li>
-        <img src="../images/pdf_icon.png" >
-        <h3>Assignment 1</h3>
-        <p>Published Date : 22/4/16 20:00</p>
-        <p>Due Date :       2/5/16  10:00</p>
-        <p>Total Points:    5.0</p>
-      </li>
+							<li>
+								<img src="images/pdf_icon.png" >
+								<h3>Assignment 3</h3>
+								<p>Published Date : 22/4/16 20:00</p>
+								<p>Due Date :       2/5/16  10:00</p>
+								<p>Total Points:    5.0</p>
+							</li>
 
-      <li>
-        <img src="../images/pdf_icon.png" >
-        <h3>Assignment 2</h3>
-        <p>Published Date : 22/4/16 20:00</p>
-        <p>Due Date :       2/5/16  10:00</p>
-        <p>Total Points:    5.0</p>
-      </li>
+							<li>
+								<img src="images/pdf_icon.png" >
+								<h3>Assignment 4</h3>
+								<p>Published Date : 22/4/16 20:00</p>
+								<p>Due Date :       2/5/16  10:00</p>
+								<p>Total Points:    5.0</p>
+							</li>
 
-      <li>
-        <img src="../images/pdf_icon.png" >
-        <h3>Assignment 3</h3>
-        <p>Published Date : 22/4/16 20:00</p>
-        <p>Due Date :       2/5/16  10:00</p>
-        <p>Total Points:    5.0</p>
-      </li>
-
-      <li>
-        <img src="../images/pdf_icon.png" >
-        <h3>Assignment 4</h3>
-        <p>Published Date : 22/4/16 20:00</p>
-        <p>Due Date :       2/5/16  10:00</p>
-        <p>Total Points:    5.0</p>
-      </li>
-
-      <li>
-        <img src="../images/pdf_icon.png" >
-        <h3>Assignment 5</h3>
-        <p>Published Date : 22/4/16 20:00</p>
-        <p>Due Date :       2/5/16  10:00</p>
-        <p>Total Points:    5.0</p>
-      </li>
-      
-    
-  </ul>
-</div>
-         
-        </md-content>
-      </md-tab>
-      <md-tab label="Media Library">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Media Library</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="Emails">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Emails</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="Anouncements">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Anouncements</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-     </md-tabs>
-  </md-content>
+							<li>
+								<img src="images/pdf_icon.png" >
+								<h3>Assignment 5</h3>
+								<p>Published Date : 22/4/16 20:00</p>
+								<p>Due Date :       2/5/16  10:00</p>
+								<p>Total Points:    5.0</p>
+							</li>
+						</ul>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="Media Library">
+				<md-content class="md-padding">
+					<h1 class="md-display-2">Media Library</h1>
+					<p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+				</md-content>
+			</md-tab>
+			<md-tab label="Emails">
+				<md-content class="md-padding">
+					<div class="singlecourse">
+						<ul ng-repeat="email in emails" ng-click="chooseEmail(email); viewEmail()">
+							<li>
+								<h3>{{email.subject}}</h3>
+								<p>Recipient: {{email.recipient}}</p>
+								<p>Created by: {{email.createdBy}}</p>
+								<p>Created Date: {{email.createdDate}}</p>
+							</li>
+						</ul>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="Announcements">
+				<md-content class="md-padding" layout ="column">
+					<md-card ng-repeat="announcement in announcements">
+						<md-card-title>
+							<md-card-title-text>
+								<span class="md-headline">{{announcement.title}}</span>
+								<span class="md-subhead">Created by {{announcement.createdBy}} at {{announcement.createdDate}}</span>
+							</md-card-title-text>
+						</md-card-title>
+						<md-card-content>
+							<p>{{announcement.content}}</p>
+						</md-card-content>
+					</md-card>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
 </div>

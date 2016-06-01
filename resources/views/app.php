@@ -31,6 +31,7 @@
 
 
   	<!-- My Application stylesheets -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
   	<link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/treeView.css">
     <link rel="stylesheet" href="styles/course.css">
@@ -50,7 +51,7 @@
       <md-toolbar class="md-tall md-hue-2">
         <span flex></span>
         <div layout="column" class="md-toolbar-tools-bottom inset" layout-align="center center">
-          <div class="homeimage">
+        <div class="homeimage">
             <img src="images/icon.jpg"></img>
           </div>
           <span flex></span>
@@ -95,7 +96,7 @@
     </md-list>
     </md-sidenav>
     <div layout="column" class="relative" layout-fill role="main">
-     <!--  <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+<!--       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
         <ng-md-icon icon="add"></ng-md-icon>
       </md-button> -->
       <md-toolbar ng-show="!showSearch">

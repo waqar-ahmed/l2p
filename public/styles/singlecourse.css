@@ -35,3 +35,13 @@
   background: #eee;
   cursor: pointer;
 }
+
+.fabbutton .md-fab.visible {
+  transform: scale(1);
+  transition: transform 0.3s linear;
+}
+
+.fabbutton .md-fab {
+  transform: scale(0);
+  transition: transform 0.3s linear;
+}

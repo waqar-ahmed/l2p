@@ -1,28 +1,24 @@
+<div class="listdemoListControls">
 
-  <div style="margin-top:5px; border: 1px solid;">
-  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2016</b></md-subheader>
-  
-  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
-  {{outerIndex + 1}} - {{course.title}}
-  <hr> 
-  </div>
-  </div>
+    <md-list style="height:20px !important;" flex>
+        <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
+          <div layout="row" layout-align="end center" ng-model="defaultSemester">
+            <h3 flex="grow" style="margin-right:10px;"><b>{{defaultSemester.name}}</b></h3>
+              <md-input-container>
+                <label style="font-size: 20px;">Semester</label>
+                <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
+                  <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
+                </md-select>
+              </md-input-container>
+          </div>
+        </md-subheader>
 
-  <div style="margin-top:30px; border: 1px solid;">
-  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Winter Semester 2015/2016</b></md-subheader>
-  
-  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
-  {{outerIndex + 1}} - {{course.title}}
-  <hr> 
-  </div>
-  </div>
-
-  <div style="margin-top:30px; border: 1px solid;">
-  <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;"><b>Courses - Summer Semester 2015</b></md-subheader>
-  
-  <div class="course_title" ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
-  {{outerIndex + 1}} - {{course.title}}
-  <hr> 
-  </div>
-  </div>
-  
+      <md-list-item ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+        <md-checkbox style="display:none;"></md-checkbox>
+        <span class="numberCircle">{{outerIndex + 1}}</span>
+        <span class="course_title">{{course.title}}</span>
+        <md-divider ng-if="!$last"></md-divider>
+        <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+    </md-list-item>
+    </md-list>
+</div>
