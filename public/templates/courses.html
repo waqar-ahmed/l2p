@@ -2,7 +2,7 @@
 <div style="margin-top:5px;">
     <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
       <div layout="row" layout-align="end center" ng-model="defaultSemester">
-        <h3 flex="grow"><b>{{defaultSemester.name}}</b></h3>
+        <h3 flex="grow" style="margin-right:10px;"><b>{{defaultSemester.name}}</b></h3>
           <md-input-container>
             <label style="font-size: 20px;">Semester</label>
             <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
