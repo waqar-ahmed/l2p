@@ -7,7 +7,7 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
 	.then(function(res){
-		if(res.trim() == "true")
+		if(res.status == true)
 		{
 			console.log("user is authenticated");
 			getAllCourses();
