@@ -41,6 +41,9 @@
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" />
     <![endif]-->
 
+    <!-- My Application services -->
+    <script src="scripts/services/courseService.js"></script>
+
 </head>
 <body ng-app="L2pLabApp" ng-cloak>
  <div layout="row" ng-controller="AppCtrl">

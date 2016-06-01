@@ -16,9 +16,8 @@ class L2pTokenAuth
      */
     public function handle($request, Closure $next)
     {        
-        if(!Auth::check()) {
-            echo  'unauthorized';
-            return redirect('/');
+        if(!Auth::check()) {           
+            return redirect()->route('home');
         }
         return $next($request);
     }
