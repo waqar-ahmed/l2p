@@ -13,10 +13,10 @@
           </div>
         </md-subheader>
 
-      <md-list-item ng-repeat="course in courses" ng-click="gotoCourse(course.id)" ng-init="outerIndex = $index">
+      <md-list-item ng-repeat="course in courses" ng-click="gotoCourse(course.itemId,course.uniqueid)" ng-init="outerIndex = $index">
         <md-checkbox style="display:none;"></md-checkbox>
         <span class="numberCircle">{{outerIndex + 1}}</span>
-        <span class="course_title">{{course.title}}</span>
+        <span class="course_title">{{course.courseTitle}}</span>
         <md-divider ng-if="!$last"></md-divider>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
     </md-list-item>

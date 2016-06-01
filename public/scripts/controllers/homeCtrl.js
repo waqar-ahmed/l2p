@@ -10,7 +10,7 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 		if(res.status == true)
 		{
 			console.log("user is authenticated");
-			getAllCourses();
+			//getAllCourses();
 		}
 		else{
 			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
@@ -25,15 +25,5 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 		window.location = LOGIN_USER;
 	}
 
-	getAllCourses = function(){
-		console.log("getting courses");
-		courseService.getAllCourses()
-		.then(function(res){
-			console.log("got all courses");
-			console.log(res);
-		}, function(err){
-			console.log("Error occured : " + err);
-		});
-	}
-
+	
 });	

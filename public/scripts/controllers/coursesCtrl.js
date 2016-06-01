@@ -1,32 +1,15 @@
-app.controller('coursesCtrl', function($scope,$location) {
+app.controller('coursesCtrl', function($scope,courseService,$location) {
+	courseService.getCurrentSem()
+		.then(function(res){
+			console.log("got all courses from current sem");
+			console.log(res.dataSet);
+			$scope.courses = res.dataSet;
+			console.log("courses:"+$scope.courses);
+		}, function(err){
+			console.log("Error occured : " + err);
+		});
 
-	$scope.courses = [
-    {
-      id : '1',
-      title: 'Elearning',
-    },
-	{
-      id : '2',
-      title: 'Functional Programming',
-    },
-    {
-      id : '3',
-      title: 'Software Project Management',
-    },
-    {
-      id : '4',
-      title: 'Generative Software Engineering',
-    },
-    {
-      id : '5',
-      title: 'L2p Lab Developement',
-    },
-    {
-      id : '6',
-      title: 'Satisfiability Checking',
-    },
-  ];
-
+	
   $scope.defaultSemester = {
         id : '1',
         abbre: 'SS2016',
@@ -51,8 +34,8 @@ app.controller('coursesCtrl', function($scope,$location) {
     },
   ];
 
-  $scope.gotoCourse = function(id){
+  $scope.gotoCourse = function(id,cid){
       console.log("showing single course " + id);
-      $location.path('/singlecourse/' + id);
+      $location.path('/singlecourse/'+cid+'/' + id);
     }
 });
