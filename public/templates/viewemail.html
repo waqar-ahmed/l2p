@@ -9,15 +9,15 @@
 		</md-input-container>
 		  <md-input-container>
 	    	<label>Recipient</label>
-	    	<input type="text" ng-model="email.recipient" ng-disabled="true">
+	    	<input type="text" ng-model="email.recipients" ng-disabled="true">
 		</md-input-container>
 		  <md-input-container>
 	    	<label>Content</label>
-          	<textarea rows="8" md-select-on-focus ng-disabled="true" ng-model="email.content"></textarea>
+			<textarea rows="8" md-select-on-focus ng-disabled="true">{{email.body}}</textarea>
 		</md-input-container>
 	</md-content>
 	<div layout="row" layout-align="end center">
-		<p flex="grow" style="font-size:13px; color:black;" class="md-padding">created by {{email.createdBy}} at {{email.createdDate}}</p>
+		<p flex="grow" style="font-size:13px; color:black;" class="md-padding">created by {{email.from}} at {{email.created}}</p>
 		<md-button ng-click="back()" class="md-primary md-raised" style="margin-bottom:10px;">close</md-button>
 	</div>
 </md-dialog>

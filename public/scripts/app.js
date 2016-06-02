@@ -20,7 +20,7 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             controller: 'coursesCtrl'
         })
         .state('singlecourse', {
-            url: '/singlecourse/:id',
+            url: '/singlecourse/:cid/:id',
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })

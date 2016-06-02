@@ -82,9 +82,9 @@
 						<ul ng-repeat="email in emails" ng-click="chooseEmail(email); viewEmail()">
 							<li>
 								<h3>{{email.subject}}</h3>
-								<p>Recipient: {{email.recipient}}</p>
-								<p>Created by: {{email.createdBy}}</p>
-								<p>Created Date: {{email.createdDate}}</p>
+								<p>Recipient: {{email.recipients}}</p>
+								<p>Created by: {{email.from}}</p>
+								<p>Created Date: {{email.created}}</p>
 							</li>
 						</ul>
 					</div>
