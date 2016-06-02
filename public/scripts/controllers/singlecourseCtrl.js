@@ -1,6 +1,14 @@
-app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog,tempdata) {
+app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog,tempdata) {
 
 	console.log("course ID: " + $stateParams.id);
+	courseService.getEmailbyid($stateParams.cid)
+		.then(function(res){
+			console.log("got emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+		}, function(err){
+			console.log("Error occured : " + err);
+		});
 
 
 	$scope.breadcrums = [''];
@@ -42,30 +50,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,$mdDialog,tempda
 		}
 	};
 
-	$scope.emails = [
-	{
-		subject: 'This is an Email',
-		content : 'hello',
-		recipient: 'Students, Managers',
-		createdBy: 'L2P',
-		createdDate: '30/05/16 20:00',
-	},
-	{
-		subject: 'The second Email',
-		content : 'hi',
-		recipient: 'Extra Users',
-		createdBy: 'L2P',
-		createdDate: '30/05/16 20:00',
-	},
-	{
-		subject: 'Test Emails',
-		content : 'how about you',
-		recipient: 'Students',
-		createdBy: 'L2P',
-		createdDate: '30/05/16 20:00',
-	},
-	];
-
+	
 	$scope.announcements = [
 	{
 		title: 'This is an announcement.',
