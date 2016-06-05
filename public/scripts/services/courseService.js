@@ -7,7 +7,8 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_ALL_COURSES = "courses";
 	var URL_GET_CURRENTSEM ="current_semester";
 	var URL_GET_ALL_EMIALS = "/all_emails";
-
+        var LOGOUT = "logout";
+        
 	this.isUserAuthenticated = function(){
 		var defer = $q.defer();
 
@@ -75,5 +76,21 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	}
 
 
+        this.logout = function()
+        {
+            var defer = $q.defer();
+
+		$http.get(LOGOUT)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+        }
 
 }]);

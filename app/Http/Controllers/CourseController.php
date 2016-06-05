@@ -2,16 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-
 class CourseController extends L2pController
-{
-    CONST GET = 'GET';       
-    
-    private function sendRestRequest($method, $uri, $query = []) {        
-        $query += ['accessToken' => Auth::user()->access_token];            
-        return $this->sendRequest($method, $uri, $query);                
-    }
+{                 
     
     public function viewCourse($cid){
         return view('single_course', array('cid'=>$cid));

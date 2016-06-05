@@ -117,7 +117,7 @@ class AuthController extends L2pController {
             ]   
         ];
 
-        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), ['form_params' =>$params]);
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params);
 
         if ($result['code'] != 200) {
             $this->defaultResponse = $this->jsonResponse(self::STATUS_FALSE, $result['reason_phrase']);

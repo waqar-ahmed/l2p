@@ -59,7 +59,7 @@
             <a class="inset md-hue-1" ng-href="https://oauth.campus.rwth-aachen.de/manage" target="_blank">Click me to authorize</a>
           </div> -->
           <div layout="row" layout-align="start center">
-            <div class="inset" flex-offset="15" flex="70">Donald Trump</div>
+            <div class="inset" flex-offset="15" flex="70">User name</div>
             <div flex="10">
               <md-button ng-click="logout()" class="md-icon-button">
                 <ng-md-icon icon="logout"></ng-md-icon>
