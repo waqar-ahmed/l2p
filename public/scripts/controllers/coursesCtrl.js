@@ -37,6 +37,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location) {
 
   $scope.gotoCourse = function(id,cid){
       console.log("showing single course " + id);
-      $location.path('/singlecourse/'+cid+'/' + id);
+      $location.path('/singlecourse/'+cid+'/');
     }
 });

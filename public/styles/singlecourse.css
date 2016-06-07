@@ -45,3 +45,8 @@
   transform: scale(0);
   transition: transform 0.3s linear;
 }
+.main_height
+{
+  height: 100% !important;
+/*  border: 2px solid red !important;
+*/}

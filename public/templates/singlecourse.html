@@ -1,5 +1,5 @@
-<md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
-<div ng-cloak>
+<!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
+ --><div ng-cloak>
 	<div class="fabbutton">
 	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
 	   add
@@ -9,12 +9,12 @@
 	   </md-button>
   	</div>
 	<md-content>
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
-			<md-tab label="Learning Material">
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" >
+			<md-tab label="Learning Material" >
 				<md-content class="md-padding">
 					<h3>Learning Material</h3>
 					<div class="row">
-						<div class="span6">
+						<div class="span6 main_height">
 							<div style="padding: 5px; border: 0px solid #aaa;">
 								<div>Root</div>
 								<div tree-view="structure" tree-view-options="options3"></div>
@@ -25,7 +25,7 @@
 			</md-tab>
 			<md-tab label="Assignments">
 				<md-content class="md-padding">
-					<div class="singlecourse">
+					<div class="singlecourse main_height">
 						<ul>
 							<li>
 								<img src="images/pdf_icon.png">
@@ -73,12 +73,12 @@
 			<md-tab label="Media Library">
 				<md-content class="md-padding">
 					<h1 class="md-display-2">Media Library</h1>
-					<p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+					<p class="main_height">Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
 				</md-content>
 			</md-tab>
 			<md-tab label="Emails">
 				<md-content class="md-padding">
-					<div class="singlecourse">
+					<div class="singlecourse  main_height">
 						<ul ng-repeat="email in emails" ng-click="chooseEmail(email); viewEmail()">
 							<li>
 								<h3>{{email.subject}}</h3>
@@ -92,6 +92,7 @@
 			</md-tab>
 			<md-tab label="Announcements">
 				<md-content class="md-padding" layout ="column">
+				<div class="main_height">
 					<md-card ng-repeat="announcement in announcements">
 						<md-card-title>
 							<md-card-title-text>
@@ -103,8 +104,10 @@
 							<p>{{announcement.content}}</p>
 						</md-card-content>
 					</md-card>
+					</div>
 				</md-content>
 			</md-tab>
 		</md-tabs>
 	</md-content>
 </div>
+
