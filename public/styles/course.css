@@ -5,7 +5,10 @@
   margin-top: 1px;
   margin-bottom:1px;
   width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
 .numberCircle {
     border-radius: 50%;
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
