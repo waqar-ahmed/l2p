@@ -1,6 +1,6 @@
 app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog,tempdata) {
 
-	console.log("course ID: " + $stateParams.id);
+	console.log("course ID: " + $stateParams.cid);
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
 			console.log("got emails");
@@ -12,6 +12,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
 
 	$scope.breadcrums = [''];
+
 
 	$scope.structure = { folders: [
 		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
