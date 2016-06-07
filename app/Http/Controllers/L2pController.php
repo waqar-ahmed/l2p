@@ -28,9 +28,19 @@ class L2pController extends Controller {
         $this->defaultResponse = $this->jsonResponse(false, 'This is default response');
     }
                 
-    public function sendRestRequest($method, $uri, $query = []) {        
-        $query += ['accessToken' => Auth::user()->access_token];
-        $response = $this->requestManager->executeRequest($method, $uri, ['query' => $query], Config::get('l2pconfig.api_url'), 6.0);                
+    public function sendRequest($method, $uri, $query = [], $data = []) {                                        
+        $query += ['accessToken' => Auth::user()->access_token];                        
+        $response = $this->requestManager->executeRequest($method, $uri, ['query' => $query, 'form_params' => $data]);                
+        if($response['code'] != 200) {
+            //TODO: log error
+            return $this->jsonResponse(self::STATUS_FALSE, $response['reason_phrase']);            
+        }
+        return json_decode($response['body'], true);	            
+    }
+    
+    public function sendJsonPostRequest($uri, $query = [], $data = []) {                                
+        $query += ['accessToken' => Auth::user()->access_token];                
+        $response = $this->requestManager->executeRequest('POST', $uri, ['json' => $data, 'query' => $query]);                
         if($response['code'] != 200) {
             //TODO: log error
             return $this->jsonResponse(self::STATUS_FALSE, $response['reason_phrase']);            

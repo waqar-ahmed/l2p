@@ -35,22 +35,28 @@ Route::group(['middleware'=>'l2pApi'], function() {
          */
         Route::get('all_anouncements_count', 'AnnouncementController@viewAllAnouncementCount');
         Route::get('all_anouncements', 'AnnouncementController@viewAllAnouncements');
+        Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
         
-        Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
-        Route::get('active_features', 'CourseController@viewActiveFeatures');
-        
+        /*
+         * Assignments
+         */
         Route::get('all_assignments', 'CourseController@viewAllAssignments');
-        Route::get('all_counts', 'CourseController@viewAllCounts');
-        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
-        Route::get('all_discussion_item_count', 'CourseController@viewAllDiscussionItemCount');
-        Route::get('all_discussion_items', 'CourseController@viewAllDiscussionItems');
-        Route::get('all_discussion_root_items', 'CourseController@viewAllDiscussionRootItems');
         
         /*
          * Emails
          */
         Route::get('all_emails', 'EmailsController@viewAllEmails');
         Route::get('email/{itemId}', 'EmailsController@viewEmail');        
+        Route::post('add_email', 'EmailController@addEmail');     
+        
+        
+        Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
+        Route::get('active_features', 'CourseController@viewActiveFeatures');                
+        Route::get('all_counts', 'CourseController@viewAllCounts');
+        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
+        Route::get('all_discussion_item_count', 'CourseController@viewAllDiscussionItemCount');
+        Route::get('all_discussion_items', 'CourseController@viewAllDiscussionItems');
+        Route::get('all_discussion_root_items', 'CourseController@viewAllDiscussionRootItems');               
         
         Route::get('all_hyperlinks_count', 'CourseController@viewAllHyperlinkCount');
         Route::get('all_hyperlinks', 'CourseController@viewAllHyperlinks');
@@ -74,9 +80,8 @@ Route::group(['middleware'=>'l2pApi'], function() {
     
     /*
      * Emails
-     */
-    Route::post('add_email', 'EmailController@addEmail');   
-    Route::get('inbox', 'EmailController@inbox');        
+     */    
+    Route::get('inbox', 'EmailController@inbox');                    
     
     /*
      * Routes used for backend

@@ -110,7 +110,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
 
   $scope.logout = function(){
-      console.log("loogut");
+      console.log("logout");
       courseService.logout();
   }
 
