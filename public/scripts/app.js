@@ -10,7 +10,7 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             controller: 'homeCtrl'
         })
         .state('courses', {
-            url: '/courses',
+            url: '/mycourses',
             templateUrl: 'templates/courses.html',
             controller: 'coursesCtrl'
         })

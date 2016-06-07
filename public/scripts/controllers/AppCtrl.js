@@ -12,7 +12,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       icon: 'dashboard'
     },
     {
-      link : 'courses',
+      link : 'mycourses',
       title: 'Courses',
       icon: 'import_contacts'
     },
