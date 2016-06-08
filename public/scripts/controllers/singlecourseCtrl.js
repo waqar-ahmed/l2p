@@ -50,7 +50,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		}
 	};
 
-	
+
 	$scope.announcements = [
 	{
 		title: 'This is an announcement.',
@@ -60,31 +60,22 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	},
 	];
 
-
-	$scope.chooseEmail = function(email){
-		tempdata.addData(email);
-	};
-
-	$scope.test = function(){
-	    $mdDialog.show(
-	      $mdDialog.alert()
-	        .clickOutsideToClose(true)
-	        .title('Test')
-	        .ok('Nice!')
-	    );
-	};
-
-	$scope.viewEmail = function(){
+	$scope.viewEmail = function(email){
+		if (email === undefined)
+			{selectedEmail = {};}
+		else
+			{selectedEmail = email;}
 	    $mdDialog.show({
 	    	controller: EmailDialogController,
+	    	locals: {selectedEmail: selectedEmail},
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:true
 	    });
 	};
 
-	function EmailDialogController($scope, $mdDialog, tempdata) {
-		$scope.email = tempdata.getData();
+	function EmailDialogController($scope, $mdDialog, selectedEmail) {
+		$scope.email = selectedEmail;
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
