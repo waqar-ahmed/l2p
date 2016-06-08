@@ -41,11 +41,7 @@ class CourseController extends L2pController
     
     public function viewActiveFeatures($cid) {
         return $this->sendRequest(self::GET, 'viewActiveFeatures', ['cid'=>$cid]);
-    }
-    
-    public function viewAllAssignments($cid) {
-        return $this->sendRequest(self::GET, 'viewAllAssignments', ['cid'=>$cid]);
-    }
+    }    
     
     public function viewAllCounts($cid) {
         return $this->sendRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);

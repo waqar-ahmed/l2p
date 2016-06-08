@@ -28,6 +28,8 @@ Route::group(['middleware'=>'l2pApi'], function() {
 
     Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
     Route::get('/course/{cid}', 'CourseController@viewCourse');
+    
+    Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
 
     Route::group(['prefix' => '/course/{cid}'], function () {
         /*
@@ -40,7 +42,8 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Assignments
          */
-        Route::get('all_assignments', 'CourseController@viewAllAssignments');
+        Route::get('all_assignments', 'AssignmentController@viewAllAssignments');
+        Route::get('assignment/{itemId}', 'AssignmentController@viewAssignments');        
         
         /*
          * Emails
@@ -50,7 +53,6 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::post('add_email', 'EmailController@addEmail');     
         
         
-        Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
         Route::get('active_features', 'CourseController@viewActiveFeatures');                
         Route::get('all_counts', 'CourseController@viewAllCounts');
         Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
