@@ -71,10 +71,6 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		})
 
 		return defer.promise;
-
-	
 	}
-
-
 
 }]);

@@ -10,7 +10,6 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			console.log("Error occured : " + err);
 		});
 
-
 	$scope.breadcrums = [''];
 
 	$scope.structure = { folders: [
@@ -60,22 +59,61 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	},
 	];
 
-	$scope.viewEmail = function(email){
+	$scope.test = function(){
+		$mdDialog.show(
+	     	$mdDialog.alert()
+	        .clickOutsideToClose(true)
+	        .title('This is an alert title')
+	        .textContent('for test.')
+	        .ok('Got it!')
+    	);
+	}
+
+	$scope.viewEmail = function(email,method){
 		if (email === undefined)
 			{selectedEmail = {};}
 		else
 			{selectedEmail = email;}
 	    $mdDialog.show({
 	    	controller: EmailDialogController,
-	    	locals: {selectedEmail: selectedEmail},
+	    	locals: {
+	    		selectedEmail: selectedEmail,
+	    		method: method,
+	    	},
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:true
 	    });
 	};
 
-	function EmailDialogController($scope, $mdDialog, selectedEmail) {
-		$scope.email = selectedEmail;
+	$scope.refreshEmails = function()
+	{
+	courseService.getEmailbyid($stateParams.cid)
+		.then(function(res){
+			console.log("get emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+		}, function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+
+	function EmailDialogController($scope, $mdDialog, selectedEmail, method) {
+		$scope.authWrite = false;
+		$scope.authDelete = false;
+		$scope.authShow = false;
+		if (method == 'creat'){
+			$scope.authWrite = true;
+		}
+		else if (method == 'read'){
+			$scope.authShow = true;
+		}
+		else if (method == 'edit'){
+			$scope.authWrite = true;
+			$scope.authDelete = true;
+			$scope.authShow = true;
+		}
+		$scope.currentemail = selectedEmail;
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};

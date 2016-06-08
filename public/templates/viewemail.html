@@ -1,23 +1,32 @@
-<md-dialog flex="50" flex-xs="80">
-	<md-toolbar class="md-padding">
+<md-dialog flex="50" flex-xs="80" class="email-detail">
+	<md-toolbar class="md-toolbar-tools">
+	<div layout="row" layout-align="center center" flex>
+		<md-button class="md-icon-button" ng-click="back()">
+			<ng-md-icon icon="arrow_back"></ng-md-icon>
+		</md-button>
 		<h3>Details</h3>
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="" ng-show="authDelete">
+			<ng-md-icon icon="delete"></ng-md-icon>
+		</md-button>
+		<md-button class="md-icon-button" ng-click="authWrite" ng-show="authWrite">
+			<ng-md-icon icon="save"></ng-md-icon>
+		</md-button>
+	</div>
 	</md-toolbar>
-    <md-content class="md-padding" layout="column">
+    <md-content layout="column">
 	    <md-input-container>
 	    	<label>Title</label>
-	    	<input type="text" ng-model="email.subject" ng-disabled="true">
+	    	<input type="text" ng-model="currentemail.subject" ng-disabled="!authWrite">
 		</md-input-container>
 		  <md-input-container>
 	    	<label>Recipient</label>
-	    	<input type="text" ng-model="email.recipients" ng-disabled="true">
+	    	<input type="text" ng-model="currentemail.recipients" ng-disabled="!authWrite">
 		</md-input-container>
 		  <md-input-container>
 	    	<label>Content</label>
-			<textarea rows="8" md-select-on-focus ng-disabled="true">{{email.body}}</textarea>
+			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite">{{currentemail.body}}</textarea>
 		</md-input-container>
 	</md-content>
-	<div layout="row" layout-align="end center">
-		<p flex="grow" style="font-size:13px; color:black;" class="md-padding">created by {{email.from}} at {{email.created}}</p>
-		<md-button ng-click="back()" class="md-primary md-raised" style="margin-bottom:10px;">close</md-button>
-	</div>
+		<div style="font-size:13px; color:black;" id="creatinfo" ng-show="authShow">created by {{currentemail.from}} at {{currentemail.created*1000| date:'medium'}}</div>
 </md-dialog>

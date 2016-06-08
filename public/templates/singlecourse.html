@@ -1,8 +1,8 @@
 <!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
  --><div ng-cloak>
 	<div class="fabbutton">
-	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined)">
-	   add
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')">
+	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
 	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
 	   delete
@@ -79,12 +79,20 @@
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<ul ng-repeat="email in emails" ng-click="viewEmail(email)">
+						<ul ng-repeat="email in emails">
 							<li>
-								<h3>{{email.subject}}</h3>
-								<p>Recipient: {{email.recipients}}</p>
-								<p>Created by: {{email.from}}</p>
-								<p>Created Date: {{email.created}}</p>
+								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
+									<div flex="grow">
+										<h3>{{email.subject}}</h3>
+										<p>Recipient: {{email.recipients}}</p>
+										<p>Created by: {{email.from}}</p>
+										<p>Created Date: {{email.created*1000| date:'medium'}}</p>
+									</div>
+									<span flex></span>
+									<md-button class="md-icon-button" ng-click="viewEmail(email,'edit'); $event.stopPropagation()">
+	            					<ng-md-icon icon="mode_edit"></ng-md-icon>
+	         				 		</md-button>
+	         				 	</div>
 							</li>
 						</ul>
 					</div>

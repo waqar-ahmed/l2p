@@ -44,38 +44,38 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       icon: 'send'
     }
   ];
-  $scope.activity = [
-      {
-        what: 'Data Mining',
-        who: 'Exercise 1',
-        when: '3:08PM',
-        notes: "12345678.pdf"
-      },
-      {
-        what: 'Web Technology',
-        who: 'Exercise 2',
-        when: '3:09PM',
-        notes: "87654321.pdf"
-      },
-      {
-        what: 'MALO',
-        who: 'Lecture 3',
-        when: '4:08PM',
-        notes: "159753.pdf"
-      },
-      {
-        what: 'BWL',
-        who: 'Lecture 2',
-        when: '9:08PM',
-        notes: "123453453.pdf"
-      },
-      {
-        what: 'French Course',
-        who: 'Sample Exam 2',
-        when: '7:08PM',
-        notes: "5674334.pdf"
-      },
-    ];
+  // $scope.activity = [
+  //     {
+  //       what: 'Data Mining',
+  //       who: 'Exercise 1',
+  //       when: '3:08PM',
+  //       notes: "12345678.pdf"
+  //     },
+  //     {
+  //       what: 'Web Technology',
+  //       who: 'Exercise 2',
+  //       when: '3:09PM',
+  //       notes: "87654321.pdf"
+  //     },
+  //     {
+  //       what: 'MALO',
+  //       who: 'Lecture 3',
+  //       when: '4:08PM',
+  //       notes: "159753.pdf"
+  //     },
+  //     {
+  //       what: 'BWL',
+  //       who: 'Lecture 2',
+  //       when: '9:08PM',
+  //       notes: "123453453.pdf"
+  //     },
+  //     {
+  //       what: 'French Course',
+  //       who: 'Sample Exam 2',
+  //       when: '7:08PM',
+  //       notes: "5674334.pdf"
+  //     },
+  //   ];
   $scope.alert = '';
   $scope.showListBottomSheet = function($event) {
     $scope.alert = '';
