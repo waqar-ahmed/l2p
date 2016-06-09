@@ -1,4 +1,4 @@
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','AxelSoft']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','AxelSoft','ngSanitize']);
 
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){

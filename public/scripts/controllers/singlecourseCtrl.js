@@ -80,6 +80,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    		selectedEmail: selectedEmail,
 	    		method: method,
 	    	},
+	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:true
@@ -114,6 +115,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			$scope.authShow = true;
 		}
 		$scope.currentemail = selectedEmail;
+		console.log(selectedEmail);
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};

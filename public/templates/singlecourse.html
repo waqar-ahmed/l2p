@@ -84,9 +84,9 @@
 								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
 									<div flex="grow">
 										<h3>{{email.subject}}</h3>
-										<p>Recipient: {{email.recipients}}</p>
-										<p>Created by: {{email.from}}</p>
-										<p>Created Date: {{email.created*1000| date:'medium'}}</p>
+										<p>Recipient:   &nbsp;{{email.recipients}}</p>
+										<p>Created by:    &nbsp;{{email.from}}</p>
+										<p>Created Date:  {{email.created*1000| date:'medium'}}</p>
 									</div>
 									<span flex></span>
 									<md-button class="md-icon-button" ng-click="viewEmail(email,'edit'); $event.stopPropagation()">
