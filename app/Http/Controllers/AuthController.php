@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Config;
 use App\DeviceToken;
@@ -165,5 +164,5 @@ class AuthController extends L2pController {
         }                        
         $cookie = Cookie::forget('dcode');
         return $this->jsonResponse(self::STATUS_TRUE, 'logged out')->withCookie($cookie);
-    }
+    }        
 }

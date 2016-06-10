@@ -3,7 +3,19 @@
 namespace App\Http\Controllers;
 
 class CourseController extends L2pController
-{                 
+{   
+    public function viewAllSemesters() {
+        $semesters = array();
+        $allCourses = $this->sendRequest(self::GET, 'viewAllCourseInfo');        
+        if($allCourses['Status']) {
+            foreach($allCourses['dataSet'] as $course) {
+                if(!in_array($course['semester'], $semesters)) {
+                    array_push($semesters, $course['semester']);
+                }
+            }
+        }
+        return $this->jsonResponse(self::STATUS_TRUE, $semesters);
+    }
     
     public function viewCourse($cid){
         return view('single_course', array('cid'=>$cid));
@@ -27,8 +39,8 @@ class CourseController extends L2pController
         return $this->sendRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');
     }
     
-    public function viewAllCourseEvents($cid) {
-        return $this->sendRequest(self::GET, 'viewAllCourseEvents', ['cid'=>$cid]);
+    public function viewAllCourseEvents() {
+        return $this->sendRequest(self::GET, 'viewAllCourseEvents');
     }       
     
     public function viewAllAnouncementCount($cid) {
@@ -69,11 +81,7 @@ class CourseController extends L2pController
     
     public function viewAllHyperlinks($cid) {
         return $this->sendRequest(self::GET, 'viewAllHyperlinks', ['cid'=>$cid]);
-    }       
-    
-    public function viewAllLearningMaterials($cid) {
-        return $this->sendRequest(self::GET, 'viewAllLearningMaterials', ['cid'=>$cid]);
-    }       
+    }               
     
     public function viewAllLearningObjects($cid) {
         return $this->sendRequest(self::GET, 'viewAllLearningObjects', ['cid'=>$cid]);

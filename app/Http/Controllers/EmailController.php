@@ -11,6 +11,15 @@ use Validator;
  * @author odgiiv
  */
 class EmailController extends L2pController {
+    
+    protected $validations = [
+        'attachmentsToUpload' => 'json',
+        'body' => 'string',
+        'cc' => 'string',
+        'replyto' => 'bool',
+        'recipients' => 'required|string',
+        'subject' => 'required|string',
+    ];
         
     public function inbox() {
         $allEmails = array();
@@ -47,22 +56,8 @@ class EmailController extends L2pController {
         }         
     }
     
-    public function addEmail(Request $request, $cid) { 
-        $validations = [
-            'attachmentsToUpload' => 'json',
-            'body' => 'string',
-            'cc' => 'string',
-            'replyto' => 'bool',
-            'recipients' => 'required|string',
-            'subject' => 'required|string',
-        ];
-        $validator = Validator::make($request->all(), $validations);
-        if ($validator->fails()) {
-            return $this->jsonResponse(self::STATUS_FALSE, $validator->errors()->all());            
-        }
-        $params = $this->addParamsReq2Req($request, ['attachmentsToUpload', 'body',
-            'cc', 'replyto', 'recipients', 'subject',]);
-        return $this->sendJsonPostRequest('addEmail', ['cid'=>$cid], $params);        
+    public function addEmail(Request $request, $cid) {                 
+        return $this->addToModule($request->all(), 'addEmail', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteEmail($cid, $itemId) {
