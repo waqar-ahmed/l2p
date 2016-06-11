@@ -63,6 +63,8 @@ Route::group(['middleware'=>'l2pApi'], function() {
          * Learning materials
          */
         Route::get('all_learning_materials', 'LearningMaterialController@viewAllLearningMaterials');
+        Route::get('learning_material', 'LearningMaterialController@viewLearningMaterial');
+        Route::get('learning_material_count', 'LearningMaterialController@viewLearningMaterialsCount');
         
         
         Route::get('active_features', 'CourseController@viewActiveFeatures');                
@@ -94,8 +96,12 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Download
          */
-        Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');                 
+        Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');        
         
+        /*
+         * Create folder
+         */
+        Route::get('createFolder/{moduleNumber}/{desiredFolderName}/{sourceDirectory}', 'L2pController@createFolder');        
     }); 
     
     /*
