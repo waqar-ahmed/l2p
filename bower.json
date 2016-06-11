@@ -9,13 +9,6 @@
   "homepage": "https://github.com/waqar-ahmed/l2p",
   "moduleType": [],
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "angular-tree-control": "~0.2.26"
   }
