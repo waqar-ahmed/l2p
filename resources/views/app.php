@@ -17,8 +17,7 @@
 <!-- link for CSS when using the tree as a Dom element -->
 <link rel="stylesheet" type="text/css" href="../bower_components/angular-tree-control/css/tree-control.css">
 <!-- link for CSS when using the tree as an attribute -->
-<link rel="stylesheet" type="text/css" href="../bower_components/angular-tree-control/css/tree-control-attribute.css">
-
+<link rel="stylesheet" type="text/css" href="../bower_components/angular-tree-control/css/tree-control-attribute.css" />
 
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
