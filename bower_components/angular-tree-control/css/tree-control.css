@@ -19,13 +19,16 @@ treecontrol ul {
     list-style: none;
     border: none;
     overflow: hidden;
-
 }
 
 treecontrol li {
     position: relative;
     padding: 0 0 0 20px;
     line-height: 35px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
 }
 
 treecontrol li.tree-expanded i.tree-leaf-head, treecontrol li.tree-collapsed i.tree-leaf-head {display:none;}
