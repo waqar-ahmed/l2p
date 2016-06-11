@@ -25,29 +25,6 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		console.log("Error occured");
 	})
 
-
-	$scope.str = { 
-						folders: [
-		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
-			{ name: 'Subfolder 1', files: [{ name: 'Subfile 1.txt' }] },
-			{ name: 'Subfolder 2' },
-			{ name: 'Subfolder 3' }
-		]},
-		{ name: 'Folder 2' }
-	], files: [{ name: 'File 1.gif' }, { name: 'File 2.gif' }]};
-
-	$scope.options = {
-    onNodeSelect: function (node, breadcrums) {
-        $scope.breadcrums = breadcrums;
-        console.log(node);
-        console.log(breadcrums);
-    }
-};
-
-	$scope.options2 = {
-		collapsible: false
-	};
-
 	var iconClassMap = {
 		txt: 'icon-file-text',
 		jpg: 'icon-picture blue',
@@ -114,6 +91,9 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
         var dataSet = groupMaterialsByParent(y);
 
+        console.log("dataset is ");
+        console.log(dataSet);
+
 
         data = dataSet.reduce(function (r, a) {
                 function getParent(s, b) {
@@ -146,6 +126,8 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
         elements = jQuery.parseJSON(tree);
 
+        console.log(tree);
+
         $scope.dataLoaded = true;
 
         $scope.roleList = elements;
@@ -162,7 +144,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
                 x[obj.parentFolderId] = []; //Assign a new array with the first element of DtmStamp.
 
             //x will always be the array corresponding to the current DtmStamp. Push a value the current value to it.
-            x[obj.parentFolderId].push({"id" : obj.itemId, "isDirectory" : obj.isDirectory, "name" : obj.name});
+            x[obj.parentFolderId].push({"id" : obj.itemId, "isDirectory" : obj.isDirectory, "name" : obj.name, "url" : obj.selfUrl});
         }
 
         console.log(x);
@@ -175,12 +157,20 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
             if(x[i] != null && x[i] != undefined){
                 for(var j=0;j < x[i].length; j++){
                     var r = x[i][j];
-                    dataSet.push({"parentId" : i, "id" : r.id, "name" : r.name, "isDirectory":r.isDirectory});
+                    dataSet.push({"parentId" : i, "id" : r.id, "name" : r.name, "isDirectory":r.isDirectory, "url":r.url});
                 }
             }
         }
 
         return dataSet;
+    }
+
+    $scope.showSelected = function(node){
+    	console.log(node);
+    	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
+    	if(!node.isDirectory){
+    		window.open(SERVER_URL + node.url, '_blank');
+    	}
     }
 
 });
