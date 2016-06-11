@@ -17,7 +17,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_AUTHENTICATE)
 		.success(function(res){
-			console.log(res);
+			console.log(res.Status);
 			defer.resolve(res);
 		})
 		.error(function(err, status){
