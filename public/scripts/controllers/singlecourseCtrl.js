@@ -172,7 +172,6 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
     		window.open(SERVER_URL + node.url, '_blank');
     	}
     }
-
 });
 
 
