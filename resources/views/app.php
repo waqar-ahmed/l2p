@@ -12,6 +12,15 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 
+
+<script type="text/javascript" src="../bower_components/angular-tree-control/angular-tree-control.js"></script>
+<!-- link for CSS when using the tree as a Dom element -->
+<link rel="stylesheet" type="text/css" href="../bower_components/angular-tree-control/css/tree-control.css">
+<!-- link for CSS when using the tree as an attribute -->
+<link rel="stylesheet" type="text/css" href="../bower_components/angular-tree-control/css/tree-control-attribute.css">
+
+
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
 
   	<!-- Angular Material Library -->
@@ -29,7 +38,7 @@
     <script src="scripts/controllers/singlecourseCtrl.js"></script>
 
     <!-- My Application module files  -->
-    <script src="scripts/modules/treeView.js"></script>
+    <!-- // <script src="scripts/modules/treeView.js"></script> -->
 
 
   	<!-- My Application stylesheets -->
@@ -38,7 +47,7 @@
     <link rel="stylesheet" href="styles/treeView.css">
     <link rel="stylesheet" href="styles/course.css">
     <link rel="stylesheet" href="styles/singlecourse.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <!--[if IE 7]>
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" />
     <![endif]-->

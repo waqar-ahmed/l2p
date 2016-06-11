@@ -1,4 +1,4 @@
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router', 'angularTreeview']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','treeControl']);
 
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
