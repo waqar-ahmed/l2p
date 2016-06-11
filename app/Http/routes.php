@@ -23,38 +23,58 @@ Route::get('/authenticate', 'AuthController@authenticateUser');
 
 Route::group(['middleware'=>'l2pApi'], function() {        
 
+    Route::get('/semesters', 'CourseController@viewAllSemesters');
     Route::get('/courses', 'CourseController@viewAllCouseInfo');
     Route::get('/current_semester', 'CourseController@viewAllCourseInfoByCurrentSemester');
-
     Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
     Route::get('/course/{cid}', 'CourseController@viewCourse');
+    
+    Route::get('/view_user_role/{cid}', 'L2pController@viewUserRole');
+    
+    Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
 
     Route::group(['prefix' => '/course/{cid}'], function () {
+        
         /*
          * Announcements
          */
         Route::get('all_anouncements_count', 'AnnouncementController@viewAllAnouncementCount');
         Route::get('all_anouncements', 'AnnouncementController@viewAllAnouncements');
+        Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
         
-        Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
-        Route::get('active_features', 'CourseController@viewActiveFeatures');
-        
-        Route::get('all_assignments', 'CourseController@viewAllAssignments');
-        Route::get('all_counts', 'CourseController@viewAllCounts');
-        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
-        Route::get('all_discussion_item_count', 'CourseController@viewAllDiscussionItemCount');
-        Route::get('all_discussion_items', 'CourseController@viewAllDiscussionItems');
-        Route::get('all_discussion_root_items', 'CourseController@viewAllDiscussionRootItems');
+        /*
+         * Assignments
+         */
+        Route::get('all_assignments', 'AssignmentController@viewAllAssignments');
+        Route::get('assignment/{itemId}', 'AssignmentController@viewAssignments');        
+        Route::get('add_assignment', 'AssignmentController@addAssignment');
+        Route::get('delete_assignment/{itemId}', 'AssignmentController@deleteAssignment');
+        Route::post('provide_assignment_solution/{assignmentId}/{gwsNameAlias}');
+        Route::get('delete_assignment_solution/{itemId}');
         
         /*
          * Emails
          */
-        Route::get('all_emails', 'EmailsController@viewAllEmails');
-        Route::get('email/{itemId}', 'EmailsController@viewEmail');        
+        Route::get('all_emails', 'EmailController@viewAllEmails');
+        Route::get('email/{itemId}', 'EmailController@viewEmail');        
+        Route::post('add_email', 'EmailController@addEmail');  
+        
+        /*
+         * Learning materials
+         */
+        Route::get('all_learning_materials', 'LearningMaterialController@viewAllLearningMaterials');
+        
+        
+        Route::get('active_features', 'CourseController@viewActiveFeatures');                
+        Route::get('all_counts', 'CourseController@viewAllCounts');
+        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
+        Route::get('all_discussion_item_count', 'CourseController@viewAllDiscussionItemCount');
+        Route::get('all_discussion_items', 'CourseController@viewAllDiscussionItems');
+        Route::get('all_discussion_root_items', 'CourseController@viewAllDiscussionRootItems');               
         
         Route::get('all_hyperlinks_count', 'CourseController@viewAllHyperlinkCount');
         Route::get('all_hyperlinks', 'CourseController@viewAllHyperlinks');
-        Route::get('all_learning_materials', 'CourseController@viewAllLearningMaterials');
+        
         Route::get('all_learning_objects', 'CourseController@viewAllLearningObjects');
         Route::get('all_literatures', 'CourseController@viewAllLiteratures');
         Route::get('all_literatures_count', 'CourseController@viewAllLiteraturesCount');        
@@ -70,13 +90,18 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('exam_results', 'CourseController@viewExamResults');        
         Route::get('exam_results_statistics', 'CourseController@viewExamResultsStatistics');        
         Route::get('grade_book', 'CourseController@viewGradeBook');                 
+        
+        /*
+         * Download
+         */
+        Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');                 
+        
     }); 
     
     /*
      * Emails
-     */
-    Route::post('add_email', 'EmailController@addEmail');   
-    Route::get('inbox', 'EmailController@inbox');        
+     */    
+    Route::get('inbox', 'EmailController@inbox');                    
     
     /*
      * Routes used for backend

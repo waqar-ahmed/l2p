@@ -7,8 +7,6 @@ console.log("in home");
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
 	.then(function(res){
-		console.log(res);
-		console.log(res.Status);
 		if(res.Status == true)
 		{
 			console.log("user is authenticated");

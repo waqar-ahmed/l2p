@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
-
+use Validator;
 
 /**
  * Description of EmailController
@@ -12,6 +11,15 @@ use Illuminate\Http\Request;
  * @author odgiiv
  */
 class EmailController extends L2pController {
+    
+    protected $validations = [
+        'attachmentsToUpload' => 'json',
+        'body' => 'string',
+        'cc' => 'string',
+        'replyto' => 'bool',
+        'recipients' => 'required|string',
+        'subject' => 'required|string',
+    ];
         
     public function inbox() {
         $allEmails = array();
@@ -20,7 +28,7 @@ class EmailController extends L2pController {
             return $this->jsonResponse(self::STATUS_FALSE, 'Can not get courses by current semester');
         }
         foreach($openCourseIds as $courseId) {
-            $courseEmails = $this->sendRestRequest(self::GET, 'viewAllEmails', ['cid'=>$courseId]);
+            $courseEmails = $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$courseId]);
             if($courseEmails['Status']) {
                 $allEmails += $courseEmails['dataSet'];
             }            
@@ -32,7 +40,7 @@ class EmailController extends L2pController {
     }
     
     private function getCurrentCourses() {        
-        $courseInfoArray = $this->sendRestRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');        
+        $courseInfoArray = $this->sendRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');        
         if ($courseInfoArray['Status']) {
             $courses = array();
             $dataSet = $courseInfoArray['dataSet'];
@@ -48,31 +56,22 @@ class EmailController extends L2pController {
         }         
     }
     
-    public function addEmail(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'attachmentsToUpload' => 'json',
-            'body' => 'string',
-            'cc' => 'string',
-            'replyto' => 'bool',
-            'cid' => 'required',
-            'recipients' => 'required',
-            'subject' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $this->jsonResponse(self::STATUS_FALSE, $validator->errors()->all());            
-        }
-        $params = $this->addParamsReq2Req($request, ['attachmentsToUpload', 'body',
-            'cc', 'replyto', 'cid', 'recipients', 'subject',]);
-        return $this->sendRestRequest(self::POST, 'addEmail', $params);        
+    public function addEmail(Request $request, $cid) {                 
+        return $this->addToModule($request->all(), 'addEmail', ['cid'=>$cid], $this->validations);
+    }
+    
+    public function deleteEmail($cid, $itemId) {
+        return $this->sendRequest(self::GET, 'deleteEmail', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
     public function viewAllEmails($cid) {        
-        return $this->sendRestRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
+        return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
     }
     
     public function viewEmail($cid, $itemId) {        
-        return $this->sendRestRequest(self::GET, 'viewAllEmails', ['cid'=>$cid, 'itemid'=>$itemId]);
+        return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    
+    public function uploadInAnnouncement(Request $request, $cid) {        
+    }    
 }
