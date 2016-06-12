@@ -57,7 +57,7 @@ class EmailController extends L2pController {
     }
     
     public function addEmail(Request $request, $cid) {                 
-        return $this->addToModule($request->all(), 'addEmail', ['cid'=>$cid], $this->validations);
+        return $this->addToModule($request, 'addEmail', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteEmail($cid, $itemId) {
