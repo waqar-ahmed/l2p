@@ -1,5 +1,5 @@
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl']);
 
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl']);
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');

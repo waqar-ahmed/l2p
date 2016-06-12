@@ -1,6 +1,8 @@
 app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog,tempdata) {
 
-	console.log("course ID: " + $stateParams.id);
+
+	console.log("course ID: " + $stateParams.cid);
+
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
 			console.log("got emails");
@@ -10,18 +12,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			console.log("Error occured : " + err);
 		});
 
-
 	$scope.userrole = true;
-	
-	// courseService.getEmailbyid($stateParams.cid)
-	// 	.then(function(res){
-	// 		console.log("got emails");
-	// 		console.log(res.dataSet);
-	// 		$scope.emails = res.dataSet;
-	// 	}, function(err){
-	// 		console.log("Error occured : " + err);
-	// 	});
-
 
 	$scope.breadcrums = [''];
 
@@ -30,7 +21,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		console.log("get all learningMaterials ");
 		console.log(res.dataSet);
 		parseLearningMaterials(res.dataSet);
-		//console.log(buildHierarchy(items));â€
+		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
 	})
@@ -209,7 +200,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
         var dataSet = [];
 
-        var branch = [];    
+        var branch = [];
 
         for(var i = 0; i <= x.length; i++){
             if(x[i] != null && x[i] != undefined){
