@@ -145,15 +145,7 @@ class CourseController extends L2pController
     
     public function viewHyperLink($cid, $itemId) {
         return $this->sendRequest(self::GET, 'viewHyperlink', ['cid'=>$cid, 'itemid'=>$itemId]);               
-    }
-    
-    public function viewLearningMaterial($cid, $itemId) {
-        return $this->sendRequest(self::GET, 'viewLearningMaterial', ['cid'=>$cid, 'itemid'=>$itemId]);               
-    }
-    
-    public function viewLearningMaterialCount($cid) {
-        return $this->sendRequest(self::GET, 'viewLearningMaterial', ['cid'=>$cid]);                               
-    }
+    }        
     
     public function viewLearningObject($cid, $itemId) {
         return $this->sendRequest(self::GET, 'viewLearningObject', ['cid'=>$cid, 'itemid'=>$itemId]);                                       
