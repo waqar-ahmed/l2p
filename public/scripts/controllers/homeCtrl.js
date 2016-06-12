@@ -2,12 +2,12 @@ app.controller('homeCtrl', function($scope, courseService, $location){
 
 	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
 	var LOGIN_USER = "login";
-
+console.log("in home");
 
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
 	.then(function(res){
-		if(res.status == true)
+		if(res.Status == true)
 		{
 			console.log("user is authenticated");
 			//getAllCourses();

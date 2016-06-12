@@ -1,5 +1,6 @@
 app.controller('coursesCtrl', function($scope,courseService,$location) {
-	courseService.getCurrentSem()
+	
+  courseService.getCurrentSem()
 		.then(function(res){
 			console.log("got all courses from current sem");
 			console.log(res.dataSet);
@@ -9,7 +10,8 @@ app.controller('coursesCtrl', function($scope,courseService,$location) {
 			console.log("Error occured : " + err);
 		});
 
-	
+
+
   $scope.defaultSemester = {
         id : '1',
         abbre: 'SS2016',
@@ -35,7 +37,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location) {
   ];
 
   $scope.gotoCourse = function(id,cid){
-      console.log("showing single course " + id);
-      $location.path('/singlecourse/'+cid+'/');
+      console.log("showing single course " + cid);
+      $location.path('singlecourse/'+cid);
     }
 });

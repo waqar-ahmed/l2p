@@ -1,4 +1,4 @@
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','AxelSoft','ngSanitize']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl']);
 
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
@@ -20,7 +20,7 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             controller: 'coursesCtrl'
         })
         .state('singlecourse', {
-            url: '/singlecourse/:cid/:id',
+            url: '/singlecourse/:cid',
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })

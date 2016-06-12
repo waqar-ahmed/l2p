@@ -6,10 +6,10 @@ return [
 	'client_id' => 'mQSZ0xgOuYww3EiRdqmhYMCG6t3sHcsfIWxPXAs7Z3v2LperWuIQaV0qMHlTKHhm.apps.rwth-aachen.de',
 	
 	// l2P Urls available to requests
-	'base_url' => 'https://oauth.campus.rwth-aachen.de/',
+	'oauth_url' => 'https://oauth.campus.rwth-aachen.de/',
 	'user_code_url' => 'oauth2waitress/oauth2.svc/code',
-	'access_token_url' => 'oauth2waitress/oauth2.svc/token',
-	'use_refresh_token_url' => 'oauth2/oauth2.svc/token',
+	'access_token_url' => 'oauth2waitress/oauth2.svc/token',                
+	'refresh_token_url' => 'oauth2/oauth2.svc/token',
 
 	// User controls on request
 	'scope' => 'l2p2013.rwth userinfo.rwth',

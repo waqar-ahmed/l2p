@@ -6,7 +6,7 @@
 
 .singlecourse ul {
   list-style-type: none;
-  width: auto;
+  width: 100%;
 }
 
 .singlecourse h3 {
@@ -50,6 +50,16 @@
   height: 100% !important;
 /*  border: 2px solid red !important;
 */}
+
+.loadingicon{
+ position: absolute;
+ top: 20%;
+ left: 40%;
+}
+
+.tree{
+  padding-left: 0 !important;
+}
 
 .email-detail md-input-container{
   margin: 8px 8px 0 8px;

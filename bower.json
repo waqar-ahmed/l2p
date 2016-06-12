@@ -1,0 +1,15 @@
+{
+  "name": "l2p",
+  "description": "",
+  "main": "",
+  "authors": [
+    "waqar ahmed <waqar.ahmed@rwth-aachen.de>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/waqar-ahmed/l2p",
+  "moduleType": [],
+  "private": true,
+  "dependencies": {
+    "angular-tree-control": "~0.2.26"
+  }
+}
