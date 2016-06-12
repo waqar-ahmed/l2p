@@ -89,3 +89,7 @@
   padding:0 0 20px 0;
   margin: 0 10px 0 0;
 }
+
+.ng-hide.ng-hide-animate{
+     display: none !important;
+}

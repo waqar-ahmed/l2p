@@ -10,7 +10,9 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			console.log("Error occured : " + err);
 		});
 
+	$scope.userrole = true;
 	$scope.breadcrums = [''];
+	$scope.testscope = "hello";
 
 	$scope.structure = { folders: [
 		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
@@ -77,7 +79,8 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    $mdDialog.show({
 	    	controller: EmailDialogController,
 	    	locals: {
-	    		selectedEmail: selectedEmail,
+	    		emails: $scope.emails,
+	    		selectedEmail: angular.copy(selectedEmail),
 	    		method: method,
 	    	},
 	    	bindToController: true,
@@ -87,22 +90,12 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    });
 	};
 
-	$scope.refreshEmails = function()
-	{
-	courseService.getEmailbyid($stateParams.cid)
-		.then(function(res){
-			console.log("get emails");
-			console.log(res.dataSet);
-			$scope.emails = res.dataSet;
-		}, function(err){
-			console.log("Error occured : " + err);
-		});
-	}
 
-	function EmailDialogController($scope, $mdDialog, selectedEmail, method) {
+	function EmailDialogController($scope, $mdDialog, courseService, emails, selectedEmail, method) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
+
 		if (method == 'creat'){
 			$scope.authWrite = true;
 		}
@@ -114,11 +107,36 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			$scope.authDelete = true;
 			$scope.authShow = true;
 		}
+
+		$scope.emails = emails;
+		console.log($scope.emails);
 		$scope.currentemail = selectedEmail;
 		console.log(selectedEmail);
+
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
+
+	  	$scope.edit = function() {
+	  		$scope.refreshEmails();
+	  	}
+
+	  	$scope.delete = function() {
+	  		$scope.refreshEmails();
+	  		$scope.back();
+	  	}
+
+  		$scope.refreshEmails = function(){
+			courseService.getEmailbyid($stateParams.cid)
+			.then(function(res){
+				console.log("refresh emails");
+				console.log(res.dataSet);
+				$scope.emails = res.dataSet;
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+		}
 	};
 
 
