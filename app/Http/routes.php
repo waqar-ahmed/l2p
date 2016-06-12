@@ -31,7 +31,10 @@ Route::group(['middleware'=>'l2pApi'], function() {
     
     Route::get('/view_user_role/{cid}', 'L2pController@viewUserRole');
     
-    Route::get('all_course_events', 'CourseController@viewAllCourseEvents');    
+    /*
+     * Calendar
+     */
+    Route::get('all_course_events', 'CalendarController@viewAllCourseEvents');    
 
     Route::group(['prefix' => '/course/{cid}'], function () {
         
@@ -41,6 +44,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_anouncements_count', 'AnnouncementController@viewAllAnouncementCount');
         Route::get('all_anouncements', 'AnnouncementController@viewAllAnouncements');
         Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
+        Route::get('delete_announcement', 'AnnouncementController@deleteAnnouncement');
         
         /*
          * Assignments
@@ -58,6 +62,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_emails', 'EmailController@viewAllEmails');
         Route::get('email/{itemId}', 'EmailController@viewEmail');        
         Route::post('add_email', 'EmailController@addEmail');  
+        Route::post('delete_email/{itemId}', 'EmailController@deleteEmail');  
         
         /*
          * Learning materials
@@ -65,7 +70,12 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_learning_materials', 'LearningMaterialController@viewAllLearningMaterials');
         Route::get('learning_material', 'LearningMaterialController@viewLearningMaterial');
         Route::get('learning_material_count', 'LearningMaterialController@viewLearningMaterialsCount');
+        Route::get('delete_learning_material/{itemId}', 'LearningMaterialController@deleteLearningMaterial');
         
+        /*
+         * Calendar
+         */
+        Route::get('course_events', 'CalendarController@viewCourseEvents');  
         
         Route::get('active_features', 'CourseController@viewActiveFeatures');                
         Route::get('all_counts', 'CourseController@viewAllCounts');
@@ -86,8 +96,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_shared_documents', 'CourseController@viewAllSharedDocuments');        
         Route::get('all_wiki_count', 'CourseController@viewAllWikiCount');        
         Route::get('all_wikis', 'CourseController@viewAllWikis');        
-        Route::get('available_groups_in_group_workspace', 'CourseController@viewAvailableGroupsInGroupWorkspace');        
-        Route::get('course_events', 'CourseController@viewCourseEvents');        
+        Route::get('available_groups_in_group_workspace', 'CourseController@viewAvailableGroupsInGroupWorkspace');                      
         Route::get('course_info', 'CourseController@viewCourseInfo');        
         Route::get('exam_results', 'CourseController@viewExamResults');        
         Route::get('exam_results_statistics', 'CourseController@viewExamResultsStatistics');        

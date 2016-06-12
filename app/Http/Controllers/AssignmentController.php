@@ -28,7 +28,7 @@ class AssignmentController extends L2pController {
     }
     
     public function addAssignment(Request $request, $cid) {        
-        return $this->addToModule($request->all(), 'addAnnouncement', ['cid'=>$cid], $this->validations);
+        return $this->addToModule($request, 'addAnnouncement', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteAssignment($cid, $itemId) {        
@@ -41,7 +41,7 @@ class AssignmentController extends L2pController {
             'assignmentid' => 'required|integer',
             'gws_name_alias' => 'required|string'
         ];
-        return $this->addToModule($request->all(), 'provideAssignmentSolution', ['cid'=>$cid, 'assignmentid'=>$assignmentId, 'gws_name_alias'=>$gwsNameAlias], $validations);        
+        return $this->addToModule($request, 'provideAssignmentSolution', ['cid'=>$cid, 'assignmentid'=>$assignmentId, 'gws_name_alias'=>$gwsNameAlias], $validations);        
     }
     
     public function deleteAssignmentSolution($cid, $itemId) {
