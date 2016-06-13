@@ -2,33 +2,50 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Angular Material style sheet -->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
+		<!-- Link for bootstrap CSS -->
+		<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css" />
+
+
+		<!-- Link for fullCalendar CSS  -->
+		<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
 
         <!-- Angular Material requires Angular.js Libraries -->
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+		<!--script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script-->
+		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
+		
+		<!-- Jquery Library -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
-
-
+		<!-- Tree control javascript -->
         <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
-        <!-- link for CSS when using the tree as a Dom element -->
+		
+		<!-- link for CSS when using the tree as a Dom element -->
         <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
-        <!-- link for CSS when using the tree as an attribute -->
-
+		
+		<!-- link for CSS when using the tree as an attribute -->
         <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
-
+		
+		<!-- Angular Material Library -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
-
-        <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
         <!-- Angular Routing Library -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+
+		<!-- jquery, moment, and angular have to get included before fullcalendar -->
+		<!--script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script-->
+		<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+		<script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+
 
         <!-- My Application script files  -->
         <script src="scripts/app.js"></script>
@@ -36,7 +53,9 @@
         <script src="scripts/controllers/homeCtrl.js"></script>
         <script src="scripts/controllers/testCtrl.js"></script>
         <script src="scripts/controllers/coursesCtrl.js"></script>
-        <script src="scripts/controllers/singlecourseCtrl.js"></script>
+		<script src="scripts/controllers/singlecourseCtrl.js"></script>
+		<script src="scripts/controllers/scheduleCtrl.js"></script>
+
 
         <!-- My Application module files  -->
         <!-- // <script src="scripts/modules/treeView.js"></script> -->
@@ -44,12 +63,13 @@
 
         <!-- My Application stylesheets -->
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-        <link rel="stylesheet" href="styles/style.css">
+		<link rel="stylesheet" href="styles/style.css">
+		<link rel="stylesheet" href="styles/calendar.css">
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
-        <link rel="stylesheet" href="styles/singlecourse.css">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-        <!--[if IE 7]>
+		<link rel="stylesheet" href="styles/singlecourse.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+                <!--[if IE 7]>
           <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" />
         <![endif]-->
 

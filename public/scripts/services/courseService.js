@@ -10,6 +10,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_ALL_EMIALS = "/all_emails";
     var LOGOUT = "logout";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
+	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
 
 	this.isUserAuthenticated = function(){
@@ -106,6 +107,23 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		return defer.promise;
 	}
+
+	this.getAllCourseEvents = function(){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_ALL_COURSE_EVENTS)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
 
     this.logout = function(){
         var defer = $q.defer();

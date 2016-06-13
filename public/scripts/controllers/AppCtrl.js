@@ -16,14 +16,9 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       title: 'Courses',
       icon: 'import_contacts'
     },
-  {
-      link : 'previous',
-      title: 'Previous Semesters',
-      icon: 'my_library_books'
-    },
-  {
+    {
       link : 'schedule',
-      title: 'Schedule',
+      title: 'Calendar',
       icon: 'date_range'
     }
   ];
