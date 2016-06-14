@@ -97,3 +97,10 @@ section {
 .calTools{
 	margin-bottom: 10px;
 }
+a.fc-day-grid-event{
+   color: white;
+}
+
+a.fc-time-grid-event{
+   color: white;
+}

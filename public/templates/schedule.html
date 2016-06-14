@@ -1,22 +1,22 @@
 <div ng-if="dataLoading">Loading...</div>
 
-	<div class="container" ng-if ="!dataLoading">
-		<section id="directives-calendar">
-			<div class="well">
-				<div class="row-fluid">
+	<div class="container-fluid" ng-if ="!dataLoading" layout-fill layout-padding>
+		
+			
+				<div class="row">
 					<div class="span8">
-						<div class="btn-toolbar">
+						
 							<div class="btn-group">
-								<button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">AgendaDay</button>
-								<button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">AgendaWeek</button>
-								<button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Month</button>
+								<button class="btn btn-primary" ng-click="changeView('agendaDay', 'myCalendar1')">Day</button>
+								<button class="btn btn-primary" ng-click="changeView('agendaWeek', 'myCalendar1')">Week</button>
+								<button class="btn btn-primary" ng-click="changeView('month', 'myCalendar1')">Month</button>
 							</div>
-						</div>
+						
 						<div class="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar1"></div>
 					</div>
 				</div>
-			</div>
-		</section>
+			
+		
 	</div>
 
 
