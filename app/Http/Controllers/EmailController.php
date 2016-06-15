@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
 
 /**
  * Description of EmailController
@@ -14,9 +13,9 @@ class EmailController extends L2pController {
     
     protected $validations = [
         'attachmentsToUpload' => 'json',
-        'body' => 'string',
-        'cc' => 'string',
+        'body' => 'string',        
         'replyto' => 'bool',
+        'cc' => 'required|string',
         'recipients' => 'required|string',
         'subject' => 'required|string',
     ];

@@ -34,7 +34,13 @@ Route::group(['middleware'=>'l2pApi'], function() {
     /*
      * Calendar
      */
-    Route::get('all_course_events', 'CalendarController@viewAllCourseEvents');    
+    Route::get('all_course_events', 'CalendarController@viewAllCourseEvents'); 
+    
+    /*
+     * Whats new
+     */
+    Route::get('whats_all_new_since/{pastMinutes}', 'WhatsNewController@whatsAllNewSince');  
+    Route::get('whats_all_new_since_for_semester/{sem}/{pastMinutes}', 'WhatsNewController@whatsAllNewSinceForSemester');  
 
     Route::group(['prefix' => '/course/{cid}'], function () {
         
@@ -43,7 +49,9 @@ Route::group(['middleware'=>'l2pApi'], function() {
          */
         Route::get('all_anouncements_count', 'AnnouncementController@viewAllAnouncementCount');
         Route::get('all_anouncements', 'AnnouncementController@viewAllAnouncements');
+        Route::get('anouncement', 'AnnouncementController@viewAnouncement');
         Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
+        Route::post('update_announcement', 'AnnouncementController@updateAnnouncement');
         Route::get('delete_announcement', 'AnnouncementController@deleteAnnouncement');
         
         /*
@@ -62,7 +70,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_emails', 'EmailController@viewAllEmails');
         Route::get('email/{itemId}', 'EmailController@viewEmail');        
         Route::post('add_email', 'EmailController@addEmail');  
-        Route::post('delete_email/{itemId}', 'EmailController@deleteEmail');  
+        Route::get('delete_email/{itemId}', 'EmailController@deleteEmail');  
         
         /*
          * Learning materials
@@ -76,6 +84,17 @@ Route::group(['middleware'=>'l2pApi'], function() {
          * Calendar
          */
         Route::get('course_events', 'CalendarController@viewCourseEvents');  
+        Route::post('add_course_event', 'CalendarController@addCourseEvent');  
+        Route::post('update_course_event', 'CalendarController@updateCourseEvent');  
+        Route::get('delete_course_even/{itemId}', 'CalendarController@deleteCourseEvent');  
+        
+        /*
+         * What's new
+         */        
+        Route::get('whats_new', 'WhatsNewController@whatsNew');  
+        Route::get('whats_new_since/{pastMinutes}', 'WhatsNewController@whatsNewSince');  
+        
+        
         
         Route::get('active_features', 'CourseController@viewActiveFeatures');                
         Route::get('all_counts', 'CourseController@viewAllCounts');
