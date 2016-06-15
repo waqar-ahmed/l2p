@@ -30,7 +30,7 @@ class AnnouncementController extends L2pController {
     }        
     
     public function addAnnouncement(Request $request, $cid) {          
-        return $this->addToModule($request->all(), 'addAnnouncement', ['cid'=>$cid], $this->validations);
+        return $this->addToModule($request, 'addAnnouncement', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteAnnouncement($cid, $itemId) {
@@ -38,7 +38,7 @@ class AnnouncementController extends L2pController {
     }
     
     public function updateAnnouncement(Request $request, $cid, $itemId) {        
-        return $this->addToModule($request->all(), 'updateAnnouncement', ['cid'=>$cid, 'itemid'=>$itemId], $this->validations);        
+        return $this->addToModule($request, 'updateAnnouncement', ['cid'=>$cid, 'itemid'=>$itemId], $this->validations);        
     }
     
     public function uploadInAnnouncement(Request $request, $cid, $attachmentDir) {        
