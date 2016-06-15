@@ -95,13 +95,13 @@
 								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
 									<div flex="grow">
 										<h3>{{email.subject}}</h3>
-										<p>Recipient:   &nbsp;{{email.recipients}}</p>
-										<p>Created by:    &nbsp;{{email.from}}</p>
-										<p>Created Date:  {{email.created*1000| date:'medium'}}</p>
+										<p><b>Recipient:</b> {{email.recipients}}</p>
+										<p><b>Created by:</b> {{email.from}}</p>
+										<p><b>Created Date:</b> {{email.created*1000| date:'medium'}}</p>
 									</div>
 									<span flex></span>
-									<md-button class="md-icon-button" ng-click="viewEmail(email,'edit'); $event.stopPropagation()" ng-show="authCUD">
-	            					<ng-md-icon icon="mode_edit"></ng-md-icon>
+									<md-button class="md-icon-button" ng-click="deleteEmail(email); $event.stopPropagation()" ng-show="authCUD">
+	            					<ng-md-icon icon="delete"></ng-md-icon>
 	         				 		</md-button>
 	         				 	</div>
 							</li>

@@ -45,6 +45,7 @@
         <!-- My Application stylesheets -->
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
         <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/viewEmail.css">
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
         <link rel="stylesheet" href="styles/singlecourse.css">
@@ -113,15 +114,13 @@
                       </md-button> -->
                 <md-toolbar ng-show="!showSearch">
                     <div class="md-toolbar-tools">
-                        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
-                        <span class="main_title"> {{navbartitle}}</span>
-
-                        </h5>
+                        <h3 class="main_title"> {{navbartitle}}</h3>
                         <span flex></span>
 
-                        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="showListBottomSheet($event)">
                             <ng-md-icon icon="more_vert"></ng-md-icon>
                         </md-button>
                     </div>

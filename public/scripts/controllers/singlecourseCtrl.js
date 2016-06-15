@@ -104,6 +104,18 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
         });
 	};
 
+	$scope.deleteEmail = function(email) {
+  	courseService.deleteEmail($stateParams.cid, email.itemId)
+		.then(function(res){
+			console.log("email is deleted");
+			console.log(res);
+			$scope.refreshEmails();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+  	}
+
 	$scope.refreshEmails = function(){
 			courseService.getEmailbyid($stateParams.cid)
 			.then(function(res){
@@ -120,6 +132,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
+		$scope.recipients = ["extra","tutors","mangagers","students"];
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
@@ -139,34 +152,52 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    	$mdDialog.hide();
 	  	};
 
-	  	$scope.editEmail = function() {
-	  	}
+	  	// $scope.editEmail = function() {
+	  	// 	console.log("edit");
+	  	// }
 
 	  	$scope.deleteEmail = function() {
-	  		$scope.back();
+	  	courseService.deleteEmail(cid, $scope.currentemail.itemId)
+			.then(function(res){
+				console.log("email is deleted");
+				console.log(res);
+				$scope.back();
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
 	  	}
 
+	  	editRecipient = function() {
+	  		var strRecipient = "";
+	  		for (var key in $scope.selectedRecipient) {
+	  			strRecipient = strRecipient+ $scope.selectedRecipient[key]+ ";";
+	  		}
+	  		console.log("edited recipient is "+ strRecipient);
+	  		return strRecipient;
+	  	}
 
 	  	$scope.addEmail = function(){
-	  		// var newEmail = {
-	  		// 	recipients: $scope.currentemail.recipients,
-	  		// 	subject: $scope.currentemail.subject,
-	  		// 	body: $scope.currentemail.body,
-	  		// 	replyTo: "Reply to my address",
-	  		// 	cc : " ",
-	  		// };
-
+	  		$scope.currentemail.replyTo = 'Reply to my address';
+	  		$scope.currentemail.recipients = editRecipient();
 	  		var newEmail = {
-	  			'recipients': 'tutors;',
-	  			'cc' : ' ',
-	  			'body': 'this is content',
-	  			'subject': 'test',
-	  			'replyTo': 'Reply to my address',
+	  			'recipients': $scope.currentemail.recipients,
+	  			'subject': $scope.currentemail.subject,
+	  			'body': $scope.currentemail.body,
+	  			'replyTo': $scope.currentemail.replyTo,
+	  			'cc' : $scope.currentemail.cc,
 	  		};
+
+	  		// var newEmail = {
+	  		// 	'recipients': 'tutors;',
+	  		// 	'cc' : 'test@rwth-aachen.de',
+	  		// 	'body': 'this is content',
+	  		// 	'subject': 'test',
+	  		// 	'replyTo': 'Reply to my address',
+	  		// };
 
 	  		console.log(newEmail);
 
-	  		var testobject = "try";
 	  		courseService.addEmail(cid, newEmail)
 			.then(function(res){
 				console.log("new email sent");

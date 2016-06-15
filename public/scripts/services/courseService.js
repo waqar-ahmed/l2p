@@ -12,7 +12,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
     var URL_VIEW_USER_ROLE = "view_user_role";
     var URL_ADD_EMAIL = "/add_email";
-
+	var URL_DELETE_EMAIL = "/delete_email";
 
 	this.isUserAuthenticated = function(){
 		var defer = $q.defer();
@@ -141,5 +141,23 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		})
 
 		return defer.promise;
+    }
+
+    this.deleteEmail = function(cid, itemId){
+
+    var defer = $q.defer();
+    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_EMAIL+ "/"+ itemId;
+
+	$http.get(content)
+	.success(function(res){
+		// console.log(res);
+		defer.resolve(res);
+	})
+	.error(function(err, status){
+		console.log(err);
+		defer.reject(err);
+	})
+
+	return defer.promise;
     }
 }]);

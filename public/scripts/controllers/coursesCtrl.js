@@ -1,5 +1,5 @@
 app.controller('coursesCtrl', function($scope,courseService,$location) {
-	
+
   courseService.getCurrentSem()
 		.then(function(res){
 			console.log("got all courses from current sem");
