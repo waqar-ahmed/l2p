@@ -19,10 +19,15 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })
-		.state('schedule', {
+		    .state('schedule', {
             url: '/schedule',
             templateUrl: 'templates/schedule.html',
             controller: 'scheduleCtrl'
+        })
+        .state('emails', {
+            url: '/emails',
+            templateUrl: 'templates/emails.html',
+            controller: 'emailsCtrl'
         })
 
 
@@ -49,16 +54,3 @@ app.config(function($mdThemingProvider) {
         .primaryPalette('grey')
 });
 
-app.service('tempdata', function(){
-  var savedata = {};
-
-  var addData = function(inputdata){
-    savedata = inputdata;
-  }
-
-  var getData = function(){
-    return savedata;
-  }
-
-  return {addData, getData};
-});

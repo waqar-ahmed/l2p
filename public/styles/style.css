@@ -78,3 +78,10 @@ md-list-item.md-3-line md-divider[md-inset] {
   padding:6px;
   }
 
+.main_title h3{
+  max-height: 46px;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}

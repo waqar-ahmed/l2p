@@ -62,45 +62,6 @@
   padding-left: 0 !important;
 }
 
-.email-detail md-input-container{
-  margin: 8px 8px 0 8px;
-}
-
-.email-detail textarea[disabled],.email-detail input[disabled]{
-  color: #696969;
-}
-
-.email-detail #creatinfo {
-  padding: 0 8px 12px 14px;
-}
-
-.email-detail md-content {
-  padding :16px 8px 0 8px;
-}
-
-.email-content p{
-  font-size: 15px;
-  color: #696969;
-  padding: 4px 8px 0 6px;
-}
-
-.email-content label{
-  font-size: 11px;
-  color: #696969;
-  padding: 8px 8px 8px 8px;
-}
-
-.email-content{
-  margin: 0 10px 0 0;
-  max-height: 256px;
-  overflow: scroll;
-}
-
-#email-divider{
-  padding:0 0 20px 0;
-  margin: 0 10px 0 0;
-}
-
 .ng-hide.ng-hide-animate{
      display: none !important;
 }

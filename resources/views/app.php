@@ -18,20 +18,20 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
-		
+
 		<!-- Jquery Library -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 
 		<!-- Tree control javascript -->
         <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
-		
+
 		<!-- link for CSS when using the tree as a Dom element -->
         <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
-		
+
 		<!-- link for CSS when using the tree as an attribute -->
         <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
-		
+
 		<!-- Angular Material Library -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
@@ -55,6 +55,8 @@
         <script src="scripts/controllers/coursesCtrl.js"></script>
 		<script src="scripts/controllers/singlecourseCtrl.js"></script>
 		<script src="scripts/controllers/scheduleCtrl.js"></script>
+        <script src="scripts/controllers/emailsCtrl.js"></script>
+
 
 
         <!-- My Application module files  -->
@@ -63,10 +65,14 @@
 
         <!-- My Application stylesheets -->
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-		<link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/viewEmail.css">
+
 		<link rel="stylesheet" href="styles/calendar.css">
+
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
+        <link rel="stylesheet" href="styles/emails.css">
 		<link rel="stylesheet" href="styles/singlecourse.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
                 <!--[if IE 7]>
@@ -133,15 +139,13 @@
                       </md-button> -->
                 <md-toolbar ng-show="!showSearch">
                     <div class="md-toolbar-tools">
-                        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
-                        <span class="main_title"> {{navbartitle}}</span>
-
-                        </h5>
+                        <h3 class="main_title"> {{navbartitle}}</h3>
                         <span flex></span>
 
-                        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="showListBottomSheet($event)">
                             <ng-md-icon icon="more_vert"></ng-md-icon>
                         </md-button>
                     </div>

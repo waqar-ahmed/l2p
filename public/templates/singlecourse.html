@@ -1,10 +1,10 @@
 <!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
  --><div ng-cloak>
 	<div class="fabbutton">
-	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="userrole">
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
-	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()" ng-show="userrole">
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
   	</div>
@@ -19,7 +19,7 @@
 					<div class="row">
 						<div class="span6 main_height">
 							<div class="tree">
-								
+
 								<treecontrol class="tree-classic"
 								   tree-model="roleList"
 								   options="options"
@@ -95,13 +95,13 @@
 								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
 									<div flex="grow">
 										<h3>{{email.subject}}</h3>
-										<p>Recipient:   &nbsp;{{email.recipients}}</p>
-										<p>Created by:    &nbsp;{{email.from}}</p>
-										<p>Created Date:  {{email.created*1000| date:'medium'}}</p>
+										<p><b>Recipient:</b> {{email.recipients}}</p>
+										<p><b>Created by:</b> {{email.from}}</p>
+										<p><b>Created Date:</b> {{email.created*1000| date:'medium'}}</p>
 									</div>
 									<span flex></span>
-									<md-button class="md-icon-button" ng-click="viewEmail(email,'edit'); $event.stopPropagation()" ng-show="userrole">
-	            					<ng-md-icon icon="mode_edit"></ng-md-icon>
+									<md-button class="md-icon-button" ng-click="deleteEmail(email); $event.stopPropagation()" ng-show="authCUD">
+	            					<ng-md-icon icon="delete"></ng-md-icon>
 	         				 		</md-button>
 	         				 	</div>
 							</li>

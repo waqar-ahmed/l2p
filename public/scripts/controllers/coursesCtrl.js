@@ -1,5 +1,5 @@
 app.controller('coursesCtrl', function($scope,courseService,$location) {
-	
+
   courseService.getCurrentSem()
 		.then(function(res){
 			console.log("got all courses from current sem");
@@ -15,24 +15,24 @@ app.controller('coursesCtrl', function($scope,courseService,$location) {
   $scope.defaultSemester = {
         id : '1',
         abbre: 'SS2016',
-        name: 'Courses - Summer Semester 2016',
+        name: 'Summer Semester 2016',
       };
 
   $scope.semesters = [
     {
       id : '1',
       abbre: 'SS2016',
-      name: 'Courses - Summer Semester 2016',
+      name: 'Summer Semester 2016',
     },
     {
       id : '2',
       abbre: 'WS2015',
-      name: 'Courses - Winter Semester 2016',
+      name: 'Winter Semester 2016',
     },
     {
       id : '3',
       abbre: 'SS2015',
-      name: 'Courses - Summer Semester 2015',
+      name: 'Summer Semester 2015',
     },
   ];
 

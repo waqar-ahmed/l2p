@@ -1,4 +1,4 @@
-app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog,tempdata) {
+app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog) {
 
 
 	console.log("course ID: " + $stateParams.cid);
@@ -12,7 +12,15 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			console.log("Error occured : " + err);
 		});
 
-	$scope.userrole = true;
+	 courseService.viewUserRole($stateParams.cid)
+		.then(function(res){
+			console.log("got role");
+			console.log(res.role);
+			$scope.userRole = res.role.toString();
+			$scope.setRole();
+		}, function(err){
+			console.log("Error occured : " + err);
+		});
 
 	$scope.breadcrums = [''];
 
@@ -54,15 +62,23 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	},
 	];
 
-	$scope.test = function(){
-		$mdDialog.show(
-	     	$mdDialog.alert()
-	        .clickOutsideToClose(true)
-	        .title('This is an alert title')
-	        .textContent('for test.')
-	        .ok('Got it!')
-    	);
+	$scope.setRole = function(){
+		if ($scope.userRole.indexOf("manager")!==-1){
+			$scope.authCUD = true;}
+		else if ($scope.userRole.indexOf("student")!==-1){
+			$scope.authCUD = false;}
+		console.log($scope.authCUD);
 	}
+
+	// $scope.test = function(){
+	// 	$mdDialog.show(
+	//      	$mdDialog.alert()
+	//         .clickOutsideToClose(true)
+	//         .title('This is an alert title')
+	//         .textContent('for test.')
+	//         .ok('Got it!')
+ //    	);
+	// }
 
 	$scope.viewEmail = function(email,method){
 		if (email === undefined)
@@ -72,22 +88,51 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    $mdDialog.show({
 	    	controller: EmailDialogController,
 	    	locals: {
-	    		emails: $scope.emails,
 	    		selectedEmail: angular.copy(selectedEmail),
 	    		method: method,
+	    		cid: $stateParams.cid,
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:true
-	    });
+	    })
+	    .then(function() {
+            $scope.refreshEmails();
+        }, function() {
+            $scope.refreshEmails();
+        });
 	};
 
+	$scope.deleteEmail = function(email) {
+  	courseService.deleteEmail($stateParams.cid, email.itemId)
+		.then(function(res){
+			console.log("email is deleted");
+			console.log(res);
+			$scope.refreshEmails();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+  	}
 
-	function EmailDialogController($scope, $mdDialog, courseService, emails, selectedEmail, method) {
+	$scope.refreshEmails = function(){
+			courseService.getEmailbyid($stateParams.cid)
+			.then(function(res){
+				console.log("refresh emails");
+				console.log(res.dataSet);
+				$scope.emails = res.dataSet;
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+		}
+
+	function EmailDialogController($scope, $mdDialog, courseService, selectedEmail, method, cid) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
+		$scope.recipients = ["extra","tutors","mangagers","students"];
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
@@ -101,35 +146,68 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			$scope.authShow = true;
 		}
 
-		$scope.emails = emails;
-		console.log($scope.emails);
 		$scope.currentemail = selectedEmail;
-		console.log(selectedEmail);
 
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
 
-	  	$scope.edit = function() {
-	  		$scope.refreshEmails();
-	  	}
+	  	// $scope.editEmail = function() {
+	  	// 	console.log("edit");
+	  	// }
 
-	  	$scope.delete = function() {
-	  		$scope.refreshEmails();
-	  		$scope.back();
-	  	}
-
-  		$scope.refreshEmails = function(){
-			courseService.getEmailbyid($stateParams.cid)
+	  	$scope.deleteEmail = function() {
+	  	courseService.deleteEmail(cid, $scope.currentemail.itemId)
 			.then(function(res){
-				console.log("refresh emails");
-				console.log(res.dataSet);
-				$scope.emails = res.dataSet;
+				console.log("email is deleted");
+				console.log(res);
+				$scope.back();
 			},
 			function(err){
 				console.log("Error occured : " + err);
 			});
-		}
+	  	}
+
+	  	editRecipient = function() {
+	  		var strRecipient = "";
+	  		for (var key in $scope.selectedRecipient) {
+	  			strRecipient = strRecipient+ $scope.selectedRecipient[key]+ ";";
+	  		}
+	  		console.log("edited recipient is "+ strRecipient);
+	  		return strRecipient;
+	  	}
+
+	  	$scope.addEmail = function(){
+	  		$scope.currentemail.replyTo = 'Reply to my address';
+	  		$scope.currentemail.recipients = editRecipient();
+	  		var newEmail = {
+	  			'recipients': $scope.currentemail.recipients,
+	  			'subject': $scope.currentemail.subject,
+	  			'body': $scope.currentemail.body,
+	  			'replyTo': $scope.currentemail.replyTo,
+	  			'cc' : $scope.currentemail.cc,
+	  		};
+
+	  		// var newEmail = {
+	  		// 	'recipients': 'tutors;',
+	  		// 	'cc' : 'test@rwth-aachen.de',
+	  		// 	'body': 'this is content',
+	  		// 	'subject': 'test',
+	  		// 	'replyTo': 'Reply to my address',
+	  		// };
+
+	  		console.log(newEmail);
+
+	  		courseService.addEmail(cid, newEmail)
+			.then(function(res){
+				console.log("new email sent");
+				console.log(res);
+				$scope.back();
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
 	};
 
 
@@ -175,7 +253,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
         elements = jQuery.parseJSON(tree);
 
-        console.log(tree);
+        // console.log(tree);
 
         $scope.dataLoaded = true;
 
