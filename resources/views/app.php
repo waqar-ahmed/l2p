@@ -5,8 +5,8 @@
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 		<!-- Link for bootstrap CSS -->
-		<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css" />
-
+		<!-- <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css" />
+ -->
 
 		<!-- Link for fullCalendar CSS  -->
 		<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>

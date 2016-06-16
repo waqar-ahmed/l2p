@@ -1,21 +1,23 @@
 <div class="listdemoListControls">
 
     <md-list style="height:20px !important;" flex>
-        <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
-          <div layout="row" layout-align="begin center" ng-model="defaultSemester">
+      <div id="coursetitle">
+        <md-subheader class="md-no-sticky" style="margin-bottom:10px !important; color: black;" flex>
+          <div layout="row" layout-align="begin center" ng-model="selectedSemester">
             <h3 style="margin-right:10px;font-size:20px!important;"><b>Semester: </b></h3>
             <span flex></span>
             <md-input-container>
-              <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
+              <md-select ng-model="selectedSemester" ng-model-options="{trackBy: '$value.sem'}">
                 <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.name}}</md-option>
               </md-select>
             </md-input-container>
           </div>
         </md-subheader>
+      </div>
 
-      <md-list-item ng-repeat="course in courses" ng-click="gotoCourse(course.itemId,course.uniqueid); $parent.setNav(course.courseTitle)" ng-init="outerIndex = $index">
+      <md-list-item ng-repeat="course in courses|filter: {'semester':selectedSemester.sem}" ng-click="gotoCourse(course.itemId,course.uniqueid); $parent.setNav(course.courseTitle)" ng-init="outerIndex = $index">
         <md-checkbox style="display:none;"></md-checkbox>
-        <span class="numberCircle">{{outerIndex + 1}}</span>
+        <span class="numberCircle">{{course.description}}</span>
         <span class="course_title">{{course.courseTitle}}</span>
         <md-divider ng-if="!$last"></md-divider>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
