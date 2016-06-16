@@ -1,0 +1,41 @@
+body {
+    background: #00549f;
+}
+
+.wrapper
+{
+
+    margin-top: 5%; 
+
+}
+
+.authorizebutton {
+	width:400px;height:100px;-webkit-border-radius: 5px 5px 5px 5px;-moz-border-radius: 5px 5px 5px 5px;border-radius: 5px 5px 5px 5px;background-color:#00549f;
+	border: 2px solid white;
+	line-height: 100px;
+
+}
+
+.authorizebutton:hover {
+	
+	background-color:white;
+
+}
+
+.container {
+
+	font-weight: bolder;
+	font-size: 30px;
+	color: white;
+	font-family: arial;
+    
+}
+
+.container:hover {
+
+	color: black;
+	
+    
+}
+
+

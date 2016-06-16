@@ -3,12 +3,11 @@
     <md-list style="height:20px !important;" flex>
         <md-subheader class="md-no-sticky" style="margin-bottom:10px !important;color: black;" flex>
           <div layout="row" layout-align="begin center" ng-model="defaultSemester">
-            <h3 style="margin-right:10px;"><b>{{defaultSemester.name}}</b></h3>
+            <h3 style="margin-right:10px;"><b>Semester: </b></h3>
             <span flex></span>
             <md-input-container>
-              <label style="font-size:20px;">Semester</label>
               <md-select ng-model="defaultSemester" ng-model-options="{trackBy: '$value.id'}">
-                <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.abbre}}</md-option>
+                <md-option ng-repeat="semester in semesters" ng-value="semester">{{semester.name}}</md-option>
               </md-select>
             </md-input-container>
           </div>
@@ -27,3 +26,6 @@
 
     </md-list>
 </div>
+
+
+
