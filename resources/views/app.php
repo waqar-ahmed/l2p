@@ -55,6 +55,8 @@
         <script src="scripts/controllers/coursesCtrl.js"></script>
 		<script src="scripts/controllers/singlecourseCtrl.js"></script>
 		<script src="scripts/controllers/scheduleCtrl.js"></script>
+        <script src="scripts/controllers/emailsCtrl.js"></script>
+
 
 
         <!-- My Application module files  -->
@@ -70,6 +72,7 @@
 
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
+        <link rel="stylesheet" href="styles/emails.css">
 		<link rel="stylesheet" href="styles/singlecourse.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
                 <!--[if IE 7]>

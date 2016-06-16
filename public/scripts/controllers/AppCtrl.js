@@ -17,6 +17,11 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       icon: 'import_contacts'
     },
     {
+      link : 'emails',
+      title: 'Emails',
+      icon: 'icon_email'
+    },
+    {
       link : 'schedule',
       title: 'Calendar',
       icon: 'date_range'

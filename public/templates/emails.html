@@ -1,0 +1,19 @@
+<div style="margin-top:-10;">
+	<div class="md-accordion customwidth" ng-repeat="data in accordianData"> 
+    	<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+        	<div class="md-toolbar-tools customcolor_email" >
+
+                	<div id="wrapper">
+    					<div id="inner1"> {{data.heading}}</div>
+   						 <div id="inner2"> Jan 28</div>
+					</div>
+
+            		<span flex=""></span>
+            		<span ng-class="{expandCollapse:true, active:data.expanded}"></span> 
+        	</div>
+    	</md-toolbar>
+    	<div ng-class="{dataContent:true, activeContent:data.expanded}">{{data.content}}</div>
+	</div>
+</div>
+
