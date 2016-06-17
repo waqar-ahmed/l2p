@@ -1,5 +1,29 @@
 app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog) {
 
+var LOGIN_PAGE = "login.html";
+	courseService.isUserAuthenticated()
+	.then(function(res){
+		if(res.Status == true)
+		{
+			console.log("user is authenticated");
+			verified = true;
+			//getAllCourses();
+		}
+		else{
+			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
+			//requestUserCode();
+			gotoAuthorizePage();
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+
+
+	gotoAuthorizePage = function(){
+		window.location = LOGIN_PAGE;
+	}
+
+
 
 	console.log("course ID: " + $stateParams.cid);
 
