@@ -16,8 +16,8 @@
       </div>
 
       <md-list-item ng-repeat="course in courses|filter: {'semester':selectedSemester.sem}" ng-click="gotoCourse(course.itemId,course.uniqueid); $parent.setNav(course.courseTitle)" ng-init="outerIndex = $index">
-        <md-checkbox style="display:none;"></md-checkbox>
-        <span class="numberCircle">{{course.description}}</span>
+<!--         <md-checkbox style="display:none;"></md-checkbox> -->
+        <span class="numberCircle" ng-style="{'background-color':colors[$index]}">{{course.description != '' ? course.description : 'X'}}</span>
         <span class="course_title">{{course.courseTitle}}</span>
         <md-divider ng-if="!$last"></md-divider>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
@@ -28,6 +28,9 @@
 
     </md-list>
 
+   <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="coursesLoaded" class="loadingicon">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
 
     
 </div>

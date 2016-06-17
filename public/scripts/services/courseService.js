@@ -17,7 +17,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
-	var authenticated = false;
+	var authenticated = true;
 
 
 	this.isUserAuthenticated = function(){
