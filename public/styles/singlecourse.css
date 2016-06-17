@@ -65,3 +65,7 @@
 .ng-hide.ng-hide-animate{
      display: none !important;
 }
+
+::-webkit-scrollbar { 
+    display: none; 
+}

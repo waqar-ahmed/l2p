@@ -179,7 +179,7 @@
                     </div>
 
                 </md-toolbar>
-                <md-content flex md-scroll-y>
+                <md-content flex md-scroll-y style="overflow-y: hidden; overflow-x: hidden;">
 
                     <!-- This is a place where your content will be loaded -->
                     <ui-view layout="column" layout-fill layout-padding>
