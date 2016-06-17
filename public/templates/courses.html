@@ -2,8 +2,8 @@
 
     <md-list style="height:20px !important;" flex>
       <div id="coursetitle">
-        <md-subheader class="md-no-sticky" style="margin-bottom:10px !important; color: black;" flex>
-          <div layout="row" layout-align="begin center" ng-model="selectedSemester">
+        <md-subheader class="md-no-sticky" style="margin-bottom:10px !important; margin-top:10px !important; color: black;" flex>
+          <div layout="row" layout-align="begin center" ng-model="selectedSemester" style="height:40px !important; ">
             <h3 style="margin-right:10px;font-size:20px!important;"><b>Semester: </b></h3>
             <span flex></span>
             <md-input-container>
@@ -27,11 +27,6 @@
     </md-list-item>
 
     </md-list>
-
-
-     <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="coursesLoaded" class="loadingicon">
-      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
 
 
     
