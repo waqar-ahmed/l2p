@@ -1,5 +1,5 @@
 
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload']);
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
@@ -52,5 +52,67 @@ app.config(function($mdThemingProvider) {
     .accentPalette('pink');
   $mdThemingProvider.theme('input', 'default')
         .primaryPalette('grey')
+});
+
+
+
+app.directive('fileModel', ['$parse', 'fileService', function ($parse, fileService) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs, rootScope) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+console.log("in directive");
+
+            element.bind('change', function(){
+                modelSetter(scope, element[0].files[0]);
+                    console.log("binding file");
+                    //fileService.push(element[0].files[0]);
+                    fileService.setUploadedFile(element[0].files[0]);
+            });
+        }
+    };
+}]);
+
+app.service('fileUpload', ['$http', function ($http) {
+
+console.log("service called");
+
+    this.uploadFileToUrl = function(file, req, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
+}]);
+
+app.factory('fileService', function() {
+    // var files = [];
+    // return files;
+
+console.log("factory called");
+
+    var uploadedFile;
+    return{
+        setUploadedFile : function(file){
+            uploadedFile = file;
+        },
+
+        getUploadedFile : function(){
+            return uploadedFile;
+        },
+        
+        resetUploadedFile : function(){
+            uploadedFile = null;
+        }
+    }
 });
 

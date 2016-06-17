@@ -46,6 +46,8 @@
 		<script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
 		<script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
 
         <!-- My Application script files  -->
         <script src="scripts/app.js"></script>
@@ -179,7 +181,7 @@
                     </div>
 
                 </md-toolbar>
-                <md-content flex md-scroll-y>
+                <md-content class="contentCls">
 
                     <!-- This is a place where your content will be loaded -->
                     <ui-view layout="column" layout-fill layout-padding>

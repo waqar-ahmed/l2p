@@ -4,6 +4,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
 
   $scope.navbartitle = "L2p - Home";
+  var LOGIN_PAGE = "login.html";
 
  	$scope.menu = [
       {
@@ -71,6 +72,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.logout = function(){
       console.log("logout");
       courseService.logout();
+      window.location = LOGIN_PAGE;
   }
 
 });

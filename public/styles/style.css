@@ -85,3 +85,12 @@ md-list-item.md-3-line md-divider[md-inset] {
   overflow: hidden;
   white-space: nowrap;
 }
+
+
+.layout-padding{
+  padding : 0px !important;
+}
+
+.contentCls{
+   
+}
