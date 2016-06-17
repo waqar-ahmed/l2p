@@ -137,15 +137,15 @@
                 <!--       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
                         <ng-md-icon icon="add"></ng-md-icon>
                       </md-button> -->
-                <md-toolbar ng-show="!showSearch">
+                <md-toolbar>
                     <div class="md-toolbar-tools">
-                        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                        <md-button class="md-icon-button" ng-click="toggleSidenav('left');resetAuth()" hide-gt-md aria-label="Menu">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
                         <h3 class="main_title"> {{navbartitle}}</h3>
                         <span flex></span>
 
-                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="" ng-show="authcourse">
                             <ng-md-icon icon="more_vert"></ng-md-icon>
                         </md-button>
                     </div>

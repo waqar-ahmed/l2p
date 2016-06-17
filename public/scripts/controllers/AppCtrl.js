@@ -5,6 +5,8 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
 
   $scope.navbartitle = "L2p - Home";
 
+  $scope.test = "I'm the test";
+
  	$scope.menu = [
       {
       link : '',
@@ -45,7 +47,9 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
     }
   ];
 
+  $scope.authcourse = false;
   $scope.alert = '';
+
   $scope.showListBottomSheet = function($event) {
     $scope.alert = '';
     $mdBottomSheet.show({
@@ -59,6 +63,10 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
 
   $scope.setNav = function(navTitle) {
       $scope.navbartitle = navTitle;
+  }
+
+  $scope.resetAuth = function()  {
+    $scope.authcourse = false;
   }
 
   $scope.onMenuSelect = function(link,title){

@@ -15,7 +15,7 @@
         </md-subheader>
       </div>
 
-      <md-list-item ng-repeat="course in courses|filter: {'semester':selectedSemester.sem}" ng-click="gotoCourse(course.itemId,course.uniqueid); $parent.setNav(course.courseTitle)" ng-init="outerIndex = $index">
+      <md-list-item ng-repeat="course in courses|filter: {'semester':selectedSemester.sem}" ng-click="gotoCourse(course.itemId,course.uniqueid)" ng-init="outerIndex = $index">
         <md-checkbox style="display:none;"></md-checkbox>
         <span class="numberCircle">{{course.description}}</span>
         <span class="course_title">{{course.courseTitle}}</span>

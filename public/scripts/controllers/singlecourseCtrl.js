@@ -1,5 +1,4 @@
-app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog) {
-
+app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
 
 	console.log("course ID: " + $stateParams.cid);
 
@@ -10,7 +9,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			$scope.emails = res.dataSet;
 		}, function(err){
 			console.log("Error occured : " + err);
-		});
+	});
 
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
@@ -20,9 +19,25 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			$scope.setRole();
 		}, function(err){
 			console.log("Error occured : " + err);
-		});
+	});
 
+	$scope.$parent.authcourse = true;
 	$scope.breadcrums = [''];
+
+	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
+
+	courseService.getCurrentSem(sem)
+		.then(function(res){
+			console.log("got course by currentsemester");
+			console.log(res.dataSet);
+			$scope.courseinfo = res.dataSet;
+			var currentCourse = $.grep($scope.courseinfo, function(n,i) {
+  				return n.uniqueid === $stateParams.cid;
+			});
+			$scope.$parent.setNav(currentCourse[0].courseTitle);
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
 
 	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
@@ -33,6 +48,10 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	}, function(){
 		console.log("Error occured");
 	})
+
+	this.getCurrentCourse = function() {
+
+	} 
 
 	var iconClassMap = {
 		txt: 'icon-file-text',
@@ -109,6 +128,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		.then(function(res){
 			console.log("email is deleted");
 			console.log(res);
+			$window.alert("email is deleted");
 			$scope.refreshEmails();
 		},
 		function(err){
@@ -128,7 +148,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 			});
 		}
 
-	function EmailDialogController($scope, $mdDialog, courseService, selectedEmail, method, cid) {
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
@@ -203,6 +223,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 				console.log("new email sent");
 				console.log(res);
 				$scope.back();
+				$window.alert("new email is sent");
 			},
 			function(err){
 				console.log("Error occured : " + err);
