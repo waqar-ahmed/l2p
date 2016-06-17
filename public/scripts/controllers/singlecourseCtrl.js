@@ -2,22 +2,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 
 	var LOGIN_PAGE = "login.html";
 	
-	// courseService.isUserAuthenticated()
-	// .then(function(res){
-	// 	if(res.Status == true)
-	// 	{
-	// 		console.log("user is authenticated");
-	// 		verified = true;
-	// 	}
-	// 	else{
-	// 		gotoAuthorizePage();
-	// 	}
-	// }, function(err){
-	// 	console.log("Error occured : " + err);
-	// });
-
-
-	gotoAuthorizePage = function(){
+	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
 	}
 

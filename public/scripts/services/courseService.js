@@ -17,6 +17,8 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
+	var authenticated = false;
+
 
 	this.isUserAuthenticated = function(){
 		var defer = $q.defer();
@@ -25,6 +27,12 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		.success(function(res){
 			console.log(res.Status);
 			defer.resolve(res);
+			if(res.Status){
+				authenticated = true;
+			}
+			else{
+				authenticated = false;
+			}
 		})
 		.error(function(err, status){
 			console.log(err);
@@ -32,6 +40,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		})
 
 		return defer.promise;
+	}
+
+	this.getAuthenticatedValue = function(){
+		return authenticated;
 	}
 
 	this.getAllCourses = function(){
