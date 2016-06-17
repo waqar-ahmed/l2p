@@ -13,6 +13,8 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	// 	else{
 	// 		//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
 	// 		//requestUserCode();
+	// 	}
+	// 	else{
 	// 		gotoAuthorizePage();
 	// 	}
 	// }, function(err){
@@ -23,6 +25,9 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	// gotoAuthorizePage = function(){
 	// 	window.location = LOGIN_PAGE;
 	// }
+	gotoAuthorizePage = function(){
+		window.location = LOGIN_PAGE;
+	}
 
 	console.log("course ID: " + $stateParams.cid);
 

@@ -11,7 +11,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     var LOGOUT = "logout";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
 
-    var URL_VIEW_USER_ROLE = "view_user_role";
+    var URL_VIEW_USER_ROLE = "/view_user_role";
     var URL_ADD_EMAIL = "/add_email";
 	var URL_DELETE_EMAIL = "/delete_email";
 
@@ -71,7 +71,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ALL_EMIALS)
 		.success(function(res){
-			//console.log(res);
+			console.log(res);
 			defer.resolve(res);
 		})
 		.error(function(err, status){
@@ -115,7 +115,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
     this.viewUserRole = function(cid){
         var defer = $q.defer();
-        
+
 		$http.get(URL_VIEW_USER_ROLE+ "/"+ cid)
 		.success(function(res){
 			// console.log(res);
