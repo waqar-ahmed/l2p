@@ -1,5 +1,5 @@
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','treeControl']);
 
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap']);
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
@@ -14,16 +14,22 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/courses.html',
             controller: 'coursesCtrl'
         })
-        .state('previous_semester', {
-            url: '/previous',
-            templateUrl: 'templates/courses.html',
-            controller: 'coursesCtrl'
-        })
         .state('singlecourse', {
             url: '/singlecourse/:cid',
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })
+		    .state('schedule', {
+            url: '/schedule',
+            templateUrl: 'templates/schedule.html',
+            controller: 'scheduleCtrl'
+        })
+        .state('emails', {
+            url: '/emails',
+            templateUrl: 'templates/emails.html',
+            controller: 'emailsCtrl'
+        })
+
 
 }]);
 
@@ -48,16 +54,3 @@ app.config(function($mdThemingProvider) {
         .primaryPalette('grey')
 });
 
-app.service('tempdata', function(){
-  var savedata = {};
-
-  var addData = function(inputdata){
-    savedata = inputdata;
-  }
-
-  var getData = function(){
-    return savedata;
-  }
-
-  return {addData, getData};
-});

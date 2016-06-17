@@ -1,6 +1,6 @@
 * {margin: 0; padding: 0;}
 
-.singlecourse div {
+.singlecourse >div {
   margin: 20px;
 }
 
@@ -52,7 +52,6 @@
 */}
 
 
-
 .loadingicon{
  position: absolute;
  top: 20%;
@@ -63,4 +62,6 @@
   padding-left: 0 !important;
 }
 
-
+.ng-hide.ng-hide-animate{
+     display: none !important;
+}

@@ -5,8 +5,8 @@
   margin-top: 1px;
   margin-bottom:1px;
   width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .numberCircle {
@@ -54,3 +54,6 @@
   user-select: none;
   /* Likely future */ }
 
+#coursetitle .md-subheader ._md-subheader-inner {
+  padding : 4px 16px 4px 16px;
+}

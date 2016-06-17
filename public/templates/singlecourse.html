@@ -1,11 +1,11 @@
 <!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
  --><div ng-cloak>
 	<div class="fabbutton">
-	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
-	   add
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
+	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
-	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
-	   delete
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()" ng-show="authCUD">
+	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
   	</div>
 	<md-content>
@@ -19,7 +19,7 @@
 					<div class="row">
 						<div class="span6 main_height">
 							<div class="tree">
-								
+
 								<treecontrol class="tree-classic"
 								   tree-model="roleList"
 								   options="options"
@@ -90,12 +90,20 @@
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<ul ng-repeat="email in emails" ng-click="chooseEmail(email); viewEmail()">
+						<ul ng-repeat="email in emails">
 							<li>
-								<h3>{{email.subject}}</h3>
-								<p>Recipient: {{email.recipients}}</p>
-								<p>Created by: {{email.from}}</p>
-								<p>Created Date: {{email.created}}</p>
+								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
+									<div flex="grow">
+										<h3>{{email.subject}}</h3>
+										<p><b>Recipient:</b> {{email.recipients}}</p>
+										<p><b>Created by:</b> {{email.from}}</p>
+										<p><b>Created Date:</b> {{email.created*1000| date:'medium'}}</p>
+									</div>
+									<span flex></span>
+									<md-button class="md-icon-button" ng-click="deleteEmail(email); $event.stopPropagation()" ng-show="authCUD">
+	            					<ng-md-icon icon="delete"></ng-md-icon>
+	         				 		</md-button>
+	         				 	</div>
 							</li>
 						</ul>
 					</div>
