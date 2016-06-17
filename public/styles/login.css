@@ -31,11 +31,34 @@ body {
     
 }
 
-.container:hover {
+.container{
+	color: #FFFFFF;
+    text-decoration: none;
+}
 
-	color: black;
-	
-    
+
+
+.wrapLink{
+	width: 400px;
+	height: 100px;
+	border: 2px solid #fff;
+	-webkit-border-radius: 5px 5px 5px 5px;-moz-border-radius: 5px 5px 5px 5px;border-radius: 5px 5px 5px 5px;
+	margin: 0 auto;
+	text-align: center;
+	line-height: 100px;
+}
+
+.wrapLink a{
+	font-size: 30px;
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	display: block;
+	font-family: arial;
+}
+
+.wrapLink a:active{
+	color:black;
 }
 
 

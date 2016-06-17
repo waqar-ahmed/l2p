@@ -1,3 +1,4 @@
+
 [ng-click]:hover {
   cursor: pointer;
 }
@@ -78,10 +79,19 @@ md-list-item.md-3-line md-divider[md-inset] {
   padding:6px;
   }
 
-.main_title h3{
-  max-height: 46px;
+.main_title{
   text-overflow: ellipsis;
   display: block;
-  overflow: hidden;
+  overflow: hidden ;
   white-space: nowrap;
+  width: 90% !important;
+}
+
+
+.layout-padding{
+  padding : 0px !important;
+}
+
+.contentCls{
+   
 }

@@ -1,4 +1,11 @@
+
 app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
+
+	var LOGIN_PAGE = "login.html";
+
+	if(!courseService.getAuthenticatedValue()){
+		window.location = LOGIN_PAGE;
+	}
 
 	console.log("course ID: " + $stateParams.cid);
 
@@ -14,7 +21,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
 			console.log("got role");
-			console.log(res.role);
+			console.log(res);
 			$scope.userRole = res.role.toString();
 			$scope.setRole();
 		}, function(err){

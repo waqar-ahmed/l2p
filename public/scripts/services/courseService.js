@@ -12,11 +12,13 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     var URL_SEMESTER = "/semester";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
 
-    var URL_VIEW_USER_ROLE = "view_user_role";
+    var URL_VIEW_USER_ROLE = "/view_user_role";
     var URL_ADD_EMAIL = "/add_email";
 	var URL_DELETE_EMAIL = "/delete_email";
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
+
+	var authenticated = true;
 
 
 	this.isUserAuthenticated = function(){
@@ -26,6 +28,12 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		.success(function(res){
 			console.log(res.Status);
 			defer.resolve(res);
+			if(res.Status){
+				authenticated = true;
+			}
+			else{
+				authenticated = false;
+			}
 		})
 		.error(function(err, status){
 			console.log(err);
@@ -33,6 +41,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		})
 
 		return defer.promise;
+	}
+
+	this.getAuthenticatedValue = function(){
+		return authenticated;
 	}
 
 	this.getAllCourses = function(){
@@ -72,7 +84,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ALL_EMIALS)
 		.success(function(res){
-			//console.log(res);
+			console.log(res);
 			defer.resolve(res);
 		})
 		.error(function(err, status){
@@ -197,4 +209,71 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	return defer.promise;
     }
+
+
+
+            //trigger onFileSelect method on clickUpload button clicked
+        this.clickUpload = function(){
+            document.getElementById('i_file').click();
+        };
+
+
+         this.onFileSelect = function(file) {
+
+          if(!file) return;
+
+          console.log("in file select");
+
+          console.log(file.name);
+
+          $scope.showProgressBar = true;
+
+          file.upload = Upload.upload({
+            url: '/admin/bubblePLE/fileAttachments/rest',
+            data: {fileattachment: {filename: file, title: file.name}},
+          });
+
+
+          file.upload.progress(function(evt){
+              console.log('percent: ' +parseInt(100.0 * evt.loaded / evt.total));
+          });
+
+
+          file.upload.then(function (response) {
+            $timeout(function () {
+              file.result = response.data;
+              console.log(response);
+              $mdToast.show(
+                      $mdToast.simple()
+                          .textContent('File uploaded successfully')
+                          .position('bottom')
+                          .hideDelay(3000)
+               );
+              console.log(response.data.item.filename);
+
+              var filePath = String(response.data.item.filename);
+              var res = filePath.split("/files/fileattachment/");
+              addFileNode(res[1], filePath);
+              $scope.showProgressBar = false;
+            });
+          }, function (response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ': ' + response.data;
+            console.log("in response");
+            console.log(response);
+            $mdToast.show(
+                      $mdToast.simple()
+                          .textContent('Error Uploading file')
+                          .position('bottom')
+                          .hideDelay(3000)
+                  );
+            $scope.showProgressBar = false;
+          }, function (evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            console.log(file.progress);
+            $scope.progressBarValue = file.progress;
+          });
+	}
+
 }]);

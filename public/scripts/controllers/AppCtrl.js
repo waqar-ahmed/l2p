@@ -4,6 +4,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   };
 
   $scope.navbartitle = "L2p - Home";
+  var LOGIN_PAGE = "login.html";
 
   $scope.test = "I'm the test";
 
@@ -21,7 +22,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
     {
       link : 'emails',
       title: 'Emails',
-      icon: 'icon_email'
+      icon: 'email'
     },
     {
       link : 'schedule',
@@ -79,6 +80,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.logout = function(){
       console.log("logout");
       courseService.logout();
+      window.location = LOGIN_PAGE;
   }
 
 });

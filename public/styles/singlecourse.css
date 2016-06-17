@@ -54,7 +54,7 @@
 
 .loadingicon{
  position: absolute;
- top: 20%;
+ top: 40%;
  left: 40%;
 }
 
@@ -65,3 +65,8 @@
 .ng-hide.ng-hide-animate{
      display: none !important;
 }
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
