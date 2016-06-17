@@ -1,13 +1,17 @@
 app.controller('coursesCtrl', function($scope,courseService,$location) {
 
+  $scope.coursesLoaded = false;
+
   courseService.getAllCourses()
 		.then(function(res){
 			console.log("got all courses from current sem");
 			console.log(res.dataSet);
 			$scope.courses = res.dataSet;
 			console.log("courses:"+$scope.courses);
+      $scope.coursesLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
+      $scope.coursesLoaded = true;
 		});
 
 

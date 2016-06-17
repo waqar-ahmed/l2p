@@ -38,7 +38,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
 			console.log("got role");
-			console.log(res.role);
+			console.log(res);
 			$scope.userRole = res.role.toString();
 			$scope.setRole();
 		}, function(err){

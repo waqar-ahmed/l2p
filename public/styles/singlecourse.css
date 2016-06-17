@@ -54,7 +54,7 @@
 
 .loadingicon{
  position: absolute;
- top: 20%;
+ top: 40%;
  left: 40%;
 }
 
@@ -66,16 +66,7 @@
      display: none !important;
 }
 
-<<<<<<< HEAD
+
 ::-webkit-scrollbar { 
     display: none; 
 }
-=======
-
-.singleCourseTabs{
-}
-
-.tabclass{
-  
-}
->>>>>>> 403a8c93c697f8d42f2e0fa8babb1283d001faa3

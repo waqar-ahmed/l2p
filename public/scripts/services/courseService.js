@@ -115,7 +115,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
     this.viewUserRole = function(cid){
         var defer = $q.defer();
-
+        
 		$http.get(URL_VIEW_USER_ROLE+ "/"+ cid)
 		.success(function(res){
 			// console.log(res);
@@ -180,4 +180,71 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	return defer.promise;
     }
+
+
+
+            //trigger onFileSelect method on clickUpload button clicked
+        this.clickUpload = function(){
+            document.getElementById('i_file').click();
+        };
+
+
+         this.onFileSelect = function(file) {
+
+          if(!file) return;
+
+          console.log("in file select");
+
+          console.log(file.name);
+
+          $scope.showProgressBar = true;
+
+          file.upload = Upload.upload({
+            url: '/admin/bubblePLE/fileAttachments/rest',
+            data: {fileattachment: {filename: file, title: file.name}},
+          });
+
+
+          file.upload.progress(function(evt){
+              console.log('percent: ' +parseInt(100.0 * evt.loaded / evt.total));
+          });
+
+
+          file.upload.then(function (response) {
+            $timeout(function () {
+              file.result = response.data;
+              console.log(response);
+              $mdToast.show(
+                      $mdToast.simple()
+                          .textContent('File uploaded successfully')
+                          .position('bottom')
+                          .hideDelay(3000)
+               );
+              console.log(response.data.item.filename);
+
+              var filePath = String(response.data.item.filename);
+              var res = filePath.split("/files/fileattachment/");
+              addFileNode(res[1], filePath);
+              $scope.showProgressBar = false;
+            });
+          }, function (response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ': ' + response.data;
+            console.log("in response");
+            console.log(response);
+            $mdToast.show(
+                      $mdToast.simple()
+                          .textContent('Error Uploading file')
+                          .position('bottom')
+                          .hideDelay(3000)
+                  );
+            $scope.showProgressBar = false;
+          }, function (evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            console.log(file.progress);
+            $scope.progressBarValue = file.progress;
+          });
+	}
+
 }]);
