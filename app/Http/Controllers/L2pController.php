@@ -48,24 +48,24 @@ class L2pController extends Controller {
         return response()->json(['Status' => $status, 'Body' => $body]);
     }
     
-    protected function addToModule($input, $uri, $uriQuery = [], $validations = []) {                
+    protected function addToModule($request, $uri, $uriQuery = [], $validations = []) {                
         if (empty($validations)) {
             if (!is_null($this->validations)) {
                 $validations = $this->validations;
             }                   
         }        
-        $validator = Validator::make($input, $validations);
+        $validator = Validator::make($request->all(), $validations);
         if ($validator->fails()) {
             return $this->jsonResponse(self::STATUS_FALSE, $validator->errors()->all());            
         }   
-        return $this->sendRequest(self::POST, $uri, $uriQuery, true, $this->addParamsReq2Req($input, array_keys($this->validations)));        
+        return $this->sendRequest(self::POST, $uri, $uriQuery, $this->addParamsReq2Req($request, array_keys($this->validations)), true);        
     }
     
-    protected function addParamsReq2Req($inputArray, $params) {
-        $returnArray = array();
+    protected function addParamsReq2Req($request, $params) {
+        $returnArray = array();        
         foreach ($params as $param) {                        
-            if(in_array($param, $inputArray)) {
-                $returnArray += [$param => $inputArray[$param]];
+            if($request->has($param)) {                                        
+                $returnArray += [$param => $request->input($param)];
             }
         }
         return $returnArray;
