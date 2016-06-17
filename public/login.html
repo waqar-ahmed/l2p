@@ -18,6 +18,49 @@
         <a href="login" target="_blank">Authorize</a>
     </div>
 
+
+    <script>
+
+window.setInterval(function(){
+  AuthenticateUser();
+}, 3000);
+
+
+    var xmlHttp = null;
+
+function AuthenticateUser()
+{
+	console.log("authenticating user");
+	    var Url = "authenticate";
+
+	    xmlHttp = new XMLHttpRequest(); 
+	    xmlHttp.onreadystatechange = ProcessRequest;
+	    xmlHttp.open( "GET", Url, true );
+	    xmlHttp.send( null );
+	}
+
+	function ProcessRequest() 
+	{
+	    if ( xmlHttp.readyState == 4 && xmlHttp.status == 200 ) 
+	    {
+	        if ( xmlHttp.responseText == "Not found" ) 
+	        {
+	            console.log("not found");
+	        }
+	        else
+	        {
+	        	var info = JSON.parse(xmlHttp.responseText);
+	            console.log(info.Status);
+
+	            if(info.Status){
+	            	window.location = "../public";
+	            }
+	        }                    
+	    }
+	}
+
+    </script>
+
 </div>
 
 </body>

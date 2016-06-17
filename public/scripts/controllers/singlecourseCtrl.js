@@ -1,6 +1,7 @@
 app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog) {
 
-var LOGIN_PAGE = "login.html";
+	var LOGIN_PAGE = "login.html";
+	
 	courseService.isUserAuthenticated()
 	.then(function(res){
 		if(res.Status == true)
@@ -22,8 +23,6 @@ var LOGIN_PAGE = "login.html";
 	gotoAuthorizePage = function(){
 		window.location = LOGIN_PAGE;
 	}
-
-
 
 	console.log("course ID: " + $stateParams.cid);
 
