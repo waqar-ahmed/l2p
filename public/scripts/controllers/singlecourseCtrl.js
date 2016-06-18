@@ -88,6 +88,17 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	},
 	];
 
+	
+	$scope.courseinfos = [
+	{
+		coursetitle: 'Introduction to Web Technology',
+		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
+		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
+	},
+	];
+	
+	
+	
 	$scope.setRole = function(){
 		if ($scope.userRole.indexOf("manager")!==-1){
 			$scope.authCUD = true;}
