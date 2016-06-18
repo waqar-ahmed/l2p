@@ -18,6 +18,8 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
+	var URL_GET_ALL_NEWS = "whats_all_new_since";
+
 	var authenticated = true;
 
 
@@ -68,7 +70,23 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_COURSE+ URL_SEMESTER+ "/"+sem)
 		.success(function(res){
-			//console.log(res);
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.getWhatsNew = function(mins){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_ALL_NEWS+ "/"+ mins)
+		.success(function(res){
+			// console.log(res);
 			defer.resolve(res);
 		})
 		.error(function(err, status){

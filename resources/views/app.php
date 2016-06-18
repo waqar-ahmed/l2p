@@ -83,6 +83,7 @@
 
         <!-- My Application services -->
         <script src="scripts/services/courseService.js"></script>
+         <script src="scripts/services/colorService.js"></script>
 
     </head>
     <body ng-app="L2pLabApp" ng-cloak>

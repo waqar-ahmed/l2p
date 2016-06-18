@@ -1,4 +1,4 @@
-.md-accordion .expandCollapse { 
+.md-accordion .expandCollapse {
   width:30px;
   height:30px;
   position:relative;
@@ -11,46 +11,50 @@
   margin-left: -2px;
   overflow:hidden;
 }
+
 .md-accordion .expandCollapse:active {
   border:0px;
 }
+
 .md-accordion .expandCollapse:before, .md-accordion .expandCollapse:after {
-  width:30px;
-  height:30px;
+  width:24px;
+  height:24px;
   display:block;
   position:absolute;
   top:0; left:0;
-  line-height:32px;
+  line-height:27px;
   text-align:center;
   -webkit-transition: .3s all ease-out;
   transition: .3s all ease-out;
 }
-.md-accordion .expandCollapse:before { 
+
+.md-accordion .expandCollapse:before {
   opacity:1
   -webkit-transform: rotate(0deg);
   transform: rotate(0deg);
   content: "|";
-  margin-top:-3px;
+  margin-top:-2px;
 }
+
 .md-accordion .expandCollapse:after {
   opacity:1;
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
   content: "|";
-  margin-left:-3px;
+  margin-left:-2px;
 }
+
 .md-accordion .active:before {
   opacity:1;
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
-  margin-left:3px;
-  margin-top:0px;
+  margin-left:2px;
+  margin-top: 0px;
 }
 
 .md-accordion .dataContent {
-  background: #F2F2F2;
+  background: #F6F9FE;
   height:0px;
-  width: 100% !important;
   overflow:hidden;
   -webkit-transition: .3s all ease-out;
   transition: .3s all ease-out;
@@ -58,57 +62,74 @@
 
 .md-accordion .activeContent {
   height:auto;
-  padding:20px;
-  display:block;
+  max-height: 180px;
+  padding: 20px;
+  display: block;
+  overflow: scroll;
+}
+
+.md-accordion .activeContent >p{
 }
 
 .md-accordion md-toolbar{
-  cursor:pointer;
-  border-bottom:1px solid #939393
+  cursor: pointer;
+  border-bottom: 1px solid #D6D6D6;
+  min-height: 75px;
+  background: white;
 }
 
 .customwidth
 {
+  padding: 0 20px 0 20px;
   margin: 0 -20 0 -20px !important;
   color: black !important;
 }
+
 .customcolor_email
 {
   background: white !important;
   border-top: 1px black !important;
   border-bottom: 1px black !important;
   color: black !important;
+  min-height: 75px !important;
+  margin :5px 0 0 10px;
 
 }
 
-#wrapper{
-    margin-left:auto;
-    margin-right:auto;
-    height:auto; 
-    width:auto;
-}
 
-#inner1{
-  float:left; 
-  font-size: 17px !important;
-  font-weight: normal;
-  max-width: 300px;
+.inner1{
+  font-size: 16px !important;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 
 }
 
-#inner2{
-float:left; 
-clear: left;
-font-size: 14px !important;
-font-weight: normal;
-} 
+.inner2{
+  clear: left;
+  font-size: 12px !important;
+}
 
-#inner2{
-float:left; 
-clear: left;
-font-size: 12px !important;
-font-weight: normal;
-} 
+.type_circle {
+  position: relative;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-right: 10px;
+  font-size: 12px;
+  border-radius: 50%;
+}
+
+.type_circle span{
+  padding: 11px 0 11px 0;
+}
+
+#wrapper div{
+  padding-bottom: 5px;
+}
+
+#definescroll >div{
+  overflow: scroll;
+  max-height: 100%;
+}
