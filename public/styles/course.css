@@ -8,10 +8,12 @@
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
+  margin: auto;
 }
 
 .numberCircle {
     border-radius: 50%;
+<<<<<<< HEAD
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
 
     width: 18px;
@@ -21,14 +23,62 @@
     margin-right: 10px;
     padding: 8px 10px 8px 8px;
 
+=======
+    width: 13px;
+    height: 13px;
+    padding: 10px;
+    margin-right: 10px;
+>>>>>>> 94bf6c00109a38e7b5b112a5ace36d9c8ac65dc7
     background: #666;
     border: 2px solid #efefef;
     color: #fff;
+    display: block;
     text-align: center;
+<<<<<<< HEAD
     text-align: center !important;
 
+=======
+>>>>>>> 94bf6c00109a38e7b5b112a5ace36d9c8ac65dc7
     font: 12px Arial, sans-serif, bolder;
+
 }
+
+
+
+.block {
+    width: 13px;
+    height: 13px;
+    padding: 14px;
+    position: relative;
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-right: 10px;
+    font-size: 12px;
+    border-radius: 50%;
+
+}
+
+.h-center {
+    text-align: center;
+}
+
+.v-center span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    border: 2px solid #efefef;
+    border-radius: 50%;
+}
+
+
+
+
+
+
 
 .tabsdemoDynamicHeight md-content {
   background-color: transparent !important; }

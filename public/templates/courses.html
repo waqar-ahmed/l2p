@@ -1,6 +1,7 @@
 <div class="listdemoListControls">
 
     <md-list style="height:20px !important;" flex>
+
       <div id="coursetitle">
         <md-subheader class="md-no-sticky" style="margin-bottom:10px !important; margin-top:10px !important; color: black;" flex>
           <div layout="row" layout-align="begin center" ng-model="selectedSemester" style="height:40px !important; ">
@@ -16,16 +17,12 @@
       </div>
 
       <md-list-item ng-repeat="course in courses|filter: {'semester':selectedSemester.sem}" ng-click="gotoCourse(course.itemId,course.uniqueid); $parent.setNav(course.courseTitle)" ng-init="outerIndex = $index">
-<!--         <md-checkbox style="display:none;"></md-checkbox> -->
-        <span class="numberCircle" ng-style="{'background-color':colors[$index]}">{{course.description != '' ? course.description : 'X'}}</span>
-        <span class="course_title">{{course.courseTitle}}</span>
+        <div class="block h-center v-center"><span ng-style="{'background-color':colors[$index]}">{{course.description != '' ? course.description : 'X'}}</span></div>
+        <span class="main_title">{{course.courseTitle}}</span>
+
         <md-divider ng-if="!$last"></md-divider>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
     </md-list-item>
-    </md-list>
-            <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
-    </md-list-item>
-
     </md-list>
 
    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="coursesLoaded" class="loadingicon">

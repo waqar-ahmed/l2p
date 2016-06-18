@@ -17,7 +17,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
       $scope.coursesLoaded = true;
 		});
 
-
    var colors = [
     '#4183D7',
     '#59ABE3',
@@ -31,7 +30,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
     '#89C4F4',
     '#020360'
    ];
-
 
   generateColors = function(length){
     $scope.colors = [];

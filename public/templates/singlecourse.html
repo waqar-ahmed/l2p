@@ -1,5 +1,6 @@
 <!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
  --><div ng-cloak>
+
 	<div class="fabbutton">
 	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
@@ -8,6 +9,7 @@
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
   	</div>
+
 	<md-content class="singleCourseTabs">
 		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass" >
 			<md-tab label="Learning Material" >
@@ -34,6 +36,7 @@
 					</div>
 				</md-content>
 			</md-tab>
+
 			<md-tab label="Assignments">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
@@ -81,12 +84,14 @@
 					</div>
 				</md-content>
 			</md-tab>
+
 			<md-tab label="Media Library">
 				<md-content class="md-padding">
 					<h1 class="md-display-2">Media Library</h1>
 					<p class="main_height">Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
 				</md-content>
 			</md-tab>
+			
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="main_height" style="margin-top:-10;">
@@ -98,6 +103,7 @@
                 					<div id="wrapper">
     								<div id="inner1"> {{email.subject}}</div>
    									<div id="inner2"> {{email.created*1000| date:'medium'}}</div>
+
 									</div>
 
             							<span flex=""></span>
@@ -119,6 +125,7 @@
 						
 				</md-content>
 			</md-tab>
+
 			<md-tab label="Announcements">
 				<md-content class="md-padding" layout ="column">
 				<div class="main_height">

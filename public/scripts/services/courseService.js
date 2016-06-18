@@ -9,6 +9,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_CURRENTSEM ="current_semester";
 	var URL_GET_ALL_EMIALS = "/all_emails";
     var LOGOUT = "logout";
+    var URL_SEMESTER = "/semester";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
 
     var URL_VIEW_USER_ROLE = "/view_user_role";
@@ -62,10 +63,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
-	this.getCurrentSem = function(){
+	this.getCurrentSem = function(sem){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_CURRENTSEM)
+		$http.get(URL_GET_COURSE+ URL_SEMESTER+ "/"+sem)
 		.success(function(res){
 			//console.log(res);
 			defer.resolve(res);
@@ -140,6 +141,22 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		return defer.promise;
     }
+
+    this.getCourseBySem = function(){
+		var defer = $q.defer();
+
+		$http.get()
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
 
 	this.getAllCourseEvents = function(){
 		var defer = $q.defer();

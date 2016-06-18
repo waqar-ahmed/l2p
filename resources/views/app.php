@@ -99,7 +99,7 @@
                                     <a class="inset md-hue-1" ng-href="https://oauth.campus.rwth-aachen.de/manage" target="_blank">Click me to authorize</a>
                                   </div> -->
                         <div layout="row" layout-align="start center">
-                            <div class="inset" flex-offset="15" flex="70">Welcome</div>
+                            <div class="inset" flex-offset="20" flex="65">Welcome</div>
                             <div flex="10">
                                 <md-button ng-click="logout()" class="md-icon-button">
                                     <ng-md-icon icon="logout"></ng-md-icon>
@@ -139,15 +139,15 @@
                 <!--       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
                         <ng-md-icon icon="add"></ng-md-icon>
                       </md-button> -->
-                <md-toolbar ng-show="!showSearch">
+                <md-toolbar>
                     <div class="md-toolbar-tools">
-                        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                        <md-button class="md-icon-button" ng-click="toggleSidenav('left');resetAuth()" hide-gt-md aria-label="Menu">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
                         <h3 class="main_title"> {{navbartitle}}</h3>
                         <span flex></span>
 
-                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="" ng-show="authcourse">
                             <ng-md-icon icon="more_vert"></ng-md-icon>
                         </md-button>
                     </div>
