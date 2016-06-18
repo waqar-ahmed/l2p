@@ -37,10 +37,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		.then(function(res){
 			console.log("got course by currentsemester");
 			console.log(res.dataSet);
-			$scope.courseinfo = res.dataSet;
-			var currentCourse = $.grep($scope.courseinfo, function(n,i) {
+			$scope.$parent.courseinfo = res.dataSet;
+			var currentCourse = $.grep($scope.$parent.courseinfo, function(n,i) {
   				return n.uniqueid === $stateParams.cid;
 			});
+			$scope.$parent.filterid = currentCourse[0].uniqueid;
+			console.log($scope.$parent.filterid);
 			$scope.$parent.setNav(currentCourse[0].courseTitle);
 		}, function(err){
 			console.log("Error occured : " + err);
@@ -58,7 +60,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	this.getCurrentCourse = function() {
 
-	} 
+	}
 
 	var iconClassMap = {
 		txt: 'icon-file-text',

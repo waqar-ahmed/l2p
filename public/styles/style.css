@@ -7,6 +7,14 @@ md-content.md-default-theme {
   background-color: #eee;
 }
 
+md-sidenav,
+md-sidenav.md-locked-open,
+md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 200px !important;
+    width: 70% !important;
+    max-width: 280px !important;
+}
+
 md-sidenav > md-toolbar {
   padding: 15px;
   height: 150px;
@@ -93,5 +101,27 @@ md-list-item.md-3-line md-divider[md-inset] {
 }
 
 .contentCls{
-   
+
+}
+
+.custom_menu {
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  max-width: 210px;
+}
+
+.course_selector {
+  font-size: 13px !important;
+  max-width: 200px;
+  height: 32px;
+  min-height: 32px;
+  max-height: 32px;
+}
+
+md-menu-content md-menu-item button.course_selector span {
+  max-width: 168px;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
 }

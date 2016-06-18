@@ -115,7 +115,7 @@
                                 <div class="inset">
                                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                                 </div>
-                                <div class="inset" ng-click="onMenuSelect(item.link, item.title)">{{item.title}}
+                                <div class="inset" ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
                                 </div>
                             </md-item-content>
                         </a>
@@ -128,7 +128,7 @@
                                 <div class="inset">
                                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                                 </div>
-                                <div class="inset"ng-click="onMenuSelect(item.link)">{{item.title}}
+                                <div class="inset"ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
                                 </div>
                             </md-item-content>
                         </a>
@@ -141,46 +141,29 @@
                       </md-button> -->
                 <md-toolbar>
                     <div class="md-toolbar-tools">
-                        <md-button class="md-icon-button" ng-click="toggleSidenav('left');resetAuth()" hide-gt-md aria-label="Menu">
+                        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
                         <h3 class="main_title"> {{navbartitle}}</h3>
                         <span flex></span>
+                        <md-menu md-position-mode="target-right target">
 
-                        <md-button class="md-icon-button" aria-label="Open Settings" ng-click="" ng-show="authcourse">
-                            <ng-md-icon icon="more_vert"></ng-md-icon>
-                        </md-button>
-                    </div>
-                    <!--  <md-tabs md-stretch-tabs class="md-primary" md-selected="data.selectedIndex">
-                       <md-tab id="tab1" aria-controls="tab1-content">
-                         Latest
-                       </md-tab>
-                       <md-tab id="tab2" aria-controls="tab2-content">
-                         Favorites
-                       </md-tab>
-                     </md-tabs> -->
-                </md-toolbar>
-                <md-toolbar class="md-hue-1" ng-show="showSearch">
-                    <div class="md-toolbar-tools">
-                        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
-                            <ng-md-icon icon="arrow_back"></ng-md-icon>
-                        </md-button>
-                        <h3 flex="10">
-                            Back
-                        </h3>
-                        <md-input-container md-theme="input" flex>
-                            <label>&nbsp;</label>
-                            <input ng-model="search.who" placeholder="enter search">
-                        </md-input-container>
-                        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-                            <ng-md-icon icon="search"></ng-md-icon>
-                        </md-button>
-                        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-                            <ng-md-icon icon="more_vert"></ng-md-icon>
-                        </md-button>
-                    </div>
+                            <md-button class="md-icon-button" aria-label="Open Settings" ng-click="$mdOpenMenu($event)" ng-show="authcourse">
+                                <ng-md-icon icon="more_vert"></ng-md-icon>
+                            </md-button>
 
+                              <md-menu-content>
+                                <md-menu-item ng-repeat="singlecourse in courseinfo|filter: {'uniqueid':'!'+filterid}" class="custom_menu">
+                                  <md-button ng-click="switchCourse(singlecourse.uniqueid)" class="course_selector">
+                                  {{singlecourse.courseTitle}}
+                                  </md-button>
+                                </md-menu-item>
+                              </md-menu-content>
+
+                        </md-menu>
+                    </div>
                 </md-toolbar>
+
                 <md-content flex md-scroll-y style="overflow-x:hidden; overflow-y:hidden;">
 
                     <!-- This is a place where your content will be loaded -->
