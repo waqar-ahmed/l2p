@@ -3,19 +3,7 @@
 namespace App\Http\Controllers;
 
 class CourseController extends L2pController
-{   
-    public function viewAllSemesters() {
-        $semesters = array();
-        $allCourses = $this->sendRequest(self::GET, 'viewAllCourseInfo');        
-        if($allCourses['Status']) {
-            foreach($allCourses['dataSet'] as $course) {
-                if(!in_array($course['semester'], $semesters)) {
-                    array_push($semesters, $course['semester']);
-                }
-            }
-        }
-        return $this->jsonResponse(self::STATUS_TRUE, $semesters);
-    }
+{       
     
     public function viewCourse($cid){
         return view('single_course', array('cid'=>$cid));

@@ -154,6 +154,6 @@ Route::group(['middleware'=>'l2pApi'], function() {
      * Routes used for backend
      */
     Route::get('/_courses', 'CourseController@_viewAllCourseInfo');
-        
+    Route::post('/_semesters', 'L2pController@_sortSemesters');
 });    
 
