@@ -1,122 +1,42 @@
-<div layout="column">
-  <div style="margin-left:25px;"><b>Quick Menu</b></div>
-  <div layout="row" layout-padding layout-margin >
-    <div flex="33" style="background-color:#EEEEEE;">courses</div>
-    <div flex="33" style="background-color:#EEEEEE;">previous semesters</div>
-    <div flex="33" style="background-color:#EEEEEE;">calendar</div>
+<md-subheader class="md-no-sticky"><b>What's new</b></md-subheader>
+<div ng-cloak>
+	<div class="fabbutton">
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
+	   add
+	   </md-button>
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
+	   delete
+	   </md-button>
+  	</div>
+	
+	<div>
+<!--     <h1 class="md-title">Update since</h1> -->
+    <div layout="row">
+      <md-input-container style="margin-right: 10px;">
+        <label>Update Since</label>
+        <md-select ng-model="lastday">
+          <md-option ng-repeat="lastday in lastdays" value="{{lastday}}">{{lastday}}</md-option>
+        </md-select>
+      </md-input-container>       
+    </div>
   </div>
+  
+  
+	<md-content>
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
+			<md-tab label="">
+				<md-content class="md-padding">
+					<h3>Lecture Name</h3>
+					<div class="row">
+						<div class="span6">
+							<div style="padding: 5px; border: 0px solid #aaa;">
+								<div>Root</div>
+								<div tree-view="structure" tree-view-options="options3"></div>
+							</div>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
 </div>
-
-
-<!-- Hidden element to upload file -->
-                <div>
-                    <!-- <input type="file" id="i_file" name="fileattachment[]" ngf-select="onFileSelect($file)" style="display: none;"/> -->
-                    <input type="file" file-model="myFile" name="fileattachment[]" id="i_file" style="display: none;" />
-                </div>
-
-
-
-<!--   <md-button aria-label="file" ng-click="clickUpload()" flex>
-                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
-                    <md-tooltip md-direction="right">
-                        select file
-                    </md-tooltip>
-                    <label class="icon-label">select file</label>
-                    
-                </md-button>
-
-
-
-  <md-button aria-label="file" ng-click="uploadFIle()" flex>
-                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
-                    <md-tooltip md-direction="right">
-                        Upload Document
-                    </md-tooltip>
-                    <label class="icon-label">Upload Document</label>
-                    
-                </md-button> -->
-
-
- <!--  <td style="background-color:#EEEEEE;height:33%;width:33%;">
-    <center>calendar</center>
-  </td> -->
-
-<!--
-<div class="inset" hide-sm></div>
-            <ng-switch on="data.selectedIndex" class="tabpanel-container">
-              <div role="tabpanel"
-                   id="tab1-content"
-                   aria-labelledby="tab1"
-                   ng-switch-when="0"
-                   md-swipe-left="next()"
-                   md-swipe-right="previous()"
-                   layout="row" layout-align="center center">
-                   <md-card flex-gt-sm="90" flex-gt-md="80">
-                    <md-card-content>
-                      <h2>What's new</h2>
-                      <md-list>
-                        <md-item ng-repeat="item in activity | filter:search">
-                          <md-item-content>
-                            <div class="md-tile-left inset" hide-sm>
-                                <user-avatar></user-avatar>
-                            </div>
-                            <div class="md-tile-content">
-                              <h3>{{item.what}}</h3>
-                              <h4>{{item.who}}</h4>
-                              <p>
-                                {{item.notes}}
-                              </p>
-                            </div>
-                          </md-item-content>
-                          <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                          <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                        </md-item>
-                        <md-divider></md-divider>
-                        <md-item layout class="inset">
-                            <md-button layout layout-align="start center" flex class="md-primary">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> More
-                            </md-button>
-                        </md-item>
-                      </md-list>
-                    </md-card-content>
-                  </md-card>
-              </div>
-              <div role="tabpanel"
-                   id="tab2-content"
-                   aria-labelledby="tab2"
-                   ng-switch-when="1"
-                   md-swipe-left="next()"
-                   md-swipe-right="previous()"
-                   layout="row" layout-align="center center">
-                  <md-card flex-gt-sm="90" flex-gt-md="80">
-                    <md-card-content>
-                      <h2>Favorites</h2>
-                      <md-list>
-                        <md-item ng-repeat="item in activity | filter:search | orderBy:'-what'">
-                          <md-item-content>
-                            <div class="md-tile-left inset" hide-sm>
-                                <user-avatar></user-avatar>
-                            </div>
-                            <div class="md-tile-content">
-                              <h3>{{item.what}}</h3>
-                              <h4>{{item.who}}</h4>
-                              <p>
-                                {{item.notes}}
-                              </p>
-                            </div>
-                          </md-item-content>
-                          <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                          <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                        </md-item>
-                        <md-divider></md-divider>
-                        <md-item layout class="inset">
-                            <md-button layout layout-align="start center" flex class="md-primary">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> More
-                            </md-button>
-                        </md-item>
-                      </md-list>
-                    </md-card-content>
-                  </md-card>
-              </div>
-
-          </ng-switch> -->
