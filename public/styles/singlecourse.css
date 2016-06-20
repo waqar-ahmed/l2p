@@ -1,7 +1,7 @@
 * {margin: 0; padding: 0;}
 
 .singlecourse >div {
-  margin: 20px;
+  /*margin: 20px;*/
 }
 
 .singlecourse ul {
@@ -11,6 +11,14 @@
 
 .singlecourse h3 {
   font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+.email_body
+{
+  margin-top: 3px;
+  margin-bottom: 15px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .singlecourse li img {
@@ -48,8 +56,9 @@
 .main_height
 {
   height: 100% !important;
-/*  border: 2px solid red !important;
-*/}
+  margin-bottom: 20px;
+/* border: 2px solid red !important;*/
+}
 
 
 .loadingicon{

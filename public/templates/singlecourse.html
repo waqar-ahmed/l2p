@@ -11,7 +11,7 @@
   	</div>
 
 	<md-content class="singleCourseTabs">
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass">
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass" >
 			<md-tab label="Learning Material" >
 				<md-content class="md-padding">
 				<!-- <div class="loadingicon" ng-hide="dataLoaded">
@@ -112,6 +112,36 @@
 							</li>
 						</ul>
 					</div>
+<!-- 					<div class="main_height" style="margin-top:-10;">
+							<div class="md-accordion customwidth" ng-repeat="email in emails">
+    							<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+        							<div class="md-toolbar-tools customcolor_email" >
+
+                					<div id="wrapper">
+    								<div id="inner1"> {{email.subject}}</div>
+   									<div id="inner2"> {{email.created*1000| date:'medium'}}</div>
+
+									</div>
+
+            							<span flex=""></span>
+            							<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+        							</div>
+    							</md-toolbar>
+    						<div ng-class="{dataContent:true, activeContent:data.expanded}" >
+       						 	<div style="margin-right:40px !important;">
+
+       						 		<b>{{email.subject}}</b>
+       						 		<p class="email_body">{{email.body}}</p>
+       						 		<p><b>From: </b> {{email.from}}</p>
+
+
+       							 </div>
+       						 </div>
+						</div>
+
+					</div> -->
+
 				</md-content>
 			</md-tab>
 
