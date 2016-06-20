@@ -22,8 +22,11 @@ Route::get('/logout', 'AuthController@logout');
 Route::get('/authenticate', 'AuthController@authenticateUser');
 
 Route::group(['middleware'=>'l2pApi'], function() {        
-
-    Route::get('/semesters', 'CourseController@viewAllSemesters');
+    
+    /*
+     * View all semesters by full name
+     */
+    Route::get('/semesters', 'L2pController@viewAllSemesters');
     Route::get('/courses', 'CourseController@viewAllCouseInfo');
     Route::get('/current_semester', 'CourseController@viewAllCourseInfoByCurrentSemester');
     Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
