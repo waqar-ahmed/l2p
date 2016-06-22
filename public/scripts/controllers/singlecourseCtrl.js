@@ -2,6 +2,7 @@
 app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
 
 	var LOGIN_PAGE = "login.html";
+	$scope.emailsLoaded = false;
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
@@ -14,6 +15,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("got emails");
 			console.log(res.dataSet);
 			$scope.emails = res.dataSet;
+			$scope.emailsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
@@ -98,6 +100,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		console.log($scope.authCUD);
 	}
 
+	$scope.resetLoading = function() {
+		$scope.emailsLoaded = false;
+	}
+
 	// $scope.test = function(){
 	// 	$mdDialog.show(
 	//      	$mdDialog.alert()
@@ -119,6 +125,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    		selectedEmail: angular.copy(selectedEmail),
 	    		method: method,
 	    		cid: $stateParams.cid,
+	    		resetLoading: $scope.resetLoading.bind(self)
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
@@ -137,6 +144,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		.then(function(res){
 			console.log("email is deleted");
 			console.log(res);
+			$scope.emailsLoaded = false;
 			$window.alert("email is deleted");
 			$scope.refreshEmails();
 		},
@@ -151,13 +159,14 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				console.log("refresh emails");
 				console.log(res.dataSet);
 				$scope.emails = res.dataSet;
+				$scope.emailsLoaded = true;
 			},
 			function(err){
 				console.log("Error occured : " + err);
 			});
 		}
 
-	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid) {
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
@@ -232,6 +241,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				console.log("new email sent");
 				console.log(res);
 				$scope.back();
+				resetLoading();
 				$window.alert("new email is sent");
 			},
 			function(err){

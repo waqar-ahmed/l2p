@@ -34,13 +34,14 @@
 
 		 <md-input-container ng-show="authWrite">
 	    	<label>CC</label>
-	    	<input type="text" ng-model="currentemail.cc" ng-disabled="!authWrite" placeholder=" ">
+	    	<input type="text" ng-model="currentemail.cc" ng-disabled="!authWrite">
 		</md-input-container>
 
 		<md-input-container ng-show="authWrite">
 	    	<label>Content</label>
 			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" placeholder=" " ng-model="currentemail.body">{{currentemail.body}}</textarea>
 		</md-input-container>
+
 		<div ng-show="!authWrite" class="email-content">
 			<label>Content</label>
 			<p ng-bind-html="currentemail.body"></p>

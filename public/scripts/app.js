@@ -109,10 +109,9 @@ console.log("factory called");
         getUploadedFile : function(){
             return uploadedFile;
         },
-        
+
         resetUploadedFile : function(){
             uploadedFile = null;
         }
     }
 });
-

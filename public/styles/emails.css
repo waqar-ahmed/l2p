@@ -130,7 +130,23 @@
   padding-bottom: 5px;
 }
 
-#definescroll >div{
-  overflow: scroll;
-  max-height: 100%;
+.definescroll {
+  height: calc(100% - 180px) !important;
+   overflow: auto;
+}
+
+.select-header md-input-container{
+  margin: 12px 4px 0 0;
+  line-height: normal;
+}
+
+.select-header label{
+  font-size:18px!important;
+  font-weight:bold;
+  color:black !important;
+}
+
+.select-header h4{
+  margin:16px 10px 0 0;
+  font-size:16px!important;
 }

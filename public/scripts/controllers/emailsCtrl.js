@@ -1,12 +1,44 @@
-app.controller('emailsCtrl', function($scope, colorService, courseService){
+app.controller('emailsCtrl', function($scope, $window, colorService, courseService){
 
     $scope.dataset = {};
     $scope.courses = {};
     $scope.combinedData = [];
     $scope.colors = [];
-
+    $scope.emailsLoaded = false;
+    $scope.contentTypes = ["email", "announcement"];
+    $scope.selectedType = ["email", "announcement"];
+    $scope.days = [
+        {
+            "name": "3 days",
+            "value": 3,
+        },
+        {
+            "name": "7 days",
+            "value": 7,
+        },
+        {
+            "name": "two weeks",
+            "value": 14,
+        },
+        {
+            "name": "month",
+            "value": 30,
+        },
+    ];
+    $scope.selectedDay = {
+        "name": "3 days",
+        "value": 3,
+    };
     var sem = "ss16";
-    var mins = 10080;
+    var minPerDay = 1440;
+    var mins = $scope.selectedDay.value* minPerDay;
+    var tempmin = mins;
+
+    if ($window.innerWidth < 435) {
+         $scope.smallscreen = true;
+    } else {
+        $scope.smallscreen = false;
+    }
 
     courseService.getWhatsNew(mins)
         .then(function(res){
@@ -27,6 +59,9 @@ app.controller('emailsCtrl', function($scope, colorService, courseService){
     data.expanded = !data.expanded;
     };
 
+    $scope.containsComparator = function(expected, actual){
+      return actual.indexOf(expected) > -1;
+    };
 
     parseDataSet = function() {
         for (var i=0; i<$scope.dataset.length; i++){
@@ -72,9 +107,11 @@ app.controller('emailsCtrl', function($scope, colorService, courseService){
                 $scope.combinedData.push(currentData);
             }
         }
+        // $scope.combinedData = orderBy($scope.combined);
         console.log("data is parsed");
         console.log($scope.combinedData);
         $scope.colors = colorService.generateColors($scope.combinedData.length);
+        $scope.emailsLoaded = true;
     }
 
     getCurrentSem = function() {
@@ -89,16 +126,21 @@ app.controller('emailsCtrl', function($scope, colorService, courseService){
         });
     }
 
-    refreshNews = function() {
-        $scope.combinedData = [];
-        courseService.getWhatsNew(mins)
-            .then(function(res){
-                console.log("refresh news");
-                console.log(res.dataset);
-                $scope.dataset = res.dataset;
-                parseDataSet();
-            }, function(err){
-                console.log("Error occured : " + err);
-        });
+    $scope.refreshNews = function(value) {
+        if (mins != value* minPerDay) {
+            mins = value* minPerDay;
+            $scope.emailsLoaded = false;
+            $scope.combinedData = [];
+            courseService.getWhatsNew(mins)
+                .then(function(res){
+                    console.log("refresh news");
+                    console.log(res.dataset);
+                    $scope.dataset = res.dataset;
+                    parseDataSet();
+                }, function(err){
+                    console.log("Error occured : " + err);
+            });
+        }
     }
+
 });

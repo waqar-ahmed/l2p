@@ -55,7 +55,7 @@
 }
 .main_height
 {
-  height: 100% !important;
+  height: calc(100% - 190px) !important;
   margin-bottom: 20px;
 /* border: 2px solid red !important;*/
 }
@@ -75,7 +75,7 @@
      display: none !important;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar {
+    display: none;
 }
 

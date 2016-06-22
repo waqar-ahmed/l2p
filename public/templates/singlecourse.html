@@ -95,7 +95,7 @@
 			<md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<ul ng-repeat="email in emails">
+						<ul ng-repeat="email in emails" ng-show="emailsLoaded">
 							<li>
 								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')">
 									<div flex="grow">
@@ -111,6 +111,9 @@
 	         				 	</div>
 							</li>
 						</ul>
+					  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+       			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        				</div>
 					</div>
 <!-- 					<div class="main_height" style="margin-top:-10;">
 							<div class="md-accordion customwidth" ng-repeat="email in emails">
