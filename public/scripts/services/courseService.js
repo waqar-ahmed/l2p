@@ -7,14 +7,20 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_ALL_COURSES = "courses";
 	var URL_GET_COURSE = "course";
 	var URL_GET_CURRENTSEM ="current_semester";
-	var URL_GET_ALL_EMIALS = "/all_emails";
     var LOGOUT = "logout";
     var URL_SEMESTER = "/semester";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
 
     var URL_VIEW_USER_ROLE = "view_user_role";
+
+	var URL_GET_ALL_EMIALS = "/all_emails";
     var URL_ADD_EMAIL = "/add_email";
 	var URL_DELETE_EMAIL = "/delete_email";
+
+	var URL_GET_ALL_ANNOUNS = "/all_anouncements";
+	var URL_ADD_ANNOUNS = "/add_announcement";
+	var URL_DELETE_ANNOUNS = "/delete_announcement";
+	var URL_UPDATE_ANNOUNS = "/update_announcement";
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
@@ -81,6 +87,38 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+    this.getCourseBySem = function(){
+		var defer = $q.defer();
+
+		$http.get()
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
+	this.getAllCourseEvents = function(){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_ALL_COURSE_EVENTS)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
 	this.getWhatsNew = function(mins){
 		var defer = $q.defer();
 
@@ -96,22 +134,6 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		return defer.promise;
 	};
-
-	this.getEmailbyid = function(cid){
-		var defer = $q.defer();
-
-		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ALL_EMIALS)
-		.success(function(res){
-			console.log(res);
-			defer.resolve(res);
-		})
-		.error(function(err, status){
-			console.log(err);
-			defer.reject(err);
-		})
-
-		return defer.promise;
-	}
 
 	this.getAllLearningMaterials = function(cid){
 		var defer = $q.defer();
@@ -160,28 +182,12 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
     }
 
-    this.getCourseBySem = function(){
+	this.getEmailbyid = function(cid){
 		var defer = $q.defer();
 
-		$http.get()
+		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ALL_EMIALS)
 		.success(function(res){
-			//console.log(res);
-			defer.resolve(res);
-		})
-		.error(function(err, status){
-			console.log(err);
-			defer.reject(err);
-		})
-
-		return defer.promise;
-	}
-
-	this.getAllCourseEvents = function(){
-		var defer = $q.defer();
-
-		$http.get(URL_GET_ALL_COURSE_EVENTS)
-		.success(function(res){
-			//console.log(res);
+			// console.log(res);
 			defer.resolve(res);
 		})
 		.error(function(err, status){
@@ -214,6 +220,58 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
     var defer = $q.defer();
     var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_EMAIL+ "/"+ itemId;
+
+	$http.get(content)
+	.success(function(res){
+		// console.log(res);
+		defer.resolve(res);
+	})
+	.error(function(err, status){
+		console.log(err);
+		defer.reject(err);
+	})
+
+	return defer.promise;
+    }
+
+    this.getAnnounbyid = function(cid){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_GET_ALL_ANNOUNS)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
+    this.addAnnoun = function(cid, announcement){
+
+        var defer = $q.defer();
+        var content = URL_GET_COURSE+ "/"+ cid+ URL_ADD_ANNOUNS;
+
+		$http.post(content, announcement)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+    }
+
+    this.deleteAnnoun = function(cid, itemId){
+
+    var defer = $q.defer();
+    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_ANNOUNS+ "/"+ itemId;
 
 	$http.get(content)
 	.success(function(res){

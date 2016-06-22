@@ -1,31 +1,35 @@
 <div>
-    <md-subheader style="margin-bottom:10px !important; margin-top:10px !important; color: black;">
+    <div id="emailtitle">
+    <md-subheader style="margin:10px 0 10px 0 !important; padding: 4px 16px 4px 16px !important; color: black;">
         <div layout="row" layout-align="begin center" class="select-header">
 
-        <div flex="50" flex-sm="70" flex-gt-sm="75" layout-align="end center" layout="row">
+        <div flex="50" flex-sm="70" flex-md="75" flex-gt-md="85" layout-align="begin center" layout="row">
             <span flex></span>
-            <h4 ng-hide="smallscreen"><b>Types: </b></h4>
-            <md-input-container>
-            <label ng-show="smallscreen">Types: </label>
-                 <md-select ng-model="selectedType" multiple ng-model-options="{trackBy: '$value'}">
-                    <md-option ng-value="type" ng-repeat="type in contentTypes">{{type}}</md-option>
-                </md-select>
-            </md-input-container>
+             <div layout="column" layout-gt-xs="row" layout-align="begin end">
+                <h4><b>Types: </b></h4>
+                <md-input-container style="width:124px!important;">
+                     <md-select ng-model="selectedType" multiple ng-model-options="{trackBy: '$value'}">
+                        <md-option ng-value="type" ng-repeat="type in contentTypes">{{type}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
         </div>
 
         <div flex layout-align="end center" layout="row">
             <span flex></span>
-            <h4 ng-hide="smallscreen"><b>Last: </b></h4>
-            <md-input-container>
-             <label ng-show="smallscreen">Last: </label>
-              <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value.name'}">
-                <md-option ng-repeat="day in days" ng-value="day" ng-click="refreshNews(day.value)">{{day.name}}</md-option>
-              </md-select>
-            </md-input-container>
+             <div layout="column" layout-gt-xs="row" layout-align="begin end">
+                <h4><b>Last: </b></h4>
+                <md-input-container>
+                  <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value.name'}">
+                    <md-option ng-repeat="day in days" ng-value="day" ng-click="refreshNews(day.value)">{{day.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+            </div>
         </div>
 
         </div>
     </md-subheader>
+    </div>
 
     <div class="definescroll">
         <div class="md-accordion customwidth" ng-repeat="data in combinedData|orderBy:'date':true|filter:{'type': selectedType}:containsComparator" ng-init="outerIndex = $index">

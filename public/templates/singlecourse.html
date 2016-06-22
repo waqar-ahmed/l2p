@@ -5,7 +5,7 @@
 	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
-	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()" ng-show="authCUD">
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewAnnoun(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
   	</div>
@@ -149,24 +149,28 @@
 			</md-tab>
 
 			<md-tab label="Announcements">
-				<md-content class="md-padding" layout ="column">
-				<div class="main_height">
-					<md-card ng-repeat="announcement in announcements">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">{{announcement.title}}</span>
-								<span class="md-subhead">Created by {{announcement.createdBy}} at {{announcement.createdDate}}</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<p>{{announcement.content}}</p>
-						</md-card-content>
-					</md-card>
+			<md-content class="md-padding">
+					<div class="singlecourse  main_height">
+						<ul ng-repeat="announcement in announcements" ng-show="announcementsLoaded">
+							<li>
+								<div layout="row" layout-align="begin center" ng-click="viewAnnoun(announcement,'read')">
+									<div flex="grow">
+										<h3>{{announcement.title}}</h3>
+										<p><b>expire date:</b> {{(announcement.expireTime==0) ? '' : announcement.expireTime*1000| date:'mediumDate'}}</p>
+										<p><b>Created Date:</b> {{announcement.created*1000| date:'mediumDate'}}</p>
+									</div>
+									<span flex></span>
+									<md-button class="md-icon-button" ng-click="deleteAnnoun(announcement); $event.stopPropagation()" ng-show="authCUD">
+	            					<ng-md-icon icon="delete"></ng-md-icon>
+	         				 		</md-button>
+	         				 	</div>
+							</li>
+						</ul>
+					  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="announcementsLoaded" class="loadingicon">
+       			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        				</div>
 					</div>
 				</md-content>
-			</md-tab>
-		</md-tabs>
-	</md-content>
 
 	 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>

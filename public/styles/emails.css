@@ -136,7 +136,8 @@
 }
 
 .select-header md-input-container{
-  margin: 12px 4px 0 0;
+  margin: 2px 4px 0 0;
+  padding: 0;
   line-height: normal;
 }
 
@@ -147,6 +148,10 @@
 }
 
 .select-header h4{
-  margin:16px 10px 0 0;
+  margin:0px 10px 8px 0;
   font-size:16px!important;
+}
+
+#emailtitle .md-subheader ._md-subheader-inner {
+  padding : 8px 16px 8px 16px;
 }

@@ -6,6 +6,11 @@
   color: #696969;
 }
 
+.email-detail input {
+  max-width: 100%;
+  max-height: 60px;
+}
+
 .email-detail #creatinfo {
   padding: 0 18px 12px 14px;
   font-size:13px;
@@ -39,12 +44,17 @@
 
 .email-content label{
   font-size: 11px;
-  color: #696969;
+  color: rgba(0,0,0,0.54);
   padding: 8px 8px 8px 8px;
+  margin-left: 1px;
 }
 
 .email-content{
-  margin: -6px 10px 0 0;
+  margin: -7px 10px 0 0;
+}
+
+.email-content md-datepicker{
+  margin: -6px -2px 8px -3px !important;
 }
 
 #email-divider{

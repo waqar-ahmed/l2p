@@ -6,10 +6,10 @@
 		</md-button>
 		<h3>Details</h3>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="deleteEmail()" ng-show="authDelete">
+		<md-button class="md-icon-button" ng-click="" ng-show="authDelete">
 			<ng-md-icon icon="delete"></ng-md-icon>
 		</md-button>
-		<md-button class="md-icon-button" ng-click="addEmail()" ng-show="authWrite">
+		<md-button class="md-icon-button" ng-click="addAnnoun()" ng-show="authWrite">
 			<ng-md-icon icon="save"></ng-md-icon>
 		</md-button>
 	</div>
@@ -17,20 +17,25 @@
     <md-content layout="column">
 	    <md-input-container>
 	    	<label>Title</label>
-	    	<input type="text" ng-model="currentemail.subject" ng-disabled="!authWrite">
+	    	<input type="text" ng-model="currentannoun.title" ng-disabled="!authWrite" placeholder="">
 		</md-input-container>
 
 		<md-input-container ng-show="authWrite">
 	    	<label>Content</label>
-			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" placeholder=" " ng-model="currentemail.body">{{currentemail.body}}</textarea>
+			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" placeholder=" " ng-model="currentannoun.body">{{currentannoun.body}}</textarea>
 		</md-input-container>
-		
+
 		<div ng-show="!authWrite" class="email-content">
 			<label>Content</label>
-			<p ng-bind-html="currentemail.body"></p>
+			<p ng-bind-html="currentannoun.body"></p>
+		</div>
+		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
+
+		<div class="email-content" layout="column">
+			<label>Expire Date</label>
+			<md-datepicker ng-model="expireEdited" md-placeholder="Enter date" class="email-content" ng-disabled="!authWrite"></md-datepicker>
 		</div>
 
-		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
 	</md-content>
-		<div style="font-size:13px; color:black;" id="creatinfo" ng-show="authShow">created by {{currentemail.from}} at {{currentemail.created*1000| date:'medium'}}</div>
+		<div style="font-size:13px; color:black;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
 </md-dialog>

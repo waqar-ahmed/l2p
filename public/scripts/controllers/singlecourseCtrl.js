@@ -2,7 +2,12 @@
 app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
 
 	var LOGIN_PAGE = "login.html";
+	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
+
 	$scope.emailsLoaded = false;
+	$scope.announcementsLoaded = false;
+	$scope.$parent.authcourse = true;
+	$scope.breadcrums = [''];
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
@@ -20,6 +25,16 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("Error occured : " + err);
 	});
 
+	courseService.getAnnounbyid($stateParams.cid)
+		.then(function(res){
+			console.log("got announcements");
+			console.log(res.dataSet);
+			$scope.announcements = res.dataSet;
+			$scope.announcementsLoaded = true;
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
+
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
 			console.log("got role");
@@ -29,11 +44,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-
-	$scope.$parent.authcourse = true;
-	$scope.breadcrums = [''];
-
-	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
 
 	courseService.getCurrentSem(sem)
 		.then(function(res){
@@ -83,15 +93,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	};
 
 
-	$scope.announcements = [
-	{
-		title: 'This is an announcement.',
-		createdBy: ' L2P',
-		createdDate: '30/05/16 20:00',
-		content:"The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request.",
-	},
-	];
-
 	$scope.setRole = function(){
 		if ($scope.userRole.indexOf("manager")!==-1){
 			$scope.authCUD = true;}
@@ -100,8 +101,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		console.log($scope.authCUD);
 	}
 
-	$scope.resetLoading = function() {
+	$scope.resetEmailLoading = function() {
 		$scope.emailsLoaded = false;
+	}
+
+	$scope.resetAnnounLoading = function() {
+		$scope.announcementsLoaded = false;
 	}
 
 	// $scope.test = function(){
@@ -125,18 +130,14 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    		selectedEmail: angular.copy(selectedEmail),
 	    		method: method,
 	    		cid: $stateParams.cid,
-	    		resetLoading: $scope.resetLoading.bind(self)
+	    		resetLoading: $scope.resetEmailLoading.bind(self),
+	    		refreshEmail: $scope.refreshEmails.bind(self),
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:true
-	    })
-	    .then(function() {
-            $scope.refreshEmails();
-        }, function() {
-            $scope.refreshEmails();
-        });
+	    });
 	};
 
 	$scope.deleteEmail = function(email) {
@@ -154,19 +155,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
   	}
 
 	$scope.refreshEmails = function(){
-			courseService.getEmailbyid($stateParams.cid)
-			.then(function(res){
-				console.log("refresh emails");
-				console.log(res.dataSet);
-				$scope.emails = res.dataSet;
-				$scope.emailsLoaded = true;
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-		}
+	courseService.getEmailbyid($stateParams.cid)
+		.then(function(res){
+			console.log("refresh emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+			$scope.emailsLoaded = true;
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
 
-	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading) {
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
@@ -177,34 +178,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 		else if (method == 'read'){
 			$scope.authShow = true;
+			$scope.currentemail = selectedEmail;
 		}
-		else if (method == 'edit'){
-			$scope.authWrite = true;
-			$scope.authDelete = true;
-			$scope.authShow = true;
-		}
-
-		$scope.currentemail = selectedEmail;
 
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
-
-	  	// $scope.editEmail = function() {
-	  	// 	console.log("edit");
-	  	// }
-
-	  	$scope.deleteEmail = function() {
-	  	courseService.deleteEmail(cid, $scope.currentemail.itemId)
-			.then(function(res){
-				console.log("email is deleted");
-				console.log(res);
-				$scope.back();
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-	  	}
 
 	  	editRecipient = function() {
 	  		var strRecipient = "";
@@ -226,14 +205,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  			'cc' : $scope.currentemail.cc,
 	  		};
 
-	  		// var newEmail = {
-	  		// 	'recipients': 'tutors;',
-	  		// 	'cc' : 'test@rwth-aachen.de',
-	  		// 	'body': 'this is content',
-	  		// 	'subject': 'test',
-	  		// 	'replyTo': 'Reply to my address',
-	  		// };
-
 	  		console.log(newEmail);
 
 	  		courseService.addEmail(cid, newEmail)
@@ -242,6 +213,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				console.log(res);
 				$scope.back();
 				resetLoading();
+				refreshEmail();
 				$window.alert("new email is sent");
 			},
 			function(err){
@@ -250,6 +222,107 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  	}
 	};
 
+	$scope.viewAnnoun = function(announcement,method){
+		if (announcement === undefined)
+			{selectedAnnouncement = {};}
+		else
+			{selectedAnnouncement = announcement;}
+	    $mdDialog.show({
+	    	controller: AnnounDialogController,
+	    	locals: {
+	    		selectedAnnouncement: angular.copy(selectedAnnouncement),
+	    		method: method,
+	    		cid: $stateParams.cid,
+	    		resetLoading: $scope.resetAnnounLoading.bind(self),
+	    		refreshAnnouns: $scope.refreshAnnouns.bind(self)
+
+	    	},
+	    	bindToController: true,
+	      	templateUrl:'templates/viewannouncement.html',
+	      	parent: angular.element(document.body),
+	      	clickOutsideToClose:true
+	    });
+	};
+
+	$scope.deleteAnnoun = function(announcement) {
+  	courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+		.then(function(res){
+			console.log("announcement is deleted");
+			console.log(res);
+			$scope.announcementsLoaded = false;
+			$window.alert("announcement is deleted");
+			$scope.refreshAnnouns();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+
+	$scope.refreshAnnouns = function(){
+	courseService.getAnnounbyid($stateParams.cid)
+		.then(function(res){
+			console.log("refresh announcements");
+			console.log(res.dataSet);
+			$scope.announcements = res.dataSet;
+			$scope.announcementsLoaded = true;
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+
+	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
+		$scope.authWrite = false;
+		$scope.authDelete = false;
+		$scope.authShow = false;
+
+		if (method == 'creat'){
+			$scope.authWrite = true;
+			$scope.expireEdited = new Date();
+		}
+		else if (method == 'read'){
+			$scope.authShow = true;
+			$scope.currentannoun = selectedAnnouncement;
+			if ($scope.currentannoun.expireTime != 0) {
+				var tempDate = new Date();
+				tempDate.setTime($scope.currentannoun.expireTime*1000);
+				$scope.expireEdited = tempDate;
+			}
+		}
+		else if (method == 'edit'){
+			$scope.authWrite = true;
+			$scope.authDelete = true;
+			$scope.authShow = true;
+		}
+
+	  	$scope.back = function() {
+	    	$mdDialog.hide();
+	  	};
+
+	  	$scope.addAnnoun = function(){
+	  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+	  		console.log(expireTime);
+	  		var newAnnouncement = {
+  				"title": $scope.currentannoun.title,
+				"body": $scope.currentannoun.body,
+				"expireTime": expireTime,
+	  		};
+
+	  		console.log(newAnnouncement);
+	  		courseService.addAnnoun(cid, newAnnouncement)
+			.then(function(res){
+				console.log("new announcement sent");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshAnnouns();
+				$window.alert("new announcement is sent");
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
+	};
 
 	function parseLearningMaterials(y){
 
