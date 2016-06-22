@@ -6,10 +6,10 @@
 		</md-button>
 		<h3>Details</h3>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="" ng-show="authDelete">
-			<ng-md-icon icon="delete"></ng-md-icon>
+		<md-button class="md-icon-button" ng-click="activeEdit()" ng-show="authEdit">
+			<ng-md-icon icon="edit"></ng-md-icon>
 		</md-button>
-		<md-button class="md-icon-button" ng-click="addAnnoun()" ng-show="authWrite">
+		<md-button class="md-icon-button" ng-click="authShow? editAnnoun() : addAnnoun()" ng-show="authWrite">
 			<ng-md-icon icon="save"></ng-md-icon>
 		</md-button>
 	</div>
@@ -22,7 +22,7 @@
 
 		<md-input-container ng-show="authWrite">
 	    	<label>Content</label>
-			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" placeholder=" " ng-model="currentannoun.body">{{currentannoun.body}}</textarea>
+			<textarea md-detect-hidden rows="8" ng-disabled="!authWrite" ng-model="currentannoun.body" >{{currentannoun.body}}</textarea>
 		</md-input-container>
 
 		<div ng-show="!authWrite" class="email-content">

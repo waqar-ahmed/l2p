@@ -39,7 +39,7 @@
 
 		<md-input-container ng-show="authWrite">
 	    	<label>Content</label>
-			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" placeholder=" " ng-model="currentemail.body">{{currentemail.body}}</textarea>
+			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" ng-model="currentemail.body">{{currentemail.body}}</textarea>
 		</md-input-container>
 
 		<div ng-show="!authWrite" class="email-content">

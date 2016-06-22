@@ -268,6 +268,24 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
     }
 
+        this.editAnnoun = function(cid, announcement, itemId){
+
+        var defer = $q.defer();
+        var content = URL_GET_COURSE+ "/"+ cid+ URL_UPDATE_ANNOUNS+ "/"+ itemId;
+
+		$http.post(content, announcement)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+    }
+
     this.deleteAnnoun = function(cid, itemId){
 
     var defer = $q.defer();
