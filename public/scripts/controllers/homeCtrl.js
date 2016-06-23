@@ -47,8 +47,23 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 	  
 	  
 	$scope.breadcrums = [''];
+	
+ 
+    $scope.tree = [{
+        id: 1,
+        fname: "tree",
+        child: [{
+            id: 1,
+            fname: "example"
+        }],
+        lname: "grid"
+    }];
+
+
+ 
+
 		
-	$scope.structure = { folders: [
+/* 	$scope.structure = { folders: [
 		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
 			{ name: 'Subfolder 1', files: [{ name: 'Subfile 1.txt' }] },
 			{ name: 'Subfolder 2' },
@@ -83,7 +98,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 			return iconClassMap[ext] || defaultIconClass;
 		}
-	};
+	}; */
 	
 	
 	$scope.clickUpload = function(){

@@ -27,14 +27,28 @@
 			<md-tab label="">
 				<md-content class="md-padding">
 					<h3>Lecture Name</h3>
-					<div class="row">
-						<div class="span6">
-							<div style="padding: 5px; border: 0px solid #aaa;">
-								<div>Root</div>
-								<div tree-view="structure" tree-view-options="options3"></div>
-							</div>
-						</div>
-					</div>
+					<div ng-app="Application" ng-controller="homeCtrl">
+					<table>
+						<thead>
+							<tr>
+								<th>col 1</th>
+								<th>col 2</th>
+								<th>col 3</th>
+							</tr>
+						</thead>
+						<tbody ng-repeat="item in tree">
+							<tr>
+								<td>{{item.id}}</td>
+								<td>{{item.fname}}</td>
+								<td>{{item.lname}}</td>
+							</tr>
+							<tr ng-repeat="children in item.child">
+								<td style="padding-left:15px;">{{children.id}}</td>
+								<td>{{children.fname}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				</md-content>
 			</md-tab>
 		</md-tabs>
