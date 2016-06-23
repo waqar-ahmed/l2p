@@ -267,7 +267,7 @@
 					<div class="singlecourse  main_height">
 						<ul ng-repeat="announcement in announcements" ng-show="announcementsLoaded">
 							<li>
-								<div layout="row" layout-align="begin center" ng-click="viewAnnoun(announcement,'read')">
+								<div layout="row" layout-align="begin center" ng-click="authCUD ? viewAnnoun(announcement,'edit') : viewAnnoun(announcement,'read')">
 									<div flex="grow">
 										<h3>{{announcement.title}}</h3>
 										<p><b>expire date:</b> {{(announcement.expireTime==0) ? '' : announcement.expireTime*1000| date:'mediumDate'}}</p>

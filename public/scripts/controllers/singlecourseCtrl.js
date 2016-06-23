@@ -204,11 +204,11 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  		$scope.currentemail.replyTo = 'Reply to my address';
 	  		$scope.currentemail.recipients = editRecipient();
 	  		var newEmail = {
-	  			'recipients': $scope.currentemail.recipients,
-	  			'subject': $scope.currentemail.subject,
-	  			'body': $scope.currentemail.body,
-	  			'replyTo': $scope.currentemail.replyTo,
-	  			'cc' : $scope.currentemail.cc,
+	  			"recipients": $scope.currentemail.recipients,
+	  			"subject": $scope.currentemail.subject,
+	  			"body": $scope.currentemail.body,
+	  			"replyTo": $scope.currentemail.replyTo,
+	  			"cc" : $scope.currentemail.cc,
 	  		};
 
 	  		console.log(newEmail);
@@ -279,7 +279,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
 		$scope.authWrite = false;
-		$scope.authDelete = false;
+		$scope.authEdit = false;
 		$scope.authShow = false;
 
 		if (method == 'creat'){
@@ -296,13 +296,23 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			}
 		}
 		else if (method == 'edit'){
-			$scope.authWrite = true;
-			$scope.authDelete = true;
+			$scope.authEdit = true;
 			$scope.authShow = true;
+			$scope.currentannoun = selectedAnnouncement;
+			if ($scope.currentannoun.expireTime != 0) {
+				var tempDate = new Date();
+				tempDate.setTime($scope.currentannoun.expireTime*1000);
+				$scope.expireEdited = tempDate;
+			}
 		}
 
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
+	  	};
+
+	  	$scope.activeEdit = function() {
+	    	$scope.authWrite = true;
+	    	$scope.authEdit = false;
 	  	};
 
 	  	$scope.addAnnoun = function(){
@@ -323,6 +333,35 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				resetLoading();
 				refreshAnnouns();
 				$window.alert("new announcement is sent");
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
+
+	  		$scope.editAnnoun = function(){
+	  		if ($scope.expireEdited != undefined){
+		  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+		  	}
+		  	else {
+		  		var expireTime = 0;
+		  	}
+	  		console.log(expireTime);
+	  		var editedAnnouncement = {
+  				"title": $scope.currentannoun.title,
+				"body": $scope.currentannoun.body,
+				"expireTime": expireTime,
+	  		};
+
+	  		console.log(editedAnnouncement);
+	  		courseService.editAnnoun(cid, editedAnnouncement,$scope.currentannoun.itemId)
+			.then(function(res){
+				console.log("announcement is updated");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshAnnouns();
+				$window.alert("announcement is updated");
 			},
 			function(err){
 				console.log("Error occured : " + err);

@@ -51,7 +51,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_anouncements', 'AnnouncementController@viewAllAnouncements');
         Route::get('anouncement', 'AnnouncementController@viewAnouncement');
         Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
-        Route::post('update_announcement', 'AnnouncementController@updateAnnouncement');
+        Route::post('update_announcement/{itemId}', 'AnnouncementController@updateAnnouncement');
         Route::get('delete_announcement/{itemId}', 'AnnouncementController@deleteAnnouncement');
 
         /*
