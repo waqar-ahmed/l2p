@@ -9,6 +9,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	$scope.$parent.authcourse = true;
 	$scope.breadcrums = [''];
 
+	$scope.longText = "Q: Do we need to use some specific template for the project definition document or can we write it in a free form, provided that we give answers to all the questions? (questions to answer: project background, business goals, project goals, critical success factors, assumptions, constraints, and stakeholders)";
+	$scope.replyBody = "I would be interested in an answer here as well because the template from the lecture slides contains slightly different topics than the one mentioned in the assigment. Assignment: project background, business goals, project goals, critical success factors, assumptions, constraints and stakeholders.Lecure slides: project definition, project scope, objectives, project deliverables, critical success factors, assumptions, constraints, completion criteria";
+	$scope.show_replies = false;
+
+
+
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
 	}

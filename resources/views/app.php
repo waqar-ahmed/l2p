@@ -19,6 +19,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
 
+
         <!-- Jquery Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -45,6 +46,9 @@
         <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
         <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
         <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="bower_components/text_truncate/ng-text-truncate.js"></script>
+
+
 
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
@@ -58,6 +62,7 @@
         <script src="scripts/controllers/singlecourseCtrl.js"></script>
         <script src="scripts/controllers/scheduleCtrl.js"></script>
         <script src="scripts/controllers/emailsCtrl.js"></script>
+
 
 
 

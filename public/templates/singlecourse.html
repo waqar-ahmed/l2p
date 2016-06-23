@@ -85,10 +85,124 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Media Library">
-				<md-content class="md-padding">
-					<h1 class="md-display-2">Media Library</h1>
-					<p class="main_height">Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+			<md-tab label="Discussion Forum">
+				<md-content class="md-padding main_height"">
+					
+					<ul class="post-grid">
+          					<li  class="col-s-4" ng-class="{ 'reset-s' : $index%3==0 }" >
+            					<div style="margin-left:-10pX;">	
+            						<h4>Assignment 1. Project Definition Template</h4>
+            						<p class="discussion_question" ng-text-truncate="longText" ng-tt-chars-threshold="80">
+            						</p>
+            						<p class="fa fa-comment" ng-click="show_replies = !show_replies"> 1 </p>
+            						<p class="discussion_username">Salman Sayani June 22</p>
+            					</div>
+            				</li>
+       				</ul>
+       				<div ng-show="show_replies" class="post-grid" style="background:#f1f3f4; margin-top:10px;">
+  							
+  							<div class="replybox_div">
+  								<textarea rows="3" name="reply" style="width:100% !important;" placeholder="Add you reply.."></textarea>
+  								<div style="width:100%;overflow: hidden;">
+  							 		<div style="float:right;margin-right: -7px;"><md-button class="md-raised md-primary">Reply</md-button>
+  							 		</div>
+  							 	
+  							 	</div>
+
+
+  							</div>
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+				<!-- Delete this temporary code...  -->
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+				<!-- Delete this temporary code...  -->
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+
+							
+       				</div>
+
+
+				<!-- Delete this temporary code...  -->
+
+
+					<ul class="post-grid">
+          					<li  class="col-s-4" ng-class="{ 'reset-s' : $index%3==0 }" >
+            					<div style="margin-left:-10pX;">	
+            						<h4>Assignment 1. Project Definition Template</h4>
+            						<p class="discussion_question" ng-text-truncate="longText" ng-tt-chars-threshold="80">
+            						</p>
+            						<p class="fa fa-comment" ng-click="show_replies = !show_replies"> 1 </p>
+            						<p class="discussion_username">Salman Sayani June 22</p>
+            					</div>
+            				</li>
+       				</ul>
+       				<div ng-show="show_replies" class="post-grid" style="background:#f1f3f4; margin-top:10px;">
+  							
+  							<div class="replybox_div">
+  								<textarea rows="3" name="reply" style="width:100% !important;" placeholder="Add you reply.."></textarea>
+  								<div style="width:100%;overflow: hidden;">
+  							 		<div style="float:right;margin-right: -7px;"><md-button class="md-raised md-primary">Reply</md-button>
+  							 		</div>
+  							 	
+  							 	</div>
+
+
+  							</div>
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+
+  							<div class="reply_from_users">
+  								
+  								  <h4 class="reply_user_name">Waqar Ahmed</h4>
+  								  <p class="reply_body" ng-text-truncate="replyBody" ng-tt-chars-threshold="100"></p>
+  								  <p class="reply_date">June 22</p>
+
+
+  							</div>
+
+							
+       				</div>
+       								<!-- Delete this temporary code...  -->
+
 				</md-content>
 			</md-tab>
 
