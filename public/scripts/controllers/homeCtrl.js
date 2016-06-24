@@ -37,6 +37,16 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 		window.location = LOGIN_USER;
 	}
 
+
+	// last update since...
+	$scope.lastdays = [
+          "Last Day",
+          "Last 7 Days",
+          "Last 15 Days",
+          "Last 30 Days"
+    	];
+    
+    
 	$scope.clickUpload = function(){
             document.getElementById('i_file').click();
         };
