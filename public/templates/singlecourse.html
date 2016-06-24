@@ -304,6 +304,26 @@
 					</div>
 				</md-content>
 			</md-tab>
+			
+			<md-tab label="Course Info">
+				<md-content class="md-padding" layout ="column">
+				<div class="main_height">
+					<md-card ng-repeat="courseinfo in courseinfos">
+						<md-card-title>
+							<md-card-title-text>
+								<span class="md-headline">{{courseinfo.coursetitle}}</span>
+								<span class="md-subhead">{{courseinfo.description}}</span>
+							</md-card-title-text>
+						</md-card-title>
+						<md-card-content>
+							<a href="{{courseinfo.url}}">{{courseinfo.url}}</a>
+						</md-card-content>
+					</md-card>
+					</div>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
 
 	 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>

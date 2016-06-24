@@ -98,7 +98,24 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 	};
 
+	$scope.announcements = [
+	{
+		title: 'This is an announcement.',
+		createdBy: ' L2P',
+		createdDate: '30/05/16 20:00',
+		content:"The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request.",
+	},
+	];
 
+	
+	$scope.courseinfos = [
+	{
+		coursetitle: 'Introduction to Web Technology',
+		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
+		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
+	},
+	];
+	
 	$scope.setRole = function(){
 		if ($scope.userRole.indexOf("manager")!==-1){
 			$scope.authCUD = true;}
