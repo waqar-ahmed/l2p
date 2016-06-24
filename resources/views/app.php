@@ -4,16 +4,12 @@
         <!-- Angular Material style sheet -->
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
-		<!-- Link for bootstrap CSS -->
-		<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.css" />
-
-
 		<!-- Link for fullCalendar CSS  -->
 		<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
 
         <!-- Angular Material requires Angular.js Libraries -->
-		<!--script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script-->
-		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+		<!--script type="text/javascript" src="bower_components/angular/angular.min.js"></script-->
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
@@ -21,7 +17,7 @@
 		
 		<!-- Jquery Library -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!--script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script-->
 
 		<!-- Tree control javascript -->
         <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
@@ -40,7 +36,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
 
 		<!-- jquery, moment, and angular have to get included before fullcalendar -->
-		<!--script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script-->
 		<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
 		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
 		<script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>

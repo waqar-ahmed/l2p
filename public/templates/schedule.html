@@ -1,22 +1,48 @@
 <div ng-if="dataLoading">Loading...</div>
+<div ng-if="!dataLoading">
 
-	<div class="container-fluid" ng-if ="!dataLoading" layout-fill layout-padding>
-		
-			
-				<div class="row">
-					<div class="span8">
-						
-							<div class="btn-group">
-								<button class="btn btn-primary" ng-click="changeView('agendaDay', 'myCalendar1')">Day</button>
-								<button class="btn btn-primary" ng-click="changeView('agendaWeek', 'myCalendar1')">Week</button>
-								<button class="btn btn-primary" ng-click="changeView('month', 'myCalendar1')">Month</button>
-							</div>
-						
-						<div class="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar1"></div>
-					</div>
-				</div>
-			
-		
+<div layout-fill layout-padding layout="column" ng-show="showC">
+	<div layout="row" layout-align="start center">
+		<md-button class="md-raised md-primary md-hue-2" ng-click="changeView('agendaDay', 'myCalendar1')">Day</md-button>
+		<md-button class="md-raised md-primary md-hue-2" ng-click="changeView('agendaWeek', 'myCalendar1')">Week</md-button>
+		<md-button class="md-raised md-primary md-hue-2" ng-click="changeView('month', 'myCalendar1')">Month</md-button>
 	</div>
+	<div layout="column" class="calendar md-padding" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar1"></div>
 
+	
+</div>
+<div class="scheduleList" ng-if="!dataLoading" ng-show="!showC" >
+	
+	<md-list style="height:60px !important;" flex>
+		
+		<md-list-item class="md-3-line md-long-text" ng-repeat="event in eventSource | orderBy: 'start'" ng-click="null">
+			<span class="dateCircle">{{event.start|date :"EEE MMM d"}}</span>
+			<ul class="event_info md-list-item-text" layout="column"  style="list-style-type:none">
+				<h3>{{event.title}}</h3>
+				<p>{{event.start|date :"shortTime"}}-{{event.end|date :"shortTime"}}</p>
+				<h4>{{event.location}}</h4>
+			<ul>
+		</md-list-item>
+		<md-divider></md-divider>
+	</md-list>
+	
+</div>
+<div>
+<md-fab-speed-dial md-direction="up" class="md-fling md-fab-bottom-right">
+  <md-fab-trigger>
+    <md-button aria-label="Change View" class="md-fab md-primary">
+		<ng-md-icon icon="my_library_books"></ng-md-icon>
+	</md-button>
+  </md-fab-trigger>
+  <md-fab-actions>
+    <md-button aria-label="Calendar View" class="md-fab md-raised md-primary md-mini" ng-click="showC=true">
+      <ng-md-icon icon="view_module" style="color: blue"></ng-md-icon>
+    </md-button>
+    <md-button aria-label="Schedule View" class="md-fab md-raised md-primary md-mini" ng-click="showC=false">
+      <ng-md-icon icon="view_list"></ng-md-icon>
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial>
+<div>
+</div>
 
