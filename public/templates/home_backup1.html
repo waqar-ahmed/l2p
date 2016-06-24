@@ -1,107 +1,11 @@
-<md-subheader class="md-no-sticky"><b>What's new</b></md-subheader>
-<div ng-cloak>
-	<div class="fabbutton">
-	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
-	   add
-	   </md-button>
-	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
-	   delete
-	   </md-button>
-  	</div>
-	
-	<div>
-<!--     <h1 class="md-title">Update since</h1> -->
-    <div layout="row">
-      <md-input-container style="margin-right: 10px;">
-        <label>Update Since</label>
-        <md-select ng-model="lastday">
-          <md-option ng-repeat="lastday in lastdays" value="{{lastday}}">{{lastday}}</md-option>
-        </md-select>
-      </md-input-container>       
-    </div>
-  </div>
-  
-  
-	<md-content>
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
-			<md-tab label="">
-				<md-content class="md-padding">
-					<h3>Lecture Name</h3>
-					<div ng-app="Application" ng-controller="homeCtrl">
-					<table>
-						<thead>
-							<tr>
-								<th>col 1</th>
-								<th>col 2</th>
-								<th>col 3</th>
-							</tr>
-						</thead>
-						<tbody ng-repeat="item in tree">
-							<tr>
-								<td>{{item.id}}</td>
-								<td>{{item.fname}}</td>
-								<td>{{item.lname}}</td>
-							</tr>
-							<tr ng-repeat="children in item.child">
-								<td style="padding-left:15px;">{{children.id}}</td>
-								<td>{{children.fname}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				</md-content>
-			</md-tab>
-		</md-tabs>
-	</md-content>
-</div>
-
-
-<!-- <div layout="column">
+<div layout="column">
   <div style="margin-left:25px;"><b>Quick Menu</b></div>
   <div layout="row" layout-padding layout-margin >
     <div flex="33" style="background-color:#EEEEEE;">courses</div>
     <div flex="33" style="background-color:#EEEEEE;">previous semesters</div>
     <div flex="33" style="background-color:#EEEEEE;">calendar</div>
-=======
->>>>>>> 98d3705df4a95ec6a5efb021d9425e9e3badaaa5
   </div>
-  
-  
-	<md-content>
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab">
-			<md-tab label="">
-				<md-content class="md-padding">
-					<h3>Lecture Name</h3>
-					<div ng-app="Application" ng-controller="homeCtrl">
-					<table>
-						<thead>
-							<tr>
-								<th>col 1</th>
-								<th>col 2</th>
-								<th>col 3</th>
-							</tr>
-						</thead>
-						<tbody ng-repeat="item in tree">
-							<tr>
-								<td>{{item.id}}</td>
-								<td>{{item.fname}}</td>
-								<td>{{item.lname}}</td>
-							</tr>
-							<tr ng-repeat="children in item.child">
-								<td style="padding-left:15px;">{{children.id}}</td>
-								<td>{{children.fname}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				</md-content>
-			</md-tab>
-		</md-tabs>
-	</md-content>
 </div>
-<<<<<<< HEAD
--->
-
 
 
 <!-- Hidden element to upload file -->

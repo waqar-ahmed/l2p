@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
 
 /**
  * Description of EmailController
@@ -14,9 +13,9 @@ class EmailController extends L2pController {
     
     protected $validations = [
         'attachmentsToUpload' => 'json',
-        'body' => 'string',
-        'cc' => 'string',
+        'body' => 'string',        
         'replyto' => 'bool',
+        'cc' => 'required|string',
         'recipients' => 'required|string',
         'subject' => 'required|string',
     ];
@@ -57,14 +56,14 @@ class EmailController extends L2pController {
     }
     
     public function addEmail(Request $request, $cid) {                 
-        return $this->addToModule($request->all(), 'addEmail', ['cid'=>$cid], $this->validations);
+        return $this->addToModule($request, 'addEmail', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteEmail($cid, $itemId) {
         return $this->sendRequest(self::GET, 'deleteEmail', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    public function viewAllEmails($cid) {        
+    public function viewAllEmails($cid) { 
         return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
     }
     

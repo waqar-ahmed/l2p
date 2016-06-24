@@ -37,11 +37,7 @@ class CourseController extends L2pController
     
     public function viewAllCourseInfoByCurrentSemester() {
         return $this->sendRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');
-    }
-    
-    public function viewAllCourseEvents() {
-        return $this->sendRequest(self::GET, 'viewAllCourseEvents');
-    }       
+    }        
     
     public function viewAllAnouncementCount($cid) {
         return $this->sendRequest(self::GET, 'viewAllAnnouncementCount', ['cid'=>$cid]);
@@ -122,11 +118,7 @@ class CourseController extends L2pController
     public function viewAvailableGroupsInGroupWorkspace($cid) {
         return $this->sendRequest(self::GET, 'viewAvailableGroupsInGroupWorkspace', ['cid'=>$cid]);
     }
-    
-    public function viewCourseEvents($cid) {
-        return $this->sendRequest(self::GET, 'viewCourseEvents', ['cid'=>$cid]);
-    }
-    
+            
     public function viewCourseInfo($cid) {
         return $this->sendRequest(self::GET, 'viewCourseInfo', ['cid'=>$cid]);
     }
