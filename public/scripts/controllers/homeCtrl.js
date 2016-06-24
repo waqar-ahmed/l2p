@@ -100,8 +100,6 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 		}
 	}; */
 	
-	
->>>>>>> 98d3705df4a95ec6a5efb021d9425e9e3badaaa5
 	$scope.clickUpload = function(){
             document.getElementById('i_file').click();
         };

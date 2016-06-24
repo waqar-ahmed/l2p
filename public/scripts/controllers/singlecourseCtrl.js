@@ -396,54 +396,59 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  	}
 	};
 
-	function parseLearningMaterials(y){
 
 
-        $scope.dataLoaded = false;
+function convert(array){
+    var map = {}
+    for(var i = 0; i < array.length; i++){
+        var obj = array[i]
+        if(!(obj.id in map)){
+            map[obj.id] = obj
+            map[obj.id].nodes = []
+        }
 
-        var dataSet = groupMaterialsByParent(y);
+        if(typeof map[obj.id].name == 'undefined'){
+            map[obj.id].id = obj.itemId
+            map[obj.id].name = obj.name
+            map[obj.id].parentId= obj.parentFolderId
+        }
 
-        console.log("dataset is ");
-        console.log(dataSet);
+        var parent = obj.parentFolderId || '-';
+        if(!(parent in map)){
+            map[parent] = {}
+            map[parent].nodes = []
+        }
+
+        map[parent].nodes.push(map[obj.id])
+    }
+    console.log(map);
+    return map;
+}
 
 
-        data = dataSet.reduce(function (r, a) {
-                function getParent(s, b) {
-                    return b.id === a.parentId ? b : (b.nodes && b.nodes.reduce(getParent, s));
-                }
-
-                var index = 0, node;
-                if ('parentId' in a) {
-                    node = r.reduce(getParent, {});
-                }
-                if (node && Object.keys(node).length) {
-                    node.nodes = node.nodes || [];
-                    node.nodes.push(a);
 
 
-                } else {
-                    while (index < r.length) {
-                        if (r[index].parentId === a.id) {
-                            a.nodes = (a.nodes || []).concat(r.splice(index, 1));
-                        } else {
-                            index++;
-                        }
-                    }
-                    r.push(a);
-                }
-                return r;
-            }, []);
+function parseLearningMaterials(y){
 
-        var tree = JSON.stringify(data, 0 , 0);
+	flatToNested = new FlatToNested({
+	    // The name of the property with the node id in the flat representation
+	    id: 'itemId',
+	    // The name of the property with the parent node id in the flat representation
+	    parent: 'parentFolderId',
+	    // The name of the property that will hold the children nodes in the nested representation
+	    children: 'nodes'
+	});
 
-        elements = jQuery.parseJSON(tree);
+	var nested = flatToNested.convert(y);
+	console.log(nested);
 
-        // console.log(tree);
+	$scope.roleList = nested;
+	$scope.dataLoaded = true;
 
-        $scope.dataLoaded = true;
+	return;
+}
 
-        $scope.roleList = elements;
-	}
+
 
     function groupMaterialsByParent(y){
         var x = [];
@@ -459,6 +464,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
             x[obj.parentFolderId].push({"id" : obj.itemId, "isDirectory" : obj.isDirectory, "name" : obj.name, "url" : obj.selfUrl});
         }
 
+        console.log("group mateirals by parent");
         console.log(x);
 
         var dataSet = [];
@@ -481,7 +487,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
     	console.log(node);
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
     	if(!node.isDirectory){
-    		window.open(SERVER_URL + node.url, '_blank');
+    		window.open(SERVER_URL + node.selfUrl, '_blank');
     	}
     }
 });

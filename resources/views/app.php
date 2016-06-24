@@ -52,6 +52,11 @@
 
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.16.0/angular-ui-tree.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.16.0/angular-ui-tree.js"></script>
+
+        <!-- // <script src="bower_components/flat-to-nested-js/index.js"></script> -->
+        <script src="scripts/modules/flat-nested.js"></script>
 
         <!-- My Application script files  -->
         <script src="scripts/app.js"></script>
