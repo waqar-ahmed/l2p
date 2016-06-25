@@ -59,7 +59,7 @@ class L2pController extends Controller {
         if ($validator->fails()) {
             return $this->jsonResponse(self::STATUS_FALSE, $validator->errors()->all());            
         }   
-        return $this->sendRequest(self::POST, $uri, $uriQuery, $this->addParamsReq2Req($request, array_keys($this->validations)), true);        
+        return $this->sendRequest(self::POST, $uri, $uriQuery, $this->addParamsReq2Req($request, array_keys($validations)), true);        
     }
     
     protected function addParamsReq2Req($request, $params) {
@@ -85,8 +85,8 @@ class L2pController extends Controller {
             'moduleNumber'=>$moduleNumber, 
             'desiredFolderName'=>$desiredFolderName, 
             'sourceDirectory'=>$sourceDirectory]);
-    }
-    
+    }        
+        
     public function viewAllSemesters() {
         $semesters = array();
         $allCourses = $this->sendRequest(self::GET, 'viewAllCourseInfo');        
@@ -96,12 +96,21 @@ class L2pController extends Controller {
                     array_push($semesters, $course['semester']);
                 }
             }
-        }               
-        return $this->jsonResponse(self::STATUS_TRUE, $this->sortSemesters($semesters));                
-    }
+        }       
+        $arr = array();
+        $sortedSemesters = $this->sortSemesters($semesters);        
+        array_walk($sortedSemesters, function ($key, $semester) use (&$arr) {             
+            return $arr[] = array($key=>$semester);            
+        });
+        return $this->jsonResponse(self::STATUS_TRUE, $arr);                
+    }        
     
     public function _sortSemesters(Request $request) {        
         return $this->sortSemesters(array_map('trim', explode(',', $request->input('semesters'))));                
+    }
+    
+    public function _viewTesterPage(){ 
+        return view('tester');
     }
     
     private function sortSemesters($semesters) { 
@@ -138,7 +147,7 @@ class L2pController extends Controller {
             if ($fullText != $sem) {
                 $fullText .=  (2000 + (int)(substr($sem, 2)));                                
             }
-            $sortedSemesters += [$fullText=>$sem];
+            $sortedSemesters += array($fullText=>$sem);
         }        
         return $sortedSemesters;
     }        
