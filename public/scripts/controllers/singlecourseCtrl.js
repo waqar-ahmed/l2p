@@ -66,6 +66,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("Error occured : " + err);
 	});
 
+
 	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
@@ -74,7 +75,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
-	})
+	});
+
+
+
+	courseService.getAllAssignments($stateParams.cid)
+	.then(function(res){
+		console.log("get all assignments ");
+		console.log(res.dataSet);
+		$scope.assignments = res.dataSet;
+	}, function(){
+		console.log("Error occured");
+	});
+
 
 	this.getCurrentCourse = function() {
 
@@ -489,6 +502,14 @@ function parseLearningMaterials(y){
     	if(!node.isDirectory){
     		window.open(SERVER_URL + node.selfUrl, '_blank');
     	}
+    }
+
+    $scope.downloadAssignment = function(doc){
+    	console.log(doc);
+    	var SERVER_URL = "https://www3.elearning.rwth-aachen.de/";
+    	var url = doc.downloadUrl.replace("assessment|", "");
+    	
+    	window.open(SERVER_URL + url, '_blank');
     }
 });
 

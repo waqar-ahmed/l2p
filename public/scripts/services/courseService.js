@@ -10,6 +10,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     var LOGOUT = "logout";
     var URL_SEMESTER = "/semester";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
+    var URL_GET_ASSIGNMENTS = "/all_assignments";
 
     var URL_VIEW_USER_ROLE = "view_user_role";
 
@@ -138,6 +139,21 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	this.getAllLearningMaterials = function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_LEARNING_MATERIALS)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
+	this.getAllAssignments = function(cid){
+		var defer = $q.defer();
+		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ASSIGNMENTS)
 		.success(function(res){
 			//console.log(res);
 			defer.resolve(res);
