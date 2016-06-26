@@ -30,6 +30,7 @@ class RequestManagerGuzzle implements L2pRequestManager {
             //TODO: Log exceptions here
             if ($e->hasResponse()) {
                 $response =  $e->getResponse();                
+//                echo $response->getBody();                       
                 return array('code' => $response->getStatusCode(), 'body' => $response->getBody(), 
                 'reason_phrase' => $response->getReasonPhrase(), 'headers' => $response->getHeaders());//              
             }

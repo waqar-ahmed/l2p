@@ -42,13 +42,13 @@ class AnnouncementController extends L2pController {
     }
     
     public function uploadInAnnouncement(Request $request, $cid) {  
-        $vali = [            
+        $valid = [            
             'fileName' => 'required|string',
             'stream' => 'required|string',        
         ]; 
         if(!$request->has('attachmentDirectory') && is_string($request->input('attachmentDirectory')) ) {
-            return $this->jsonResponse(self::STATUS_FALSE, 'attachmentDirectory field is required.');            
+            return $this->jsonResponse(self::STATUS_FALSE, 'attachmentDirectory field is required and must be string.');            
         } 
-        return $this->addToModule($request, 'uploadInAnnouncement', ['cid'=>$cid, 'attachmentDirectory'=>$request->input('attachmentDirectory')], $vali);        
+        return $this->addToModule($request, 'uploadInAnnouncement', ['cid'=>$cid, 'attachmentDirectory'=>$request->input('attachmentDirectory')], $valid);        
     }
 }
