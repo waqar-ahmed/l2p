@@ -40,7 +40,7 @@
 }
 
 .singlecourse li:hover {
-  background: #eee;
+  /*background: #eee;*/
   cursor: pointer;
 }
 
@@ -169,5 +169,58 @@ ul.post-grid li {
     padding-bottom: 20px;
 
 
+}
+
+
+
+
+
+.bubble 
+{
+position: relative;
+width: 100%;
+padding: 0px;
+background: #F2F2F2;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+border: #7E7F7F solid 2px;
+margin-top: 15px;
+}
+
+.bubble > ul{
+  font-size: 12px;
+}
+.bubble li{
+  border: none;
+  padding: 3px;
+}
+
+.bubble:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 20px 15px;
+border-color: #F2F2F2 transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -15px;
+left: 141px;
+}
+
+.bubble:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 21px 16px;
+border-color: #7E7F7F transparent;
+display: block;
+width: 0;
+z-index: 0;
+top: -18px;
+left: 140px;
 }
 
