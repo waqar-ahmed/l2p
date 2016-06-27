@@ -53,7 +53,7 @@
 									<i class="fa fa-chevron-up" aria-hidden="true" ng-hide="!showDetails"></i>
 								 </span></a></h4>
 
-						         <div class="procedure-details" ng-show="showDetails">
+						         <div class="bubble" ng-show="showDetails">
 						            <ul>
 						            	<li ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)">
 						            		<h3>{{doc.fileName}}</h3>
@@ -267,24 +267,7 @@
 					</div>
 				</md-content>
 			</md-tab>
-			
-			<md-tab label="Course Info">
-				<md-content class="md-padding" layout ="column">
-				<div class="main_height">
-					<md-card ng-repeat="courseinfo in courseinfos">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">{{courseinfo.coursetitle}}</span>
-								<span class="md-subhead">{{courseinfo.description}}</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<a href="{{courseinfo.url}}">{{courseinfo.url}}</a>
-						</md-card-content>
-					</md-card>
-					</div>
-				</md-content>
-			</md-tab>
+		
 			
 			<md-tab label="Course Info">
 				<md-content class="md-padding" layout ="column">
