@@ -25,7 +25,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
-	var URL_GET_ALL_NEWS = "whats_all_new_since";
+	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since/";
 
 	var authenticated = true;
 
@@ -120,10 +120,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
-	this.getWhatsNew = function(mins){
+	this.getAllWhatsNew = function(mins){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_ALL_NEWS+ "/"+ mins)
+		$http.get(URL_GET_ALL_WHATS_NEW + mins)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);

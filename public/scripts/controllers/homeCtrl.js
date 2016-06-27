@@ -60,7 +60,73 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     }];
 
 
- 
+    $scope.loadWhatsNew = function(day){
+    	var mins;
+    	if(day > 0){
+    		mins = day * 24 * 60;  // day * hours * minutes
+    	}
+    	else{
+    		return;
+    	}
+    	console.log("loading data for mins : " +mins);
+    	courseService.getAllWhatsNew(mins)
+    	.then(function(res){
+		if(res.Status == true){
+			console.log(res.dataset);
+			bindData(res.dataset);
+		}
+		else{
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+    }
+
+
+
+    $scope.loadWhatsNew(1);
+
+    $scope.updateList = function(lastday){
+    	var day = 0;
+    	if(lastday === $scope.lastdays[0]){
+    		console.log(1);
+    		day = 1;
+    	}
+    	else if(lastday === $scope.lastdays[1]){
+    		console.log(7);
+    		day = 7;
+    	}
+    	else if(lastday === $scope.lastdays[2]){
+    		console.log(15);
+    		day = 15;
+    	}
+    	else if(lastday === $scope.lastdays[3]){
+    		console.log(30);
+    		day = 30;
+    	}
+    	else{
+    		console.log("error");
+    	}
+    	loadWhatsNew(day);
+    } 
+
+    bindData = function(data){
+    	var allEmails=[];
+    	var allAnnouncements=[];
+    	var allLearningMaterials=[];
+    	var discussionForum=[];
+    	console.log("in bind data");
+    	for(var i =0; i < data.length; i++){
+    		for(var j =0;j<data[i].length;j++){
+    			if(data[i][j] === "emails"){
+    				for(var k=0;k<data[i][j].length;k++){
+    					console.log(data[i][j][k].subject);
+    				}
+
+    			}
+    		}
+    	}
+    }
 
 		
 /* 	$scope.structure = { folders: [
