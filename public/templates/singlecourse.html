@@ -44,44 +44,22 @@
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 						<ul>
-							<li>
+							<li ng-repeat="assignment in assignments">
 								<img src="images/pdf_icon.png">
-								<h3>Assignment 1</h3>
-								<p>Published Date : 22/4/16 20:00</p>
-								<p>Due Date :       2/5/16  10:00</p>
-								<p>Total Points:    5.0</p>
-							</li>
+								<h3>{{assignment.title}}</h3>
+								<p>Due Date: {{assignment.dueDate * 1000 | date:'dd-MM-yyyy, HH:mm'}} </p>
+								<h4><a ng-click="showDetails = ! showDetails">Assignment Documents <span>
+									<i class="fa fa-chevron-down" aria-hidden="true" ng-hide="showDetails"></i>
+									<i class="fa fa-chevron-up" aria-hidden="true" ng-hide="!showDetails"></i>
+								 </span></a></h4>
 
-							<li>
-								<img src="images/pdf_icon.png" >
-								<h3>Assignment 2</h3>
-								<p>Published Date : 22/4/16 20:00</p>
-								<p>Due Date :       2/5/16  10:00</p>
-								<p>Total Points:    5.0</p>
-							</li>
-
-							<li>
-								<img src="images/pdf_icon.png" >
-								<h3>Assignment 3</h3>
-								<p>Published Date : 22/4/16 20:00</p>
-								<p>Due Date :       2/5/16  10:00</p>
-								<p>Total Points:    5.0</p>
-							</li>
-
-							<li>
-								<img src="images/pdf_icon.png" >
-								<h3>Assignment 4</h3>
-								<p>Published Date : 22/4/16 20:00</p>
-								<p>Due Date :       2/5/16  10:00</p>
-								<p>Total Points:    5.0</p>
-							</li>
-
-							<li>
-								<img src="images/pdf_icon.png" >
-								<h3>Assignment 5</h3>
-								<p>Published Date : 22/4/16 20:00</p>
-								<p>Due Date :       2/5/16  10:00</p>
-								<p>Total Points:    5.0</p>
+						         <div class="bubble" ng-show="showDetails">
+						            <ul>
+						            	<li ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)">
+						            		<h3>{{doc.fileName}}</h3>
+						            	</li>
+						            </ul>
+						         </div>
 							</li>
 						</ul>
 					</div>
@@ -289,24 +267,7 @@
 					</div>
 				</md-content>
 			</md-tab>
-			
-			<md-tab label="Course Info">
-				<md-content class="md-padding" layout ="column">
-				<div class="main_height">
-					<md-card ng-repeat="courseinfo in courseinfos">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">{{courseinfo.coursetitle}}</span>
-								<span class="md-subhead">{{courseinfo.description}}</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<a href="{{courseinfo.url}}">{{courseinfo.url}}</a>
-						</md-card-content>
-					</md-card>
-					</div>
-				</md-content>
-			</md-tab>
+		
 			
 			<md-tab label="Course Info">
 				<md-content class="md-padding" layout ="column">

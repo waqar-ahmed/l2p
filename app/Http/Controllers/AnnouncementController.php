@@ -17,11 +17,11 @@ class AnnouncementController extends L2pController {
         'title' => 'required|string',
     ];
 
-    public function viewAllAnouncementCount($cid) {
+    public function viewAllAnnouncementCount($cid) {
         return $this->sendRequest(self::GET, 'viewAllAnnouncementCount', ['cid'=>$cid]);
     }
 
-    public function viewAllAnouncements($cid) {
+    public function viewAllAnnouncements($cid) {
         return $this->sendRequest(self::GET, 'viewAllAnnouncements', ['cid'=>$cid]);
     }
 
@@ -41,6 +41,15 @@ class AnnouncementController extends L2pController {
         return $this->addToModule($request, 'updateAnnouncement', ['cid'=>$cid, 'itemid'=>$itemId], $this->validations);
     }
 
-    public function uploadInAnnouncement(Request $request, $cid, $attachmentDir) {
+    
+    public function uploadInAnnouncement(Request $request, $cid) {  
+        $valid = [            
+            'fileName' => 'required|string',
+            'stream' => 'required|string',
+        ];
+        if(!$request->has('attachmentDirectory') && is_string($request->input('attachmentDirectory')) ) {
+            return $this->jsonResponse(self::STATUS_FALSE, 'attachmentDirectory field is required and must be string.');            
+        } 
+        return $this->addToModule($request, 'uploadInAnnouncement', ['cid'=>$cid, 'attachmentDirectory'=>$request->input('attachmentDirectory')], $valid);        
     }
 }
