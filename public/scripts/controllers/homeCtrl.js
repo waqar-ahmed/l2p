@@ -6,67 +6,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 	console.log("in home");
 
 	$scope.verified = false;
-
-
-	
-
-
-
-
-$(function() {
-    $(document).on("click","#left ul.nav li.parent > a > span.sign", function(){          
-        $(this).find('i:first').toggleClass("icon-minus");      
-    }); 
-    
-    // Open Le current menu
-    $("#left ul.nav li.parent.active > a > span.sign").find('i:first').addClass("icon-minus");
-    $("#left ul.nav li.current").parents('ul.children').addClass("in");
-});
-
-// !function ($) {
-    
-//     // Le left-menu sign
-//     /* for older jquery version
-//     $('#left ul.nav li.parent > a > span.sign').click(function () {
-//         $(this).find('i:first').toggleClass("icon-minus");
-//     }); */
-    
-//     $(document).on("click","#left ul.nav li.parent > a > span.sign", function(){          
-//         $(this).find('i:first').toggleClass("icon-minus");      
-//     }); 
-    
-//     // Open Le current menu
-//     $("#left ul.nav li.parent.active > a > span.sign").find('i:first').addClass("icon-minus");
-//     $("#left ul.nav li.current").parents('ul.children').addClass("in");
-
-// }(window.jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	$scope.dataLoaded = false;
 
 
 	//Checking if user is authenticated or not
@@ -120,6 +60,8 @@ $(function() {
     }];
 
 
+    
+
     $scope.loadWhatsNew = function(day){
     	var mins;
     	if(day > 0){
@@ -129,11 +71,15 @@ $(function() {
     		return;
     	}
     	console.log("loading data for mins : " +mins);
+    	$scope.allWhatsNew = [];
+    	$scope.dataLoaded = false;
     	courseService.getAllWhatsNew(mins)
     	.then(function(res){
 		if(res.Status == true){
 			console.log(res.dataset);
-			bindData(res.dataset);
+			$scope.dataLoaded = true;
+			$scope.allWhatsNew = res.dataset;
+			//bindData(res.dataset);
 		}
 		else{
 		}
@@ -167,7 +113,7 @@ $(function() {
     	else{
     		console.log("error");
     	}
-    	loadWhatsNew(day);
+    	$scope.loadWhatsNew(day);
     } 
 
     bindData = function(data){
@@ -188,43 +134,12 @@ $(function() {
     	}
     }
 
-		
-/* 	$scope.structure = { folders: [
-		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
-			{ name: 'Subfolder 1', files: [{ name: 'Subfile 1.txt' }] },
-			{ name: 'Subfolder 2' },
-			{ name: 'Subfolder 3' }
-		]},
-		{ name: 'Folder 2' }
-	], files: [{ name: 'File 1.gif' }, { name: 'File 2.gif' }]};
+    $scope.downloadFile = function(subitem){
+    	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
+    	// var url = doc.downloadUrl.replace("assessment|", "");
+    	window.open(SERVER_URL + subitem.selfUrl, '_blank');
+    }
 
-	$scope.options = {
-		onNodeSelect: function (node, breadcrums) {
-			$scope.breadcrums = breadcrums;
-		}
-	};
-
-	$scope.options2 = {
-		collapsible: false
-	};
-
-	var iconClassMap = {
-		txt: 'icon-file-text',
-		jpg: 'icon-picture blue',
-		png: 'icon-picture orange',
-		gif: 'icon-picture'
-	},
-		defaultIconClass = 'icon-file';
-
-	$scope.options3 = {
-		mapIcon: function (file) {
-			var pattern = /\.(\w+)$/,
-				match = pattern.exec(file.name),
-				ext = match && match[1];
-
-			return iconClassMap[ext] || defaultIconClass;
-		}
-	}; */
 	
 	$scope.clickUpload = function(){
             document.getElementById('i_file').click();

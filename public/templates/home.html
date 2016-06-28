@@ -26,10 +26,94 @@
   
 	<md-content>
 
-
-
      <md-content flex layout="row" layout-align="center">
             <md-content flex="100">
+
+
+
+
+
+
+
+
+
+<div class="myTree">
+  <!-- Course list -->
+  <div ng-repeat="item in allWhatsNew">
+  <div class='container'>
+      <div class="first" ng-click="showDetails = ! showDetails">
+        <i class="fa fa-minus" aria-hidden="true" ng-show="showDetails"></i>
+        <i class="fa fa-plus" aria-hidden="true" ng-show="!showDetails"></i>
+      </div>
+      <div class="second">
+        <h3>{{item.cid}}</h3>
+      </div>
+      <div class="clear"></div>
+  </div>
+
+<!-- Course learning materials, announcements etc list -->
+<!-- Learning materials -->
+  <div class="procedure-details" ng-show="showDetails">
+    <div class='innercontainer'>
+      <div class="innerfirst" ng-click="innershowDetails = ! innershowDetails">
+        <i class="fa fa-minus" aria-hidden="true" ng-show="innershowDetails"></i>
+        <i class="fa fa-plus" aria-hidden="true" ng-show="!innershowDetails"></i>
+      </div>
+      <div class="innersecond">
+        <h3>Learning Materials</h3>
+      </div>
+      <div class="clear"></div>
+    </div>
+  
+  <!-- detials of courseinfo and other info -->
+    <div class="innercontainer innerdetails" ng-show="innershowDetails">
+      <h3 ng-if="item.learningMaterials.length==0">Nothing to show</h3>
+      <a ng-repeat="subitem in item.learningMaterials" ng-click="downloadFile(subitem)">
+        <i class="fa fa-play" aria-hidden="true"></i>
+          {{subitem.name}}
+      </a>
+    </div>
+  </div>
+
+</div>
+
+
+</div>   <!-- tree div end -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
             <ul class="cbp_tmtimeline">
                 <li>
                   <time class="cbp_tmtime" datetime="2013-04-10 18:30"><span>4/10/13</span> <span>18:30</span></time>
@@ -71,7 +155,7 @@
                     <p>Parsley amaranth tigernut...</p>
                   </div>
                 </li>
-              </ul>
+              </ul> -->
 
             </md-content>
         </md-content>
@@ -125,10 +209,14 @@
 
 
 
-
 	</md-content>
 </div>
 
+
+
+   <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
 
 
 
