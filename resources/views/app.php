@@ -125,7 +125,8 @@
                                 </div>
                             </md-item-content>
                         </a>
-                    </md-item>
+					</md-item>
+<!--
                     <md-divider></md-divider>
                     <md-subheader>Management</md-subheader>
                     <md-item ng-repeat="item in admin">
@@ -138,7 +139,8 @@
                                 </div>
                             </md-item-content>
                         </a>
-                    </md-item>
+					</md-item>
+--!>
                 </md-list>
             </md-sidenav>
             <div layout="column" class="relative" layout-fill role="main">

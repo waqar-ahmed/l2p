@@ -26,8 +26,14 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       link : 'schedule',
       title: 'Calendar',
       icon: 'date_range'
+    },
+	{
+      link : 'about',
+      title: 'About',
+      icon: 'copyright'
     }
   ];
+  /*
   $scope.admin = [
     {
       link : 'settings',
@@ -45,7 +51,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       icon: 'send'
     }
   ];
-
+  */
   $scope.authcourse = false;
   $scope.alert = '';
 
