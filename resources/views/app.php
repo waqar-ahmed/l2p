@@ -115,9 +115,11 @@
                     </div>
                 </md-toolbar>
                 <md-list>
-                    <md-item ng-repeat="item in menu">
+					<md-item ng-repeat="item in menu">
+						<md-divider ng-if="$last"></md-divider>
                         <a>
-                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<md-item-content md-ink-ripple layout="row" layout-align="start center">
+
                                 <div class="inset">
                                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                                 </div>
