@@ -112,12 +112,12 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Media libraries
          */
-        Route::get('all_media_libraries', 'MediaLibraryController@viewAllMediaLibraries');        
-        Route::get('all_media_library_count', 'MediaLibraryController@viewAllMediaLibraryCount');        
-        Route::get('delete_media_library', 'MediaLibraryController@deleteMediaLibrary');        
-        Route::get('media_library', 'MediaLibraryController@viewMediaLibrary');        
-        
-        
+        Route::get('all_media_libraries', 'MediaLibraryController@viewAllMediaLibraries');
+        Route::get('all_media_library_count', 'MediaLibraryController@viewAllMediaLibraryCount');
+        Route::get('delete_media_library', 'MediaLibraryController@deleteMediaLibrary');
+        Route::get('media_library', 'MediaLibraryController@viewMediaLibrary');
+
+
        /*
         * Discussion
         */
@@ -130,10 +130,10 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::post('update_discussion_thread_reply/{selfId}', 'DiscussionController@updateDiscussionThreadReply');                              
         Route::get('delete_discussion_item/{selfId}', 'DiscussionController@deleteDiscussionItem');                                      
         
-        Route::get('active_features', 'CourseController@viewActiveFeatures');                
+        Route::get('active_features', 'CourseController@viewActiveFeatures');
         Route::get('all_counts', 'CourseController@viewAllCounts');
         Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');        
-        
+
         Route::get('all_learning_objects', 'CourseController@viewAllLearningObjects');
         Route::get('all_literatures', 'CourseController@viewAllLiteratures');
         Route::get('all_literatures_count', 'CourseController@viewAllLiteraturesCount');        

@@ -19,7 +19,7 @@ class AuthController extends L2pController {
             ]                
         ];
         // Execute the post request and get the verification url and user code etc.        
-        $result = $this->requestManager->executeRequest(self::POST, Config::get('l2pconfig.user_code_url'), $params, Config::get('l2pconfig.oauth_url'), 2.0);        
+        $result = $this->requestManager->executeRequest(self::POST, Config::get('l2pconfig.user_code_url'), $params, Config::get('l2pconfig.oauth_url'));        
         
         if($result['code'] != 200) //if there is error
         {            
@@ -91,7 +91,7 @@ class AuthController extends L2pController {
             ]   
         ];
 
-        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params, Config::get('l2pconfig.oauth_url'), 2.0);         
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params, Config::get('l2pconfig.oauth_url'));         
         if($result['code'] != 200)
         {                
             $this->defaultResponse = $this->jsonResponse(self::STATUS_FALSE, $result['reason_phrase']);
@@ -116,7 +116,7 @@ class AuthController extends L2pController {
             ]   
         ];
 
-        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params, Config::get('l2pconfig.oauth_url'), 2.0);
+        $result = $this->requestManager->executeRequest('POST', Config::get('l2pconfig.access_token_url'), $params, Config::get('l2pconfig.oauth_url'));
 
         if ($result['code'] != 200) {
             $this->defaultResponse = $this->jsonResponse(self::STATUS_FALSE, $result['reason_phrase']);
