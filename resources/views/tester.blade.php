@@ -217,10 +217,9 @@
         $('.result').html('');
         $('.result').attr('hidden', 'true');
         $('#url_parameters').html('');
-        $('#json_parameters').html('');
-        $('#upload').files =[];
-        
+        $('#json_parameters').html('');        
         $('#upload').replaceWith($('#upload').val('').clone(true));
+        document.getElementById('upload').addEventListener('change', handleFileSelect, false);
     }
     
     data = {
