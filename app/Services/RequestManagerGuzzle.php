@@ -12,16 +12,16 @@ class RequestManagerGuzzle implements L2pRequestManager {
     private $client;
 
     function __construct() {
-        $this->client = new Client(["base_uri" => Config::get('l2pconfig.api_url'), 'timeout' => 10.0]);
+        $this->client = new Client(["base_uri" => Config::get('l2pconfig.api_url')]);
     }    
 
     /*
      * Send http requests to url
      */
-    public function executeRequest($method, $subUrl, $params, $url = null, $timeout = 0.0) {
+    public function executeRequest($method, $subUrl, $params, $url = null) {
         if(isset($url)) {
-            $this->client = new Client(["base_uri" => $url, 'timeout' => $timeout]);
-        }
+            $this->client = new Client(["base_uri" => $url]);
+        }   
         $errorMessage = 'Error occurred while sending a request to server';
         try {
             $response =  $this->client->request($method, $subUrl, $params);        
