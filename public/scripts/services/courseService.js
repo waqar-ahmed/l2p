@@ -18,7 +18,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     var URL_ADD_EMAIL = "/add_email";
 	var URL_DELETE_EMAIL = "/delete_email";
 
-	var URL_GET_ALL_ANNOUNS = "/all_anouncements";
+	var URL_GET_ALL_ANNOUNS = "/all_announcements";
 	var URL_ADD_ANNOUNS = "/add_announcement";
 	var URL_DELETE_ANNOUNS = "/delete_announcement";
 	var URL_UPDATE_ANNOUNS = "/update_announcement";

@@ -8,6 +8,66 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 	$scope.verified = false;
 
 
+	
+
+
+
+
+$(function() {
+    $(document).on("click","#left ul.nav li.parent > a > span.sign", function(){          
+        $(this).find('i:first').toggleClass("icon-minus");      
+    }); 
+    
+    // Open Le current menu
+    $("#left ul.nav li.parent.active > a > span.sign").find('i:first').addClass("icon-minus");
+    $("#left ul.nav li.current").parents('ul.children').addClass("in");
+});
+
+// !function ($) {
+    
+//     // Le left-menu sign
+//     /* for older jquery version
+//     $('#left ul.nav li.parent > a > span.sign').click(function () {
+//         $(this).find('i:first').toggleClass("icon-minus");
+//     }); */
+    
+//     $(document).on("click","#left ul.nav li.parent > a > span.sign", function(){          
+//         $(this).find('i:first').toggleClass("icon-minus");      
+//     }); 
+    
+//     // Open Le current menu
+//     $("#left ul.nav li.parent.active > a > span.sign").find('i:first').addClass("icon-minus");
+//     $("#left ul.nav li.current").parents('ul.children').addClass("in");
+
+// }(window.jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
@@ -115,14 +175,14 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	var allAnnouncements=[];
     	var allLearningMaterials=[];
     	var discussionForum=[];
+    	console.log(data);
     	console.log("in bind data");
-    	for(var i =0; i < data.length; i++){
-    		for(var j =0;j<data[i].length;j++){
-    			if(data[i][j] === "emails"){
-    				for(var k=0;k<data[i][j].length;k++){
-    					console.log(data[i][j][k].subject);
-    				}
-
+    	for(var i=0; i < data.length; i++){
+    		console.log("i loop");
+    		console.log(data[i]);
+    		if(data[i].emails.length > 0){
+    			for(var j=0;j<data[i].emails.length;j++){
+    				console.log(data[i].emails[j].subject);
     			}
     		}
     	}

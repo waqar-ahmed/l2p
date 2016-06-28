@@ -21,16 +21,17 @@ Route::get('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');
 Route::get('/authenticate', 'AuthController@authenticateUser');
 
-Route::group(['middleware'=>'l2pApi'], function() {        
-    
+
+Route::group(['middleware'=>'l2pApi'], function() {
     /*
      * View all semesters by full name
      */
     Route::get('/semesters', 'L2pController@viewAllSemesters');
     Route::get('/courses', 'CourseController@viewAllCouseInfo');
     Route::get('/current_semester', 'CourseController@viewAllCourseInfoByCurrentSemester');
-    Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');    
-    
+    Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
+    Route::get('/course/{cid}', 'CourseController@viewCourse');
+
     Route::get('/view_user_role/{cid}', 'L2pController@viewUserRole');
     
     /*
@@ -53,10 +54,10 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('all_announcements', 'AnnouncementController@viewAllAnnouncements');
         Route::get('announcement/{itemId}', 'AnnouncementController@viewAnnouncement');
         Route::post('add_announcement', 'AnnouncementController@addAnnouncement');
-        Route::post('update_announcement', 'AnnouncementController@updateAnnouncement');        
+        Route::post('update_announcement/{itemId}', 'AnnouncementController@updateAnnouncement');
         Route::post('upload_in_announcement', 'AnnouncementController@uploadInAnnouncement');
-        Route::get('delete_announcement', 'AnnouncementController@deleteAnnouncement');
-        
+        Route::get('delete_announcement/{itemId}', 'AnnouncementController@deleteAnnouncement');
+
         /*
          * Assignments
          */
@@ -166,8 +167,9 @@ Route::group(['middleware'=>'l2pApi'], function() {
      * Routes used for backend
      */
     Route::get('/_courses', 'CourseController@_viewAllCourseInfo');
+
     Route::get('/_course/{cid}', 'CourseController@_viewCourse');
     Route::post('/_semesters', 'L2pController@_sortSemesters');
     Route::get('/_tester', 'L2pController@_viewTesterPage');
-});    
+});
 
