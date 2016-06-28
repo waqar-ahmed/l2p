@@ -19,7 +19,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
     },
     {
       link : 'emails',
-      title: 'Emails',
+      title: 'Inbox',
       icon: 'email'
     },
     {
