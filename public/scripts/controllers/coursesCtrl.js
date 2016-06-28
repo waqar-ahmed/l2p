@@ -4,17 +4,15 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   courseService.getAllCourses()
 		.then(function(res){
-			console.log("got all courses from current sem");
-			console.log(res.dataSet);
-
-      //got all courses therefore generate colors
-      $scope.colors = colorService.generateColors(res.dataSet.length);
+			//got all courses therefore generate colors
+			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;
+			console.log("got all courses");
 			console.log("courses:"+$scope.courses);
-      $scope.coursesLoaded = true;
+			$scope.coursesLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
-      $scope.coursesLoaded = true;
+			$scope.coursesLoaded = true;
 		});
 
 

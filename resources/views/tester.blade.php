@@ -233,6 +233,20 @@
                 }            
 
             },
+            add_announcement: {
+                uri: "/course/{cid}/add_announcement",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                },    
+                req_params :
+                {
+                    title: "announcement title",
+                    body: "announcement body",
+                }
+
+            },
             upload_in_announcement: {
                 uri: "/course/{cid}/upload_in_announcement",     
                 method: "post",

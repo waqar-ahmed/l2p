@@ -40,7 +40,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
         $scope.smallscreen = false;
     }
 
-    courseService.getWhatsNew(mins)
+    courseService.getAllWhatsNew(mins)
         .then(function(res){
             console.log("got news");
             console.log(res.dataset);
