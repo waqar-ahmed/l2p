@@ -40,8 +40,8 @@ class AnnouncementController extends L2pController {
     public function updateAnnouncement(Request $request, $cid, $itemId) {
         return $this->addToModule($request, 'updateAnnouncement', ['cid'=>$cid, 'itemid'=>$itemId], $this->validations);
     }
-
-    public function uploadInAnnouncement(Request $request, $cid) {
+    
+    public function uploadInAnnouncement(Request $request, $cid) {  
         $valid = [            
             'fileName' => 'required|string',
             'stream' => 'required|string',

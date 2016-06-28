@@ -1,4 +1,4 @@
-app.controller('scheduleCtrl', function($scope,courseService,$location,$compile, $timeout, uiCalendarConfig) {
+app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$compile, $timeout, uiCalendarConfig) {
 	
 	var date = new Date();
     var d = date.getDate();
@@ -7,13 +7,18 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
 	$scope.dataLoading = true;
 	$scope.showC = true;
 
-    var curr_date = date.getDate()-1;
+    var curr_date = date.getDate();
     var curr_month = date.getMonth()+1;
     var curr_year = date.getFullYear();
     
     $scope.dateToday = Date.parse(curr_month + "/" + curr_date + "/" + curr_year);
 	$scope.range = $scope.dateToday; 
 	console.log($scope.range);
+	console.log(date.getMonth());
+	console.log(date.getDate());
+	console.log(date.getDay());
+
+	$scope.colors = colorService.generateDayColors();
 
 	$scope.onSwipeUp = function(ev) {
                 alert('Swiped Up!');
@@ -42,6 +47,11 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
 	{allDay:false,endDate:1463060700,eventDate:1463055300,location:"2354|030",title:"Mobile Internet Technology"}
 	];
 */
+
+	/* go to courses */
+	$scope.gotoCourse = function(cid) {
+    $location.path('singlecourse/'+cid);
+    }
 
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){

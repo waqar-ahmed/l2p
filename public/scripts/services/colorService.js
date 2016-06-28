@@ -28,4 +28,18 @@ app.service('colorService', function(){
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  var dayColors = [
+  '#030260',
+  '#569532',
+  '#AA4339',
+  '#AA8D39',
+  '#2D4571',
+  '#DADA13',
+  '#00596F'
+    ];
+
+  this.generateDayColors = function(){
+     return dayColors;
+  }
+
 });

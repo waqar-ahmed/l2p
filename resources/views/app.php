@@ -78,6 +78,7 @@
 
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
+         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/emails.css">
         <link rel="stylesheet" href="styles/singlecourse.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
