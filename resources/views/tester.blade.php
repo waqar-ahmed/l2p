@@ -13,7 +13,7 @@
             <div style="width: 45%; display: inline-block;">
                 <div>
                     <labe>uri: </labe>
-                    <input type="text" class="" name="uri" size="30" value="/course/{cid}" onchange="extendInput(this)">            
+                    <input type="text" class="" name="uri" size="30" value="/course/{cid}">            
                 </div>                
                 <div>
                     <label>method: </label>
@@ -43,20 +43,13 @@
                 <button onclick="send()" id="sendBtn" style="margin-bottom: 10px">Send</button>
                 <span id="loadingText" hidden="true">loading...</span>
                 <div>
-                    <textarea class="result" hidden="true" cols="50" rows="20"></textarea>
+                    <textarea class="result" hidden="true" cols="70" rows="20"></textarea>
                 </div>        
                 <div id="errorDisplayDiv">            
                 </div>
             </div>
-            <div style="width: 45%; display: inline-block; vertical-align:top;">                
-                <p>Routes:</p>
-                <h4>Announcements:</h4>
-                <a href="javascript::void(0)" onclick="fillForm('all_announcement')">view all announcements</a>
-                <h4>What is new:</h4>
-                <a href="javascript::void(0)" onclick="fillForm('whats_new')">what is new</a><br/>
-                <a href="javascript::void(0)" onclick="fillForm('whats_new_since')">what is new since</a><br/>
-                <a href="javascript::void(0)" onclick="fillForm('whats_all_new_since')">what is all new since</a><br/>
-                <a href="javascript::void(0)" onclick="fillForm('whats_all_new_since_for_semester')">what is all new since for semester</a><br/>
+            <div id="routes" style="width: 45%; display: inline-block; vertical-align:top;">                
+                <p>Routes:</p>                
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
@@ -67,7 +60,16 @@
         $(".parameters").on('click', 'a.removeParam', function () {
             $(this).closest('div').remove();
         });
+        
+        $("#routes").on('click', 'a.route', function() {
+            reset(); 
+            fillForm($(this).attr('parent'), $(this).attr('value'));
+        });
+        $(document).on('change', "input[type='text']", function () {
+            extendInput(this);
+        });
         document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+        showUrls();
         authenticate();
     });
 
@@ -186,54 +188,197 @@
         $(input).attr('size', $(input).val().trim().length);
     }
     
-    function fillForm(funcName) {
-        $(".result").html('');
-        $(".result").attr("hidden", "true");
-        $("input[name='uri']").val(data[funcName].uri);
-        $.each(data[funcName].uri_params, function(key, value) {
+    function fillForm(parentName, funcName) {               
+        $("input[name='uri']").val(data[parentName][funcName].uri);
+        $("select[name='method']").val(data[parentName][funcName].method);
+        $.each(data[parentName][funcName].uri_params, function(key, value) {
             
             addParam('url_parameters', key, value);
 	});
+        $.each(data[parentName][funcName].req_params, function(key, value) {
+            
+            addParam('json_parameters', key, value);
+	});
+    }
+    
+    function showUrls() {
+        var html = '';
+        $.each(data, function(k, v) {
+            html += '<h4>' + k + ': </h4>';
+            $.each(v, function(k1, v1) {
+                html += '<a href="javascript::void(0)" class="route" \n\
+                    parent="'+k+'" value="'+k1+'">'+k1+'</a><br/>'
+            });                        
+        });
+        $('#routes').html(html);
+    }
+    
+    function reset() {
+        $('.result').html('');
+        $('.result').attr('hidden', 'true');
+        $('#url_parameters').html('');
+        $('#json_parameters').html('');        
+        $('#upload').replaceWith($('#upload').val('').clone(true));
+        document.getElementById('upload').addEventListener('change', handleFileSelect, false);
     }
     
     data = {
-        all_announcement: {
-            uri: "/course/{cid}/all_announcements",            
-            uri_params :
-            {
-                cid: "16ss-55492",                    
-            }            
-            
+        announcements: {
+            all_announcement: {
+                uri: "/course/{cid}/all_announcements",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },
+            upload_in_announcement: {
+                uri: "/course/{cid}/upload_in_announcement",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },
+                req_params :
+                {
+                    attachmentDirectory: "/ss16/16ss-55492/Lists/AnnouncementDocuments",
+                }            
+
+            },
         },
         whats_new: {
-            uri: "/course/{cid}/whats_new",            
-            uri_params :
-            {
-                cid: "16ss-55492",                    
-            }            
+            whats_new: {
+                uri: "/course/{cid}/whats_new",   
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+            },
+            whats_new_since: {
+                uri: "/course/{cid}/whats_new_since/{pastMinutes}",
+                method: "get",
+                uri_params :                
+                {
+                    cid: "16ss-55492",                    
+                    pastMinutes: "1440"
+                }                            
+            },
+            whats_all_new_since: {
+                uri: "whats_all_new_since/{pastMinutes}",            
+                method: "get",
+                uri_params :                
+                {                                   
+                    pastMinutes: "1440"
+                }                            
+            },
+            whats_all_new_since_for_semester: {
+                uri: "whats_all_new_since_for_semester/{sem}/{pastMinutes}",            
+                method: "get",
+                uri_params :                
+                {                                   
+                    pastMinutes: "1440",
+                    sem: "ss16"
+                }                            
+            },
         },
-        whats_new_since: {
-            uri: "/course/{cid}/whats_new_since/{pastMinutes}",            
-            uri_params :                
-            {
-                cid: "16ss-55492",                    
-                pastMinutes: "1440"
-            }                            
-        },
-        whats_all_new_since: {
-            uri: "whats_all_new_since/{pastMinutes}",            
-            uri_params :                
-            {                                   
-                pastMinutes: "1440"
-            }                            
-        },
-        whats_all_new_since_for_semester: {
-            uri: "whats_all_new_since_for_semester/{sem}/{pastMinutes}",            
-            uri_params :                
-            {                                   
-                pastMinutes: "1440",
-                sem: "ss16"
-            }                            
-        },
+        discussions: {
+            all_discussion_items: {
+                uri: "/course/{cid}/all_discussion_items",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },
+            all_discussion_item_count: {
+                 uri: "/course/{cid}/all_discussion_item_count",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },
+            all_discussion_root_items: {
+                uri: "/course/{cid}/all_discussion_root_items",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },   
+            add_discussion_thread: {
+                uri: "/course/{cid}/add_discussion_thread",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                    
+                },
+                req_params :
+                {
+                    subject: "This is a sample discussion thread.",
+                    body: "This is the content body <p>of the thread.</p>",
+                }
+
+            },   
+            delete_discussion_item: {
+                uri: "/course/{cid}/delete_discussion_item/{selfId}",     
+                method: "get",
+                uri_params :
+                {
+                   cid: "16ss-55492",                    
+                   selfId: 0,                    
+                },                
+            }, 
+            add_discussion_thread_reply: {
+                uri: "/course/{cid}/add_discussion_thread_reply/{replyToId}",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                    
+                   replyToId: 0,                    
+                },
+                req_params :
+                {
+                    subject: "This is a sample discussion thread reply.",
+                    body: "This is the content body <p>of the thread reply.</p>",
+                }
+
+            },
+            update_discussion_thread: {
+                uri: "/course/{cid}/update_discussion_thread/{selfId}",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                    
+                   selfId: 0,                    
+                },
+                req_params :
+                {
+                    subject: "This is a sample discussion thread update.",
+                    body: "This is the content body <p>of the thread update.</p>",
+                }
+
+            },   
+            update_discussion_thread_reply: {
+                uri: "/course/{cid}/update_discussion_thread_reply/{selfId}",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                    
+                   selfId: 0,                    
+                },
+                req_params :
+                {
+                    subject: "This is a sample discussion thread reply update.",
+                    body: "This is the content body <p>of the thread reply update.</p>",
+                }
+
+           },
+        },                        
     }
 </script>

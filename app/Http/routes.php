@@ -110,7 +110,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::post('update_hyperlink/{itemId}', 'HyperlinkController@updateHyperlink');
 
         /*
-         * Medialibraries
+         * Media libraries
          */
         Route::get('all_media_libraries', 'MediaLibraryController@viewAllMediaLibraries');
         Route::get('all_media_library_count', 'MediaLibraryController@viewAllMediaLibraryCount');
@@ -118,12 +118,21 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('media_library', 'MediaLibraryController@viewMediaLibrary');
 
 
+       /*
+        * Discussion
+        */
+        Route::get('all_discussion_item_count', 'DiscussionController@viewAllDiscussionItemCount');
+        Route::get('all_discussion_items', 'DiscussionController@viewAllDiscussionItems');
+        Route::get('all_discussion_root_items', 'DiscussionController@viewAllDiscussionRootItems');                              
+        Route::post('add_discussion_thread', 'DiscussionController@addDiscussionThread');                              
+        Route::post('add_discussion_thread_reply/{replyToId}', 'DiscussionController@addDiscussionThreadReply');                              
+        Route::post('update_discussion_thread/{selfId}', 'DiscussionController@updateDiscussionThread');                              
+        Route::post('update_discussion_thread_reply/{selfId}', 'DiscussionController@updateDiscussionThreadReply');                              
+        Route::get('delete_discussion_item/{selfId}', 'DiscussionController@deleteDiscussionItem');                                      
+        
         Route::get('active_features', 'CourseController@viewActiveFeatures');
         Route::get('all_counts', 'CourseController@viewAllCounts');
-        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');
-        Route::get('all_discussion_item_count', 'CourseController@viewAllDiscussionItemCount');
-        Route::get('all_discussion_items', 'CourseController@viewAllDiscussionItems');
-        Route::get('all_discussion_root_items', 'CourseController@viewAllDiscussionRootItems');
+        Route::get('all_courses_curr_sem', 'CourseController@viewAllCourseInfoByCurrentSemester');        
 
         Route::get('all_learning_objects', 'CourseController@viewAllLearningObjects');
         Route::get('all_literatures', 'CourseController@viewAllLiteratures');

@@ -42,19 +42,7 @@ class CourseController extends L2pController
     public function viewAllCounts($cid) {
         return $this->sendRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);
     }       
-    
-    public function viewAllDiscussionItemCount($cid) {
-        return $this->sendRequest(self::GET, 'viewAllDiscussionItemCount', ['cid'=>$cid]);
-    }       
-    
-    public function viewAllDiscussionItems($cid) {
-        return $this->sendRequest(self::GET, 'viewAllDiscussionItems', ['cid'=>$cid]);
-    }       
-    
-    public function viewAllDiscussionRootItems($cid) {
-        return $this->sendRequest(self::GET, 'viewAllDiscussionRootItems', ['cid'=>$cid]);
-    }       
-    
+        
     public function viewAllEmails($cid) {
         return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
     }       
