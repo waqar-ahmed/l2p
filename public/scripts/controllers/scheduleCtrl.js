@@ -1,4 +1,9 @@
 app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$compile, $timeout, uiCalendarConfig) {
+	console.log(courseService.getAuthenticatedValue());
+	if(!courseService.getAuthenticatedValue()){
+		window.location = LOGIN_PAGE;
+	}
+
 	
 	var date = new Date();
     var d = date.getDate();
