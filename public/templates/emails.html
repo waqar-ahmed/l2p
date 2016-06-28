@@ -1,0 +1,66 @@
+<div>
+    <div id="emailtitle">
+    <md-subheader style="margin:10px 0 10px 0 !important; padding: 4px 16px 4px 16px !important; color: black;">
+        <div layout="row" layout-align="begin center" class="select-header">
+
+        <div flex="50" flex-sm="70" flex-md="75" flex-gt-md="85" layout-align="begin center" layout="row">
+            <span flex></span>
+             <div layout="column" layout-gt-xs="row" layout-align="begin end">
+                <h4><b>Types: </b></h4>
+                <md-input-container style="width:124px!important;">
+                     <md-select ng-model="selectedType" multiple ng-model-options="{trackBy: '$value'}">
+                        <md-option ng-value="type" ng-repeat="type in contentTypes">{{type}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        <div flex layout-align="end center" layout="row">
+            <span flex></span>
+             <div layout="column" layout-gt-xs="row" layout-align="begin end">
+                <h4><b>Last: </b></h4>
+                <md-input-container>
+                  <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value.name'}">
+                    <md-option ng-repeat="day in days" ng-value="day" ng-click="refreshNews(day.value)">{{day.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        </div>
+    </md-subheader>
+    </div>
+
+    <div class="definescroll">
+        <div class="md-accordion customwidth" ng-repeat="data in combinedData|orderBy:'date':true|filter:{'type': selectedType}:containsComparator" ng-init="outerIndex = $index">
+        	<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+            	<div class="customcolor_email" layout="row" layout-align="begin center">
+                    <div class="type_circle h-center v-center" style="width:40px;height:40px">
+                        <span ng-style="{'background-color':colors[$index]}">{{data.abbre}}</span>
+                    </div>
+
+                	<div id="wrapper" layout="column" flex="70">
+                        <div class="inner1"><b>{{data.title}}</b></div>
+        				<div class="inner1">{{data.courseTitle}}</div>
+        			    <div class="inner2">{{data.date*1000|date:'medium'}}</div>
+        			</div>
+            		<span flex></span>
+            		<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+            	</div>
+        	</md-toolbar>
+
+        	<div ng-class="{dataContent:true, activeContent:data.expanded}" >
+                <div style="margin-right:10px !important;">
+                    <p ng-bind-html="data.content"></p>
+                </div>
+            </div>
+        </div>
+
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+</div>
+

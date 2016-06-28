@@ -1,5 +1,5 @@
 
-var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap']);
+var app = angular.module('L2pLabApp', ['ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload', 'ngTextTruncate', 'ui.tree']);
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
@@ -19,10 +19,15 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/singlecourse.html',
             controller: 'singlecourseCtrl'
         })
-		.state('schedule', {
+		    .state('schedule', {
             url: '/schedule',
             templateUrl: 'templates/schedule.html',
             controller: 'scheduleCtrl'
+        })
+        .state('emails', {
+            url: '/emails',
+            templateUrl: 'templates/emails.html',
+            controller: 'emailsCtrl'
         })
 
 
@@ -49,16 +54,64 @@ app.config(function($mdThemingProvider) {
         .primaryPalette('grey')
 });
 
-app.service('tempdata', function(){
-  var savedata = {};
 
-  var addData = function(inputdata){
-    savedata = inputdata;
-  }
 
-  var getData = function(){
-    return savedata;
-  }
+app.directive('fileModel', ['$parse', 'fileService', function ($parse, fileService) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs, rootScope) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
 
-  return {addData, getData};
+console.log("in directive");
+
+            element.bind('change', function(){
+                modelSetter(scope, element[0].files[0]);
+                    console.log("binding file");
+                    //fileService.push(element[0].files[0]);
+                    fileService.setUploadedFile(element[0].files[0]);
+            });
+        }
+    };
+}]);
+
+app.service('fileUpload', ['$http', function ($http) {
+
+console.log("service called");
+
+    this.uploadFileToUrl = function(file, req, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
+}]);
+
+app.factory('fileService', function() {
+    // var files = [];
+    // return files;
+
+console.log("factory called");
+
+    var uploadedFile;
+    return{
+        setUploadedFile : function(file){
+            uploadedFile = file;
+        },
+
+        getUploadedFile : function(){
+            return uploadedFile;
+        },
+
+        resetUploadedFile : function(){
+            uploadedFile = null;
+        }
+    }
 });

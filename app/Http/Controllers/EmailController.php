@@ -63,7 +63,7 @@ class EmailController extends L2pController {
         return $this->sendRequest(self::GET, 'deleteEmail', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    public function viewAllEmails($cid) {        
+    public function viewAllEmails($cid) { 
         return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid]);
     }
     

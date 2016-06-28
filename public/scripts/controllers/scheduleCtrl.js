@@ -5,6 +5,20 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
     var m = date.getMonth();
     var y = date.getFullYear();
 	$scope.dataLoading = true;
+	$scope.showC = true;
+
+    var curr_date = date.getDate()-1;
+    var curr_month = date.getMonth()+1;
+    var curr_year = date.getFullYear();
+    
+    $scope.dateToday = Date.parse(curr_month + "/" + curr_date + "/" + curr_year);
+	$scope.range = $scope.dateToday; 
+	console.log($scope.range);
+
+	$scope.onSwipeUp = function(ev) {
+                alert('Swiped Up!');
+				console.log("swiped up!");
+    };
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
@@ -81,7 +95,9 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
     };
      /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) {
-        element.attr({'tooltip': event.title +" "+event.location,
+		var loc = " ";
+		if(event.location != null) loc= loc + event.location;
+        element.attr({'tooltip': event.title + loc,
                       'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
@@ -89,7 +105,7 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
 	/* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
+        height: "auto",
         editable: true,
         header:{
           left: 'title',
