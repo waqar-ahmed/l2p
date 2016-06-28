@@ -18,7 +18,7 @@ class RequestManagerGuzzle implements L2pRequestManager {
     /*
      * Send http requests to url
      */
-    public function executeRequest($method, $subUrl, $params, $url = null, $timeout = 10.0) {
+    public function executeRequest($method, $subUrl, $params, $url = null, $timeout = 0.0) {
         if(isset($url)) {
             $this->client = new Client(["base_uri" => $url, 'timeout' => $timeout]);
         }
@@ -30,6 +30,7 @@ class RequestManagerGuzzle implements L2pRequestManager {
             //TODO: Log exceptions here
             if ($e->hasResponse()) {
                 $response =  $e->getResponse();                
+//                echo $response->getBody();                       
                 return array('code' => $response->getStatusCode(), 'body' => $response->getBody(), 
                 'reason_phrase' => $response->getReasonPhrase(), 'headers' => $response->getHeaders());//              
             }
