@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
+app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window, colorService, $mdToast) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
@@ -8,12 +8,51 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	$scope.announcementsLoaded = false;
 	$scope.$parent.authcourse = true;
 	$scope.breadcrums = [''];
+	$scope.firstLetter = "";
+    $scope.colors = [];
+    $scope.colors_announcement = [];
 
 	$scope.longText = "Q: Do we need to use some specific template for the project definition document or can we write it in a free form, provided that we give answers to all the questions? (questions to answer: project background, business goals, project goals, critical success factors, assumptions, constraints, and stakeholders)";
 	$scope.replyBody = "I would be interested in an answer here as well because the template from the lecture slides contains slightly different topics than the one mentioned in the assigment. Assignment: project background, business goals, project goals, critical success factors, assumptions, constraints and stakeholders.Lecure slides: project definition, project scope, objectives, project deliverables, critical success factors, assumptions, constraints, completion criteria";
 	$scope.show_replies = false;
 
 
+	$scope.showSimpleToast= function(message) {
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent(message)
+        .position('top')
+        .hideDelay(3000)
+    );
+ 		 }
+
+	$scope.trimFirstLetter = function(sentFrom){
+
+    	return String(sentFrom).charAt(0);
+  	
+  	};
+
+
+
+  	$scope.showConfirm = function(ev,email) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to delete email?')
+          .textContent('')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+    $mdDialog.show(confirm).then(function() {
+
+    	$scope.deleteEmail(email);
+    	$scope.showSimpleToast("Email has been deleted");
+
+      
+    }, function() {
+			console.log("confirmation canceled");
+		    });
+  };
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
@@ -26,6 +65,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("got emails");
 			console.log(res.dataSet);
 			$scope.emails = res.dataSet;
+        	$scope.colors = colorService.generateColors($scope.emails.length);
 			$scope.emailsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
@@ -36,6 +76,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("got announcements");
 			console.log(res.dataSet);
 			$scope.announcements = res.dataSet;
+			$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
 			$scope.announcementsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
@@ -164,7 +205,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
 	      	parent: angular.element(document.body),
-	      	clickOutsideToClose:true
+	      	clickOutsideToClose:false
 	    });
 	};
 
@@ -175,7 +216,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("email is deleted");
 			console.log(res);
 			$scope.emailsLoaded = false;
-			$window.alert("email is deleted");
+			//$window.alert("email is deleted");
+			console.log("email is deleted");
 			$scope.refreshEmails();
 		},
 		function(err){
@@ -196,11 +238,16 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		});
 	}
 
-	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail) {
+
+
+
+
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
 		$scope.recipients = ["extra","tutors","mangagers","students"];
+		$scope.hello = "Hi";
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
@@ -213,6 +260,15 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
+
+	  	$scope.showSimpleToast= function(message) {
+    	$mdToast.show(
+      	$mdToast.simple()
+        .textContent(message)
+        .position('top')
+        .hideDelay(3000)
+    );
+ 		 }
 
 	  	editRecipient = function() {
 	  		var strRecipient = "";
@@ -243,7 +299,9 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				$scope.back();
 				resetLoading();
 				refreshEmail();
-				$window.alert("new email is sent");
+				//$window.alert("new email is sent");
+				$scope.showSimpleToast("Email has been sent!");
+
 			},
 			function(err){
 				console.log("Error occured : " + err);
@@ -251,7 +309,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  	}
 	};
 
-	/* view Announcements details */
+
+	/* Announcements details */
 	$scope.viewAnnoun = function(announcement,method){
 		if (announcement === undefined)
 			{selectedAnnouncement = {};}
@@ -270,9 +329,32 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    	bindToController: true,
 	      	templateUrl:'templates/viewannouncement.html',
 	      	parent: angular.element(document.body),
-	      	clickOutsideToClose:true
+	      	clickOutsideToClose:false
 	    });
+
+
 	};
+
+
+	$scope.showConfirmAnnoucnment = function(ev,ann) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to delete Announcement?')
+          .textContent('')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+    $mdDialog.show(confirm).then(function() {
+
+    	$scope.deleteAnnoun(ann);
+    	$scope.showSimpleToast("Announcement has been deleted");
+
+      
+    }, function() {
+			console.log("confirmation canceled");
+		    });
+  };
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
@@ -281,7 +363,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("announcement is deleted");
 			console.log(res);
 			$scope.announcementsLoaded = false;
-			$window.alert("announcement is deleted");
+			//$window.alert("announcement is deleted");
 			$scope.refreshAnnouns();
 		},
 		function(err){
@@ -305,14 +387,31 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	
 	
 
-	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
-		$scope.authWrite = false;
-		$scope.authEdit = false;
+	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns,$mdToast) {
+		$scope.authWrite = true;
+		$scope.authEdit = true;
 		$scope.authShow = false;
+		$scope.announce_heading = '';
+		$scope.isEdit = false;
+		$scope.announce_button = '';
+
+
+		$scope.showSimpleToast= function(message) {
+    	$mdToast.show(
+      	$mdToast.simple()
+        .textContent(message)
+        .position('top')
+        .hideDelay(3000)
+    );
+ 		 }
+
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
+			$scope.announce_heading = 'New Announcement';
 			$scope.expireEdited = new Date();
+			isEdit = false;
+			$scope.announce_button = 'Add Announcement';
 		}
 		else if (method == 'read'){
 			$scope.authShow = true;
@@ -325,7 +424,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 		else if (method == 'edit'){
 			$scope.authEdit = true;
+			$scope.announce_heading = 'Edit Announcement';
+			$scope.announce_button = 'Edit Announcement';
 			$scope.authShow = true;
+			$scope.isEdit = true;
 			$scope.currentannoun = selectedAnnouncement;
 			if ($scope.currentannoun.expireTime != 0) {
 				var tempDate = new Date();
@@ -335,6 +437,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 
 	  	$scope.back = function() {
+	  		$scope.editannouncement = false;
+	  		console.log("On Cancel Edit Announcement: "+ $scope.editannouncement);
 	    	$mdDialog.hide();
 	  	};
 
@@ -360,7 +464,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				$scope.back();
 				resetLoading();
 				refreshAnnouns();
-				$window.alert("new announcement is sent");
+				$scope.showSimpleToast("New Announcement has been added");
 			},
 			function(err){
 				console.log("Error occured : " + err);
@@ -389,7 +493,9 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				$scope.back();
 				resetLoading();
 				refreshAnnouns();
-				$window.alert("announcement is updated");
+				//$window.alert("annuncement is updated");
+				$scope.showSimpleToast("Announcement has been updated");
+
 			},
 			function(err){
 				console.log("Error occured : " + err);

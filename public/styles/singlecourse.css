@@ -224,3 +224,14 @@ top: -18px;
 left: 140px;
 }
 
+.email-detail
+{
+  height: 60% !important;
+  width: 90% !important;
+  max-width: 2000px !important;
+  margin: 10px;
+}
+
+
+
+

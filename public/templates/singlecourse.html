@@ -11,6 +11,7 @@
 	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewAnnoun(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
+	   
   	</div>
 
 	<md-content class="singleCourseTabs">
@@ -203,7 +204,52 @@
 				</md-content>
 			</md-tab>
 
+
 			<md-tab label="Emails">
+				<md-content class="md-padding">
+					<div class="singlecourse  main_height">
+						<div class="md-accordion customwidth" ng-repeat="email in emails" ng-init="outerIndex = $index">
+        				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+            				<div class="customcolor_email" layout="row" layout-align="begin center">
+                    			<div class="type_circle h-center v-center" style="width:40px;height:40px">
+                 					<span ng-style="{'background-color':colors[$index]}">{{trimFirstLetter(email.from);}}</span>
+                    			</div>
+
+                			<div id="wrapper" layout="column" flex="70">
+                        		<div class="inner1"><b>{{email.subject}}</b></div>
+        			    		<div class="inner2">{{email.created*1000|date:'medium'}}</div>
+
+        					</div>
+
+        			
+
+            					<span flex></span>
+            					<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+            				</div>
+        				</md-toolbar>
+
+        				<div ng-class="{dataContent:true, activeContent:data.expanded}">
+
+              			 	  	<md-button class="md-icon-button" ng-click="showConfirm($event,email)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
+	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
+	         				 	</md-button>
+
+              			 	   <div class="clear" ng-show="authCUD"></div>
+
+              			 	  <div style="margin-right:10px !important;">
+              			 	  <p style="margin-bottom:5px;" ><b>{{email.subject}}</b></p>
+              			 	 	 <p class="discussion_question" ng-bind-html="email.body" ng-text-truncate="email.body" ng-tt-chars-threshold="120"></p>
+                			</div>
+            			</div>
+       				 </div>
+
+       				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+           			 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+       				 </div>
+    			</div>
+
+			<!-- <md-tab label="Emails">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<ul ng-repeat="email in emails" ng-show="emailsLoaded">
@@ -225,7 +271,7 @@
 					  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
        			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
         				</div>
-					</div>
+					</div> -->
 <!-- 					<div class="main_height" style="margin-top:-10;">
 							<div class="md-accordion customwidth" ng-repeat="email in emails">
     							<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
@@ -259,7 +305,7 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Announcements">
+			<<!-- md-tab label="Announcements">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<ul ng-repeat="announcement in announcements" ng-show="announcementsLoaded">
@@ -281,6 +327,54 @@
        			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
         				</div>
 					</div>
+				</md-content>
+			</md-tab> -->
+
+			<md-tab label="Announcements">
+			<md-content class="md-padding">
+					<div class="singlecourse  main_height">
+						<div class="md-accordion customwidth" ng-repeat="announcement in announcements" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
+        				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+            				<div class="customcolor_email" layout="row" layout-align="begin center">
+                    			<div class="type_circle h-center v-center" style="width:40px;height:40px">
+                 					<span ng-style="{'background-color':colors_announcement[$index]}">A</span>
+                    			</div>
+
+                			<div id="wrapper" layout="column" flex="70">
+                        		<div class="inner1"><b>{{announcement.title}}</b></div>
+        			    		<div class="inner2"><b>Created: </b>{{announcement.created*1000| date:'mediumDate'}} </div>
+								<div class="inner2"><b>Expire: </b>{{(announcement.expireTime==0) ? '' : announcement.expireTime*1000| date:'mediumDate'}}</div>
+
+        					</div>
+            					<span flex></span>
+            					<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+            				</div>
+        				</md-toolbar>
+
+        				<div ng-class="{dataContent:true, activeContent:data.expanded}">
+
+              			 	  	<md-button class="md-icon-button" ng-click="showConfirmAnnoucnment($event,announcement)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
+	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
+	         				 	</md-button>
+
+	         				 	<md-button class="md-icon-button" ng-click="viewAnnoun(announcement,'edit')" ng-show="authCUD" style="float:right;margin-right:-5px;margin-top:-20px;">
+	            				<ng-md-icon icon="edit" style="color:red !important;"></ng-md-icon>
+	         				 	</md-button>
+
+              			 	   <div class="clear" ng-show="authCUD"></div>
+
+              			 	  <div style="margin-right:10px !important;">
+              			 	  <p style="margin-bottom:5px;" ><b>{{announcement.title}}</b></p>
+              			 	 	 <p class="discussion_question" ng-bind-html="announcement.body" ng-text-truncate="announcement.body" ng-tt-chars-threshold="120"></p>
+                			</div>
+            			</div>
+       				 </div>
+
+       				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+           			 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+       				 </div>
+    			</div>
 				</md-content>
 			</md-tab>
 		
