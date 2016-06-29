@@ -425,8 +425,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	
 
 	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns,$mdToast) {
-		$scope.authWrite = false;
-		$scope.authEdit = false;
+		$scope.authWrite = true;
+		$scope.authEdit = true;
 
 		$scope.authShow = false;
 		$scope.announce_heading = '';
