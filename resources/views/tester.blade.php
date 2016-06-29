@@ -217,10 +217,9 @@
         $('.result').html('');
         $('.result').attr('hidden', 'true');
         $('#url_parameters').html('');
-        $('#json_parameters').html('');
-        $('#upload').files =[];
-        
+        $('#json_parameters').html('');        
         $('#upload').replaceWith($('#upload').val('').clone(true));
+        document.getElementById('upload').addEventListener('change', handleFileSelect, false);
     }
     
     data = {
@@ -232,6 +231,20 @@
                 {
                     cid: "16ss-55492",                    
                 }            
+
+            },
+            add_announcement: {
+                uri: "/course/{cid}/add_announcement",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                },    
+                req_params :
+                {
+                    title: "announcement title",
+                    body: "announcement body",
+                }
 
             },
             upload_in_announcement: {

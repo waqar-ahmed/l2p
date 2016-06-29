@@ -1,4 +1,4 @@
-app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast){
+app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $http, $q){
 
 	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
 	var LOGIN_USER = "login";
@@ -6,7 +6,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 	console.log("in home");
 
 	$scope.verified = false;
-
+	$scope.dataLoaded = false;
 
 
 	//Checking if user is authenticated or not
@@ -60,45 +60,125 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     }];
 
 
- 
+    
 
-		
-/* 	$scope.structure = { folders: [
-		{ name: 'Folder 1', files: [{ name: 'File 1.jpg' }, { name: 'File 2.png' }], folders: [
-			{ name: 'Subfolder 1', files: [{ name: 'Subfile 1.txt' }] },
-			{ name: 'Subfolder 2' },
-			{ name: 'Subfolder 3' }
-		]},
-		{ name: 'Folder 2' }
-	], files: [{ name: 'File 1.gif' }, { name: 'File 2.gif' }]};
-
-	$scope.options = {
-		onNodeSelect: function (node, breadcrums) {
-			$scope.breadcrums = breadcrums;
+    $scope.loadWhatsNew = function(day){
+    	var mins;
+    	if(day > 0){
+    		mins = day * 24 * 60;  // day * hours * minutes
+    	}
+    	else{
+    		return;
+    	}
+    	console.log("loading data for mins : " +mins);
+    	$scope.allWhatsNew = [];
+    	$scope.dataLoaded = false;
+    	courseService.getAllWhatsNew(mins)
+    	.then(function(res){
+		if(res.Status == true){
+			console.log(res.dataset);
+			$scope.dataLoaded = true;
+			$scope.allWhatsNew = res.dataset;
+			//bindData(res.dataset);
+			$scope.loadCourseName(res.dataset);
 		}
-	};
-
-	$scope.options2 = {
-		collapsible: false
-	};
-
-	var iconClassMap = {
-		txt: 'icon-file-text',
-		jpg: 'icon-picture blue',
-		png: 'icon-picture orange',
-		gif: 'icon-picture'
-	},
-		defaultIconClass = 'icon-file';
-
-	$scope.options3 = {
-		mapIcon: function (file) {
-			var pattern = /\.(\w+)$/,
-				match = pattern.exec(file.name),
-				ext = match && match[1];
-
-			return iconClassMap[ext] || defaultIconClass;
+		else{
 		}
-	}; */
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+    }
+
+
+
+    $scope.loadWhatsNew(1);
+
+    $scope.updateList = function(lastday){
+    	var day = 0;
+    	if(lastday === $scope.lastdays[0]){
+    		console.log(1);
+    		day = 1;
+    	}
+    	else if(lastday === $scope.lastdays[1]){
+    		console.log(7);
+    		day = 7;
+    	}
+    	else if(lastday === $scope.lastdays[2]){
+    		console.log(15);
+    		day = 15;
+    	}
+    	else if(lastday === $scope.lastdays[3]){
+    		console.log(30);
+    		day = 30;
+    	}
+    	else{
+    		console.log("error");
+    	}
+    	$scope.loadWhatsNew(day);
+    } 
+
+    bindData = function(data){
+    	var allEmails=[];
+    	var allAnnouncements=[];
+    	var allLearningMaterials=[];
+    	var discussionForum=[];
+    	console.log(data);
+    	console.log("in bind data");
+    	for(var i=0; i < data.length; i++){
+    		console.log("i loop");
+    		console.log(data[i]);
+    		if(data[i].emails.length > 0){
+    			for(var j=0;j<data[i].emails.length;j++){
+    				console.log(data[i].emails[j].subject);
+    			}
+    		}
+    	}
+    }
+
+    $scope.courseNameArr=[];
+
+    $scope.getCourseNameById = function(cid, index){
+    	courseService.getCourseInfo(cid)
+    	.then(function(res){
+		if(res.Status == true)
+		{
+			console.log(res.dataSet[0].courseTitle);
+			$scope.courseNameArr[index] = res.dataSet[0].courseTitle;
+		}
+		else{
+			return cid;
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+    }
+
+    var requestArr = [];
+    $scope.loadCourseName = function(dataset){
+    	// for(var i=0;i<dataset.length;i++){
+    	// 	$scope.getCourseNameById(dataset[i].cid, i);
+    	// }
+
+    	for(var i=0;i<dataset.length;i++){
+    		requestArr[i] = $http.get("course/" + dataset[i].cid + "/course_info");
+    	}
+
+    	$q.all(requestArr).then(function (ret) {
+    		for(var i=0;i<ret.length;i++){
+    			console.log(ret[i].data.dataSet[0].courseTitle);
+    			$scope.courseNameArr[i]={"title":ret[i].data.dataSet[0].courseTitle};
+    		}
+
+    		console.log($scope.courseNameArr);
+		});
+    }
+
+    $scope.downloadFile = function(subitem){
+    	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
+    	// var url = doc.downloadUrl.replace("assessment|", "");
+    	window.open(SERVER_URL + subitem.selfUrl, '_blank');
+    }
+
 	
 	$scope.clickUpload = function(){
             document.getElementById('i_file').click();

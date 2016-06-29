@@ -15,8 +15,8 @@
 	</div>
 	<md-content class="scheduleList" ng-show="!showC" layout-fill layout-padding>
 		<md-list style="height:60px !important;" flex>
-			<md-list-item class="md-3-line md-long-text" ng-repeat="event in eventSource | orderBy: 'start'" ng-click="null">
-				<span class="dateCircle">{{event.start|date :"EEE MMM d"}}</span>
+			<md-list-item class="md-3-line md-long-text" ng-repeat="event in eventSource | orderBy: 'start'" ng-click="gotoCourse(event.courseID)">
+				<span class="dateCircle" ng-style="{'background-color':colors[event.start.getDay()]}">{{event.start|date :"EEE MMM d"}}</span>
 				<ul class="event_info md-list-item-text" layout="column"  style="list-style-type:none">
 					<h3>{{event.title}}</h3>
 					<p>{{event.start|date :"shortTime"}}-{{event.end|date :"shortTime"}}</p>
@@ -26,8 +26,9 @@
 			</md-list-item>
 		</md-list>
 	</md-content>
-	<div>
-		<md-fab-speed-dial md-direction="up" md-open="false" class="md-fling md-fab-bottom-right">
+	
+	<div class="lock-size" ng-cloak>
+		<md-fab-speed-dial md-open="false" md-direction="up" class="md-fling md-fab-bottom-right">
 			<md-fab-trigger>
 				<md-button aria-label="Change View" class="md-fab md-primary">
 					<ng-md-icon icon="my_library_books"></ng-md-icon>

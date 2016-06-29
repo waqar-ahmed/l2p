@@ -22,10 +22,11 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_ADD_ANNOUNS = "/add_announcement";
 	var URL_DELETE_ANNOUNS = "/delete_announcement";
 	var URL_UPDATE_ANNOUNS = "/update_announcement";
+	var URL_GET_COURSE_INFO = "/course_info";
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
-	var URL_GET_ALL_NEWS = "whats_all_new_since";
+	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since/";
 
 	var authenticated = true;
 
@@ -120,10 +121,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
-	this.getWhatsNew = function(mins){
+	this.getAllWhatsNew = function(mins){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_ALL_NEWS+ "/"+ mins)
+		$http.get(URL_GET_ALL_WHATS_NEW + mins)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);
@@ -319,6 +320,21 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	return defer.promise;
     }
+
+    this.getCourseInfo= function(cid){
+		var defer = $q.defer();
+		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_COURSE_INFO)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
 
 
             //trigger onFileSelect method on clickUpload button clicked

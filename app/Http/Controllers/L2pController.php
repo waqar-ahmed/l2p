@@ -39,7 +39,7 @@ class L2pController extends Controller {
         }        
         if($response['code'] != 200) {
             //TODO: log error
-            return $this->jsonResponse(self::STATUS_FALSE, $response['reason_phrase']);            
+            return $this->jsonResponse(self::STATUS_FALSE, $response['body']);            
         }
         return json_decode($response['body'], true);	            
     }       

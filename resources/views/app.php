@@ -79,6 +79,7 @@
 
         <link rel="stylesheet" href="styles/treeView.css">
         <link rel="stylesheet" href="styles/course.css">
+         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/emails.css">
         <link rel="stylesheet" href="styles/singlecourse.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
@@ -115,9 +116,11 @@
                     </div>
                 </md-toolbar>
                 <md-list>
-                    <md-item ng-repeat="item in menu">
+					<md-item ng-repeat="item in menu">
+						<md-divider ng-if="$last"></md-divider>
                         <a>
-                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<md-item-content md-ink-ripple layout="row" layout-align="start center">
+
                                 <div class="inset">
                                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                                 </div>
@@ -125,7 +128,8 @@
                                 </div>
                             </md-item-content>
                         </a>
-                    </md-item>
+					</md-item>
+<!--
                     <md-divider></md-divider>
                     <md-subheader>Management</md-subheader>
                     <md-item ng-repeat="item in admin">
@@ -138,7 +142,8 @@
                                 </div>
                             </md-item-content>
                         </a>
-                    </md-item>
+					</md-item>
+--!>
                 </md-list>
             </md-sidenav>
             <div layout="column" class="relative" layout-fill role="main">

@@ -48,6 +48,7 @@
 								<img src="images/pdf_icon.png">
 								<h3>{{assignment.title}}</h3>
 								<p>Due Date: {{assignment.dueDate * 1000 | date:'dd-MM-yyyy, HH:mm'}} </p>
+								<p>Total Points: {{assignment.totalPoint}}</p>
 								<h4><a ng-click="showDetails = ! showDetails">Assignment Documents <span>
 									<i class="fa fa-chevron-down" aria-hidden="true" ng-hide="showDetails"></i>
 									<i class="fa fa-chevron-up" aria-hidden="true" ng-hide="!showDetails"></i>
@@ -57,6 +58,21 @@
 						            <ul>
 						            	<li ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)">
 						            		<h3>{{doc.fileName}}</h3>
+						            	</li>
+						            </ul>
+									<ul>
+						            	<li ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)">
+						            		<h3>Solution: {{doc.fileName}}</h3>
+						            	</li>
+						            </ul>
+									<ul>
+						            	<li ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)">
+						            		<h3>Sample Solution: {{doc.fileName}}</h3>
+						            	</li>
+						            </ul>
+									<ul>
+						            	<li ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)">
+						            		<h3>Correction: {{doc.fileName}}</h3>
 						            	</li>
 						            </ul>
 						         </div>

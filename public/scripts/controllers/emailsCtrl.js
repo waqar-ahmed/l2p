@@ -21,7 +21,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
             "value": 14,
         },
         {
-            "name": "month",
+            "name": "one month",
             "value": 30,
         },
     ];
@@ -40,7 +40,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
         $scope.smallscreen = false;
     }
 
-    courseService.getWhatsNew(mins)
+    courseService.getAllWhatsNew(mins)
         .then(function(res){
             console.log("got news");
             console.log(res.dataset);
@@ -131,7 +131,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
             mins = value* minPerDay;
             $scope.emailsLoaded = false;
             $scope.combinedData = [];
-            courseService.getWhatsNew(mins)
+            courseService.getAllWhatsNew(mins)
                 .then(function(res){
                     console.log("refresh news");
                     console.log(res.dataset);

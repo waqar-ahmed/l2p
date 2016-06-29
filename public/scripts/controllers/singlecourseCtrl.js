@@ -20,7 +20,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	}
 
 	console.log("course ID: " + $stateParams.cid);
-
+	/* get Emails by cid*/
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
 			console.log("got emails");
@@ -30,7 +30,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-
+	/* get Announcements by cid*/
 	courseService.getAnnounbyid($stateParams.cid)
 		.then(function(res){
 			console.log("got announcements");
@@ -40,7 +40,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-
+	/* get User Role by cid*/
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
 			console.log("got role");
@@ -50,7 +50,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-
+	/* get Courses by sem*/
 	courseService.getCurrentSem(sem)
 		.then(function(res){
 			console.log("got course by currentsemester");
@@ -66,7 +66,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("Error occured : " + err);
 	});
 
-
+	/* get Learning Materials by cid*/
 	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
@@ -78,7 +78,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	});
 
 
-
+	/* get Assignments by cid*/
 	courseService.getAllAssignments($stateParams.cid)
 	.then(function(res){
 		console.log("get all assignments ");
@@ -110,15 +110,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			return iconClassMap[ext] || defaultIconClass;
 		}
 	};
-
-	$scope.announcements = [
-	{
-		title: 'This is an announcement.',
-		createdBy: ' L2P',
-		createdDate: '30/05/16 20:00',
-		content:"The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request.",
-	},
-	];
 
 	
 	$scope.courseinfos = [
@@ -158,6 +149,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
  //    	);
 	// }
 
+	/* view Email details */
 	$scope.viewEmail = function(email,method){
 		if (email === undefined)
 			{selectedEmail = {};}
@@ -179,6 +171,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    });
 	};
 
+	/* delete Email */
 	$scope.deleteEmail = function(email) {
 		var	confirmDelete = confirm("Do you want to delete the email?");
 		if (confirmDelete == true) {
@@ -196,6 +189,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
   		}
 	}
 
+	/* refresh Emails */
 	$scope.refreshEmails = function(){
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
@@ -264,6 +258,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	  	}
 	};
 
+	/* view Announcements details */
 	$scope.viewAnnoun = function(announcement,method){
 		if (announcement === undefined)
 			{selectedAnnouncement = {};}
@@ -286,6 +281,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	    });
 	};
 
+	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
 		var confirmDelete = confirm("Do you want to delete the announcement?");
 		if (confirmDelete == true) {
@@ -303,6 +299,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 	}
 
+	/* refresh Announcements */
 	$scope.refreshAnnouns = function(){
 	courseService.getAnnounbyid($stateParams.cid)
 		.then(function(res){
@@ -316,14 +313,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		});
 	}
 	
-	
-	$scope.courseinfos = [
-	{
-		coursetitle: 'Introduction to Web Technology',
-		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
-		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
-	},
-	];
 	
 
 	function AnnounDialogController($scope, $mdDialog, $window, $compile, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
@@ -514,6 +503,7 @@ function parseLearningMaterials(y){
     	}
     }
 
+	/* download Assignment */
     $scope.downloadAssignment = function(doc){
     	console.log(doc);
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de/";
