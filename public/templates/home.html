@@ -37,6 +37,7 @@
 
 
 
+
 <div class="myTree">
   <!-- Course list -->
   <div ng-repeat="item in allWhatsNew">
@@ -45,7 +46,7 @@
         <i class="fa fa-minus" aria-hidden="true" ng-show="showDetails"></i>
         <i class="fa fa-plus" aria-hidden="true" ng-show="!showDetails"></i>
       </div>
-      <div class="second">
+      <div ng-class="{'second':'true', 'animated-background':courseNameArr[$index].title === NULL}">
         <h3 class="main_title">{{courseNameArr[$index].title}}</h3>
       </div>
       <div class="clear"></div>
