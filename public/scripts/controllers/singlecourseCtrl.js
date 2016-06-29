@@ -379,7 +379,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
-<<<<<<< HEAD
   	courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
 		.then(function(res){
 			console.log("announcement is deleted");
@@ -391,22 +390,22 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		function(err){
 			console.log("Error occured : " + err);
 		});
-=======
-		var confirmDelete = confirm("Do you want to delete the announcement?");
-		if (confirmDelete == true) {
-			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
-			.then(function(res){
-				console.log("announcement is deleted");
-				console.log(res);
-				$scope.announcementsLoaded = false;
-				$window.alert("announcement is deleted");
-				$scope.refreshAnnouns();
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-		}
->>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
+// =======
+// 		var confirmDelete = confirm("Do you want to delete the announcement?");
+// 		if (confirmDelete == true) {
+// 			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+// 			.then(function(res){
+// 				console.log("announcement is deleted");
+// 				console.log(res);
+// 				$scope.announcementsLoaded = false;
+// 				$window.alert("announcement is deleted");
+// 				$scope.refreshAnnouns();
+// 			},
+// 			function(err){
+// 				console.log("Error occured : " + err);
+// 			});
+// 		}
+// >>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
 	}
 
 	/* refresh Announcements */
@@ -425,15 +424,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	
 	
 
-<<<<<<< HEAD
 	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns,$mdToast) {
-		$scope.authWrite = true;
-		$scope.authEdit = true;
-=======
-	function AnnounDialogController($scope, $mdDialog, $window, $compile, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
 		$scope.authWrite = false;
 		$scope.authEdit = false;
->>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
+
 		$scope.authShow = false;
 		$scope.announce_heading = '';
 		$scope.isEdit = false;
