@@ -31,11 +31,13 @@
 			<textarea style="height:100px !important;" rows="8"  ng-model="currentannoun.body" >{{currentannoun.body}}</textarea>
 		</md-input-container>
 
-		<div ng-show="!authWrite" class="email-content">
+	<!-- 	<div ng-show="!authWrite" class="email-content">
 			<label>Content</label>
 			<p ng-bind-html="currentannoun.body"></p>
 		</div>
-		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
+		<md-divider id="email-divider" ng-show="!authWrite"></md-divider> -->
+
+		<div contenteditable ng-model="test" ng-init="test='I am test'"></div>
 
 		<div class="email-content" layout="column">
 			<label>Expire Date</label>

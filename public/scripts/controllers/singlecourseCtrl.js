@@ -177,6 +177,9 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		$scope.announcementsLoaded = false;
 	}
 
+	$scope.test = function() {
+		console.log("test");
+	}
 	// $scope.test = function(){
 	// 	$mdDialog.show(
 	//      	$mdDialog.alert()
@@ -224,6 +227,24 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("Error occured : " + err);
 		});
   	}
+// =======
+// 		var	confirmDelete = confirm("Do you want to delete the email?");
+// 		if (confirmDelete == true) {
+// 			courseService.deleteEmail($stateParams.cid, email.itemId)
+// 			.then(function(res){
+// 				console.log("email is deleted");
+// 				console.log(res);
+// 				$scope.emailsLoaded = false;
+// 				$window.alert("email is deleted");
+// 				$scope.refreshEmails();
+// 			},
+// 			function(err){
+// 				console.log("Error occured : " + err);
+// 			});
+//   		}
+// 	}
+
+// >>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
 	/* refresh Emails */
 	$scope.refreshEmails = function(){
 	courseService.getEmailbyid($stateParams.cid)
@@ -358,6 +379,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
+<<<<<<< HEAD
   	courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
 		.then(function(res){
 			console.log("announcement is deleted");
@@ -369,6 +391,22 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		function(err){
 			console.log("Error occured : " + err);
 		});
+=======
+		var confirmDelete = confirm("Do you want to delete the announcement?");
+		if (confirmDelete == true) {
+			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+			.then(function(res){
+				console.log("announcement is deleted");
+				console.log(res);
+				$scope.announcementsLoaded = false;
+				$window.alert("announcement is deleted");
+				$scope.refreshAnnouns();
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+		}
+>>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
 	}
 
 	/* refresh Announcements */
@@ -387,9 +425,15 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	
 	
 
+<<<<<<< HEAD
 	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns,$mdToast) {
 		$scope.authWrite = true;
 		$scope.authEdit = true;
+=======
+	function AnnounDialogController($scope, $mdDialog, $window, $compile, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
+		$scope.authWrite = false;
+		$scope.authEdit = false;
+>>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
 		$scope.authShow = false;
 		$scope.announce_heading = '';
 		$scope.isEdit = false;
@@ -435,6 +479,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 				$scope.expireEdited = tempDate;
 			}
 		}
+		// var template = angular.element($scope.currentannoun.body);
+		// $scope.currentannoun.bodyEdited = $compile(template);
 
 	  	$scope.back = function() {
 	  		$scope.editannouncement = false;
@@ -471,7 +517,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			});
 	  	}
 
-	  		$scope.editAnnoun = function(){
+  		$scope.editAnnoun = function(){
 	  		if ($scope.expireEdited != undefined){
 		  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
 		  	}
@@ -502,7 +548,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			});
 	  	}
 	};
-
 
 
 function convert(array){
