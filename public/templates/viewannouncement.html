@@ -37,7 +37,6 @@
 		</div>
 		<md-divider id="email-divider" ng-show="!authWrite"></md-divider> -->
 
-		<div contenteditable ng-model="test" ng-init="test='I am test'"></div>
 
 		<div class="email-content" layout="column">
 			<label>Expire Date</label>
@@ -47,6 +46,6 @@
 		<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="text-align:center;background:#3f3f3f;">{{announce_button}}</md-button>
 
 	</md-content>
-		<div style="font-size:13px; color:black;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
+		<div style="font-size:13px; color:black;margin-top:10px;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
 </md-dialog>
 
