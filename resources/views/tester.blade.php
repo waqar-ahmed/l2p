@@ -393,6 +393,22 @@
                 }
 
            },
-        },                        
+        }, 
+        emails: {
+            add_email: {
+                uri: "/course/{cid}/add_email",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                                      
+                },
+                req_params :
+                {
+                    subject: "This is a sample email.",
+                    recipients: "managers;tutors;students;",
+                    cc: "administrator@example.rwth-aachen.de",
+                }
+            },
+        }
     }
 </script>
