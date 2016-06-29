@@ -5,6 +5,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
     $scope.combinedData = [];
     $scope.colors = [];
     $scope.emailsLoaded = false;
+    $scope.dataLoaded = true;
     $scope.contentTypes = ["email", "announcement"];
     $scope.selectedType = ["email", "announcement"];
     $scope.days = [

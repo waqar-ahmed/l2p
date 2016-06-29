@@ -2,6 +2,23 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   $scope.coursesLoaded = false;
 
+  $scope.selectedSemester = {
+        sem: 'ss16',
+        name: 'Summer Semester 2016',
+      };
+
+   console.log($scope.semesters);
+
+  courseService.getSortedSems()
+    .then(function(res){
+      $scope.semesters = res.Body;
+      console.log("got sorted semesters");
+      console.log($scope.semesters);
+    }, function(err){
+      console.log("Error occured : " + err);
+  });
+
+
   courseService.getAllCourses()
 		.then(function(res){
 			//got all courses therefore generate colors
@@ -14,27 +31,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 			console.log("Error occured : " + err);
 			$scope.coursesLoaded = true;
 		});
-
-
-  $scope.selectedSemester = {
-        sem: 'ss16',
-        name: 'Summer Semester 2016',
-      };
-
-  $scope.semesters = [
-    {
-      sem: 'ss16',
-      name: 'Summer Semester 2016',
-    },
-    {
-      sem: 'ws15',
-      name: 'Winter Semester 2016',
-    },
-    {
-      sem: 'ss15',
-      name: 'Summer Semester 2015',
-    },
-  ];
 
   $scope.gotoCourse = function(id,cid){
       console.log("showing single course " + cid);

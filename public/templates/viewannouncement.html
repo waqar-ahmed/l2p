@@ -25,13 +25,11 @@
 			<textarea md-detect-hidden rows="8" ng-disabled="!authWrite" ng-model="currentannoun.body" >{{currentannoun.body}}</textarea>
 		</md-input-container>
 
-	<!-- 	<div ng-show="!authWrite" class="email-content">
+		<div ng-show="!authWrite" class="email-content">
 			<label>Content</label>
 			<p ng-bind-html="currentannoun.body"></p>
 		</div>
-		<md-divider id="email-divider" ng-show="!authWrite"></md-divider> -->
-
-		<div contenteditable ng-model="test" ng-init="test='I am test'"></div>
+		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
 
 		<div class="email-content" layout="column">
 			<label>Expire Date</label>

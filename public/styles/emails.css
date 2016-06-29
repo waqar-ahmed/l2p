@@ -131,9 +131,9 @@
 }
 
 .definescroll {
-  height: calc(100% - 155px) !important;
+  height: calc(100% - 170px) !important;
    overflow: auto;
-   overflow-x: hidden; 
+   overflow-x: hidden;
 }
 
 .select-header md-input-container{

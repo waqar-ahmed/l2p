@@ -121,7 +121,8 @@ md-list-item.md-3-line md-divider[md-inset] {
 
 md-menu-content md-menu-item button.course_selector span {
   margin-left: 8px;
-  max-width: 168px;
+  margin-right: 8px;
+  max-width: 176px;
   text-overflow: ellipsis;
   display: block;
   overflow: hidden;
