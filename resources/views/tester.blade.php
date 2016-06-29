@@ -409,6 +409,12 @@
                     cc: "administrator@example.rwth-aachen.de",
                 }
             },
+        },
+        semesters: {
+            semesters: {
+                uri: "/semesters",     
+                method: "get",                
+            },
         }
     }
 </script>
