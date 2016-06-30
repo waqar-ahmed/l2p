@@ -295,7 +295,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	  	};
 
 
-	  	$scope. = function(){
+	  	$scope.temp = function(){
 	  		$scope.currentemail.replyTo = 'Reply to my address';
 	  		$scope.currentemail.recipients = editRecipient();
 	  		var newEmail = {
