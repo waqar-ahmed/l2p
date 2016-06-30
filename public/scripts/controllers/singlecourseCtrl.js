@@ -206,6 +206,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				};
 				index++;
 				transferArray.push(tempArray);
+				orginalDiscussions[i].counts = 0;
 				$scope.discussions.push(orginalDiscussions[i]);
 			}
 			else {
@@ -221,7 +222,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				var level = $scope.discussions[master].children.length+1;
 				orginalDiscussions[i].level = level;
 				$scope.discussions[master].children.push(orginalDiscussions[i]);
-				$scope.discussions[master].counts = $scope.discussions[master].children.length+1;
+				$scope.discussions[master].counts = $scope.discussions[master].children.length;
 			}
 		}
 		console.log("data is parsed");
@@ -557,7 +558,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 			function(err){
 				console.log("Error occured : " + err);
 			});
-	
+
 	}
 
 	/* refresh Announcements */
