@@ -5,7 +5,7 @@
  <div ng-cloak>
 
 	<div class="fabbutton">
-	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
+	   <md-button ng-class="{visible:selectedTab==3}" style="position:absolute !important;" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	   <ng-md-icon icon="note_add"></ng-md-icon>
 	   </md-button>
 	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewAnnoun(undefined,'creat')" ng-show="authCUD">
@@ -41,7 +41,106 @@
 				</md-content>
 			</md-tab>
 
+
 			<md-tab label="Assignments">
+				<md-content class="md-padding">
+					<div class="singlecourse main_height">
+
+							<div class="md-accordion customwidth" ng-repeat="assignment in assignments">
+        				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+
+            				<div class="customcolor_email" layout="row" layout-align="begin center">
+                    			<div style="width:40px;height:40px">
+                 					
+                 					<img src="images/file_icon.png" alt="icon" height="30" width="30" style="margin-right:5px;"> 
+
+                    			</div>
+
+                			<div id="wrapper" layout="column" flex="70">
+                        		<div class="inner1"><b>{{assignment.title}}</b></div>
+        			    		<div class="inner2"><b>Due Date: </b>{{assignment.dueDate * 1000 | date:'dd-MM-yyyy, HH:mm'}} </div>
+								<div class="inner2"><b>Total Points: </b> {{assignment.totalPoint}}</div>
+
+        					</div>
+            					<span flex></span>
+            					<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+            				</div>
+        				</md-toolbar>
+
+        				<div ng-class="{dataContent:true, activeContent:data.expanded}">
+
+              			 	  	<md-button class="md-icon-button" ng-click="showConfirmAnnoucnment($event,announcement)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
+	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
+	         				 	</md-button>
+
+	         				 	<md-button class="md-icon-button" ng-click="viewAnnoun(announcement,'edit')" ng-show="authCUD" style="float:right;margin-right:-5px;margin-top:-20px;">
+	            				<ng-md-icon icon="edit" style="color:red !important;"></ng-md-icon>
+	         				 	</md-button>
+
+              			 	   <div class="clear" ng-show="authCUD"></div>
+
+              			 	  <div  style="margin-right:10px !important;">
+              			 	  <p style="margin-bottom:5px;" >
+
+              			 	  	<b>{{assignment.title}}</b></p>
+              			 	 	 <hr>
+
+								<div ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)"> 
+									<div style="display: flex;align-items: center;margin-left:5px;">
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
+									</div>
+								</div>
+
+								<div ng-if="assignment.solution.solutionDocuments.length==0"></div>
+								<div ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)"> 
+
+								<p style="margin-bottom:5px;margin-top:15px;" ><b>Uploaded Solution</b></p>
+              			 	 	 <hr>
+									<div style="display: flex;align-items: center;">
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
+									</div>
+								</div>
+
+
+								<div ng-if="assignment.correction.correctionDocuments.length==0"></div>
+								<div ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)"> 
+
+								<p style="margin-bottom:5px;margin-top:15px;" ><b>Corrected Solution</b></p>
+              			 	 	 <hr>
+									<div style="display: flex;align-items: center;">
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
+									</div>
+								</div>
+
+
+								<div ng-if="assignment.SampleSolutionDocuments.length==0"></div>
+								<div ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)"> 
+
+								<p style="margin-bottom:5px;margin-top:15px;" ><b>Sample Solution</b></p>
+              			 	 	 <hr>
+									<div style="display: flex;align-items: center;">
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
+									</div>
+								</div>
+
+
+                			</div>
+            			</div>
+       				 </div>
+
+       				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+           			 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+       				 </div>
+						
+					</div>
+				</md-content>
+			</md-tab>
+
+			<!-- <md-tab label="Assignments">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 						<ul>
@@ -81,7 +180,9 @@
 						</ul>
 					</div>
 				</md-content>
-			</md-tab>
+			</md-tab> -->
+
+
 
 			<md-tab label="Discussion Forum">
 				<md-content class="md-padding main_height">
