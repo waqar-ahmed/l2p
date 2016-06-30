@@ -420,8 +420,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
-		$scope.recipients = ["extra","tutors","mangagers","students"];
-		$scope.hello = "Hi";
+		$scope.recipients = ["extra","tutors","managers","students"];
 
 		if (method == 'creat'){
 			$scope.authWrite = true;

@@ -1,7 +1,7 @@
-<md-dialog flex-gt-sm="200" flex="100" class="email-detail">
+<md-dialog flex-xs="90" flex-sm="90" flex-gt-sm="60" class="email-detail">
 	<md-toolbar class="md-toolbar-tools">
 	<div layout="row" layout-align="center center"  flex ng-cloak>
-		
+
 		<h3 ng-bind="announce_heading">{{announce_heading}}</h3>
 
 		<span flex></span>
@@ -16,7 +16,6 @@
 			<ng-md-icon icon="save"></ng-md-icon>
 		</md-button> -->
 
-		
 	</div>
 	</md-toolbar>
 
@@ -35,7 +34,9 @@
 			<label>Content</label>
 			<p ng-bind-html="currentannoun.body"></p>
 		</div>
+
 		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
+
 
 		<div class="email-content" layout="column">
 			<label>Expire Date</label>
@@ -45,6 +46,6 @@
 		<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="text-align:center;background:#3f3f3f;">{{announce_button}}</md-button>
 
 	</md-content>
-		<div style="font-size:13px; color:black;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
+		<div style="font-size:13px; color:black;margin-top:10px;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
 </md-dialog>
 
