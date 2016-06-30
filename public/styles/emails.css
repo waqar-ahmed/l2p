@@ -62,13 +62,16 @@
 
 .md-accordion .activeContent {
   height:auto;
-  max-height: 180px;
   padding: 20px;
   display: block;
-  overflow: scroll;
+  overflow: hidden;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .md-accordion .activeContent >p{
+
+
 
 }
 
@@ -131,8 +134,9 @@
 }
 
 .definescroll {
-  height: calc(100% - 155px) !important;
+  height: calc(100% - 170px) !important;
    overflow: auto;
+   overflow-x: hidden;
 }
 
 .select-header md-input-container{

@@ -1,17 +1,19 @@
-<md-dialog flex-gt-sm="50" flex="80" class="email-detail">
+<md-dialog flex-xs="90" flex-sm="90" flex-gt-sm="60" class="email-detail">
 	<md-toolbar class="md-toolbar-tools">
-	<div layout="row" layout-align="center center" flex ng-cloak>
-		<md-button class="md-icon-button" ng-click="back()">
-			<ng-md-icon icon="arrow_back"></ng-md-icon>
-		</md-button>
-		<h3>Details</h3>
+	<div layout="row" layout-align="center center"  flex ng-cloak>
+
+		<h3>Add New Email</h3>
 		<span flex></span>
-		<md-button class="md-icon-button" ng-click="deleteEmail()" ng-show="authDelete">
+			<md-button class="md-icon-button" ng-click="back()">
+				<i style="margin-right:-20px !important;" class="fa fa-times fa-2x" aria-hidden="true"></i>
+
+			</md-button>
+		<!-- <md-button class="md-icon-button" ng-click="deleteEmail()" ng-show="authDelete">
 			<ng-md-icon icon="delete"></ng-md-icon>
 		</md-button>
 		<md-button class="md-icon-button" ng-click="addEmail()" ng-show="authWrite">
 			<ng-md-icon icon="save"></ng-md-icon>
-		</md-button>
+		</md-button> -->
 	</div>
 	</md-toolbar>
     <md-content layout="column">
@@ -39,14 +41,18 @@
 
 		<md-input-container ng-show="authWrite">
 	    	<label>Content</label>
-			<textarea rows="8" md-select-on-focus ng-disabled="!authWrite" ng-model="currentemail.body">{{currentemail.body}}</textarea>
+			<textarea style="height:100px !important;" rows="8" md-select-on-focus ng-disabled="!authWrite" ng-model="currentemail.body">{{currentemail.body}}</textarea>
 		</md-input-container>
 
 		<div ng-show="!authWrite" class="email-content">
 			<label>Content</label>
 			<p ng-bind-html="currentemail.body"></p>
 		</div>
+
+		      <md-button class="md-raised md-primary" ng-click="addEmail()" style="text-align:center;background:#3f3f3f;">Send Email</md-button>
+
 		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
 	</md-content>
+
 		<div id="creatinfo" ng-show="authShow">created by {{currentemail.from}} at {{currentemail.created*1000| date:'medium'}}</div>
 </md-dialog>

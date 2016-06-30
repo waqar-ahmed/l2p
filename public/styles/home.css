@@ -157,16 +157,6 @@
   }
 
 
-
-
-
-
-
-
-
-
-
-
   @font-face {
   font-family: 'ecoico';
   src:url('../fonts/timelineicons/ecoico.eot');
@@ -186,7 +176,7 @@
   width: 98%;
   height: 120%;
   font-size: 12px;
-} 
+}
 
 /* The line */
 .cbp_tmtimeline:before {
@@ -248,7 +238,7 @@
   background: #6cbfee;
 }
 
-.cbp_tmtimeline > li .cbp_tmlabel h2 { 
+.cbp_tmtimeline > li .cbp_tmlabel h2 {
   margin-top: 0px;
   padding: 0 0 10px 0;
   border-bottom: 1px solid rgba(255,255,255,0.4);
@@ -360,7 +350,7 @@
     float: right;
     left: auto;
     margin: -55px 5px 0 0px;
-  } 
+  }
 }
 
 
@@ -387,9 +377,9 @@ ol.tree
 {
   width: 100%;
 }
-  ol.tree li 
-  { 
-    position: relative; 
+  ol.tree li
+  {
+    position: relative;
     list-style: none;
     padding: 10px;
   }
@@ -408,7 +398,7 @@ ol.tree
     ol.tree li.file a[href *= '.html']  { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
     ol.tree li.file a[href $= '.css'] { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
     ol.tree li.file a[href $= '.js']  { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
-  
+
   ol.tree li input
   {
     position: absolute;
@@ -487,6 +477,7 @@ ol.tree
 .myTree{
   width: 99%;
   padding-top: 10px;
+  height: 140%;
 }
 
 .mainTitle{
@@ -496,7 +487,7 @@ ol.tree
 .mainTitle .icn{
   width: 20%;
   border: 1px solid green;
-  
+
 }
 .mainTitleText{
   width: 40%;
@@ -574,4 +565,26 @@ ol.tree
 
 .clear {
     clear: both;
+}
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.animated-background {
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 28%, #eeeeee 50%);
+    background-size: 150% 150%;
+    height: 40px;
+    position: relative;
 }

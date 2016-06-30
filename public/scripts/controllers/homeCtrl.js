@@ -1,4 +1,4 @@
-app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast){
+app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $http, $q){
 
 	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
 	var LOGIN_USER = "login";
@@ -80,6 +80,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 			$scope.dataLoaded = true;
 			$scope.allWhatsNew = res.dataset;
 			//bindData(res.dataset);
+			$scope.loadCourseName(res.dataset);
 		}
 		else{
 		}
@@ -132,6 +133,44 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     			}
     		}
     	}
+    }
+
+    $scope.courseNameArr=[];
+
+    $scope.getCourseNameById = function(cid, index){
+    	courseService.getCourseInfo(cid)
+    	.then(function(res){
+		if(res.Status == true)
+		{
+			console.log(res.dataSet[0].courseTitle);
+			$scope.courseNameArr[index] = res.dataSet[0].courseTitle;
+		}
+		else{
+			return cid;
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+    }
+
+    var requestArr = [];
+    $scope.loadCourseName = function(dataset){
+    	// for(var i=0;i<dataset.length;i++){
+    	// 	$scope.getCourseNameById(dataset[i].cid, i);
+    	// }
+
+    	for(var i=0;i<dataset.length;i++){
+    		requestArr[i] = $http.get("course/" + dataset[i].cid + "/course_info");
+    	}
+
+    	$q.all(requestArr).then(function (ret) {
+    		for(var i=0;i<ret.length;i++){
+    			console.log(ret[i].data.dataSet[0].courseTitle);
+    			$scope.courseNameArr[i]={"title":ret[i].data.dataSet[0].courseTitle};
+    		}
+
+    		console.log($scope.courseNameArr);
+		});
     }
 
     $scope.downloadFile = function(subitem){

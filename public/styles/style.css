@@ -3,7 +3,7 @@
   cursor: pointer;
 }
 
-md-content.md-default-theme {
+md-content.md-default-the {
   background-color: #eee;
 }
 
@@ -113,14 +113,16 @@ md-list-item.md-3-line md-divider[md-inset] {
 
 .course_selector {
   font-size: 13px !important;
-  max-width: 200px;
+  padding: 5px !important;
   height: 32px;
   min-height: 32px;
   max-height: 32px;
 }
 
 md-menu-content md-menu-item button.course_selector span {
-  max-width: 168px;
+  margin-left: 8px;
+  margin-right: 8px;
+  max-width: 176px;
   text-overflow: ellipsis;
   display: block;
   overflow: hidden;
