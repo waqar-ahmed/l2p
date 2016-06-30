@@ -1,19 +1,22 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window, colorService, $mdToast) {
+app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast) {
+
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
+	var orginalDiscussions = [];
 
+	$scope.discussLoaded = false;
 	$scope.emailsLoaded = false;
 	$scope.announcementsLoaded = false;
 	$scope.$parent.authcourse = true;
 	$scope.breadcrums = [''];
+	$scope.discussions = [];
+
 	$scope.firstLetter = "";
     $scope.colors = [];
     $scope.colors_announcement = [];
 
-	$scope.longText = "Q: Do we need to use some specific template for the project definition document or can we write it in a free form, provided that we give answers to all the questions? (questions to answer: project background, business goals, project goals, critical success factors, assumptions, constraints, and stakeholders)";
-	$scope.replyBody = "I would be interested in an answer here as well because the template from the lecture slides contains slightly different topics than the one mentioned in the assigment. Assignment: project background, business goals, project goals, critical success factors, assumptions, constraints and stakeholders.Lecure slides: project definition, project scope, objectives, project deliverables, critical success factors, assumptions, constraints, completion criteria";
 	$scope.show_replies = false;
 
 
@@ -27,9 +30,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
  		 }
 
 	$scope.trimFirstLetter = function(sentFrom){
-
     	return String(sentFrom).charAt(0);
-  	
   	};
 
 
@@ -44,21 +45,29 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
           .ok('Delete')
           .cancel('Cancel');
     $mdDialog.show(confirm).then(function() {
-
     	$scope.deleteEmail(email);
     	$scope.showSimpleToast("Email has been deleted");
-
-      
-    }, function() {
+    	}, function() {
 			console.log("confirmation canceled");
-		    });
-  };
+		});
+  	};
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
 	}
 
 	console.log("course ID: " + $stateParams.cid);
+
+	courseService.getAllDiscussions($stateParams.cid)
+		.then(function(res){
+			console.log("got discussions");
+			console.log(res.dataSet);
+			orginalDiscussions = res.dataSet;
+			$scope.parseDiscuss();
+			$scope.discussLoaded = true;
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
 	/* get Emails by cid*/
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
@@ -152,7 +161,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		}
 	};
 
-	
+
 	$scope.courseinfos = [
 	{
 		coursetitle: 'Introduction to Web Technology',
@@ -160,7 +169,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
 	},
 	];
-	
+
 	$scope.setRole = function(){
 		if ($scope.userRole.indexOf("manager")!==-1){
 			$scope.authCUD = true;}
@@ -180,15 +189,159 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	$scope.test = function() {
 		console.log("test");
 	}
-	// $scope.test = function(){
-	// 	$mdDialog.show(
-	//      	$mdDialog.alert()
-	//         .clickOutsideToClose(true)
-	//         .title('This is an alert title')
-	//         .textContent('for test.')
-	//         .ok('Got it!')
- //    	);
-	// }
+
+	$scope.parseDiscuss = function() {
+		var transferArray = [];
+		var index = 0;
+		for (var i=0; i<orginalDiscussions.length; i++){
+			if (orginalDiscussions[i].selfId == orginalDiscussions[i].parentDiscussionId) {
+				var tempArray = {
+					"selfId": orginalDiscussions[i].selfId,
+					"value": index,
+				};
+				index++;
+				transferArray.push(tempArray);
+				$scope.discussions.push(orginalDiscussions[i]);
+			}
+			else {
+				var master = $filter('filter')(transferArray,{'selfId':orginalDiscussions[i].parentDiscussionId})[0].value;
+				if ($scope.discussions[master].children == undefined) {
+					$scope.discussions[master].children = [];
+				}
+				if (orginalDiscussions[i].replyToId!=orginalDiscussions[i].parentDiscussionId) {
+					var fromData =  $filter('filter')($scope.discussions[master].children,{'selfId':orginalDiscussions[i].replyToId})[0];
+					orginalDiscussions[i].fromName = fromData.from;
+					orginalDiscussions[i].fromLevel = fromData.level;
+				}
+				var level = $scope.discussions[master].children.length+1;
+				orginalDiscussions[i].level = level;
+				$scope.discussions[master].children.push(orginalDiscussions[i]);
+				$scope.discussions[master].counts = $scope.discussions[master].children.length+1;
+			}
+		}
+		console.log("data is parsed");
+		console.log($scope.discussions);
+	}
+
+	$scope.addDisucss = function(discussion,method){
+		if (discussion === undefined)
+			{selectedDiscussion = {};}
+		else
+			{selectedDiscussion = discussion;}
+	    $mdDialog.show({
+	    	controller: DiscussionDialogController,
+	    	locals: {
+	    		selectedDiscussion: angular.copy(selectedDiscussion),
+	    		method: method,
+	    		cid: $stateParams.cid,
+	    		resetLoading: $scope.resetDiscussLoading.bind(self),
+	    		refreshDiscusses: $scope.refreshDiscusses.bind(self),
+	    	},
+	    	bindToController: true,
+	      	templateUrl:'templates/viewdiscuss.html',
+	      	parent: angular.element(document.body),
+	      	clickOutsideToClose:true
+	    });
+	};
+
+	/* delete Discussion */
+	$scope.deleteDiscuss = function(discussion, method) {
+
+		if (method == "reply"){
+			var confirmDeleteReply = confirm("Do you want to delete the reply?");
+			if (confirmDeleteReply == true) {
+				courseService.deleteEmail($stateParams.cid, email.itemId)
+				.then(function(res){
+					console.log("email is deleted");
+					console.log(res);
+					$scope.emailsLoaded = false;
+					$window.alert("email is deleted");
+					$scope.refreshEmails();
+				},
+				function(err){
+					console.log("Error occured : " + err);
+				});
+	  		}
+		}
+
+		else if (method == "discuss") {
+			var confirmDeleteDiscuss = confirm("Do you want to delete the discussion?");
+			if (confirmDeleteDiscuss == true) {
+				courseService.deleteEmail($stateParams.cid, email.itemId)
+				.then(function(res){
+					console.log("email is deleted");
+					console.log(res);
+					$scope.emailsLoaded = false;
+					$window.alert("email is deleted");
+					$scope.refreshEmails();
+				},
+				function(err){
+					console.log("Error occured : " + err);
+				});
+	  		}
+		}
+
+	}
+
+	/* refresh Discussions */
+	$scope.refreshDiscusses = function(){
+	courseService.getEmailbyid($stateParams.cid)
+		.then(function(res){
+			console.log("refresh emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+			$scope.emailsLoaded = true;
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+
+	function DiscussDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail) {
+		$scope.authWrite = false;
+		$scope.authDelete = false;
+		$scope.authShow = false;
+
+		if (method == 'creat'){
+			$scope.authWrite = true;
+		}
+		else if (method == 'read'){
+			$scope.authShow = true;
+			$scope.currentemail = selectedEmail;
+		}
+
+	  	$scope.back = function() {
+	    	$mdDialog.hide();
+	  	};
+
+
+	  	$scope.addEmail = function(){
+	  		$scope.currentemail.replyTo = 'Reply to my address';
+	  		$scope.currentemail.recipients = editRecipient();
+	  		var newEmail = {
+	  			"recipients": $scope.currentemail.recipients,
+	  			"subject": $scope.currentemail.subject,
+	  			"body": $scope.currentemail.body,
+	  			"replyTo": $scope.currentemail.replyTo,
+	  			"cc" : $scope.currentemail.cc,
+	  		};
+
+	  		console.log(newEmail);
+
+	  		courseService.addEmail(cid, newEmail)
+			.then(function(res){
+				console.log("new email sent");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshEmail();
+				$window.alert("new email is sent");
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
+	};
 
 	/* view Email details */
 	$scope.viewEmail = function(email,method){
@@ -370,7 +523,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
     	$scope.deleteAnnoun(ann);
     	$scope.showSimpleToast("Announcement has been deleted");
 
-      
+
     }, function() {
 			console.log("confirmation canceled");
 		    });
@@ -378,33 +531,20 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
-  	courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
-		.then(function(res){
-			console.log("announcement is deleted");
-			console.log(res);
-			$scope.announcementsLoaded = false;
-			//$window.alert("announcement is deleted");
-			$scope.refreshAnnouns();
-		},
-		function(err){
-			console.log("Error occured : " + err);
-		});
-// =======
-// 		var confirmDelete = confirm("Do you want to delete the announcement?");
-// 		if (confirmDelete == true) {
-// 			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
-// 			.then(function(res){
-// 				console.log("announcement is deleted");
-// 				console.log(res);
-// 				$scope.announcementsLoaded = false;
-// 				$window.alert("announcement is deleted");
-// 				$scope.refreshAnnouns();
-// 			},
-// 			function(err){
-// 				console.log("Error occured : " + err);
-// 			});
-// 		}
-// >>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
+		var confirmDelete = confirm("Do you want to delete the announcement?");
+		if (confirmDelete == true) {
+			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+			.then(function(res){
+				console.log("announcement is deleted");
+				console.log(res);
+				$scope.announcementsLoaded = false;
+				$window.alert("announcement is deleted");
+				$scope.refreshAnnouns();
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+		}
 	}
 
 	/* refresh Announcements */
@@ -420,8 +560,8 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 			console.log("Error occured : " + err);
 		});
 	}
-	
-	
+
+
 
 	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns,$mdToast) {
 		$scope.authWrite = true;
@@ -641,7 +781,7 @@ function parseLearningMaterials(y){
     	console.log(doc);
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de/";
     	var url = doc.downloadUrl.replace("assessment|", "");
-    	
+
     	window.open(SERVER_URL + url, '_blank');
     }
 });

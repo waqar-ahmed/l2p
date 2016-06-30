@@ -1,50 +1,60 @@
-app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$compile, $timeout, uiCalendarConfig) {
-	console.log(courseService.getAuthenticatedValue());
-	if(!courseService.getAuthenticatedValue()){
-		window.location = LOGIN_PAGE;
-	}
+app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$anchorScroll,$compile, $timeout, uiCalendarConfig) {
 
-	
-	var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+	$scope.scrollTo = function(div) {
+		$timeout(function() {
+			console.log('e-'+div);
+			$location.hash('e-'+div);
+			$anchorScroll();
+		});
+    }
+    
+
+
+
 	$scope.dataLoading = true;
-	$scope.showC = true;
+	$scope.showC = false;
 
+	var date = new Date();
     var curr_date = date.getDate();
     var curr_month = date.getMonth()+1;
     var curr_year = date.getFullYear();
     
     $scope.dateToday = Date.parse(curr_month + "/" + curr_date + "/" + curr_year);
-	$scope.range = $scope.dateToday; 
-	console.log($scope.range);
-	console.log(date.getMonth());
-	console.log(date.getDate());
-	console.log(date.getDay());
+	console.log("today "+$scope.dateToday);
 
 	$scope.colors = colorService.generateDayColors();
 
-	$scope.onSwipeUp = function(ev) {
-                alert('Swiped Up!');
-				console.log("swiped up!");
-    };
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
-			console.log("got all course events");
+			console.log("got all course events from schedule controller");
 			console.log(res);
 			$scope.eventSource = res.dataSet;
 			for (e in $scope.eventSource){
 				$scope.eventSource[e]['start'] = new Date($scope.eventSource[e].eventDate * 1000);
 				$scope.eventSource[e]['end'] = new Date($scope.eventSource[e].endDate * 1000);
 			}
-			/* event sources array*/
+			/* event sources array */
 			$scope.eventSources = [$scope.eventSource];
+
+			/* compute start date for scroll */
+			$scope.startDate = 0;
+			var temp =  $scope.startDate;
+			for (e in $scope.eventSource){
+				if($scope.eventSource[e].start >= $scope.dateToday){
+					temp = $scope.eventSource[e].start;
+					if( $scope.startDate == 0){ $scope.startDate = temp;}
+					else if(temp <  $scope.startDate){ $scope.startDate = temp;}
+				}
+			}
+
+			console.log("startDate "+ $scope.startDate);
+			$scope.scrollTo($scope.startDate.valueOf());
 			$scope.dataLoading = false;
 
 		}, function(err){
 			console.log("Error occured : " + err);
+			$scope.dataLoading = true;
 		});
 /*
 	$scope.eventSource =[
@@ -58,19 +68,25 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
     $location.path('singlecourse/'+cid);
     }
 
+
     /* alert on eventClick */
-    $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date.title + ' was clicked ');
-    };
+    //$scope.alertOnEventClick = function( date, jsEvent, view){
+    //    $scope.alertMessage = (date.title + ' was clicked ');
+    // };
+
     /* alert on Drop */
-     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-       $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
-    };
+    // $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+    //   $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+    //};
+
     /* alert on Resize */
-    $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
-       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
-    };
+    //$scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+    //   $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+    //};
+	
+
     /* add and removes an event source of choice */
+	/*
     $scope.addRemoveEventSource = function(sources,source) {
       var canAdd = 0;
       angular.forEach(sources,function(value, key){
@@ -83,7 +99,10 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
         sources.push(source);
       }
     };
+	*/
+
     /* add custom event*/
+	/*
     $scope.addEvent = function() {
       $scope.events.push({
         title: 'Open Sesame',
@@ -92,10 +111,13 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
         className: ['openSesame']
       });
     };
+	*/
+
     /* remove event */
-    $scope.remove = function(index) {
-      $scope.events.splice(index,1);
-    };
+    //$scope.remove = function(index) {
+    //  $scope.events.splice(index,1);
+    //};
+	
     /* Change View */
     $scope.changeView = function(view,calendar) {
       uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);

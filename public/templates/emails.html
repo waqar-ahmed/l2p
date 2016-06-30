@@ -20,7 +20,7 @@
              <div layout="column" layout-gt-xs="row" layout-align="begin end">
                 <h4><b>Last: </b></h4>
                 <md-input-container>
-                  <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value.name'}">
+                  <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value.name'}" ng-disabled="!emailsLoaded">
                     <md-option ng-repeat="day in days" ng-value="day" ng-click="refreshNews(day.value)">{{day.name}}</md-option>
                   </md-select>
                 </md-input-container>

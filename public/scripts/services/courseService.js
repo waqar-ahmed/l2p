@@ -9,6 +9,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_CURRENTSEM ="current_semester";
     var LOGOUT = "logout";
     var URL_SEMESTER = "/semester";
+    var URL_SORTED_SEMESTER = "semesters";
     var URL_GET_LEARNING_MATERIALS = "/all_learning_materials";
     var URL_GET_ASSIGNMENTS = "/all_assignments";
 
@@ -22,14 +23,36 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_ADD_ANNOUNS = "/add_announcement";
 	var URL_DELETE_ANNOUNS = "/delete_announcement";
 	var URL_UPDATE_ANNOUNS = "/update_announcement";
+
+	var URL_GET_ALL_DISCUSSIONS = "/all_discussion_items";
+	var URL_ADD_DISCUSSION = "/add_discussion_thread";
+	var URL_ADD_DISCUSSION_REPLY = "/add_discussion_thread_reply";
+	var URL_DELETE_DISCUSSION = "/delete_discussion_item";
+
 	var URL_GET_COURSE_INFO = "/course_info";
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
-	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since/";
+	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since";
 
 	var authenticated = true;
 
+	// template
+	// this. = function(){
+	// 	var defer = $q.defer();
+
+	// 	$http.get()
+	// 	.success(function(res){
+	// 		//console.log(res);
+	// 		defer.resolve(res);
+	// 	})
+	// 	.error(function(err, status){
+	// 		console.log(err);
+	// 		defer.reject(err);
+	// 	})
+
+	// 	return defer.promise;
+	// };
 
 	this.isUserAuthenticated = function(){
 		var defer = $q.defer();
@@ -89,6 +112,22 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	this.getSortedSems = function(){
+		var defer = $q.defer();
+
+		$http.get(URL_SORTED_SEMESTER)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
     this.getCourseBySem = function(){
 		var defer = $q.defer();
 
@@ -110,7 +149,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_ALL_COURSE_EVENTS)
 		.success(function(res){
-			//console.log(res);
+			console.log("sucess in course service");
 			defer.resolve(res);
 		})
 		.error(function(err, status){
@@ -124,7 +163,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	this.getAllWhatsNew = function(mins){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_ALL_WHATS_NEW + mins)
+		$http.get(URL_GET_ALL_WHATS_NEW + "/"+ mins)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);
@@ -216,7 +255,6 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	}
 
     this.addEmail = function(cid, email){
-
         var defer = $q.defer();
         var content = URL_GET_COURSE+ "/"+ cid+ URL_ADD_EMAIL;
 
@@ -234,21 +272,20 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     }
 
     this.deleteEmail = function(cid, itemId){
+	    var defer = $q.defer();
+	    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_EMAIL+ "/"+ itemId;
 
-    var defer = $q.defer();
-    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_EMAIL+ "/"+ itemId;
+		$http.get(content)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
 
-	$http.get(content)
-	.success(function(res){
-		// console.log(res);
-		defer.resolve(res);
-	})
-	.error(function(err, status){
-		console.log(err);
-		defer.reject(err);
-	})
-
-	return defer.promise;
+		return defer.promise;
     }
 
     this.getAnnounbyid = function(cid){
@@ -268,7 +305,6 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	}
 
     this.addAnnoun = function(cid, announcement){
-
         var defer = $q.defer();
         var content = URL_GET_COURSE+ "/"+ cid+ URL_ADD_ANNOUNS;
 
@@ -285,8 +321,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
     }
 
-        this.editAnnoun = function(cid, announcement, itemId){
-
+    this.editAnnoun = function(cid, announcement, itemId){
         var defer = $q.defer();
         var content = URL_GET_COURSE+ "/"+ cid+ URL_UPDATE_ANNOUNS+ "/"+ itemId;
 
@@ -304,22 +339,86 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     }
 
     this.deleteAnnoun = function(cid, itemId){
+	    var defer = $q.defer();
+	    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_ANNOUNS+ "/"+ itemId;
 
-    var defer = $q.defer();
-    var content = URL_GET_COURSE+ "/"+ cid+ URL_DELETE_ANNOUNS+ "/"+ itemId;
+		$http.get(content)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
 
-	$http.get(content)
-	.success(function(res){
-		// console.log(res);
-		defer.resolve(res);
-	})
-	.error(function(err, status){
-		console.log(err);
-		defer.reject(err);
-	})
-
-	return defer.promise;
+		return defer.promise;
     }
+
+    this.getAllDiscussions = function(cid){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_GET_ALL_DISCUSSIONS)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.addDiscussion = function(cid, discussion){
+		var defer = $q.defer();
+
+		$http.post(URL_GET_COURSE+ "/"+ cid+ URL_ADD_DISCUSSION, discussion)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.addDiscussionReply = function(cid, replyToId, discussion){
+		var defer = $q.defer();
+		var content = URL_GET_COURSE+ "/"+ cid+ URL_ADD_DISCUSSION_REPLY+ "/"+ replyToId;
+
+		$http.post(content, discussion)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.deleteDiscussion = function(cid, selfId){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_DELETE_DISCUSSION)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
 
     this.getCourseInfo= function(cid){
 		var defer = $q.defer();
@@ -337,7 +436,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	}
 
 
-            //trigger onFileSelect method on clickUpload button clicked
+    //trigger onFileSelect method on clickUpload button clicked
     this.clickUpload = function(){
         document.getElementById('i_file').click();
     };
