@@ -13,9 +13,9 @@
 		<div class="calendar md-padding" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar1"></div>
 		</md-content>
 	</div>
-	<md-content class="scheduleList" ng-show="!showC" layout-fill layout-padding>
+	<md-content class="scheduleList" ng-show="!showC" layout-fill layout-padding ng-if="!dataLoading">
 		<md-list style="height:60px !important;" flex>
-			<md-list-item class="md-3-line md-long-text" ng-repeat="event in eventSource | orderBy: 'start'" ng-click="gotoCourse(event.courseID)">
+			<md-list-item id="e-{{event.start.valueOf()}}" class="md-3-line md-long-text" ng-repeat="event in eventSource | orderBy: 'start'" ng-click="gotoCourse(event.courseID)" >
 				<span class="dateCircle" ng-style="{'background-color':colors[event.start.getDay()]}">{{event.start|date :"EEE MMM d"}}</span>
 				<ul class="event_info md-list-item-text" layout="column"  style="list-style-type:none">
 					<h3>{{event.title}}</h3>
@@ -37,7 +37,7 @@
 				<md-button aria-label="Calendar View" class="md-fab md-raised md-primary md-mini" ng-click="showC=true">
 					<ng-md-icon icon="view_module" style="color: blue"></ng-md-icon>
 				</md-button>
-				<md-button aria-label="Schedule View" class="md-fab md-raised md-primary md-mini" ng-click="showC=false">
+				<md-button aria-label="Schedule View" class="md-fab md-raised md-primary md-mini" ng-click="showC=false;scrollTo(startDate.valueOf())">
 					<ng-md-icon icon="view_list"></ng-md-icon>
 				</md-button>
 			</md-fab-actions>

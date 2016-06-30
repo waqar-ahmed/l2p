@@ -109,7 +109,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_ALL_COURSE_EVENTS)
 		.success(function(res){
-			//console.log(res);
+			console.log("sucess in course service");
 			defer.resolve(res);
 		})
 		.error(function(err, status){
