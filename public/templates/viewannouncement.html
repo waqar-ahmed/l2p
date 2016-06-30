@@ -43,7 +43,7 @@
 			<md-datepicker ng-model="expireEdited" md-placeholder="Enter date" class="email-content"></md-datepicker>
 		</div>
 
-		<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="text-align:center;background:#3f3f3f;">{{announce_button}}</md-button>
+		<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="text-align:center;background:#3f3f3f; width:20% !important; max-width:20px !important;">{{announce_button}}</md-button>
 
 	</md-content>
 		<div style="font-size:13px; color:black;margin-top:10px;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
