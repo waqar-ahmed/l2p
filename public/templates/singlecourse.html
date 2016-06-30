@@ -266,7 +266,7 @@
 
             				<div class="customcolor_email" layout="row" layout-align="begin center">
                     			<div class="type_circle h-center v-center" style="width:40px;height:40px">
-                 					<span ng-style="{'background-color':colors[$index]}">{{trimFirstLetter(email.from);}}</span>
+                 					<span ng-style="{'background-color':colors_email[$index]}">{{trimFirstLetter(email.from);}}</span>
                     			</div>
 
                 			<div id="wrapper" layout="column" flex="70">
@@ -281,7 +281,7 @@
 
         				<div ng-class="{dataContent:true, activeContent:data.expanded}">
 
-              			 	  	<md-button class="md-icon-button" ng-click="showConfirm($event,email)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
+              			 	  	<md-button class="md-icon-button" ng-click="showConfirmEmail($event,email)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
 	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
 	         				 	</md-button>
 
