@@ -10,7 +10,7 @@
     </head>
     <body>
         <div style="width: 100%">
-            <div style="width: 45%; display: inline-block;">
+            <div style="width: 40%; display: inline-block;">
                 <div>
                     <labe>uri: </labe>
                     <input type="text" class="" name="uri" size="30" value="/course/{cid}">            
@@ -41,6 +41,7 @@
 
                 </div>
                 <button onclick="send()" id="sendBtn" style="margin-bottom: 10px">Send</button>
+                <button onclick="reset()" id="resetBtn" style="margin-bottom: 10px">Reset</button>
                 <span id="loadingText" hidden="true">loading...</span>
                 <div>
                     <textarea class="result" hidden="true" cols="70" rows="20"></textarea>
@@ -48,8 +49,16 @@
                 <div id="errorDisplayDiv">            
                 </div>
             </div>
-            <div id="routes" style="width: 45%; display: inline-block; vertical-align:top;">                
-                <p>Routes:</p>                
+            <div id="routes" style="width: 30%; display: inline-block; vertical-align:top;">                
+                Select routes:
+                <select name="modules" id="module_select">                    
+                </select>
+                <br/>
+                <br/>
+                Sub routes:
+                <div id="sub_routes" style="margin-top: 5px;">
+                    
+                </div>
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
@@ -198,22 +207,38 @@
         $.each(data[parentName][funcName].req_params, function(key, value) {
             
             addParam('json_parameters', key, value);
-	});
+	}); 
+        window.scrollTo(0, 0);
     }
     
-    function showUrls() {
-        var html = '';
+    function showUrls() {          
+        var x = $("#module_select"); 
+        var first=true;
         $.each(data, function(k, v) {
-            html += '<h4>' + k + ': </h4>';
-            $.each(v, function(k1, v1) {
-                html += '<a href="javascript::void(0)" class="route" \n\
-                    parent="'+k+'" value="'+k1+'">'+k1+'</a><br/>'
-            });                        
+            if(first){
+                insertSubModules(k);
+                first = false;
+            }                        
+            x.append(
+                $('<option></option>').val(k).html(k)
+            );                      
         });
-        $('#routes').html(html);
+        x.on('change', function() {
+            insertSubModules(this.value);
+        });       
+    }
+    
+    function insertSubModules(parent) {
+        var html = '';                
+        $.each(data[parent], function(k1, v1) {
+            html += '<a href="javascript::void(0)" class="route" \n\
+                parent="'+parent+'" value="'+k1+'">'+k1+'</a><br/>';
+        });  
+        $('#sub_routes').html(html);
     }
     
     function reset() {
+        $('input[name="uri"]').val('');
         $('.result').html('');
         $('.result').attr('hidden', 'true');
         $('#url_parameters').html('');
@@ -223,6 +248,62 @@
     }
     
     data = {
+        authentication: {
+            login: {
+                uri: "/login",     
+                method: "get",                
+            },
+            logout: {
+                uri: "/logout",     
+                method: "get",                
+            },            
+            authenticate: {
+                uri: "/authenticate",     
+                method: "get",                
+            },
+            
+        },        
+        semesters: {
+            semesters: {
+                uri: "/semesters",     
+                method: "get",                
+            },
+            courses_by_current_semester: {
+                uri: "/current_semester",
+                method: "get",
+            },
+            courses_by_semester: {
+                uri: "/course/semester/{sem}",
+                method: "get",
+                uri_params :
+                {
+                    sem: "ws15",                    
+                }            
+            }
+        },
+        
+        courses: {
+            all_courses: {
+              uri: "/courses",
+              method: "get",               
+            },
+            course_info: {
+                uri: "/course/{cid}/course_info",
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }  
+            }            
+        },
+        
+        users: {
+            view_user_role: {
+                uri: "/view_user_role",
+                method: "get"
+            }
+        },
+        
         announcements: {
             all_announcement: {
                 uri: "/course/{cid}/all_announcements",     
@@ -260,6 +341,215 @@
                 }            
 
             },
+        },        
+        assignments: {
+            all_assignments: {
+                uri: "/course/{cid}/all_assignments",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },
+            single_assignment: {
+                uri: "/course/{cid}/assignment/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                    itemId: 0
+                }            
+            },
+            add_assignment: {
+                uri: "/course/{cid}/add_assignment",
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                        
+                },
+                req_params :
+                {                    
+                    description: "This is a sample assignment.",
+                    title: "assignment title",                    
+                }
+            },
+            delete_assignment: {
+                uri: "/course/{cid}/delete_assignment/{itemId}",
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",  
+                    itemId: 0,
+                },                
+            },
+            provide_assignment_solution: {
+                uri: "/course/{cid}/provide_assignment_solution/{assignmentId}/{gwsNameAlias}",
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492", 
+                    assignmentId: 0,
+                    gwsNameAlias: "gwsNameAlias",
+                },
+                req_params :
+                {                    
+                    comment: "Comment",                    
+                }
+            },
+            upload_in_assignment: {
+                uri: "/course/{cid}/upload_in_assignment",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },
+                req_params :
+                {
+                    solutionDirectory: "[itemId]/ss16/16ss-55492/assessment/Lists/LA_SolutionDocuments/A[itemId]/S[solutionName]",
+                }            
+
+            },
+            delete_assignment_solution: {
+                uri: "/course/{cid}/delete_assignment_solution/{itemId}",
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",  
+                    itemId: 0,
+                },                
+            },
+        },
+        emails: {
+            all_emails: {
+                uri: "/course/{cid}/all_emails",
+                method: "get",
+                uri_params :
+                {
+                   cid: "16ss-55492",                                      
+                },
+            },
+            single_email: {
+                uri: "/course/{cid}/email/{itemId}",
+                method: "get",
+                uri_params :
+                {
+                   cid: "16ss-55492",                                      
+                   itemId: 0,
+                },
+                
+            },
+            add_email: {
+                uri: "/course/{cid}/add_email",     
+                method: "post",
+                uri_params :
+                {
+                   cid: "16ss-55492",                                      
+                },
+                req_params :
+                {
+                    subject: "This is a sample email.",
+                    recipients: "managers;tutors;students;",
+                    cc: "administrator@example.rwth-aachen.de",
+                }
+            },
+            delete_email: {
+                uri: "/course/{cid}/delete_email/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                   cid: "16ss-55492",                                      
+                   itemId: 0,
+                },
+            },
+            upload_in_email: {
+                uri: "/course/{cid}/upload_in_email",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },                
+            },
+        },        
+        learning_materials: {
+            all_learning_materials: {
+                uri: "/course/{cid}/all_learning_materials",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                }, 
+            },
+            single_learning_material: {
+                uri: "/course/{cid}/learning_material/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                    itemId: 0,
+                }, 
+            },
+            delete_learning_material: {
+                uri: "/course/{cid}/delete_learning_material/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                    itemId: 0,
+                }, 
+            },
+            upload_in_learning_material: {
+                uri: "/course/{cid}/upload_in_learning_material",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },      
+                req_params :
+                {
+                    sourceDirectory: "/ss16/16ss-55492/Lists/StructuredMaterials",
+                }
+            },            
+        },
+        calendar: {
+            all_course_events: {
+                uri: "/all_course_events",     
+                method: "get",
+            },
+            add_course_event: {
+                uri: "/course/{cid}/add_course_event",     
+                method: "post",
+                uri_params: {
+                    cid: "16ss-55492",
+                },
+                req_params: {
+                    endDate: 123456789,
+                    eventDate: 123456789,
+                    title: "event title",
+                }
+            },
+            delete_course_events: {
+                uri: "/course/{cid}/delete_course_event/{itemId}",     
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                },
+            },
+            update_course_event: {
+                uri: "/course/{cid}/update_course_event/{itemId}",     
+                method: "post",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                },
+                req_params: {
+                    endDate: 123456789,
+                    eventDate: 123456789,
+                    title: "event title update",
+                }
+            },
+            
         },
         whats_new: {
             whats_new: {
@@ -297,6 +587,100 @@
                 }                            
             },
         },
+        hyperlinks: {
+            all_hyperlinks: {
+                uri: "/course/{cid}/all_hyperlinks",   
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }
+            },
+            single_hyperlink: {
+                uri: "/course/{cid}/hyperlink/{itemId}",   
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",       
+                    itemId: 0,
+                }
+            },
+            add_hyperlink: {
+                uri: "/course/{cid}/add_hyperlink",   
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                           
+                },
+                req_params: {
+                    url: "http://www.example.com",
+                    notes: "example url",
+                    description: "example url"
+                }
+            },
+            delete_hyperlink: {
+                uri: "/course/{cid}/delete_hyper_link/{itemId}",   
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",       
+                    itemId: 0,
+                }
+            },
+            update_hyperlink: {
+                uri: "/course/{cid}/update_hyperlink/{itemId}",   
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                      
+                    itemId: 0,
+                },
+                req_params: {
+                    url: "http://www.example1.com",
+                    notes: "example url update",
+                    description: "example url update"
+                }
+            }            
+            
+        },
+        media_libraries: {
+            all_media_libraries: {
+                uri: "/course/{cid}/all_media_libraries",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                }
+            },
+            single_media_library: {
+                uri: "/course/{cid}/media_library/{itemId}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                }
+            },
+            delete_media_library: {
+                uri: "/course/{cid}/delete_media_library/{itemId}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                }
+            },
+            upload_in_media_library: {
+                uri: "/course/{cid}/upload_in_media_library",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },      
+                req_params :
+                {
+                    sourceDirectory: "/ss16/16ss-55492/Lists/MediaLibrary",
+                }
+            }, 
+            
+        },
         discussions: {
             all_discussion_items: {
                 uri: "/course/{cid}/all_discussion_items",     
@@ -324,7 +708,16 @@
                     cid: "16ss-55492",                    
                 }            
 
-            },   
+            },
+            single_discussion: {
+                uri: "/course/{cid}/discussion_item/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                    itemId: 0,
+                }            
+            },
             add_discussion_thread: {
                 uri: "/course/{cid}/add_discussion_thread",     
                 method: "post",
@@ -393,28 +786,76 @@
                 }
 
            },
-        }, 
-        emails: {
-            add_email: {
-                uri: "/course/{cid}/add_email",     
-                method: "post",
+        },      
+        literatures: {
+            all_literatures: {
+                uri: "/course/{cid}/all_literatures",     
+                method: "get",
                 uri_params :
                 {
-                   cid: "16ss-55492",                                      
+                   cid: "16ss-55492",                                       
                 },
-                req_params :
+            },                   
+            single_literatures: {
+                uri: "/course/{cid}/literature/{itemId}",     
+                method: "get",
+                uri_params :
                 {
-                    subject: "This is a sample email.",
-                    recipients: "managers;tutors;students;",
-                    cc: "administrator@example.rwth-aachen.de",
+                   cid: "16ss-55492",                 
+                   itemId: 0,
+                },
+            },     
+            add_literature: {
+                uri: "/course/{cid}/add_literature",
+                method: "post",
+                uri_params: 
+                {
+                    cid: "16ss-55492",            
+                },
+                req_params: 
+                {
+                    title: "History of RWTH Aachen University",
+                    authors: "Dr. Gustav Geier",
+                    year: "2015",                    
+                    contentType: "Book",
+                    publisher: "Publisher",
                 }
             },
-        },
-        semesters: {
-            semesters: {
-                uri: "/semesters",     
-                method: "get",                
+            update_literature: {
+                uri: "/course/{cid}/update_literature/{itemId}",
+                method: "post",
+                uri_params: 
+                {
+                    cid: "16ss-55492",   
+                    itemId: 0,
+                },
+                req_params: 
+                {
+                    title: "Update literature",
+                    authors: "Update",
+                    year: "2015",                    
+                    contentType: "Book",
+                    publisher: "Publisher",
+                }
             },
+            delete_literature: {
+                uri: "/course/{cid}/delete_literature/{itemId}",
+                method: "get",
+                uri_params: 
+                {
+                    cid: "16ss-55492",            
+                    itemId: 0
+                },                
+            }
+        }, 
+        shared_documents: {
+            
+        },
+        wikis: {
+            
+        },
+        others: {
+            
         }
     }
 </script>
