@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast) {
+app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout) {
 
 
 	var LOGIN_PAGE = "login.html";
@@ -10,6 +10,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	$scope.emailsLoaded = false;
 	$scope.announcementsLoaded = false;
 	$scope.$parent.authcourse = true;
+	$scope.WaitForToast = true;
 	$scope.breadcrums = [''];
 	$scope.discussions = [];
 
@@ -44,8 +45,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
           .targetEvent(ev)
           .ok('Delete')
           .cancel('Cancel');
-    $mdDialog.show(confirm).then(function() {
+    	$mdDialog.show(confirm).then(function() {
     	$scope.deleteEmail(email);
+    	$scope.WaitForToast = false;
+    	 $timeout(function(){
+          $scope.WaitForToast = true;
+       }, 4000);
     	$scope.showSimpleToast("Email has been deleted");
     	}, function() {
 			console.log("confirmation canceled");
@@ -416,11 +421,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 
 
 
-	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast) {
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast, $timeout) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
 		$scope.recipients = ["extra","tutors","managers","students"];
+		$scope.WaitForToast = true;
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
@@ -473,6 +479,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				resetLoading();
 				refreshEmail();
 				//$window.alert("new email is sent");
+				$scope.WaitForToast = false;
+    	 $timeout(function(){
+          $scope.WaitForToast = true;
+       }, 4000);
 				$scope.showSimpleToast("Email has been sent!");
 
 			},
@@ -520,6 +530,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
           .cancel('Cancel');
     $mdDialog.show(confirm).then(function() {
 
+    	$scope.WaitForToast = false;
+    	 $timeout(function(){
+          $scope.WaitForToast = true;
+       }, 4000);
     	$scope.deleteAnnoun(ann);
     	$scope.showSimpleToast("Announcement has been deleted");
 
@@ -531,20 +545,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
-		var confirmDelete = confirm("Do you want to delete the announcement?");
-		if (confirmDelete == true) {
+
 			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
 			.then(function(res){
 				console.log("announcement is deleted");
 				console.log(res);
 				$scope.announcementsLoaded = false;
-				$window.alert("announcement is deleted");
+				//$window.alert("announcement is deleted");
 				$scope.refreshAnnouns();
 			},
 			function(err){
 				console.log("Error occured : " + err);
 			});
-		}
+	
 	}
 
 	/* refresh Announcements */
