@@ -58,8 +58,8 @@
 
             				<div class="customcolor_email" layout="row" layout-align="begin center">
                     			<div style="width:40px;height:40px">
-                 					
-                 					<img src="images/file_icon.png" alt="icon" height="30" width="30" style="margin-right:5px;"> 
+
+                 					<img src="images/file_icon.png" alt="icon" height="30" width="30" style="margin-right:5px;">
 
                     			</div>
 
@@ -92,44 +92,44 @@
               			 	  	<b>{{assignment.title}}</b></p>
               			 	 	 <hr>
 
-								<div ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)"> 
+								<div ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)">
 									<div style="display: flex;align-items: center;margin-left:5px;">
-									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
 									</div>
 								</div>
 
 								<div ng-if="assignment.solution.solutionDocuments.length==0"></div>
-								<div ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)"> 
+								<div ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)">
 
 								<p style="margin-bottom:5px;margin-top:15px;" ><b>Uploaded Solution</b></p>
               			 	 	 <hr>
 									<div style="display: flex;align-items: center;">
-									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
 									</div>
 								</div>
 
 
 								<div ng-if="assignment.correction.correctionDocuments.length==0"></div>
-								<div ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)"> 
+								<div ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)">
 
 								<p style="margin-bottom:5px;margin-top:15px;" ><b>Corrected Solution</b></p>
               			 	 	 <hr>
 									<div style="display: flex;align-items: center;">
-									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
 									</div>
 								</div>
 
 
 								<div ng-if="assignment.SampleSolutionDocuments.length==0"></div>
-								<div ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)"> 
+								<div ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)">
 
 								<p style="margin-bottom:5px;margin-top:15px;" ><b>Sample Solution</b></p>
               			 	 	 <hr>
 									<div style="display: flex;align-items: center;">
-									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;"> 
+									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
 									</div>
 								</div>
@@ -142,7 +142,7 @@
        				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
            			 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
        				 </div>
-						
+
 					</div>
 				</md-content>
 			</md-tab>
@@ -266,7 +266,7 @@
 
             				<div class="customcolor_email" layout="row" layout-align="begin center">
                     			<div class="type_circle h-center v-center" style="width:40px;height:40px">
-                 					<span ng-style="{'background-color':colors[$index]}">{{trimFirstLetter(email.from);}}</span>
+                 					<span ng-style="{'background-color':colors_email[$index]}">{{trimFirstLetter(email.from);}}</span>
                     			</div>
 
                 			<div id="wrapper" layout="column" flex="70">
@@ -281,7 +281,7 @@
 
         				<div ng-class="{dataContent:true, activeContent:data.expanded}">
 
-              			 	  	<md-button class="md-icon-button" ng-click="showConfirm($event,email)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
+              			 	  	<md-button class="md-icon-button" ng-click="showConfirmEmail($event,email)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
 	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
 	         				 	</md-button>
 
@@ -386,7 +386,7 @@
 			<md-tab label="Announcements">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<div class="md-accordion customwidth" ng-repeat="announcement in announcements" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
+						<div class="md-accordion customwidth" ng-repeat="announcement in announcements|orderBy:'created':true" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
 
             				<div class="customcolor_email" layout="row" layout-align="begin center">
@@ -424,7 +424,7 @@
             			</div>
        				 </div>
 
-       				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
+       				 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="announcementsLoaded" class="loadingicon">
            			 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
        				 </div>
     			</div>

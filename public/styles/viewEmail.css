@@ -11,15 +11,19 @@
   max-height: 60px;
 }
 
-
+.email-detail
+{
+  padding-bottom: 10px;
+}
 
 .email-detail textarea {
 }
 
 .email-detail #creatinfo {
-  padding: 0 18px 12px 14px;
+  padding: 0 18px 2px 14px;
   font-size:13px;
   color:black;
+  overflow: visible;
 }
 
 .email-detail md-content {

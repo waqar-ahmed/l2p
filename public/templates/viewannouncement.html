@@ -1,4 +1,4 @@
-<md-dialog flex-xs="90" flex-sm="90" flex-gt-sm="60" class="email-detail">
+<md-dialog flex-xs="95" flex-sm="85" flex-gt-sm="60" class="email-detail">
 	<md-toolbar class="md-toolbar-tools">
 	<div layout="row" layout-align="center center"  flex ng-cloak>
 
@@ -25,7 +25,12 @@
 	    	<input type="text" ng-model="currentannoun.title" placeholder="">
 		</md-input-container>
 
-		<md-input-container ng-show="authWrite">
+	<div class="email-content" layout="column">
+		<label>Expire Date</label>
+		<md-datepicker ng-model="expireEdited" md-placeholder="Enter date" class="email-content"></md-datepicker>
+	</div>
+
+		<md-input-container ng-show="authWrite" style="margin-bottom: -14px;">
 	    	<label>Content</label>
 			<textarea style="height:100px !important;" rows="8"  ng-model="currentannoun.body" >{{currentannoun.body}}</textarea>
 		</md-input-container>
@@ -37,15 +42,13 @@
 
 		<md-divider id="email-divider" ng-show="!authWrite"></md-divider>
 
-
-		<div class="email-content" layout="column">
-			<label>Expire Date</label>
-			<md-datepicker ng-model="expireEdited" md-placeholder="Enter date" class="email-content"></md-datepicker>
+	</md-content>
+		<div layout-align="begin center" layout="row" >
+			<div id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
+			<span flex></span>
+			
+			<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="margin-right:18px;">{{announce_button}}</md-button>
 		</div>
 
-		<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="text-align:center;background:#3f3f3f; width:20% !important; max-width:20px !important;">{{announce_button}}</md-button>
-
-	</md-content>
-		<div style="font-size:13px; color:black;margin-top:10px;" id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
 </md-dialog>
 
