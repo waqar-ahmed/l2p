@@ -163,8 +163,13 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Wiki
          */
-        Route::get('all_wiki_count', 'CourseController@viewAllWikiCount');        
-        Route::get('all_wikis', 'CourseController@viewAllWikis'); 
+        Route::get('all_wiki_count', 'WikiController@viewAllWikiCount');        
+        Route::get('all_wikis', 'WikiController@viewAllWikis'); 
+        Route::get('wiki/{itemId}', 'WikiController@viewWiki'); 
+        Route::get('wiki_version/{itemId}/{versionId}', 'WikiController@viewWikiVersion'); 
+        Route::post('add_wiki', 'WikiController@addWiki'); 
+        Route::post('update_wiki/{itemId}', 'WikiController@updateWiki'); 
+        Route::get('delete_wiki/{itemId}', 'WikiController@deleteWiki'); 
         
         /*
          * Others

@@ -286,7 +286,7 @@
             all_courses: {
               uri: "/courses",
               method: "get",               
-            },
+            },            
             course_info: {
                 uri: "/course/{cid}/course_info",
                 method: "get",
@@ -314,6 +314,24 @@
                 }            
 
             },
+            all_announcement_count: {
+                uri: "/course/{cid}/all_announcements_count",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }            
+
+            },
+            single_announcement: {
+                uri: "/course/{cid}/announcement/{itemId}",
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                    itemId: 0,
+                } 
+            },
             add_announcement: {
                 uri: "/course/{cid}/add_announcement",     
                 method: "post",
@@ -326,6 +344,31 @@
                     title: "announcement title",
                     body: "announcement body",
                 }
+
+            },
+            update_announcement: {
+                uri: "/course/{cid}/update_announcement/{itemId}",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",  
+                    itemId: 0,
+                },    
+                req_params :
+                {
+                    title: "announcement title update",
+                    body: "announcement body update",
+                }
+
+            },
+            delete_announcement: {
+                uri: "/course/{cid}/delete_announcement/{itemId}",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",   
+                    itemId: 0,
+                }            
 
             },
             upload_in_announcement: {
@@ -885,9 +928,84 @@
             },
         },
         wikis: {
+            all_wikis: {
+                uri: "/course/{cid}/all_wikis",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",                    
+                }
+            },
+            all_wiki_count: {
+                uri: "/course/{cid}/all_wiki_count",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",                    
+                }
+            },
+            view_wiki: {
+                uri: "/course/{cid}/wiki/{itemId}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                }
+            },
+            view_wiki_version: {
+                uri: "/course/{cid}/wiki_version/{itemId}/{versionId}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                    versionId: 0,
+                }
+            },
+            add_wiki: {
+                uri: "/course/{cid}/add_wiki",
+                method: "post",
+                uri_params: 
+                {
+                    cid: "16ss-55492",            
+                },
+                req_params: 
+                {
+                    title: "This is a wiki title",                   
+                    body: "This is a wiki body",                   
+                }
+            },
+            update_wiki: {
+                uri: "/course/{cid}/update_wiki/{itemId}",
+                method: "post",
+                uri_params: 
+                {
+                    cid: "16ss-55492",            
+                    itemId: 0,
+                },
+                req_params: 
+                {
+                    title: "This is a wiki title update",                   
+                    body: "This is a wiki body update",                   
+                }
+            },
+            delete_wiki: {
+                uri: "/course/{cid}/delete_wiki/{itemId}",
+                method: "get",
+                uri_params: 
+                {
+                    cid: "16ss-55492",            
+                    itemId: 0,
+                },                
+            }
             
         },
         others: {
+            view_user_role: {
+                uri: "/course/{cid}/view_user_role",
+                method: "get",
+                uri_params: 
+                {
+                    cid: "16ss-55492",                                
+                },
+            }
             
         }
     }
