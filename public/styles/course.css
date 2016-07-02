@@ -1,30 +1,61 @@
 .course_title
 {
   font-style: bold;
+  font-weight: 580;
   font-size: 3.5vw;
   margin-top: 1px;
   margin-bottom:1px;
   width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: auto;
 }
 
 .numberCircle {
     border-radius: 50%;
-    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
-
     width: 13px;
     height: 13px;
-    padding: 8px;
+    padding: 10px;
     margin-right: 10px;
-
     background: #666;
-    border: 2px solid #666;
+    border: 2px solid #efefef;
     color: #fff;
+    display: block;
     text-align: center;
-
+    text-align: center !important;
     font: 12px Arial, sans-serif, bolder;
+
 }
+
+.block {
+    width: 13px;
+    height: 13px;
+    padding: 14px;
+    position: relative;
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-right: 10px;
+    font-size: 12px;
+    border-radius: 50%;
+
+}
+
+.h-center {
+    text-align: center;
+}
+
+.v-center span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    border: 2px solid #efefef;
+    border-radius: 50%;
+}
+
 
 .tabsdemoDynamicHeight md-content {
   background-color: transparent !important; }
@@ -54,3 +85,6 @@
   user-select: none;
   /* Likely future */ }
 
+#coursetitle .md-subheader ._md-subheader-inner {
+  padding : 4px 16px 4px 16px;
+}

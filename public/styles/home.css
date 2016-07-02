@@ -21,3 +21,557 @@
   left: 7px;
   font-size: 14px;
   opacity: 0.54; }
+
+
+  /*Tree view css start*/
+  /*Acco*/
+.ac-container {
+    max-width: 400px;
+}
+
+.ac-container label {
+    height: 30px !important;
+    line-height: 21px !important;
+    font-size: 12px !important;
+    font-family: 'Open Sans','Arial Narrow',Arial,sans-serif !important;
+    padding: 5px 20px;
+    position: relative;
+    z-index: 20;
+    display: block;
+    height: 30px;
+    cursor: pointer;
+    color: #777;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+    line-height: 33px;
+    font-size: 19px;
+    background: #fff;
+    background: -moz-linear-gradient(top,#fff 1%,#eaeaea 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(1%,#fff),color-stop(100%,#eaeaea));
+    background: -webkit-linear-gradient(top,#fff 1%,#eaeaea 100%);
+    background: -o-linear-gradient(top,#fff 1%,#eaeaea 100%);
+    background: -ms-linear-gradient(top,#fff 1%,#eaeaea 100%);
+    background: linear-gradient(top,#fff 1%,#eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff',endColorstr='#eaeaea',GradientType=0 );
+    box-shadow: 0 0 0 1px rgba(155,155,155,0.3),1px 0 0 rgba(255,255,255,0.9) inset,0 2px 2px rgba(0,0,0,0.1);
+    font-size: 12px;
+    height: 30px;
+    line-height: 20px;
+}
+
+.ac-container {
+    width: 100%;
+    margin: 10px auto 30px auto;
+    text-align: left;
+}
+
+.ac-container label:hover {
+    background: #fff;
+}
+
+.ac-container input:checked + label,.ac-container input:checked + label:hover {
+    background: #f1f2f3;
+    color: #666;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+    box-shadow: 0 0 0 1px rgba(155,155,155,0.3),0 2px 2px rgba(0,0,0,0.1);
+    height: 30px;
+    line-height: 21px;
+    font-size: 13px;
+}
+
+.ac-container label:hover:after,.ac-container input:checked + label:hover:after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 13px;
+    top: 7px;
+    background: transparent url(../images/arrow_down.png) no-repeat center center;
+}
+
+.ac-container input:checked + label:hover:after {
+    background-image: url(../images/arrow_up.png);
+}
+
+.ac-container input {
+    display: none;
+}
+
+.ac-container article {
+    background: rgba(255,255,255,0.5);
+    margin-top: -1px;
+    overflow: hidden;
+    height: 0;
+    position: relative;
+    z-index: 10;
+    -webkit-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+    -moz-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+    -o-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+    -ms-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+    transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+}
+
+.ac-container article p {
+    font-style: normal;
+    color: #777;
+    line-height: 23px;
+    font-size: 10px;
+    padding: 20px;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+    font: normal normal 12px 'Open Sans';
+}
+
+.ac-container input:checked ~ article {
+    -webkit-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+    -moz-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+    -o-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+    -ms-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+    transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+    box-shadow: 0 0 0 1px rgba(155,155,155,0.3);
+}
+
+.ac-container input:checked ~ article.ac-small {
+    height: 140px;
+}
+
+.ac-container input:checked ~ article.ac-medium {
+    height: 180px;
+}
+
+.ac-container input:checked ~ article.ac-large {
+    height: 230px;
+}
+  /*Tree view css ends*/
+
+.md-no-sticky{
+  height: 40px;
+}
+
+.md-no-sticky b{
+  float: left;
+  font-size: 16px;
+}
+
+  .md-no-sticky .timeSelect{
+    float: right;
+    margin-top: -30px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  @font-face {
+  font-family: 'ecoico';
+  src:url('../fonts/timelineicons/ecoico.eot');
+  src:url('../fonts/timelineicons/ecoico.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/timelineicons/ecoico.woff') format('woff'),
+    url('../fonts/timelineicons/ecoico.ttf') format('truetype'),
+    url('../fonts/timelineicons/ecoico.svg#ecoico') format('svg');
+  font-weight: normal;
+  font-style: normal;
+} /* Made with http://icomoon.io/ */
+
+.cbp_tmtimeline {
+  margin: 30px 0 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  width: 98%;
+  height: 120%;
+  font-size: 12px;
+} 
+
+/* The line */
+.cbp_tmtimeline:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: #afdcf8;
+  left: 20%;
+  margin-left: -10px;
+}
+
+.cbp_tmtimeline > li {
+  position: relative;
+}
+
+/* The date/time */
+.cbp_tmtimeline > li .cbp_tmtime {
+  display: block;
+  width: 25%;
+  padding-right: 100px;
+  position: absolute;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span {
+  display: block;
+  text-align: right;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span:first-child {
+  font-size: 0.9em;
+  color: #bdd0db;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span:last-child {
+  font-size: 2.9em;
+  color: #3594cb;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
+  color: #6cbfee;
+}
+
+/* Right content */
+.cbp_tmtimeline > li .cbp_tmlabel {
+  margin: 0 0 15px 25%;
+  background: #3594cb;
+  color: #fff;
+  padding: 2em;
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 1.4;
+  position: relative;
+  border-radius: 5px;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
+  background: #6cbfee;
+}
+
+.cbp_tmtimeline > li .cbp_tmlabel h2 { 
+  margin-top: 0px;
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+/* The triangle */
+.cbp_tmtimeline > li .cbp_tmlabel:after {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: #3594cb;
+  border-width: 10px;
+  top: 10px;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+  border-right-color: #6cbfee;
+}
+
+/* The icons */
+.cbp_tmtimeline > li .cbp_tmicon {
+  width: 40px;
+  height: 40px;
+  font-family: 'ecoico';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 1.4em;
+  line-height: 40px;
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  color: #fff;
+  background: #46a4da;
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px #afdcf8;
+  text-align: center;
+  left: 20%;
+  top: 0;
+  margin: 0 0 0 -25px;
+}
+
+.cbp_tmicon-phone:before {
+  content: "\e000";
+}
+
+.cbp_tmicon-screen:before {
+  content: "\e001";
+}
+
+.cbp_tmicon-mail:before {
+  content: "\e002";
+}
+
+.cbp_tmicon-earth:before {
+  content: "\e003";
+}
+
+/* Example Media Queries */
+@media screen and (max-width: 65.375em) {
+
+  .cbp_tmtimeline > li .cbp_tmtime span:last-child {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 47.2em) {
+  .cbp_tmtimeline:before {
+    display: none;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmtime {
+    width: 100%;
+    position: relative;
+    padding: 0 0 20px 0;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmtime span {
+    text-align: left;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmlabel {
+    margin: 0 0 30px 0;
+    padding: 1em;
+    font-weight: 400;
+    font-size: 95%;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmlabel:after {
+    right: auto;
+    left: 20px;
+    border-right-color: transparent;
+    border-bottom-color: #3594cb;
+    top: -20px;
+  }
+
+  .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+    border-right-color: transparent;
+    border-bottom-color: #6cbfee;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmicon {
+    position: relative;
+    float: right;
+    left: auto;
+    margin: -55px 5px 0 0px;
+  } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS Tree menu styles */
+ol.tree
+{
+  width: 100%;
+}
+  ol.tree li 
+  { 
+    position: relative; 
+    list-style: none;
+    padding: 10px;
+  }
+  ol.tree li.file
+  {
+    margin-left: -1px !important;
+  }
+    ol.tree li.file a
+    {
+      background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat;
+      padding-left: 21px;
+      text-decoration: none;
+      display: block;
+    }
+    ol.tree li.file a[href *= '.pdf'] { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
+    ol.tree li.file a[href *= '.html']  { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
+    ol.tree li.file a[href $= '.css'] { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
+    ol.tree li.file a[href $= '.js']  { background: url('.../image/icon/Gnome/mimetypes/text-x-preview.svg') 0 0 no-repeat; }
+  
+  ol.tree li input
+  {
+    position: absolute;
+    left: 0;
+    margin-left: 0;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+    height: 1em;
+    width: 1em;
+    top: 0;
+    border: 5px solid red;
+  }
+
+.treeMainCheck.input{
+  border: 10px green;
+}
+
+.treeMainCheck{
+  border: 10px green;
+}
+
+    ol.tree li input + label + ol,
+    ol.tree li input + ol
+    {
+      margin: -0.938em 0 0 -44px; /* 15px */
+      height: 1em;
+    }
+    ol.tree li input + ol > li, ol.tree li label + ol > li { display: none; margin-left: -14px !important; padding-left: 1px; }
+  ol.tree li label
+  {
+    background: url('.../image/icon/Gnome/places/folder.svg') 15px 1px no-repeat;
+    cursor: pointer;
+    display: block;
+    padding-left: 37px;
+  }
+  ol.tree li input:checked + label
+  {
+    background: url('.../image/icon/Gnome/status/folder-open.svg') 15px 1px no-repeat;
+        }
+
+  ol.tree li input + label:before {
+            content: '+';
+      margin: 0 30px 0 -40px;
+        }
+  ol.tree li input:checked + label:before {
+            content: '-';
+      margin-left: -35px;
+        }
+  ol.tree li input:checked + label + ol,
+  ol.tree li input:checked + ol
+  {
+    margin: -1.25em -1em 0 -44px; /* 20px */
+    padding: 1.563em 0 0 80px;
+    height: auto;
+  }
+    ol.tree li input:checked ~ ol > li { display: block; margin: 0 0 0.125em;  /* 2px */}
+    ol.tree li input:checked ~ ol > li:last-child { margin: 0 0 0.063em; /* 1px */ }
+
+
+
+.tree .treeMainCheck{
+  border:5px solid #f5f5f5 !important;
+  font-size:18px;color:gray;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.tree input.treeMainCheck{
+  border:5px solid #f5f5f5 !important;
+  font-size:18px;color:gray;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.myTree{
+  width: 99%;
+  padding-top: 10px;
+}
+
+.mainTitle{
+  width: 100%;
+}
+
+.mainTitle .icn{
+  width: 20%;
+  border: 1px solid green;
+  
+}
+.mainTitleText{
+  width: 40%;
+  border: 2px solid blue;
+  margin-right: 0;
+  float: right;
+}
+
+
+
+
+.container{
+    width: 100%;
+    margin: auto;
+    border: 2px solid #00549f;
+    margin-bottom: 10px;
+}
+
+.innercontainer {
+    width: 97%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-right: 0;
+}
+
+.first, .innerfirst {
+    width: 15%;
+    float: left;
+    background-color: #00549f;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    vertical-align: center;
+    display: inline-block;
+    margin: 0 auto;
+}
+.fa-minus, .fa-plus{
+  line-height: inherit !important;
+}
+
+.second, .innersecond {
+    width: 85%;
+    float: left;
+    color: #00549f;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: center;
+}
+
+.second h3{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.innersecond h3{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.innerdetails{
+  margin-left: 20px;
+  width: 95%;
+}
+
+
+.innerdetails a{
+  display: block;
+}
+.innerdetails a i{
+  margin:5px;
+}
+
+.clear {
+    clear: both;
+}

@@ -1,10 +1,34 @@
-app.controller('scheduleCtrl', function($scope,courseService,$location,$compile, $timeout, uiCalendarConfig) {
+app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$compile, $timeout, uiCalendarConfig) {
+	console.log(courseService.getAuthenticatedValue());
+	if(!courseService.getAuthenticatedValue()){
+		window.location = LOGIN_PAGE;
+	}
+
 	
 	var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
 	$scope.dataLoading = true;
+	$scope.showC = true;
+
+    var curr_date = date.getDate();
+    var curr_month = date.getMonth()+1;
+    var curr_year = date.getFullYear();
+    
+    $scope.dateToday = Date.parse(curr_month + "/" + curr_date + "/" + curr_year);
+	$scope.range = $scope.dateToday; 
+	console.log($scope.range);
+	console.log(date.getMonth());
+	console.log(date.getDate());
+	console.log(date.getDay());
+
+	$scope.colors = colorService.generateDayColors();
+
+	$scope.onSwipeUp = function(ev) {
+                alert('Swiped Up!');
+				console.log("swiped up!");
+    };
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
@@ -28,6 +52,11 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
 	{allDay:false,endDate:1463060700,eventDate:1463055300,location:"2354|030",title:"Mobile Internet Technology"}
 	];
 */
+
+	/* go to courses */
+	$scope.gotoCourse = function(cid) {
+    $location.path('singlecourse/'+cid);
+    }
 
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -81,7 +110,9 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
     };
      /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) {
-        element.attr({'tooltip': event.title +" "+event.location,
+		var loc = " ";
+		if(event.location != null) loc= loc + event.location;
+        element.attr({'tooltip': event.title + loc,
                       'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
@@ -89,7 +120,7 @@ app.controller('scheduleCtrl', function($scope,courseService,$location,$compile,
 	/* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
+        height: "auto",
         editable: true,
         header:{
           left: 'title',

@@ -1,21 +1,72 @@
-app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$mdDialog,tempdata) {
 
+app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
+
+	var LOGIN_PAGE = "login.html";
+	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
+
+	$scope.emailsLoaded = false;
+	$scope.announcementsLoaded = false;
+	$scope.$parent.authcourse = true;
+	$scope.breadcrums = [''];
+
+	$scope.longText = "Q: Do we need to use some specific template for the project definition document or can we write it in a free form, provided that we give answers to all the questions? (questions to answer: project background, business goals, project goals, critical success factors, assumptions, constraints, and stakeholders)";
+	$scope.replyBody = "I would be interested in an answer here as well because the template from the lecture slides contains slightly different topics than the one mentioned in the assigment. Assignment: project background, business goals, project goals, critical success factors, assumptions, constraints and stakeholders.Lecure slides: project definition, project scope, objectives, project deliverables, critical success factors, assumptions, constraints, completion criteria";
+	$scope.show_replies = false;
+
+
+
+	if(!courseService.getAuthenticatedValue()){
+		window.location = LOGIN_PAGE;
+	}
 
 	console.log("course ID: " + $stateParams.cid);
-
+	/* get Emails by cid*/
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
 			console.log("got emails");
 			console.log(res.dataSet);
 			$scope.emails = res.dataSet;
+			$scope.emailsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
-		});
+	});
+	/* get Announcements by cid*/
+	courseService.getAnnounbyid($stateParams.cid)
+		.then(function(res){
+			console.log("got announcements");
+			console.log(res.dataSet);
+			$scope.announcements = res.dataSet;
+			$scope.announcementsLoaded = true;
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
+	/* get User Role by cid*/
+	 courseService.viewUserRole($stateParams.cid)
+		.then(function(res){
+			console.log("got role");
+			console.log(res);
+			$scope.userRole = res.role.toString();
+			$scope.setRole();
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
+	/* get Courses by sem*/
+	courseService.getCurrentSem(sem)
+		.then(function(res){
+			console.log("got course by currentsemester");
+			console.log(res.dataSet);
+			$scope.$parent.courseinfo = res.dataSet;
+			var currentCourse = $.grep($scope.$parent.courseinfo, function(n,i) {
+  				return n.uniqueid === $stateParams.cid;
+			});
+			$scope.$parent.filterid = currentCourse[0].uniqueid;
+			console.log($scope.$parent.filterid);
+			$scope.$parent.setNav(currentCourse[0].courseTitle);
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
 
-	$scope.userrole = true;
-
-	$scope.breadcrums = [''];
-
+	/* get Learning Materials by cid*/
 	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
@@ -24,7 +75,23 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
-	})
+	});
+
+
+	/* get Assignments by cid*/
+	courseService.getAllAssignments($stateParams.cid)
+	.then(function(res){
+		console.log("get all assignments ");
+		console.log(res.dataSet);
+		$scope.assignments = res.dataSet;
+	}, function(){
+		console.log("Error occured");
+	});
+
+
+	this.getCurrentCourse = function() {
+
+	}
 
 	var iconClassMap = {
 		txt: 'icon-file-text',
@@ -44,26 +111,42 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 		}
 	};
 
-
-	$scope.announcements = [
+	
+	$scope.courseinfos = [
 	{
-		title: 'This is an announcement.',
-		createdBy: ' L2P',
-		createdDate: '30/05/16 20:00',
-		content:"The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request.",
+		coursetitle: 'Introduction to Web Technology',
+		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
+		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
 	},
 	];
-
-	$scope.test = function(){
-		$mdDialog.show(
-	     	$mdDialog.alert()
-	        .clickOutsideToClose(true)
-	        .title('This is an alert title')
-	        .textContent('for test.')
-	        .ok('Got it!')
-    	);
+	
+	$scope.setRole = function(){
+		if ($scope.userRole.indexOf("manager")!==-1){
+			$scope.authCUD = true;}
+		else if ($scope.userRole.indexOf("student")!==-1){
+			$scope.authCUD = false;}
+		console.log($scope.authCUD);
 	}
 
+	$scope.resetEmailLoading = function() {
+		$scope.emailsLoaded = false;
+	}
+
+	$scope.resetAnnounLoading = function() {
+		$scope.announcementsLoaded = false;
+	}
+
+	// $scope.test = function(){
+	// 	$mdDialog.show(
+	//      	$mdDialog.alert()
+	//         .clickOutsideToClose(true)
+	//         .title('This is an alert title')
+	//         .textContent('for test.')
+	//         .ok('Got it!')
+ //    	);
+	// }
+
+	/* view Email details */
 	$scope.viewEmail = function(email,method){
 		if (email === undefined)
 			{selectedEmail = {};}
@@ -72,9 +155,11 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    $mdDialog.show({
 	    	controller: EmailDialogController,
 	    	locals: {
-	    		emails: $scope.emails,
 	    		selectedEmail: angular.copy(selectedEmail),
 	    		method: method,
+	    		cid: $stateParams.cid,
+	    		resetLoading: $scope.resetEmailLoading.bind(self),
+	    		refreshEmail: $scope.refreshEmails.bind(self),
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
@@ -83,104 +168,288 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
 	    });
 	};
 
+	/* delete Email */
+	$scope.deleteEmail = function(email) {
+  	courseService.deleteEmail($stateParams.cid, email.itemId)
+		.then(function(res){
+			console.log("email is deleted");
+			console.log(res);
+			$scope.emailsLoaded = false;
+			$window.alert("email is deleted");
+			$scope.refreshEmails();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+  	}
+	/* refresh Emails */
+	$scope.refreshEmails = function(){
+	courseService.getEmailbyid($stateParams.cid)
+		.then(function(res){
+			console.log("refresh emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+			$scope.emailsLoaded = true;
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
 
-	function EmailDialogController($scope, $mdDialog, courseService, emails, selectedEmail, method) {
+	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
+		$scope.recipients = ["extra","tutors","mangagers","students"];
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
 		}
 		else if (method == 'read'){
 			$scope.authShow = true;
+			$scope.currentemail = selectedEmail;
 		}
-		else if (method == 'edit'){
-			$scope.authWrite = true;
-			$scope.authDelete = true;
-			$scope.authShow = true;
-		}
-
-		$scope.emails = emails;
-		console.log($scope.emails);
-		$scope.currentemail = selectedEmail;
-		console.log(selectedEmail);
 
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
 
-	  	$scope.edit = function() {
-	  		$scope.refreshEmails();
+	  	editRecipient = function() {
+	  		var strRecipient = "";
+	  		for (var key in $scope.selectedRecipient) {
+	  			strRecipient = strRecipient+ $scope.selectedRecipient[key]+ ";";
+	  		}
+	  		console.log("edited recipient is "+ strRecipient);
+	  		return strRecipient;
 	  	}
 
-	  	$scope.delete = function() {
-	  		$scope.refreshEmails();
-	  		$scope.back();
-	  	}
+	  	$scope.addEmail = function(){
+	  		$scope.currentemail.replyTo = 'Reply to my address';
+	  		$scope.currentemail.recipients = editRecipient();
+	  		var newEmail = {
+	  			"recipients": $scope.currentemail.recipients,
+	  			"subject": $scope.currentemail.subject,
+	  			"body": $scope.currentemail.body,
+	  			"replyTo": $scope.currentemail.replyTo,
+	  			"cc" : $scope.currentemail.cc,
+	  		};
 
-  		$scope.refreshEmails = function(){
-			courseService.getEmailbyid($stateParams.cid)
+	  		console.log(newEmail);
+
+	  		courseService.addEmail(cid, newEmail)
 			.then(function(res){
-				console.log("refresh emails");
-				console.log(res.dataSet);
-				$scope.emails = res.dataSet;
+				console.log("new email sent");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshEmail();
+				$window.alert("new email is sent");
 			},
 			function(err){
 				console.log("Error occured : " + err);
 			});
+	  	}
+	};
+
+	/* view Announcements details */
+	$scope.viewAnnoun = function(announcement,method){
+		if (announcement === undefined)
+			{selectedAnnouncement = {};}
+		else
+			{selectedAnnouncement = announcement;}
+	    $mdDialog.show({
+	    	controller: AnnounDialogController,
+	    	locals: {
+	    		selectedAnnouncement: angular.copy(selectedAnnouncement),
+	    		method: method,
+	    		cid: $stateParams.cid,
+	    		resetLoading: $scope.resetAnnounLoading.bind(self),
+	    		refreshAnnouns: $scope.refreshAnnouns.bind(self)
+
+	    	},
+	    	bindToController: true,
+	      	templateUrl:'templates/viewannouncement.html',
+	      	parent: angular.element(document.body),
+	      	clickOutsideToClose:true
+	    });
+	};
+
+	/* delete Announcements */
+	$scope.deleteAnnoun = function(announcement) {
+  	courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+		.then(function(res){
+			console.log("announcement is deleted");
+			console.log(res);
+			$scope.announcementsLoaded = false;
+			$window.alert("announcement is deleted");
+			$scope.refreshAnnouns();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+
+	/* refresh Announcements */
+	$scope.refreshAnnouns = function(){
+	courseService.getAnnounbyid($stateParams.cid)
+		.then(function(res){
+			console.log("refresh announcements");
+			console.log(res.dataSet);
+			$scope.announcements = res.dataSet;
+			$scope.announcementsLoaded = true;
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
+	}
+	
+	
+
+	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns) {
+		$scope.authWrite = false;
+		$scope.authEdit = false;
+		$scope.authShow = false;
+
+		if (method == 'creat'){
+			$scope.authWrite = true;
+			$scope.expireEdited = new Date();
 		}
+		else if (method == 'read'){
+			$scope.authShow = true;
+			$scope.currentannoun = selectedAnnouncement;
+			if ($scope.currentannoun.expireTime != 0) {
+				var tempDate = new Date();
+				tempDate.setTime($scope.currentannoun.expireTime*1000);
+				$scope.expireEdited = tempDate;
+			}
+		}
+		else if (method == 'edit'){
+			$scope.authEdit = true;
+			$scope.authShow = true;
+			$scope.currentannoun = selectedAnnouncement;
+			if ($scope.currentannoun.expireTime != 0) {
+				var tempDate = new Date();
+				tempDate.setTime($scope.currentannoun.expireTime*1000);
+				$scope.expireEdited = tempDate;
+			}
+		}
+
+	  	$scope.back = function() {
+	    	$mdDialog.hide();
+	  	};
+
+	  	$scope.activeEdit = function() {
+	    	$scope.authWrite = true;
+	    	$scope.authEdit = false;
+	  	};
+
+	  	$scope.addAnnoun = function(){
+	  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+	  		console.log(expireTime);
+	  		var newAnnouncement = {
+  				"title": $scope.currentannoun.title,
+				"body": $scope.currentannoun.body,
+				"expireTime": expireTime,
+	  		};
+
+	  		console.log(newAnnouncement);
+	  		courseService.addAnnoun(cid, newAnnouncement)
+			.then(function(res){
+				console.log("new announcement sent");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshAnnouns();
+				$window.alert("new announcement is sent");
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
+
+	  		$scope.editAnnoun = function(){
+	  		if ($scope.expireEdited != undefined){
+		  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+		  	}
+		  	else {
+		  		var expireTime = 0;
+		  	}
+	  		console.log(expireTime);
+	  		var editedAnnouncement = {
+  				"title": $scope.currentannoun.title,
+				"body": $scope.currentannoun.body,
+				"expireTime": expireTime,
+	  		};
+
+	  		console.log(editedAnnouncement);
+	  		courseService.editAnnoun(cid, editedAnnouncement,$scope.currentannoun.itemId)
+			.then(function(res){
+				console.log("announcement is updated");
+				console.log(res);
+				$scope.back();
+				resetLoading();
+				refreshAnnouns();
+				$window.alert("announcement is updated");
+			},
+			function(err){
+				console.log("Error occured : " + err);
+			});
+	  	}
 	};
 
 
-	function parseLearningMaterials(y){
+
+function convert(array){
+    var map = {}
+    for(var i = 0; i < array.length; i++){
+        var obj = array[i]
+        if(!(obj.id in map)){
+            map[obj.id] = obj
+            map[obj.id].nodes = []
+        }
+
+        if(typeof map[obj.id].name == 'undefined'){
+            map[obj.id].id = obj.itemId
+            map[obj.id].name = obj.name
+            map[obj.id].parentId= obj.parentFolderId
+        }
+
+        var parent = obj.parentFolderId || '-';
+        if(!(parent in map)){
+            map[parent] = {}
+            map[parent].nodes = []
+        }
+
+        map[parent].nodes.push(map[obj.id])
+    }
+    console.log(map);
+    return map;
+}
 
 
-        $scope.dataLoaded = false;
-
-        var dataSet = groupMaterialsByParent(y);
-
-        console.log("dataset is ");
-        console.log(dataSet);
 
 
-        data = dataSet.reduce(function (r, a) {
-                function getParent(s, b) {
-                    return b.id === a.parentId ? b : (b.nodes && b.nodes.reduce(getParent, s));
-                }
+function parseLearningMaterials(y){
 
-                var index = 0, node;
-                if ('parentId' in a) {
-                    node = r.reduce(getParent, {});
-                }
-                if (node && Object.keys(node).length) {
-                    node.nodes = node.nodes || [];
-                    node.nodes.push(a);
+	flatToNested = new FlatToNested({
+	    // The name of the property with the node id in the flat representation
+	    id: 'itemId',
+	    // The name of the property with the parent node id in the flat representation
+	    parent: 'parentFolderId',
+	    // The name of the property that will hold the children nodes in the nested representation
+	    children: 'nodes'
+	});
+
+	var nested = flatToNested.convert(y);
+	console.log(nested);
+
+	$scope.roleList = nested;
+	$scope.dataLoaded = true;
+
+	return;
+}
 
 
-                } else {
-                    while (index < r.length) {
-                        if (r[index].parentId === a.id) {
-                            a.nodes = (a.nodes || []).concat(r.splice(index, 1));
-                        } else {
-                            index++;
-                        }
-                    }
-                    r.push(a);
-                }
-                return r;
-            }, []);
-
-        var tree = JSON.stringify(data, 0 , 0);
-
-        elements = jQuery.parseJSON(tree);
-
-        console.log(tree);
-
-        $scope.dataLoaded = true;
-
-        $scope.roleList = elements;
-	}
 
     function groupMaterialsByParent(y){
         var x = [];
@@ -196,6 +465,7 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
             x[obj.parentFolderId].push({"id" : obj.itemId, "isDirectory" : obj.isDirectory, "name" : obj.name, "url" : obj.selfUrl});
         }
 
+        console.log("group mateirals by parent");
         console.log(x);
 
         var dataSet = [];
@@ -218,8 +488,17 @@ app.controller('singlecourseCtrl', function($scope,$stateParams,courseService,$m
     	console.log(node);
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
     	if(!node.isDirectory){
-    		window.open(SERVER_URL + node.url, '_blank');
+    		window.open(SERVER_URL + node.selfUrl, '_blank');
     	}
+    }
+
+	/* download Assignment */
+    $scope.downloadAssignment = function(doc){
+    	console.log(doc);
+    	var SERVER_URL = "https://www3.elearning.rwth-aachen.de/";
+    	var url = doc.downloadUrl.replace("assessment|", "");
+    	
+    	window.open(SERVER_URL + url, '_blank');
     }
 });
 

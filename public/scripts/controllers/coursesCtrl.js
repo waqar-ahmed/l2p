@@ -1,38 +1,38 @@
-app.controller('coursesCtrl', function($scope,courseService,$location) {
-	
-  courseService.getCurrentSem()
+app.controller('coursesCtrl', function($scope,courseService,$location, $interval, colorService) {
+
+  $scope.coursesLoaded = false;
+
+  courseService.getAllCourses()
 		.then(function(res){
-			console.log("got all courses from current sem");
-			console.log(res.dataSet);
+			//got all courses therefore generate colors
+			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;
+			console.log("got all courses");
 			console.log("courses:"+$scope.courses);
+			$scope.coursesLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
+			$scope.coursesLoaded = true;
 		});
 
 
-
-  $scope.defaultSemester = {
-        id : '1',
-        abbre: 'SS2016',
-        name: 'Courses - Summer Semester 2016',
+  $scope.selectedSemester = {
+        sem: 'ss16',
+        name: 'Summer Semester 2016',
       };
 
   $scope.semesters = [
     {
-      id : '1',
-      abbre: 'SS2016',
-      name: 'Courses - Summer Semester 2016',
+      sem: 'ss16',
+      name: 'Summer Semester 2016',
     },
     {
-      id : '2',
-      abbre: 'WS2015',
-      name: 'Courses - Winter Semester 2016',
+      sem: 'ws15',
+      name: 'Winter Semester 2016',
     },
     {
-      id : '3',
-      abbre: 'SS2015',
-      name: 'Courses - Summer Semester 2015',
+      sem: 'ss15',
+      name: 'Summer Semester 2015',
     },
   ];
 
@@ -40,4 +40,5 @@ app.controller('coursesCtrl', function($scope,courseService,$location) {
       console.log("showing single course " + cid);
       $location.path('singlecourse/'+cid);
     }
+
 });

@@ -27,8 +27,15 @@ class LearningMaterialController extends L2pController {
         return $this->sendRequest(self::GET, 'deleteLearningMaterial', ['cid'=>$cid, 'itemid'=>$itemId]);                               
     }
     
-    public function uploadInLearningMaterials($cid, $sourceDir) {
-        
+    public function uploadInLearningMaterial(Request $request, $cid) {
+        $valid = [
+            'fileName' => 'required|string',
+            'stream' => 'required|string',
+        ];
+        if(!$request->has('sourceDirectory') && is_string($request->input('sourceDirectory')) ) {
+            return $this->jsonResponse(self::STATUS_FALSE, 'sourceDirectory field is required and must be string.');            
+        }
+        return $this->addToModule($request, 'uploadInLearningMaterials', ['cid'=>$cid, 'sourceDirectory'=>$request->input('sourceDirectory')], $valid);        
     }
     
 }

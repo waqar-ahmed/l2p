@@ -1,7 +1,7 @@
 * {margin: 0; padding: 0;}
 
 .singlecourse >div {
-  margin: 20px;
+  /*margin: 20px;*/
 }
 
 .singlecourse ul {
@@ -13,11 +13,19 @@
   font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
 }
 
+.email_body
+{
+  margin-top: 3px;
+  margin-bottom: 15px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .singlecourse li img {
   float: left;
   margin: 0 15px 0 0;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 }
 
 .singlecourse li p {
@@ -27,12 +35,12 @@
   padding: 10px;
   overflow: auto;
   border: 1px solid #e4e4e4;
-  margin: 5px;
+  margin: 6px 5px 10px 5px;
 
 }
 
 .singlecourse li:hover {
-  background: #eee;
+  /*background: #eee;*/
   cursor: pointer;
 }
 
@@ -47,60 +55,172 @@
 }
 .main_height
 {
-  height: 100% !important;
-/*  border: 2px solid red !important;
-*/}
+  height: calc(100% - 160px) !important;
+ /*border: 2px solid red !important;*/
+}
 
 
 .loadingicon{
  position: absolute;
- top: 20%;
+ top: 40%;
  left: 40%;
 }
 
 .tree{
   padding-left: 0 !important;
-}
-
-.email-detail md-input-container{
-  margin: 8px 8px 0 8px;
-}
-
-.email-detail textarea[disabled],.email-detail input[disabled]{
-  color: #696969;
-}
-
-.email-detail #creatinfo {
-  padding: 0 8px 12px 14px;
-}
-
-.email-detail md-content {
-  padding :16px 8px 0 8px;
-}
-
-.email-content p{
-  font-size: 15px;
-  color: #696969;
-  padding: 4px 8px 0 6px;
-}
-
-.email-content label{
-  font-size: 11px;
-  color: #696969;
-  padding: 8px 8px 8px 8px;
-}
-
-.email-content{
-  margin: 0 10px 0 0;
-  max-height: 256px;
-  overflow: scroll;
-}
-
-#email-divider{
-  padding:0 0 20px 0;
-  margin: 0 10px 0 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .ng-hide.ng-hide-animate{
      display: none !important;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+ul.post-grid {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+ul.post-grid li {
+  padding: 20px;
+  cursor: pointer;
+  -webkit-transition: background linear 0.5s;
+  transition: background linear 0.5s;
+  border-bottom: 1px solid #a8a8a8;
+}
+
+.discussion_question
+{
+  margin-bottom: 10px; margin-top:10px;
+}
+
+.discussion_username{
+
+  float: right !important;
+  font-style: italic;
+  color: grey;
+  font-size: 14px;
+
+}
+
+.ngTruncateToggleText {
+    color: blue;
+    font-size: 90%;
+    font-style: italic underline;
+}
+
+
+.replybox_div{
+    padding: 10px;
+    height: auto;
+}
+
+
+.replybox_div textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px #5f6c7a solid;
+  width: 100%;
+}
+
+::-webkit-input-placeholder {
+  padding: 5px;
+}
+
+
+.replybox_button{
+ float: right !important;
+ margin-top: 5px;
+}
+
+.reply_from_users
+{
+  width: 100%;
+}
+
+.reply_user_name
+{
+  margin-left: 10px;
+  margin-bottom: 10px;
+
+}
+
+.reply_body
+{
+
+  margin-left: 20px;
+  margin-top: 5px;
+  padding-right: 12px;
+
+}
+
+.reply_date
+{
+    margin-top: 10px;
+    margin-left: 20px;
+    font-style: italic;
+    color: grey;
+    font-size: 14px;
+    padding-bottom: 20px;
+
+
+}
+
+
+
+
+
+.bubble 
+{
+position: relative;
+width: 100%;
+padding: 0px;
+background: #F2F2F2;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+border: #7E7F7F solid 2px;
+margin-top: 15px;
+}
+
+.bubble > ul{
+  font-size: 12px;
+}
+.bubble li{
+  border: none;
+  padding: 3px;
+}
+
+.bubble:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 20px 15px;
+border-color: #F2F2F2 transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -15px;
+left: 141px;
+}
+
+.bubble:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 21px 16px;
+border-color: #7E7F7F transparent;
+display: block;
+width: 0;
+z-index: 0;
+top: -18px;
+left: 140px;
+}
+

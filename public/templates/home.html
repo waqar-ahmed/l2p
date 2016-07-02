@@ -1,92 +1,272 @@
-<div layout="column">
-  <div style="margin-left:25px;"><b>Quick Menu</b></div>
-  <div layout="row" layout-padding layout-margin >
-    <div flex="33" style="background-color:#EEEEEE;">courses</div>
-    <div flex="33" style="background-color:#EEEEEE;">previous semesters</div>
-    <div flex="33" style="background-color:#EEEEEE;">calendar</div>
+<md-subheader class="md-no-sticky"><b>What's new</b>
+<div layout="row" class="timeSelect">
+      <md-input-container style="margin-right: 10px;">
+        <label>Update Since</label>
+        <md-select ng-model="lastday" ng-change="updateList(lastday)">
+          <md-option ng-repeat="lastday in lastdays" value="{{lastday}}">{{lastday}}</md-option>
+        </md-select>
+      </md-input-container>       
+    </div>
+    <div class="clear"></div>
+</md-subheader>
+<div ng-cloak>
+	<div class="fabbutton">
+	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
+	   add
+	   </md-button>
+	   <md-button ng-class="{visible:selectedTab==4}" class="md-fab md-fab-bottom-right" ng-click="test()">
+	   delete
+	   </md-button>
+  	</div>
+	
+	<div>
+<!--     <h1 class="md-title">Update since</h1> -->
   </div>
+  
+  
+	<md-content>
+
+     <md-content flex layout="row" layout-align="center">
+            <md-content flex="100">
+
+
+
+
+
+
+
+
+
+<div class="myTree">
+  <!-- Course list -->
+  <div ng-repeat="item in allWhatsNew">
+  <div class='container'>
+      <div class="first" ng-click="showDetails = ! showDetails">
+        <i class="fa fa-minus" aria-hidden="true" ng-show="showDetails"></i>
+        <i class="fa fa-plus" aria-hidden="true" ng-show="!showDetails"></i>
+      </div>
+      <div class="second">
+        <h3>{{item.cid}}</h3>
+      </div>
+      <div class="clear"></div>
+  </div>
+
+<!-- Course learning materials, announcements etc list -->
+<!-- Learning materials -->
+  <div class="procedure-details" ng-show="showDetails">
+    <div class='innercontainer'>
+      <div class="innerfirst" ng-click="innershowDetails = ! innershowDetails">
+        <i class="fa fa-minus" aria-hidden="true" ng-show="innershowDetails"></i>
+        <i class="fa fa-plus" aria-hidden="true" ng-show="!innershowDetails"></i>
+      </div>
+      <div class="innersecond">
+        <h3>Learning Materials</h3>
+      </div>
+      <div class="clear"></div>
+    </div>
+  
+  <!-- detials of courseinfo and other info -->
+    <div class="innercontainer innerdetails" ng-show="innershowDetails">
+      <h3 ng-if="item.learningMaterials.length==0">Nothing to show</h3>
+      <a ng-repeat="subitem in item.learningMaterials" ng-click="downloadFile(subitem)">
+        <i class="fa fa-play" aria-hidden="true"></i>
+          {{subitem.name}}
+      </a>
+    </div>
+  </div>
+
 </div>
 
- <!--  <td style="background-color:#EEEEEE;height:33%;width:33%;">
-    <center>calendar</center>
-  </td> -->
 
-<!--
-<div class="inset" hide-sm></div>
-            <ng-switch on="data.selectedIndex" class="tabpanel-container">
-              <div role="tabpanel"
-                   id="tab1-content"
-                   aria-labelledby="tab1"
-                   ng-switch-when="0"
-                   md-swipe-left="next()"
-                   md-swipe-right="previous()"
-                   layout="row" layout-align="center center">
-                   <md-card flex-gt-sm="90" flex-gt-md="80">
-                    <md-card-content>
-                      <h2>What's new</h2>
-                      <md-list>
-                        <md-item ng-repeat="item in activity | filter:search">
-                          <md-item-content>
-                            <div class="md-tile-left inset" hide-sm>
-                                <user-avatar></user-avatar>
-                            </div>
-                            <div class="md-tile-content">
-                              <h3>{{item.what}}</h3>
-                              <h4>{{item.who}}</h4>
-                              <p>
-                                {{item.notes}}
-                              </p>
-                            </div>
-                          </md-item-content>
-                          <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                          <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                        </md-item>
-                        <md-divider></md-divider>
-                        <md-item layout class="inset">
-                            <md-button layout layout-align="start center" flex class="md-primary">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> More
-                            </md-button>
-                        </md-item>
-                      </md-list>
-                    </md-card-content>
-                  </md-card>
-              </div>
-              <div role="tabpanel"
-                   id="tab2-content"
-                   aria-labelledby="tab2"
-                   ng-switch-when="1"
-                   md-swipe-left="next()"
-                   md-swipe-right="previous()"
-                   layout="row" layout-align="center center">
-                  <md-card flex-gt-sm="90" flex-gt-md="80">
-                    <md-card-content>
-                      <h2>Favorites</h2>
-                      <md-list>
-                        <md-item ng-repeat="item in activity | filter:search | orderBy:'-what'">
-                          <md-item-content>
-                            <div class="md-tile-left inset" hide-sm>
-                                <user-avatar></user-avatar>
-                            </div>
-                            <div class="md-tile-content">
-                              <h3>{{item.what}}</h3>
-                              <h4>{{item.who}}</h4>
-                              <p>
-                                {{item.notes}}
-                              </p>
-                            </div>
-                          </md-item-content>
-                          <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                          <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                        </md-item>
-                        <md-divider></md-divider>
-                        <md-item layout class="inset">
-                            <md-button layout layout-align="start center" flex class="md-primary">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> More
-                            </md-button>
-                        </md-item>
-                      </md-list>
-                    </md-card-content>
-                  </md-card>
-              </div>
+</div>   <!-- tree div end -->
 
-          </ng-switch> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+            <ul class="cbp_tmtimeline">
+                <li>
+                  <time class="cbp_tmtime" datetime="2013-04-10 18:30"><span>4/10/13</span> <span>18:30</span></time>
+                  <div class="cbp_tmicon cbp_tmicon-phone"></div>
+                  <div class="cbp_tmlabel">
+                    <h2>Ricebean black-eyed pea</h2>
+                    <p>Winter purslane...</p>
+                  </div>
+                </li>
+                <li>
+                  <time class="cbp_tmtime" datetime="2013-04-11T12:04"><span>4/11/13</span> <span>12:04</span></time>
+                  <div class="cbp_tmicon cbp_tmicon-screen"></div>
+                  <div class="cbp_tmlabel">
+                    <h2>Greens radish arugula</h2>
+                    <p>Caulie dandelion maize...</p>
+                  </div>
+                </li>
+                <li>
+                  <time class="cbp_tmtime" datetime="2013-04-13 05:36"><span>4/13/13</span> <span>05:36</span></time>
+                  <div class="cbp_tmicon cbp_tmicon-mail"></div>
+                  <div class="cbp_tmlabel">
+                    <h2>Sprout garlic kohlrabi</h2>
+                    <p>Parsnip lotus root...</p>
+                  </div>
+                </li>
+                <li>
+                  <time class="cbp_tmtime" datetime="2013-04-15 13:15"><span>4/15/13</span> <span>13:15</span></time>
+                  <div class="cbp_tmicon cbp_tmicon-phone"></div>
+                  <div class="cbp_tmlabel">
+                    <h2>Watercress ricebean</h2>
+                    <p>Peanut gourd nori...</p>
+                  </div>
+                </li>
+                <li>
+                  <time class="cbp_tmtime" datetime="2013-04-16 21:30"><span>4/16/13</span> <span>21:30</span></time>
+                  <div class="cbp_tmicon cbp_tmicon-earth"></div>
+                  <div class="cbp_tmlabel">
+                    <h2>Courgette daikon</h2>
+                    <p>Parsley amaranth tigernut...</p>
+                  </div>
+                </li>
+              </ul> -->
+
+            </md-content>
+        </md-content>
+
+<!-- 
+<section class="ac-container">
+        <div>
+          <input id="ac-1" name="accordion-1" type="radio">
+          <label for="ac-1">About us</label>
+          <article class="ac-small">
+            <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
+          </article>
+        </div>
+        <div>
+          <input id="ac-2" name="accordion-1" type="radio">
+          <label for="ac-2">How we work</label>
+          <article class="ac-medium">
+            <p>Like you, I used to think the world was this great place where everybody lived by the same standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to play by his rules, then you're gonna have to pay the price. </p>
+          </article>
+        </div>
+        <div>
+          <input id="ac-3" name="accordion-1" type="radio">
+          <label for="ac-3">References</label>
+          <article class="ac-large">
+            <p>You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder. After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide... and only five made it out. Now we took an oath, that I'm breaking now. We said we'd say it was the snow that killed the other two, but it wasn't. Nature is lethal but it doesn't hold a candle to man. </p>
+          </article>
+        </div>
+        <div>
+          <input id="ac-4" name="accordion-1" type="radio">
+          <label for="ac-4">Contact us</label>
+          <article class="ac-large">
+            <p>You see? It's curious. Ted did figure it out - time travel. And when we get back, we gonna tell everyone. How it's possible, how it's done, what the dangers are. But then why fifty years in the future when the spacecraft encounters a black hole does the computer call it an 'unknown entry event'? Why don't they know? If they don't know, that means we never told anyone. And if we never told anyone it means we never made it back. Hence we die down here. Just as a matter of deductive logic. </p>
+          </article>
+        </div>
+      </section> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</md-content>
+</div>
+
+
+
+   <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Hidden element to upload file -->
+                <div>
+                    <!-- <input type="file" id="i_file" name="fileattachment[]" ngf-select="onFileSelect($file)" style="display: none;"/> -->
+                    <input type="file" file-model="myFile" name="fileattachment[]" id="i_file" style="display: none;" />
+                </div>
+
+
+
+<!--   <md-button aria-label="file" ng-click="clickUpload()" flex>
+                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
+                    <md-tooltip md-direction="right">
+                        select file
+                    </md-tooltip>
+                    <label class="icon-label">select file</label>
+                    
+                </md-button>
+
+
+
+  <md-button aria-label="file" ng-click="uploadFIle()" flex>
+                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
+                    <md-tooltip md-direction="right">
+                        Upload Document
+                    </md-tooltip>
+                    <label class="icon-label">Upload Document</label>
+                    
+                </md-button> -->
+
+
