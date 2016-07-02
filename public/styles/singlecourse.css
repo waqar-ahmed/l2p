@@ -250,14 +250,6 @@ top: -18px;
 left: 140px;
 }
 
-.email-detail
-{
-  height: 70% !important;
-  width: 90% !important;
-  max-width: 2000px !important;
-  margin: 10px;
-}
-
 .assignment_view_inside ul           
 {
     list-style: none;
