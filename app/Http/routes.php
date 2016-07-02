@@ -155,8 +155,10 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Shared documents
          */        
-        Route::get('all_shared_document_count', 'CourseController@viewAllSharedDocumentCount');        
-        Route::get('all_shared_documents', 'CourseController@viewAllSharedDocuments');        
+        Route::get('all_shared_documents_count', 'SharedDocsController@viewAllSharedDocumentCount');        
+        Route::get('all_shared_documents', 'SharedDocsController@viewAllSharedDocuments');        
+        Route::get('delete_shared_document/{itemId}', 'SharedDocsController@deleteSharedDocument');        
+        Route::post('upload_in_shared_document', 'SharedDocsController@uploadInSharedDocument');        
         
         /*
          * Wiki

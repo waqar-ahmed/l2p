@@ -849,7 +849,40 @@
             }
         }, 
         shared_documents: {
-            
+            all_shared_documents: {
+                uri: "/course/{cid}/all_shared_documents",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                }
+            },   
+            all_shared_documents_count: {
+                uri: "/course/{cid}/all_shared_documents_count",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                }
+            },
+            delete_shared_document: {
+                uri: "/course/{cid}/delete_shared_document/{itemId}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                    itemId: 0,
+                }
+            },
+            upload_in_shared_document: {
+                uri: "/course/{cid}/upload_in_shared_document",     
+                method: "post",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                },      
+                req_params :
+                {
+                    sourceDirectory: "/ss16/16ss-55492/collaboration/Lists/SharedDocuments",
+                }
+            },
         },
         wikis: {
             
