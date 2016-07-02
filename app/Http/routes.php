@@ -118,9 +118,9 @@ Route::group(['middleware'=>'l2pApi'], function() {
         Route::get('media_library', 'MediaLibraryController@viewMediaLibrary');
 
 
-       /*
-        * Discussion
-        */
+        /*
+         * Discussion
+         */
         Route::get('all_discussion_item_count', 'DiscussionController@viewAllDiscussionItemCount');
         Route::get('all_discussion_items', 'DiscussionController@viewAllDiscussionItems');
         Route::get('all_discussion_root_items', 'DiscussionController@viewAllDiscussionRootItems');
