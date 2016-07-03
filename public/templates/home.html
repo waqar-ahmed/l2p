@@ -1,11 +1,13 @@
-<md-subheader class="md-no-sticky"><b>What's new</b>
+
+<md-subheader class="md-no-sticky" style="margin:10px 0 10px 0 !important; color: black;">
+  <b>What's new</b>
 <div layout="row" class="timeSelect">
       <md-input-container style="margin-right: 10px;">
         <label>Update Since</label>
         <md-select ng-model="lastday" ng-change="updateList(lastday)">
           <md-option ng-repeat="lastday in lastdays" value="{{lastday}}">{{lastday}}</md-option>
         </md-select>
-      </md-input-container>       
+      </md-input-container>
     </div>
     <div class="clear"></div>
 </md-subheader>
@@ -18,36 +20,28 @@
 	   delete
 	   </md-button>
   	</div>
-	
+
 	<div>
 <!--     <h1 class="md-title">Update since</h1> -->
   </div>
-  
-  
+
+
 	<md-content>
 
      <md-content flex layout="row" layout-align="center">
             <md-content flex="100">
 
 
-
-
-
-
-
-
-
-
 <div class="myTree">
   <!-- Course list -->
-  <div ng-repeat="item in allWhatsNew">
+  <div ng-repeat="(key,value) in allWhatsNew">
   <div class='container'>
       <div class="first" ng-click="showDetails = ! showDetails">
         <i class="fa fa-minus" aria-hidden="true" ng-show="showDetails"></i>
         <i class="fa fa-plus" aria-hidden="true" ng-show="!showDetails"></i>
       </div>
-      <div ng-class="{'second':'true', 'animated-background':courseNameArr[$index].title === NULL}">
-        <h3 class="main_title">{{courseNameArr[$index].title}}</h3>
+      <div class="second">
+        <h3>{{key}}</h3>
       </div>
       <div class="clear"></div>
   </div>
@@ -65,11 +59,11 @@
       </div>
       <div class="clear"></div>
     </div>
-  
-  <!-- detials of courseinfo and other info --> 
+
+  <!-- detials of courseinfo and other info -->
     <div class="innercontainer innerdetails" ng-show="innershowDetails" height="120%">
       <h3 ng-if="item.learningMaterials.length==0">Nothing to show</h3>
-      <a ng-repeat="subitem in item.learningMaterials" ng-click="downloadFile(subitem)">
+      <a ng-repeat="subitem in value" ng-click="downloadFile(subitem)">
         <i class="fa fa-play" aria-hidden="true"></i>
           {{subitem.name}}
       </a>
@@ -115,12 +109,10 @@
 
 
 
-         
-
             </md-content>
         </md-content>
 
-<!-- 
+<!--
 <section class="ac-container">
         <div>
           <input id="ac-1" name="accordion-1" type="radio">
@@ -206,27 +198,12 @@
                     <!-- <input type="file" id="i_file" name="fileattachment[]" ngf-select="onFileSelect($file)" style="display: none;"/> -->
                     <input type="file" file-model="myFile" name="fileattachment[]" id="i_file" style="display: none;" />
                 </div>
+<!--
+  <form>
+        <input type="file" ng-file-select="onFileSelect($files)" >
+
+   </form>
 
 
-
-  <md-button aria-label="file" ng-click="clickUpload()" flex>
-                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
-                    <md-tooltip md-direction="right">
-                        select file
-                    </md-tooltip>
-                    <label class="icon-label">select file</label>
-                    
-                </md-button>
-
-
-
-  <md-button aria-label="file" ng-click="uploadFIle()" flex>
-                    <md-icon class="fa fa-file-o fa-2x"></md-icon>
-                    <md-tooltip md-direction="right">
-                        Upload Document
-                    </md-tooltip>
-                    <label class="icon-label">Upload Document</label>
-                    
-                </md-button>
 
 

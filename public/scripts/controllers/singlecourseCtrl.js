@@ -1,10 +1,11 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout) {
-
+app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
 	var orginalDiscussions = [];
+	var countDisucussions = 0;
+	var transferArray = [];
 
 	$scope.discussLoaded = false;
 	$scope.emailsLoaded = false;
@@ -23,6 +24,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
+	}
+
+	$scope.onTabChanges = function($index){
+		console.log("Tab index : " + $index);
 	}
 
 	console.log("course ID: " + $stateParams.cid);
@@ -86,15 +91,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	});
 
 	/* get Learning Materials by cid*/
-	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
+	courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
 		console.log(res.dataSet);
-		parseLearningMaterials(res.dataSet);
+		$scope.roleList = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
 		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
 	});
+
+
+	loadAllSharedDocs();
 
 
 	/* get Assignments by cid*/
@@ -107,6 +116,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		console.log("Error occured");
 	});
 
+	function loadAllSharedDocs(){
+		/* get Shared Docs by cid*/
+	courseService.getAllSharedDocs($stateParams.cid)
+	.then(function(res){
+		console.log("get all shared Docs");
+		console.log(res.dataSet);
+		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
+		//console.log(buildHierarchy(items));
+	}, function(){
+		console.log("Error occured");
+	});
+	}
 
 	var iconClassMap = {
 		txt: 'icon-file-text',
@@ -131,7 +153,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	courseService.getCourseInfo($stateParams.cid)
 		.then(function(res){
 			console.log("got CourseInfo");
-			console.log(res.dataSet); 			 
+			console.log(res.dataSet);
 			$scope.courseinfos = [
 				{
 					coursetitle: String(res.dataSet[0].courseTitle),
@@ -143,24 +165,13 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-	
-	
-
-/* 	$scope.courseinfos = [
-	{
-		coursetitle: 'Introduction to Web Technology',
-		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
-		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
-	},
-	]; */
-
 
 	$scope.showSimpleToast= function(message) {
     $mdToast.show(
       $mdToast.simple()
         .textContent(message)
         .position('top')
-        .hideDelay(3000)
+        .hideDelay(1200)
     );
  		 }
 
@@ -176,22 +187,13 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		console.log($scope.authCUD);
 	}
 
-	$scope.resetEmailLoading = function() {
-		$scope.emailsLoaded = false;
-	}
-
-	$scope.resetAnnounLoading = function() {
-		$scope.announcementsLoaded = false;
-	}
-
 	$scope.test = function() {
 		console.log("test");
 	}
 
 	$scope.parseDiscuss = function() {
-		var transferArray = [];
 		var index = 0;
-		for (var i=0; i<orginalDiscussions.length; i++){
+		for (var i=countDisucussions; i<orginalDiscussions.length; i++){
 			if (orginalDiscussions[i].selfId == orginalDiscussions[i].parentDiscussionId) {
 				var tempArray = {
 					"selfId": orginalDiscussions[i].selfId,
@@ -218,123 +220,143 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				$scope.discussions[master].counts = $scope.discussions[master].children.length;
 			}
 		}
+		countDisucussions = orginalDiscussions.length;
 		console.log("data is parsed");
 		console.log($scope.discussions);
 	}
 
-	$scope.addDisucss = function(discussion,method){
-		if (discussion === undefined)
-			{selectedDiscussion = {};}
-		else
-			{selectedDiscussion = discussion;}
+	$scope.addDiscussion = function(){
+		// if (discussion === undefined)
+		// 	{selectedDiscussion = {};}
+		// else
+		// 	{selectedDiscussion = discussion;}
 	    $mdDialog.show({
 	    	controller: DiscussionDialogController,
 	    	locals: {
-	    		selectedDiscussion: angular.copy(selectedDiscussion),
-	    		method: method,
+	    		// selectedDiscussion: angular.copy(selectedDiscussion),
+	    		// method: method,
 	    		cid: $stateParams.cid,
 	    		resetLoading: $scope.resetDiscussLoading.bind(self),
-	    		refreshDiscusses: $scope.refreshDiscusses.bind(self),
+	    		refreshDiscussions: $scope.refreshDiscussions.bind(self),
+	    		refresh: $scope.refresh.bind(self),
 	    	},
 	    	bindToController: true,
-	      	templateUrl:'templates/viewdiscuss.html',
+	      	templateUrl:'templates/viewdiscussion.html',
 	      	parent: angular.element(document.body),
-	      	clickOutsideToClose:true
+	      	clickOutsideToClose:false
 	    });
 	};
 
-	/* delete Discussion */
-	$scope.deleteDiscuss = function(discussion, method) {
-
-		if (method == "reply"){
-			var confirmDeleteReply = confirm("Do you want to delete the reply?");
-			if (confirmDeleteReply == true) {
-				courseService.deleteEmail($stateParams.cid, email.itemId)
-				.then(function(res){
-					console.log("email is deleted");
-					console.log(res);
-					$scope.emailsLoaded = false;
-					$window.alert("email is deleted");
-					$scope.refreshEmails();
-				},
-				function(err){
-					console.log("Error occured : " + err);
-				});
-	  		}
-		}
-
-		else if (method == "discuss") {
-			var confirmDeleteDiscuss = confirm("Do you want to delete the discussion?");
-			if (confirmDeleteDiscuss == true) {
-				courseService.deleteEmail($stateParams.cid, email.itemId)
-				.then(function(res){
-					console.log("email is deleted");
-					console.log(res);
-					$scope.emailsLoaded = false;
-					$window.alert("email is deleted");
-					$scope.refreshEmails();
-				},
-				function(err){
-					console.log("Error occured : " + err);
-				});
-	  		}
-		}
-
-	}
-
-	/* refresh Discussions */
-	$scope.refreshDiscusses = function(){
-	courseService.getEmailbyid($stateParams.cid)
-		.then(function(res){
-			console.log("refresh emails");
-			console.log(res.dataSet);
-			$scope.emails = res.dataSet;
-			$scope.emailsLoaded = true;
-		},
-		function(err){
-			console.log("Error occured : " + err);
+	$scope.addDiscussionReply = function(replyToId, body) {
+		var discussion = {
+			"subject": "Reply",
+			"body": body,
+		};
+		console.log(replyToId);
+		console.log(discussion);
+		courseService.addDiscussionReply($stateParams.cid, replyToId, discussion)
+			.then(function(res){
+				console.log("new discussion reply added");
+				console.log(res);
+				$scope.resetDiscussLoading();
+				$scope.refreshDiscussions();
+				$scope.refresh();
+				$scope.showSimpleToast("Discussion Reply has been added!");
+			}, function(err){
+				console.log("Error occured : " + err);
 		});
 	}
 
-	function DiscussDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail) {
-		$scope.authWrite = false;
-		$scope.authDelete = false;
-		$scope.authShow = false;
+/* delete Discussion */
+	$scope.showConfirmDiscussion = function(ev,selfId,outerindex) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to delete discussion?')
+          .textContent('')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+    	$mdDialog.show(confirm).then(function() {
+    	$scope.discussions.splice(outerindex,1);
+    	$scope.deleteDiscussion(selfId);
+    	$scope.refresh();
+    	$scope.showSimpleToast("Discussion has been deleted");
+    	}, function() {
+			console.log("confirmation canceled");
+		});
+  	};
 
-		if (method == 'creat'){
-			$scope.authWrite = true;
-		}
-		else if (method == 'read'){
-			$scope.authShow = true;
-			$scope.currentemail = selectedEmail;
-		}
+  	$scope.deleteDiscussion = function(selfId) {
+  		courseService.deleteDiscussion($stateParams.cid,selfId)
+			.then(function(res){
+				console.log("discussion deleted");
+				console.log(res);
+				$scope.resetDiscussLoading();
+				$scope.refreshDiscussions();
+			}, function(err){
+				console.log("Error occured : " + err);
+		});
+  	}
 
+  	$scope.showConfirmDiscussionReply = function(ev,selfId,outerindex,innerindex) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to delete discussion Reply?')
+          .textContent('')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+    	$mdDialog.show(confirm).then(function() {
+    	$scope.discussions[outerindex].children.splice(innerindex);
+    	$scope.discussions[outerindex].counts--;
+    	$scope.deleteDiscussion(selfId);
+    	$scope.refresh();
+    	$scope.showSimpleToast("Discussion Reply has been deleted");
+    	}, function() {
+			console.log("confirmation canceled");
+		});
+  	};
+
+	/* refresh Discussions */
+	$scope.refreshDiscussions = function(){
+		courseService.getAllDiscussions($stateParams.cid)
+			.then(function(res){
+				console.log("refresh discussions");
+				console.log(res.dataSet);
+				orginalDiscussions = res.dataSet;
+				$scope.parseDiscuss();
+				$scope.discussLoaded = true;
+			}, function(err){
+				console.log("Error occured : " + err);
+		});
+	}
+
+	$scope.resetDiscussLoading = function() {
+		$scope.discussLoaded = false;
+	}
+
+	function DiscussionDialogController($scope, $mdDialog, courseService, cid, resetLoading, refreshDiscussions, refresh) {
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};
 
-
-	  	$scope.temp = function(){
-	  		$scope.currentemail.replyTo = 'Reply to my address';
-	  		$scope.currentemail.recipients = editRecipient();
-	  		var newEmail = {
-	  			"recipients": $scope.currentemail.recipients,
-	  			"subject": $scope.currentemail.subject,
-	  			"body": $scope.currentemail.body,
-	  			"replyTo": $scope.currentemail.replyTo,
-	  			"cc" : $scope.currentemail.cc,
+	  	$scope.addDisucssion = function(){
+	  		var newDiscussion = {
+	  			"subject": $scope.discussion.subject,
+	  			"body": $scope.discussion.body,
 	  		};
-
-	  		console.log(newEmail);
-
-	  		courseService.addEmail(cid, newEmail)
+	  		console.log(newDiscussion);
+	  		courseService.addDiscussion(cid, newDiscussion)
 			.then(function(res){
-				console.log("new email sent");
+				console.log("new email added");
 				console.log(res);
 				$scope.back();
 				resetLoading();
-				refreshEmail();
-				$window.alert("new email is sent");
+				refreshDiscussions();
+				refresh();
+				showSimpleToast("New Discussion has been added");
 			},
 			function(err){
 				console.log("Error occured : " + err);
@@ -357,6 +379,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	    		resetLoading: $scope.resetEmailLoading.bind(self),
 	    		refreshEmail: $scope.refreshEmails.bind(self),
 	    		refresh: $scope.refresh.bind(self),
+	    		showSimpleToast: $scope.showSimpleToast.bind(self),
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewemail.html',
@@ -389,9 +412,9 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		.then(function(res){
 			console.log("email is deleted");
 			console.log(res);
-			$scope.emailsLoaded = false;
 			//$window.alert("email is deleted");
 			console.log("email is deleted");
+			$scope.resetEmailLoading();
 			$scope.refreshEmails();
 		},
 		function(err){
@@ -414,8 +437,12 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		});
 	}
 
+	$scope.resetEmailLoading = function() {
+		$scope.emailsLoaded = false;
+	}
 
-	function EmailDialogController($scope, $mdDialog, $window, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast, refresh) {
+
+	function EmailDialogController($scope, $mdDialog, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast, refresh, showSimpleToast) {
 		$scope.authWrite = false;
 		$scope.authDelete = false;
 		$scope.authShow = false;
@@ -433,15 +460,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	    	$mdDialog.hide();
 	  	};
 
-	  	$scope.showSimpleToast= function(message) {
-    	$mdToast.show(
-      	$mdToast.simple()
-        .textContent(message)
-        .position('top')
-        .hideDelay(3000)
-    );
- 		 }
-
 	  	editRecipient = function() {
 	  		var strRecipient = "";
 	  		for (var key in $scope.selectedRecipient) {
@@ -452,7 +470,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	  	}
 
 	  	$scope.addEmail = function(){
-	  		$scope.currentemail.replyTo = 'Reply to my address';
+	  		$scope.currentemail.replyTo = "Reply to my address";
 	  		$scope.currentemail.recipients = editRecipient();
 	  		var newEmail = {
 	  			"recipients": $scope.currentemail.recipients,
@@ -473,7 +491,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				refreshEmail();
 				//$window.alert("new email is sent");
 				refresh();
-				$scope.showSimpleToast("Email has been sent!");
+				showSimpleToast("Email has been sent");
 			},
 			function(err){
 				console.log("Error occured : " + err);
@@ -497,6 +515,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	    		resetLoading: $scope.resetAnnounLoading.bind(self),
 	    		refreshAnnouns: $scope.refreshAnnouns.bind(self),
 	    		refresh: $scope.refresh.bind(self),
+	    		showSimpleToast: $scope.showSimpleToast.bind(self),
 
 	    	},
 	    	bindToController: true,
@@ -504,46 +523,40 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	      	parent: angular.element(document.body),
 	      	clickOutsideToClose:false
 	    });
-
-
 	};
-
 
 	$scope.showConfirmAnnoucnment = function(ev,ann) {
     // Appending dialog to document.body to cover sidenav in docs app
-    var confirm = $mdDialog.confirm()
-          .title('Would you like to delete Announcement?')
-          .textContent('')
-          .ariaLabel('Lucky day')
-          .targetEvent(ev)
-          .ok('Delete')
-          .cancel('Cancel');
-    $mdDialog.show(confirm).then(function() {
-    	$scope.refresh();
-    	$scope.deleteAnnoun(ann);
-    	$scope.showSimpleToast("Announcement has been deleted");
+	    var confirm = $mdDialog.confirm()
+	          .title('Would you like to delete Announcement?')
+	          .textContent('')
+	          .ariaLabel('Lucky day')
+	          .targetEvent(ev)
+	          .ok('Delete')
+	          .cancel('Cancel');
 
-
-    }, function() {
+	    $mdDialog.show(confirm).then(function() {
+	    	$scope.deleteAnnoun(ann);
+	    	$scope.refresh();
+	    	$scope.showSimpleToast("Announcement has been deleted");
+	    }, function() {
 			console.log("confirmation canceled");
-		    });
-  };
+	    });
+  	};
 
 	/* delete Announcements */
 	$scope.deleteAnnoun = function(announcement) {
-
-			courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
-			.then(function(res){
-				console.log("announcement is deleted");
-				console.log(res);
-				$scope.announcementsLoaded = false;
-				//$window.alert("announcement is deleted");
-				$scope.refreshAnnouns();
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-
+		courseService.deleteAnnoun($stateParams.cid, announcement.itemId)
+		.then(function(res){
+			console.log("announcement is deleted");
+			console.log(res);
+			//$window.alert("announcement is deleted");
+			$scope.resetEmailLoading();
+			$scope.refreshAnnouns();
+		},
+		function(err){
+			console.log("Error occured : " + err);
+		});
 	}
 
 	/* refresh Announcements */
@@ -561,9 +574,11 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		});
 	}
 
+	$scope.resetAnnounLoading = function() {
+		$scope.announcementsLoaded = false;
+	}
 
-
-	function AnnounDialogController($scope, $mdDialog, $window, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns, $mdToast, refresh) {
+	function AnnounDialogController($scope, $mdDialog, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns, $mdToast, refresh, showSimpleToast) {
 		$scope.authWrite = true;
 		$scope.authEdit = true;
 
@@ -571,17 +586,6 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		$scope.announce_heading = '';
 		$scope.isEdit = false;
 		$scope.announce_button = '';
-
-
-		$scope.showSimpleToast= function(message) {
-    	$mdToast.show(
-      	$mdToast.simple()
-        .textContent(message)
-        .position('top')
-        .hideDelay(3000)
-    );
- 		 }
-
 
 		if (method == 'creat'){
 			$scope.authWrite = true;
@@ -644,7 +648,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				resetLoading();
 				refreshAnnouns();
 				refresh();
-				$scope.showSimpleToast("New Announcement has been added");
+				showSimpleToast("New Announcement has been added");
 			},
 			function(err){
 				console.log("Error occured : " + err);
@@ -675,7 +679,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 				refreshAnnouns();
 				refresh();
 				//$window.alert("annuncement is updated");
-				$scope.showSimpleToast("Announcement has been updated");
+				showSimpleToast("Announcement has been updated");
 
 			},
 			function(err){
@@ -688,7 +692,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		$scope.WaitForToast = false;
 		$timeout(function(){
           $scope.WaitForToast = true;
-       }, 4000);
+       }, 2000);
 	}
 
 function convert(array){
@@ -735,10 +739,10 @@ function parseLearningMaterials(y){
 	var nested = flatToNested.convert(y);
 	console.log(nested);
 
-	$scope.roleList = nested;
-	$scope.dataLoaded = true;
+	//$scope.roleList = nested;
+	//$scope.dataLoaded = true;
 
-	return;
+	return nested;
 }
 
 
@@ -792,6 +796,99 @@ function parseLearningMaterials(y){
 
     	window.open(SERVER_URL + url, '_blank');
     }
+
+
+    var uploadSharedDocalert, uploadSharedDocDialog;
+    $scope.uploadSharedDoc = function($event){
+    // Appending dialog to document.body to cover sidenav in docs app
+      uploadSharedDocDialog = $mdDialog;
+      var parentEl = angular.element(document.querySelector('md-content'));
+   	 $mdDialog.show({
+   	   parent: parentEl,
+      targetEvent: $event,
+      template:
+        '<md-dialog aria-label="List dialog">' +
+        '  <md-toolbar>' +
+        '     <div class="md-toolbar-tools">' +
+        '      <h2>Upload File</h2>' +
+        '      <span flex></span>' +
+        '    </div>' +
+        '  </md-toolbar>' +
+        '  <md-dialog-content class="sticky-container" style="padding:5px;">'+
+        '    <br>'+
+        '    <md-input-container style="margin-bottom:0px;">'+
+        '        <label>Selected File</label>'+
+        '        <input type="text" ng-model="fileName" ng-disabled=true>'+
+        '    </md-input-container>'+
+        '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
+        '      Browse' +
+        '    </md-button>' +
+        '  <md-dialog-actions>' +
+        '    <md-button ng-click="uploadFile()" class="md-primary">' +
+        '      Upload' +
+        '    </md-button>' +
+        '    <md-button ng-click="closeDialog()" class="md-primary">' +
+        '      Cancel' +
+        '    </md-button>' +
+        '  </md-dialog-actions>' +
+        '</md-dialog>',
+        locals: {
+          items: $scope.items,
+           cid: $stateParams.cid,
+          closeDialog: $scope.closeDialog
+        },
+        bindToController: true,
+        controllerAs: 'ctrl',
+        controller: 'DialogController'
+    });
+
+     // $mdDialog
+     //  .show(uploadSharedDocalert)
+     //  .finally(function() {
+     //    uploadSharedDocalert = undefined;
+     //  });
+  }
+  $scope.closeDialog = function() {
+    uploadSharedDocDialog.hide();
+  };
+
+
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        $rootScope.$broadcast('loadingFile');
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function(result) {
+                        console.log($scope.file);
+                          //$scope.imageSrc = result;
+                          //console.log(result);
+                          $scope.selectedFile = result.split(",")[1];
+                          // console.log("next one");
+                           courseService.setFile($scope.file.name, $scope.selectedFile);
+                          // console.log($scope.selectedFile);
+                          $rootScope.$broadcast('fileLoaded');
+        });
+    };
+
+
+
+  $scope.$on('showProg', function(event, args) {
+  	console.log("setting to true");
+	$scope.dataLoaded = false;
+    // do what you want to do
+});
+
+
+  $scope.$on('hideProg', function(event, args) {
+	$scope.dataLoaded = true;
+    // do what you want to do
+});
+
+    $scope.$on('loadShareDocs', function(event, args) {
+	loadAllSharedDocs();
+    // do what you want to do
+});
+
+
 });
 
 

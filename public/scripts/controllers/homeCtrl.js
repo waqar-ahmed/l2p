@@ -1,4 +1,4 @@
-app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $http, $q){
+app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $timeout, fileReader){
 
 	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
 	var LOGIN_USER = "login";
@@ -75,15 +75,15 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	$scope.dataLoaded = false;
     	courseService.getAllWhatsNew(mins)
     	.then(function(res){
-		if(res.Status == true){
-			console.log(res.dataset);
+        console.log(res);
 			$scope.dataLoaded = true;
-			$scope.allWhatsNew = res.dataset;
-			//bindData(res.dataset);
-			$scope.loadCourseName(res.dataset);
-		}
-		else{
-		}
+			$scope.allWhatsNew = res;
+      console.log(res);
+      for (var key in res) {
+      if (res.hasOwnProperty(key)) {
+          console.log(key + " = " + res[key]);
+      }
+}    
 	}, function(err){
 		console.log("Error occured : " + err);
 	});
@@ -135,44 +135,6 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	}
     }
 
-    $scope.courseNameArr=[];
-
-    $scope.getCourseNameById = function(cid, index){
-    	courseService.getCourseInfo(cid)
-    	.then(function(res){
-		if(res.Status == true)
-		{
-			console.log(res.dataSet[0].courseTitle);
-			$scope.courseNameArr[index] = res.dataSet[0].courseTitle;
-		}
-		else{
-			return cid;
-		}
-	}, function(err){
-		console.log("Error occured : " + err);
-	});
-    }
-
-    var requestArr = [];
-    $scope.loadCourseName = function(dataset){
-    	// for(var i=0;i<dataset.length;i++){
-    	// 	$scope.getCourseNameById(dataset[i].cid, i);
-    	// }
-
-    	for(var i=0;i<dataset.length;i++){
-    		requestArr[i] = $http.get("course/" + dataset[i].cid + "/course_info");
-    	}
-
-    	$q.all(requestArr).then(function (ret) {
-    		for(var i=0;i<ret.length;i++){
-    			console.log(ret[i].data.dataSet[0].courseTitle);
-    			$scope.courseNameArr[i]={"title":ret[i].data.dataSet[0].courseTitle};
-    		}
-
-    		console.log($scope.courseNameArr);
-		});
-    }
-
     $scope.downloadFile = function(subitem){
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
     	// var url = doc.downloadUrl.replace("assessment|", "");
@@ -180,9 +142,49 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     }
 
 	
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+
+
+
 	$scope.clickUpload = function(){
             document.getElementById('i_file').click();
         };
+
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function(result) {
+                        console.log($scope.file);
+                          //$scope.imageSrc = result;
+                          console.log(result);
+                          result = result.split(",")[1];
+                          console.log("next one");
+                          console.log(result);
+                           $scope.onFileSelect(result);
+                      });
+    };
+ 
+    $scope.$on("fileProgress", function(e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+    });
 
 
     $scope.uploadFIle = function(){
@@ -196,23 +198,31 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
           console.log("in file select");
 
-          console.log(file.name);
+          //console.log(file.name);
+          //console.log(file.toString());
 
 
           $scope.showProgressBar = true;
 
-          file.upload = Upload.upload({
-            url: 'https://www3.elearning.rwth-aachen.de/_vti_bin/L2PServices/api.svc/v1/uploadInSharedDocuments?accessToken=cAZ7oZGelvnFDjQR5fJA7rrbebtf7i7i2MN0EyQcqw0R6mUDj2cKXjbbJKwbuWBW&cid=16ss-55491&sourceDirectory=test',
-            data: {fileattachment: {fileName: file.name, stream: file}},
-          });
+          // var strStream = "";
+          // streamToString(file, (data) => {
+          //   console.log(data);
+          //   strStream = data;  // data is now my string variable
+          // });
+
+          // file.upload = Upload.upload({
+          //   url: 'course/16ss-55492/upload_in_shared_document',
+          //   data: {fileName: file.name, stream: file}
+          // });
 
 
-          file.upload.progress(function(evt){
-              console.log('percent: ' +parseInt(100.0 * evt.loaded / evt.total));
-          });
-
-
-          file.upload.then(function (response) {
+          // file.upload.progress(function(evt){
+          //     console.log('percent: ' +parseInt(100.0 * evt.loaded / evt.total));
+          // });
+Upload.upload({
+            url: 'course/16ss-55492/upload_in_shared_document',
+            data: {sourceDirectory:"/ss16/16ss-55492/collaboration/Lists/SharedDocuments", fileName: $scope.file.name, stream: file}
+          }).then(function (response) {
             $timeout(function () {
               file.result = response.data;
               console.log(response);
@@ -222,11 +232,6 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
                           .position('bottom')
                           .hideDelay(3000)
                );
-              console.log(response.data.item.filename);
-
-              var filePath = String(response.data.item.filename);
-              var res = filePath.split("/files/fileattachment/");
-              addFileNode(res[1], filePath);
               $scope.showProgressBar = false;
             });
           }, function (response) {
@@ -249,6 +254,5 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
           });
 
 }
-
 	
 });	
