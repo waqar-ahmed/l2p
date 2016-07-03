@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
+app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
