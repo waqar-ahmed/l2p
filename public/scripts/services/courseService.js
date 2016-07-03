@@ -25,7 +25,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
-	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since/";
+	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since_new/";
 
 	var URL__GET_ALL_SHARED_DOCS = "/all_shared_documents";
 

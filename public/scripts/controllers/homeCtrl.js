@@ -75,14 +75,15 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	$scope.dataLoaded = false;
     	courseService.getAllWhatsNew(mins)
     	.then(function(res){
-		if(res.Status == true){
-			console.log(res.dataset);
+        console.log(res);
 			$scope.dataLoaded = true;
-			$scope.allWhatsNew = res.dataset;
-			//bindData(res.dataset);
-		}
-		else{
-		}
+			$scope.allWhatsNew = res;
+      console.log(res);
+      for (var key in res) {
+      if (res.hasOwnProperty(key)) {
+          console.log(key + " = " + res[key]);
+      }
+}    
 	}, function(err){
 		console.log("Error occured : " + err);
 	});
@@ -90,7 +91,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 
 
-    //$scope.loadWhatsNew(1);
+    $scope.loadWhatsNew(1);
 
     $scope.updateList = function(lastday){
     	var day = 0;
