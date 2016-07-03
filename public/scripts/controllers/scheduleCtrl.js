@@ -53,8 +53,8 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
-			if(res.status == false){
-				alert(res.body);
+			if(res.Status == false){
+				alert(res.Body);
 				$location.path('/mycourses');
 			}
 			console.log("got all course events from schedule controller");
