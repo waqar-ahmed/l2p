@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window, fileReader) {
+app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, Upload, courseService, $mdDialog, $window, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
@@ -521,9 +521,30 @@ function parseLearningMaterials(y){
 
     var uploadSharedDocalert, uploadSharedDocDialog;
     $scope.uploadSharedDoc = function($event){
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.prompt()
+      .title('What would you name your dog?')
+      .textContent('Bowser is a common name.')
+      .placeholder('Dog name')
+      .ariaLabel('Dog name')
+      .initialValue('Buddy')
+      .targetEvent(ev)
+      .ok('Okay!')
+      .cancel('I\'m a cat person');
+
+
+
+
+
+return;
+
+
+
+
+
       uploadSharedDocDialog = $mdDialog;
       var parentEl = angular.element(document.querySelector('md-content'));
-   	 uploadSharedDocalert = uploadSharedDocDialog.alert({
+   	 $mdDialog.show({
    	   parent: parentEl,
       targetEvent: $event,
       template:
@@ -534,8 +555,11 @@ function parseLearningMaterials(y){
         '      <span flex></span>' +
         '    </div>' +
         '  </md-toolbar>' +
-        '  <md-dialog-content>'+
+        '  <md-dialog-content class="sticky-container">'+
         '    <br>'+
+        '    <div >'+
+        '  <md-progress-circular md-mode="indeterminate" style="position:absolute;top:20;left:45%;" ng-show="showFileProg"></md-progress-circular>' +
+        '    </div>'+
         '    <md-input-container>'+
         '        <label>Title</label>'+
         '        <input type="text" ng-model="bubbleName">'+
@@ -562,11 +586,11 @@ function parseLearningMaterials(y){
         controller: 'DialogController'
     });
     
-     $mdDialog
-      .show(uploadSharedDocalert)
-      .finally(function() {
-        uploadSharedDocalert = undefined;
-      });
+     // $mdDialog
+     //  .show(uploadSharedDocalert)
+     //  .finally(function() {
+     //    uploadSharedDocalert = undefined;
+     //  });
   }
   $scope.closeDialog = function() {
     uploadSharedDocDialog.hide();
@@ -574,16 +598,18 @@ function parseLearningMaterials(y){
 
 
     $scope.getFile = function () {
-    	$scope.dataLoaded = false;
         $scope.progress = 0;
+        $rootScope.$broadcast('loadingFile');
         fileReader.readAsDataUrl($scope.file, $scope)
                       .then(function(result) {
                         console.log($scope.file);
                           //$scope.imageSrc = result;
-                          console.log(result);
+                          //console.log(result);
                           $scope.selectedFile = result.split(",")[1];
-                          console.log("next one");
-                          $scope.dataLoaded = true;
+                          // console.log("next one");
+                           courseService.setFile($scope.selectedFile);
+                          // console.log($scope.selectedFile);
+                          $rootScope.$broadcast('fileLoaded');
         });
     };
 

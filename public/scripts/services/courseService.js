@@ -393,4 +393,13 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
       });
 	}
 
+	var fileToUpload = null;
+	this.setFile = function(stream){
+		fileToUpload = stream;
+	}
+
+	this.getFile = function(){
+		return fileToUpload;
+	}
+
 }]);
