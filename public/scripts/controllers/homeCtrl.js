@@ -91,7 +91,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 
 
-    //$scope.loadWhatsNew(1);
+    $scope.loadWhatsNew(1);
 
     $scope.updateList = function(lastday){
     	var day = 0;
