@@ -26,7 +26,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
     /*
      * Semester
      */
-    Route::get('/semesters', 'L2pController@viewAllSemesters');
+    Route::get('/semesters', 'SemesterController@viewAllSemesters');
     Route::get('/current_semester', 'CourseController@viewAllCourseInfoByCurrentSemester');
     Route::get('/course/semester/{sem}', 'CourseController@viewAllCourseInfoBySemester');
     
@@ -42,6 +42,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
      */
     Route::get('whats_all_new_since/{pastMinutes}', 'WhatsNewController@whatsAllNewSince');  
     Route::get('whats_all_new_since_for_semester/{sem}/{pastMinutes}', 'WhatsNewController@whatsAllNewSinceForSemester');  
+    Route::get('whats_all_new_since_new/{pastMinutes}', 'WhatsNewController@whatsNewLearningMaterial');  
 
     Route::group(['prefix' => '/course/{cid}'], function () {        
         
@@ -134,12 +135,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
         /*
          * Courses
          */        
-        Route::get('course_info', 'CourseController@viewCourseInfo');                                
-        
-        /*
-         * Learning objects
-         */
-        Route::get('all_learning_objects', 'CourseController@viewAllLearningObjects');
+        Route::get('course_info', 'CourseController@viewCourseInfo');                                                
         
         /*
          * Literatures
@@ -175,14 +171,16 @@ Route::group(['middleware'=>'l2pApi'], function() {
          * Others
          */
         Route::get('view_user_role', 'L2pController@viewUserRole');
-        Route::get('active_features', 'CourseController@viewActiveFeatures');
-        Route::get('all_counts', 'CourseController@viewAllCounts');                
-        Route::get('available_groups_in_group_workspace', 'CourseController@viewAvailableGroupsInGroupWorkspace');                              
-        Route::get('exam_results', 'CourseController@viewExamResults');        
-        Route::get('exam_results_statistics', 'CourseController@viewExamResultsStatistics');        
-        Route::get('grade_book', 'CourseController@viewGradeBook');                                 
+        Route::get('active_features', 'L2pController@viewActiveFeatures');
+        Route::get('all_counts', 'L2pController@viewAllCounts');    
+        
+        Route::get('available_groups_in_group_workspace', 'L2pController@viewAvailableGroupsInGroupWorkspace');                              
+        Route::get('my_group_workspace', 'L2pController@viewMyGroupWorkspace');                              
+        Route::get('exam_results', 'L2pController@viewExamResults');        
+        Route::get('exam_results_statistics', 'L2pController@viewExamResultsStatistics');        
+        Route::get('grade_book', 'L2pController@viewGradeBook');                                 
         Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');                        
-        Route::get('createFolder/{moduleNumber}/{desiredFolderName}/{sourceDirectory}', 'L2pController@createFolder');        
+        Route::post('createFolder', 'L2pController@createFolder');        
     }); 
     
     /*

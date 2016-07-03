@@ -46,7 +46,8 @@
                 <div>
                     <textarea class="result" hidden="true" cols="70" rows="20"></textarea>
                 </div>        
-                <div id="errorDisplayDiv">            
+                <div id="errorDisplayDiv">  
+                    Create folder is not working properly.
                 </div>
             </div>
             <div id="routes" style="width: 30%; display: inline-block; vertical-align:top;">                
@@ -620,6 +621,14 @@
                     pastMinutes: "1440"
                 }                            
             },
+            whats_all_new_since_new: {
+                uri: "whats_all_new_since_new/{pastMinutes}",            
+                method: "get",
+                uri_params :                
+                {                                   
+                    pastMinutes: "1440"
+                }                            
+            },
             whats_all_new_since_for_semester: {
                 uri: "whats_all_new_since_for_semester/{sem}/{pastMinutes}",            
                 method: "get",
@@ -1005,7 +1014,19 @@
                 {
                     cid: "16ss-55492",                                
                 },
-            }
+            },
+            create_folder: {
+                uri: "/course/{cid}/createFolder",
+                method: "post",
+                uri_params: {
+                    cid: "16ss-55492",                    
+                },                
+                req_params: {
+                    moduleNumber: 1,
+                    desiredFolderName: "New folder",                   
+                    sourceDirectory: "",
+                }
+            },
             
         }
     }
