@@ -24,6 +24,10 @@ class DiscussionController extends L2pController {
         return $this->sendRequest(self::GET, 'viewAllDiscussionItems', ['cid'=>$cid]);
     }
 
+    public function viewDiscussion($cid, $itemId) {
+        return $this->sendRequest(self::GET, 'viewDiscussionItem', ['cid'=>$cid, 'itemid'=>$itemId]);
+    }
+
     public function viewAllDiscussionRootItems($cid) {
         return $this->sendRequest(self::GET, 'viewAllDiscussionRootItems', ['cid'=>$cid]);
     }

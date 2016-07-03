@@ -28,7 +28,7 @@ class AssignmentController extends L2pController {
     }
     
     public function addAssignment(Request $request, $cid) {        
-        return $this->addToModule($request, 'addAnnouncement', ['cid'=>$cid], $this->validations);
+        return $this->addToModule($request, 'addAssignment', ['cid'=>$cid], $this->validations);
     }
     
     public function deleteAssignment($cid, $itemId) {        
@@ -36,18 +36,24 @@ class AssignmentController extends L2pController {
     }
     
     public function provideAssignmentSolution(Request $request, $cid, $assignmentId, $gwsNameAlias) {
-        $validations = [
-            'comment' => 'required|string', 
-            'assignmentid' => 'required|integer',
-            'gws_name_alias' => 'required|string'
+        $valid = [
+            'comment' => 'required|string',             
         ];
-        return $this->addToModule($request, 'provideAssignmentSolution', ['cid'=>$cid, 'assignmentid'=>$assignmentId, 'gws_name_alias'=>$gwsNameAlias], $validations);        
+        return $this->addToModule($request, 'provideAssignmentSolution', ['cid'=>$cid, 'assignmentid'=>$assignmentId, 'gws_name_alias'=>$gwsNameAlias], $valid);        
     }
     
     public function deleteAssignmentSolution($cid, $itemId) {
         return $this->sendRequest(self::GET, 'deleteAssignmentSolution', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    public function uploadInAssignments(Request $request, $cid, $solutionDir) {        
+    public function uploadInAssignment(Request $request, $cid) {        
+        $valid = [
+            'fileName' => 'required|string',
+            'stream' => 'required|string',
+        ];
+        if(!$request->has('solutionDirectory') && is_string($request->input('solutionDirectory')) ) {
+            return $this->jsonResponse(self::STATUS_FALSE, 'solutionDirectory field is required and must be string.');            
+        }
+        return $this->addToModule($request, 'uploadInAssignment', ['cid'=>$cid, 'solutionDirectory'=>$request->input('solutionDirectory')], $valid);        
     }
 }

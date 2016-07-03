@@ -38,8 +38,8 @@ class CalendarController extends L2pController {
         return $this->sendRequest(self::GET, 'deleteCourseEvent', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    public function updateCourseEvent(Request $request, $cid) {
-        return $this->addToModule($request, 'updateCourseEvent', ['cid'=>$cid], $this->validations);
+    public function updateCourseEvent(Request $request, $cid, $itemId) {
+        return $this->addToModule($request, 'updateCourseEvent', ['cid'=>$cid, 'itemid'=>$itemId], $this->validations);
     }
     
 }

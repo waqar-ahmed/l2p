@@ -1,6 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout) {
-
+app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
@@ -25,6 +24,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
+	}
+
+	$scope.onTabChanges = function($index){
+		console.log("Tab index : " + $index);
 	}
 
 	console.log("course ID: " + $stateParams.cid);
@@ -88,15 +91,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	});
 
 	/* get Learning Materials by cid*/
-	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
+	courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
 		console.log(res.dataSet);
-		parseLearningMaterials(res.dataSet);
+		$scope.roleList = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
 		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
 	});
+
+
+	loadAllSharedDocs();
 
 
 	/* get Assignments by cid*/
@@ -109,6 +116,19 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		console.log("Error occured");
 	});
 
+	function loadAllSharedDocs(){
+		/* get Shared Docs by cid*/
+	courseService.getAllSharedDocs($stateParams.cid)
+	.then(function(res){
+		console.log("get all shared Docs");
+		console.log(res.dataSet);
+		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
+		//console.log(buildHierarchy(items));
+	}, function(){
+		console.log("Error occured");
+	});
+	}
 
 	var iconClassMap = {
 		txt: 'icon-file-text',
@@ -719,10 +739,10 @@ function parseLearningMaterials(y){
 	var nested = flatToNested.convert(y);
 	console.log(nested);
 
-	$scope.roleList = nested;
-	$scope.dataLoaded = true;
+	//$scope.roleList = nested;
+	//$scope.dataLoaded = true;
 
-	return;
+	return nested;
 }
 
 
@@ -776,6 +796,99 @@ function parseLearningMaterials(y){
 
     	window.open(SERVER_URL + url, '_blank');
     }
+
+
+    var uploadSharedDocalert, uploadSharedDocDialog;
+    $scope.uploadSharedDoc = function($event){
+    // Appending dialog to document.body to cover sidenav in docs app
+      uploadSharedDocDialog = $mdDialog;
+      var parentEl = angular.element(document.querySelector('md-content'));
+   	 $mdDialog.show({
+   	   parent: parentEl,
+      targetEvent: $event,
+      template:
+        '<md-dialog aria-label="List dialog">' +
+        '  <md-toolbar>' +
+        '     <div class="md-toolbar-tools">' +
+        '      <h2>Upload File</h2>' +
+        '      <span flex></span>' +
+        '    </div>' +
+        '  </md-toolbar>' +
+        '  <md-dialog-content class="sticky-container" style="padding:5px;">'+
+        '    <br>'+
+        '    <md-input-container style="margin-bottom:0px;">'+
+        '        <label>Selected File</label>'+
+        '        <input type="text" ng-model="fileName" ng-disabled=true>'+
+        '    </md-input-container>'+
+        '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
+        '      Browse' +
+        '    </md-button>' +
+        '  <md-dialog-actions>' +
+        '    <md-button ng-click="uploadFile()" class="md-primary">' +
+        '      Upload' +
+        '    </md-button>' +
+        '    <md-button ng-click="closeDialog()" class="md-primary">' +
+        '      Cancel' +
+        '    </md-button>' +
+        '  </md-dialog-actions>' +
+        '</md-dialog>',
+        locals: {
+          items: $scope.items,
+           cid: $stateParams.cid,
+          closeDialog: $scope.closeDialog
+        },
+        bindToController: true,
+        controllerAs: 'ctrl',
+        controller: 'DialogController'
+    });
+
+     // $mdDialog
+     //  .show(uploadSharedDocalert)
+     //  .finally(function() {
+     //    uploadSharedDocalert = undefined;
+     //  });
+  }
+  $scope.closeDialog = function() {
+    uploadSharedDocDialog.hide();
+  };
+
+
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        $rootScope.$broadcast('loadingFile');
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function(result) {
+                        console.log($scope.file);
+                          //$scope.imageSrc = result;
+                          //console.log(result);
+                          $scope.selectedFile = result.split(",")[1];
+                          // console.log("next one");
+                           courseService.setFile($scope.file.name, $scope.selectedFile);
+                          // console.log($scope.selectedFile);
+                          $rootScope.$broadcast('fileLoaded');
+        });
+    };
+
+
+
+  $scope.$on('showProg', function(event, args) {
+  	console.log("setting to true");
+	$scope.dataLoaded = false;
+    // do what you want to do
+});
+
+
+  $scope.$on('hideProg', function(event, args) {
+	$scope.dataLoaded = true;
+    // do what you want to do
+});
+
+    $scope.$on('loadShareDocs', function(event, args) {
+	loadAllSharedDocs();
+    // do what you want to do
+});
+
+
 });
 
 

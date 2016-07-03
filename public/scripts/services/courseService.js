@@ -35,6 +35,8 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since";
 
+	var URL__GET_ALL_SHARED_DOCS = "/all_shared_documents";
+
 	var authenticated = true;
 
 	// template
@@ -181,6 +183,20 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_LEARNING_MATERIALS)
 		.success(function(res){
 			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
+	this.getAllSharedDocs = function(cid){
+		var defer = $q.defer();
+		$http.get(URL_GET_COURSE + "/" + cid + URL__GET_ALL_SHARED_DOCS)
+		.success(function(res){
 			defer.resolve(res);
 		})
 		.error(function(err, status){
@@ -490,6 +506,21 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
         console.log(file.progress);
         $scope.progressBarValue = file.progress;
       });
+	}
+
+	var fileToUpload = null;
+	var fileName = null;
+	this.setFile = function(name, stream){
+		fileName = name;
+		fileToUpload = stream;
+	}
+
+	this.getFile = function(){
+		return fileToUpload;
+	}
+
+	this.getFileName = function(){
+		return fileName;
 	}
 
 }]);

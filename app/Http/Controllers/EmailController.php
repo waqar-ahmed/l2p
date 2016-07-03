@@ -68,9 +68,14 @@ class EmailController extends L2pController {
     }
     
     public function viewEmail($cid, $itemId) {        
-        return $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$cid, 'itemid'=>$itemId]);
+        return $this->sendRequest(self::GET, 'viewEmail', ['cid'=>$cid, 'itemid'=>$itemId]);
     }
     
-    public function uploadInAnnouncement(Request $request, $cid) {        
+    public function uploadInEmail(Request $request, $cid) {        
+        $valid = [
+            'fileName' => 'required|string',
+            'stream' => 'required|string',
+        ];        
+        return $this->addToModule($request, 'uploadInEmail', ['cid'=>$cid], $valid);        
     }    
 }
