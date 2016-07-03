@@ -35,6 +35,8 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since";
 
+	var URL__GET_ALL_SHARED_DOCS = "/all_shared_documents";
+
 	var authenticated = true;
 
 	// template
@@ -191,6 +193,20 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	this.getAllSharedDocs = function(cid){
+		var defer = $q.defer();
+		$http.get(URL_GET_COURSE + "/" + cid + URL__GET_ALL_SHARED_DOCS)
+		.success(function(res){
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	}
+
 	this.getAllAssignments = function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ASSIGNMENTS)
@@ -225,7 +241,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     this.viewUserRole = function(cid){
         var defer = $q.defer();
 
-		$http.get(URL_VIEW_USER_ROLE+ "/"+ cid)
+		$http.get(URL_GET_COURSE + "/" + cid+ "/"+ URL_VIEW_USER_ROLE)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);
@@ -407,7 +423,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	this.deleteDiscussion = function(cid, selfId){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_DELETE_DISCUSSION)
+		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_DELETE_DISCUSSION+ "/"+selfId)
 		.success(function(res){
 			//console.log(res);
 			defer.resolve(res);
@@ -490,6 +506,21 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
         console.log(file.progress);
         $scope.progressBarValue = file.progress;
       });
+	}
+
+	var fileToUpload = null;
+	var fileName = null;
+	this.setFile = function(name, stream){
+		fileName = name;
+		fileToUpload = stream;
+	}
+
+	this.getFile = function(){
+		return fileToUpload;
+	}
+
+	this.getFileName = function(){
+		return fileName;
 	}
 
 }]);

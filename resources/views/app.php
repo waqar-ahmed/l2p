@@ -1,17 +1,18 @@
 <html lang="en" >
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Angular Material style sheet -->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 		<!-- Link for fullCalendar CSS  -->
 		<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
 
         <!-- Angular Material requires Angular.js Libraries -->
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+	    <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+        <script src="bower_components/angular-material/angular-material.min.js"></script>
+        <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+
+        <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
 
@@ -27,10 +28,6 @@
 
         <!-- link for CSS when using the tree as an attribute -->
         <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
-
-        <!-- Angular Material Library -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
         <!-- Angular Routing Library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
@@ -53,6 +50,7 @@
         <!-- // <script src="bower_components/flat-to-nested-js/index.js"></script> -->
         <script src="scripts/modules/flat-nested.js"></script>
 
+
         <!-- My Application script files  -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/AppCtrl.js"></script>
@@ -62,8 +60,9 @@
         <script src="scripts/controllers/singlecourseCtrl.js"></script>
         <script src="scripts/controllers/scheduleCtrl.js"></script>
         <script src="scripts/controllers/emailsCtrl.js"></script>
+        <script src="scripts/controllers/DialogController.js"></script>
 
-
+        <script src="scripts/modules/upload.js"></script>
 
 
         <!-- My Application module files  -->
@@ -115,6 +114,7 @@
                         </div>
                     </div>
                 </md-toolbar>
+
                 <md-list>
 					<md-item ng-repeat="item in menu">
 						<md-divider ng-if="$last"></md-divider>
@@ -129,27 +129,10 @@
                             </md-item-content>
                         </a>
 					</md-item>
-<!--
-                    <md-divider></md-divider>
-                    <md-subheader>Management</md-subheader>
-                    <md-item ng-repeat="item in admin">
-                        <a>
-                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                                <div class="inset">
-                                    <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
-                                </div>
-                                <div class="inset"ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
-                                </div>
-                            </md-item-content>
-                        </a>
-					</md-item>
---!>
                 </md-list>
             </md-sidenav>
+
             <div layout="column" class="relative" layout-fill role="main">
-                <!--       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
-                        <ng-md-icon icon="add"></ng-md-icon>
-                      </md-button> -->
                 <md-toolbar>
                     <div class="md-toolbar-tools">
                         <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">

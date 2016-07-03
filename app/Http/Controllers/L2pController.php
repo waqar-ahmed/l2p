@@ -80,111 +80,56 @@ class L2pController extends Controller {
         return $this->sendRequest(self::GET, 'downloadFile', ['cid'=>$cid, 'fileName'=>$fileName, 'downloadUrl'=>$downloadUrl]);
     }
 
-    public function createFolder($cid, $moduleNumber, $desiredFolderName, $sourceDirectory) {
-        return $this->sendRequest(self::GET, 'createFolder', ['cid'=>$cid,
-            'moduleNumber'=>$moduleNumber,
-            'desiredFolderName'=>$desiredFolderName,
-            'sourceDirectory'=>$sourceDirectory]);
-    }
-
-    public function viewAllSemesters() {
-        $semesters = array();
-        $allCourses = $this->sendRequest(self::GET, 'viewAllCourseInfo');
-        if($allCourses['Status']) {
-            foreach($allCourses['dataSet'] as $course) {
-                if(!in_array($course['semester'], $semesters)) {
-                    array_push($semesters, $course['semester']);
-                }
-            }
+    public function createFolder(Request $request, $cid) {
+        $valid = [
+            'moduleNumber'=>'required|integer',
+            'desiredFolderName'=>'required|string',
+            'sourceDirectory'=>'string'
+        ];
+        $validator = Validator::make($request->all(), $valid);
+        if ($validator->fails()) {
+            return $this->jsonResponse(self::STATUS_FALSE, $validator->errors()->all());
         }
-        $arr = array();
-        $sortedSemesters = $this->sortSemesters($semesters);
-        array_walk($sortedSemesters, function ($key, $semester) use (&$arr) {
-            return $arr[] = array('sem'=>$key,'name'=>$semester);
-        });
-        return $this->jsonResponse(self::STATUS_TRUE, $arr);
-    }
-
-    public function _sortSemesters(Request $request) {
-        return $this->sortSemesters(array_map('trim', explode(',', $request->input('semesters'))));
+        $requestParams = [
+            'cid'=>$cid,
+            'moduleNumber'=>$request->input('moduleNumber'),
+            'desiredFolderName'=>$request->input('desiredFolderName'),
+        ];
+        if($request->has('sourceDirectory')) {
+            $requestParams += ['sourceDirectory'=> $request->input('sourceDirectory')];
+        }
+        return $this->sendRequest(self::GET, 'createFolder', $requestParams);
     }
 
     public function _viewTesterPage(){
         return view('tester');
     }
 
-    private function sortSemesters($semesters) {
-        if(is_null($semesters)) {
-            return nul;
-        }
-        $sortedSemesters = array();
-        $this->sort($semesters, function ($val1, $val2) {
-            if($val1 === $val2) {
-                return 0;
-            }
-            if((int)substr($val1, 2) > (int)substr($val2, 2)) {
-               return 1;
-            } else if((int)substr($val1, 2) < (int)substr($val2, 2)) {
-                return -1;
-            } else {
-                if('w' === substr($val1, 0, 1)) {
-                    return 1;
-                } else if('s' === substr($val1, 0, 1)) {
-                    return -1;
-                }
-            }
-        });
-        foreach($semesters as $sem) {
-            $fullText = $sem;
-            switch (substr($sem, 0, 2)) {
-                case 'ss':
-                    $fullText = 'Summer semester ';
-                    break;
-                case 'ws':
-                    $fullText = 'Winter semester ';
-                    break;
-            }
-            if ($fullText != $sem) {
-                $fullText .=  (2000 + (int)(substr($sem, 2)));
-            }
-            $sortedSemesters += array($fullText=>$sem);
-        }
-        return $sortedSemesters;
+    public function viewAllCounts($cid) {
+        return $this->sendRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);
     }
 
-    protected function sort(&$array, $compareFunc, $order='asc') {
-        if(1 >= count($array)) {
-            return $array;
-        }
-        foreach($array as $ind1=>$val1) {
-            foreach ($array as $ind2=>$val2) {
-                switch ($compareFunc($val1, $val2)){
-                    case 1:
-                        if('asc' === $order) {
-                            $this->swap($ind1, $ind2, $array);
-                        }
-                        break;
-                    case -1:
-                        if('des'=== $order) {
-                            $this->swap($ind1, $ind2, $array);
-                        }
-                        break;
-                    case 0:
-                        break;
-                }
-            }
-        }
-        return $array;
+    public function viewActiveFeatures($cid) {
+        return $this->sendRequest(self::GET, 'viewActiveFeatures', ['cid'=>$cid]);
     }
 
-    protected function swap($ind1, $ind2, &$array) {
-        if(0 >= count($array) ||  $ind1 < 0 || $ind2 < 0 || $ind1 === $ind2
-                || count($array) <= $ind1 || count($array) <= $ind2) {
-            return $array; //FIXME: or throw exception
-        }
-        $temp = $array[$ind1];
-        $array[$ind1] = $array[$ind2];
-        $array[$ind2] = $temp;
+    public function viewAvailableGroupsInGroupWorkspace($cid) {
+        return $this->sendRequest(self::GET, 'viewAvailableGroupsInGroupWorkspace', ['cid'=>$cid]);
     }
 
+    public function viewExamResults($cid) {
+        return $this->sendRequest(self::GET, 'viewExamResults', ['cid'=>$cid]);
+    }
+
+    public function viewExamResultsStatistics($cid) {
+        return $this->sendRequest(self::GET, 'viewExamResultsStatistics', ['cid'=>$cid]);
+    }
+
+    public function viewGradeBook($cid) {
+        return $this->sendRequest(self::GET, 'viewGradeBook', ['cid'=>$cid]);
+    }
+
+    public function viewMyGroupWorkspace($cid) {
+        return $this->sendRequest(self::GET, 'viewMyGroupWorkspace', ['cid'=>$cid]);
+    }
 }

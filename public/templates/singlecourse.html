@@ -1,29 +1,30 @@
-<!-- <md-subheader class="md-no-sticky"><b>Course Name</b></md-subheader>
- -->
-
 
  <div ng-cloak>
 
 	<div class="fabbutton" ng-show="WaitForToast">
 
 
-		<md-button ng-class="{visible:selectedTab==2}" class="md-fab md-primary md-fab-bottom-right" ng-click="">
+		<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="addDiscussion()">
 	   		<ng-md-icon icon="note_add"></ng-md-icon>
 	   	</md-button>
 
-	   	<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
+		<md-button ng-class="{visible:selectedTab==1}" class="md-fab md-primary md-fab-bottom-right" ng-click="uploadSharedDoc($event)">
+		   <ng-md-icon icon="note_add"></ng-md-icon>
+		</md-button>
+
+	   	<md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	  		<ng-md-icon icon="note_add"></ng-md-icon>
 	   	</md-button>
 
-	   	<md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewAnnoun(undefined,'creat')" ng-show="authCUD">
+	   	<md-button ng-class="{visible:selectedTab==5}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewAnnoun(undefined,'creat')" ng-show="authCUD">
 	   		<ng-md-icon icon="note_add"></ng-md-icon>
 	   	</md-button>
 
   	</div>
 
 	<md-content class="singleCourseTabs">
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass" >
-			<md-tab label="Learning Material" >
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass">
+			<md-tab label="Learning Material" md-on-select="onTabChanges(0)">
 				<md-content class="md-padding">
 				<!-- <div class="loadingicon" ng-hide="dataLoaded">
 					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
@@ -48,8 +49,32 @@
 				</md-content>
 			</md-tab>
 
+			<md-tab label="Shared Documents" md-on-select="onTabChanges(2)">
+				<md-content class="md-padding">
+				<!-- <div class="loadingicon" ng-hide="dataLoaded">
+					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+				</div> -->
+				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
+					<h3>Shared Documents</h3>
+					<div class="row">
+						<div class="span6 main_height">
+							<div class="tree">
 
-			<md-tab label="Assignments">
+								<treecontrol class="tree-classic"
+								   tree-model="allSharedDocs"
+								   options="options"
+								   on-selection="showSelected(node)"
+								   selected-node="node1">
+								   {{node.name}}
+								</treecontrol>
+
+							</div>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+
+			<md-tab label="Assignments" md-on-select="onTabChanges(2)">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 
@@ -76,17 +101,7 @@
 
         				<div ng-class="{dataContent:true, activeContent:data.expanded}">
 
-              			 	  	<md-button class="md-icon-button" ng-click="showConfirmAnnoucnment($event,announcement)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
-	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
-	         				 	</md-button>
-
-	         				 	<md-button class="md-icon-button" ng-click="viewAnnoun(announcement,'edit')" ng-show="authCUD" style="float:right;margin-right:-5px;margin-top:-20px;">
-	            				<ng-md-icon icon="edit" style="color:red !important;"></ng-md-icon>
-	         				 	</md-button>
-
-              			 	   <div class="clear" ng-show="authCUD"></div>
-
-              			 	  <div  style="margin-right:10px !important;">
+              			 	  <div style="margin-right:10px !important;">
               			 	  <p style="margin-bottom:5px;" >
 
               			 	  	<b>{{assignment.title}}</b></p>
@@ -151,53 +166,10 @@
 				</md-content>
 			</md-tab>
 
-			<!-- <md-tab label="Assignments">
-				<md-content class="md-padding">
-					<div class="singlecourse main_height">
-						<ul>
-							<li ng-repeat="assignment in assignments">
-								<img src="images/pdf_icon.png">
-								<h3>{{assignment.title}}</h3>
-								<p>Due Date: {{assignment.dueDate * 1000 | date:'dd-MM-yyyy, HH:mm'}} </p>
-								<p>Total Points: {{assignment.totalPoint}}</p>
-								<h4><a ng-click="showDetails = ! showDetails">Assignment Documents <span>
-									<i class="fa fa-chevron-down" aria-hidden="true" ng-hide="showDetails"></i>
-									<i class="fa fa-chevron-up" aria-hidden="true" ng-hide="!showDetails"></i>
-								 </span></a></h4>
 
-						         <div class="bubble" ng-show="showDetails">
-						            <ul>
-						            	<li ng-repeat="doc in assignment.assignmentDocuments" ng-click="downloadAssignment(doc)">
-						            		<h3>{{doc.fileName}}</h3>
-						            	</li>
-						            </ul>
-									<ul>
-						            	<li ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)">
-						            		<h3>Solution: {{doc.fileName}}</h3>
-						            	</li>
-						            </ul>
-									<ul>
-						            	<li ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)">
-						            		<h3>Sample Solution: {{doc.fileName}}</h3>
-						            	</li>
-						            </ul>
-									<ul>
-						            	<li ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)">
-						            		<h3>Correction: {{doc.fileName}}</h3>
-						            	</li>
-						            </ul>
-						         </div>
-							</li>
-						</ul>
-					</div>
-				</md-content>
-			</md-tab> -->
-
-
-
-			<md-tab label="Discussion Forum">
+			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
-				<div ng-repeat="discussion in discussions" ng-init="discussion.showReplies=false; outerindex= $index" ng-show="discussLoaded">
+				<div ng-repeat="discussion in discussions" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
           					<li  class="col-s-4" ng-class="{'reset-s': $index%3==0 }" >
@@ -206,27 +178,26 @@
             						<div layout="row" layout-align="end center">
             							<p class="discussion_question" ng-show="discussion.showReplies" ng-class="{'dynamic_height':discussion.byMe}" ng-bind-html="discussion.body"></p>
             							<span flex></span>
-            							<md-button class="md-icon-button" ng-click="; $event.stopPropagation()" ng-show="discussion.showReplies&&discussion.byMe" style="margin-right:-8px;">
+            							<md-button class="md-icon-button" ng-click="showConfirmDiscussion(event,discussion.selfId,outerindex);$event.stopPropagation()" ng-show="discussion.showReplies&&discussion.byMe" style="margin-right:-8px;">
 		            						<ng-md-icon icon="delete"></ng-md-icon>
 		         				 		</md-button>
             						</div>
-            						</p>
             						<p class="fa fa-comment" style="margin-top: 6px;"> {{discussion.counts}}</p>
-            						<p class="discussion_username" style="margin-top: 6px;">{{discussion.from}} {{discussion.created*1000| date:'mediumDate'}}</p>
+            						<p class="discussion_username" style="margin-top: 6px;">{{discussion.from}} {{discussion.created*1000|date: 'mediumDate'}}</p>
             					</div>
             				</li>
        				</ul>
 
        				<div ng-show="discussion.showReplies" class="post-grid" style="background:#f1f3f4;">
 						<div class="replybox_div">
-							<textarea rows="3" name="reply" placeholder="Add you reply.."></textarea>
+							<textarea rows="3" name="reply" placeholder="Add you reply.." ng-model="discussion.ReplyToBody">{{discussion.ReplyToBody}}</textarea>
 							<div class="reply_button" layout="row" layout-align="end center">
 								<span flex></span>
-						 		<md-button class="md-raised md-primary">Reply</md-button>
+						 		<md-button class="md-raised md-primary" ng-click="addDiscussionReply(discussion.selfId,discussion.ReplyToBody)">Reply</md-button>
 						 	</div>
 						</div>
 
-						<div class="reply_from_users" ng-init="reply.showReplies=false;" ng-repeat="reply in discussions[$index].children">
+						<div class="reply_from_users" ng-init="reply.showReplies=false; innerindex=$index" ng-repeat="reply in discussions[outerindex].children">
 					  		<div layout="row">
 					  			<h4 class="reply_user_name">{{reply.from}}</h4>
 					  			<span flex></span>
@@ -236,16 +207,16 @@
 						  	<p class="reply_body" ng-bind-html="reply.body"></p>
 						  	<div layout="row">
 							  	<p class="reply_date" flex="30" flex-sm="40" flex-gt-sm="45" ng-click="reply.showReplies=!reply.showReplies">Reply</p>
-							  	<p class="reply_date" flex ng-click="" ng-show="reply.byMe">Delete</p>
+							  	<p class="reply_date" flex ng-click="showConfirmDiscussionReply(ev,reply.selfId,outerindex,innerindex)" ng-show="reply.byMe">Delete</p>
 							  	<span flex></span>
-							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000| date:'mediumDate'}}</p>
+							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "MMM dd 'at' h:mm"}}</p>
 							</div>
 
 							<div class="replybox_div" ng-show="reply.showReplies">
-								<textarea rows="3" name="reply" placeholder="Add you reply.."></textarea>
+								<textarea rows="3" name="reply" placeholder="Add you reply.." ng-model="reply.replyToBody">{{reply.replyToBody}}</textarea>
 								<div class="reply_button" layout="row" layout-align="end center">
 									<span flex></span>
-						 			<md-button class="md-raised md-primary">Reply</md-button>
+						 			<md-button class="md-raised md-primary" ng-click="addDiscussionReply(reply.selfId,reply.replyToBody)">Reply</md-button>
 						 		</div>
 							</div>
 							<md-divider ng-if="!$last" style="margin-top:4px;"></md-divider>
@@ -262,7 +233,7 @@
 			</md-tab>
 
 
-			<md-tab label="Emails">
+			<md-tab label="Emails" md-on-select="onTabChanges(4)">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<div class="md-accordion customwidth" ng-repeat="email in emails|orderBy:'created':true" ng-show="emailsLoaded" ng-init="outerIndex = $index">
@@ -303,91 +274,10 @@
        				 </div>
     			</div>
 
-			<!-- <md-tab label="Emails">
-				<md-content class="md-padding">
-					<div class="singlecourse  main_height">
-						<ul ng-repeat="email in emails" ng-show="emailsLoaded">
-=======
-						<ul ng-repeat="email in emails|orderBy:'created':true" ng-show="emailsLoaded" ng-init="email.swipe=false;">
->>>>>>> f37c98cf8549798fcc403b8cecbdf1fdc6dab7f5
-							<li>
-								<div layout="row" layout-align="begin center" ng-click="viewEmail(email,'read')" md-swipe-left="email.swipe=true;" md-swipe-right="email.swipe=false;">
-									<div flex="grow">
-										<h3>{{email.subject}}</h3>
-										<p><b>Recipient:</b> {{email.recipients}}</p>
-										<p><b>Created by:</b> {{email.from}}</p>
-										<p><b>Created Date:</b> {{email.created*1000| date:'mediumDate'}}</p>
-									</div>
-									<span flex></span>
-									<md-button class="md-icon-button" ng-click="deleteEmail(email); $event.stopPropagation()" ng-show="authCUD&&email.swipe">
-	            					<ng-md-icon icon="delete"></ng-md-icon>
-	         				 		</md-button>
-	         				 	</div>
-							</li>
-						</ul>
-					  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="emailsLoaded" class="loadingicon">
-       			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        				</div>
-					</div> -->
-<!-- 					<div class="main_height" style="margin-top:-10;">
-							<div class="md-accordion customwidth" ng-repeat="email in emails">
-    							<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
-
-        							<div class="md-toolbar-tools customcolor_email" >
-
-                					<div id="wrapper">
-    								<div id="inner1"> {{email.subject}}</div>
-   									<div id="inner2"> {{email.created*1000| date:'medium'}}</div>
-
-									</div>
-
-            							<span flex=""></span>
-            							<span ng-class="{expandCollapse:true, active:data.expanded}"></span>
-        							</div>
-    							</md-toolbar>
-    						<div ng-class="{dataContent:true, activeContent:data.expanded}" >
-       						 	<div style="margin-right:40px !important;">
-
-       						 		<b>{{email.subject}}</b>
-       						 		<p class="email_body">{{email.body}}</p>
-       						 		<p><b>From: </b> {{email.from}}</p>
-
-
-       							 </div>
-       						 </div>
-						</div>
-
-					</div> -->
-
 				</md-content>
 			</md-tab>
 
-			<<!-- md-tab label="Announcements">
-			<md-content class="md-padding">
-					<div class="singlecourse  main_height">
-						<ul ng-repeat="announcement in announcements|orderBy:'created':true" ng-show="announcementsLoaded" ng-init="announcement.swipe=false">
-							<li>
-								<div layout="row" layout-align="begin center" ng-click="authCUD ? viewAnnoun(announcement,'edit') : viewAnnoun(announcement,'read')" md-swipe-left="announcement.swipe=true;" md-swipe-right="announcement.swipe=false;">
-									<div flex="grow">
-										<h3>{{announcement.title}}</h3>
-										<p><b>expire date:</b> {{(announcement.expireTime==0) ? '' : announcement.expireTime*1000| date:'mediumDate'}}</p>
-										<p><b>Created Date:</b> {{announcement.created*1000| date:'mediumDate'}}</p>
-									</div>
-									<span flex></span>
-									<md-button class="md-icon-button" ng-click="deleteAnnoun(announcement); $event.stopPropagation()" ng-show="authCUD&&announcement.swipe">
-	            					<ng-md-icon icon="delete"></ng-md-icon>
-	         				 		</md-button>
-	         				 	</div>
-							</li>
-						</ul>
-					  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="announcementsLoaded" class="loadingicon">
-       			 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        				</div>
-					</div>
-				</md-content>
-			</md-tab> -->
-
-			<md-tab label="Announcements">
+			<md-tab label="Announcements" md-on-select="onTabChanges(5)">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<div class="md-accordion customwidth" ng-repeat="announcement in announcements|orderBy:'created':true" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
@@ -455,9 +345,11 @@
 			</md-tab>
 		</md-tabs>
 	</md-content>
+</div>
 
 	 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
-</div>
+
+
 
