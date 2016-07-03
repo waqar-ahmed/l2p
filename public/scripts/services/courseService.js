@@ -241,7 +241,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
     this.viewUserRole = function(cid){
         var defer = $q.defer();
 
-		$http.get(URL_VIEW_USER_ROLE+ "/"+ cid)
+		$http.get(URL_GET_COURSE + "/" + cid+ "/"+ URL_VIEW_USER_ROLE)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);

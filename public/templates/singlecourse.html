@@ -4,11 +4,11 @@
 	<div class="fabbutton" ng-show="WaitForToast">
 
 
-		<md-button ng-class="{visible:selectedTab==2}" class="md-fab md-primary md-fab-bottom-right" ng-click="addDiscussion()">
+		<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="addDiscussion()">
 	   		<ng-md-icon icon="note_add"></ng-md-icon>
 	   	</md-button>
 
-		<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="uploadSharedDoc($event)">
+		<md-button ng-class="{visible:selectedTab==1}" class="md-fab md-primary md-fab-bottom-right" ng-click="uploadSharedDoc($event)">
 		   <ng-md-icon icon="note_add"></ng-md-icon>
 		</md-button>
 
@@ -49,7 +49,32 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Assignments" md-on-select="onTabChanges(1)">
+			<md-tab label="Shared Documents" md-on-select="onTabChanges(2)">
+				<md-content class="md-padding">
+				<!-- <div class="loadingicon" ng-hide="dataLoaded">
+					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+				</div> -->
+				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
+					<h3>Shared Documents</h3>
+					<div class="row">
+						<div class="span6 main_height">
+							<div class="tree">
+
+								<treecontrol class="tree-classic"
+								   tree-model="allSharedDocs"
+								   options="options"
+								   on-selection="showSelected(node)"
+								   selected-node="node1">
+								   {{node.name}}
+								</treecontrol>
+
+							</div>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+
+			<md-tab label="Assignments" md-on-select="onTabChanges(2)">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 
@@ -76,17 +101,7 @@
 
         				<div ng-class="{dataContent:true, activeContent:data.expanded}">
 
-              			 	  	<md-button class="md-icon-button" ng-click="showConfirmAnnoucnment($event,announcement)" ng-show="authCUD" style="float:right;margin-right:-20px;margin-top:-20px;">
-	            				<ng-md-icon icon="delete" style="color:red !important;"></ng-md-icon>
-	         				 	</md-button>
-
-	         				 	<md-button class="md-icon-button" ng-click="viewAnnoun(announcement,'edit')" ng-show="authCUD" style="float:right;margin-right:-5px;margin-top:-20px;">
-	            				<ng-md-icon icon="edit" style="color:red !important;"></ng-md-icon>
-	         				 	</md-button>
-
-              			 	   <div class="clear" ng-show="authCUD"></div>
-
-              			 	  <div  style="margin-right:10px !important;">
+              			 	  <div style="margin-right:10px !important;">
               			 	  <p style="margin-bottom:5px;" >
 
               			 	  	<b>{{assignment.title}}</b></p>
@@ -148,34 +163,7 @@
 			</md-tab>
 
 
-			<md-tab label="Shared Documents" md-on-select="onTabChanges(2)">
-				<md-content class="md-padding">
-				<!-- <div class="loadingicon" ng-hide="dataLoaded">
-					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-				</div> -->
-				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
-					<h3>Shared Documents</h3>
-					<div class="row">
-						<div class="span6 main_height">
-							<div class="tree">
-
-								<treecontrol class="tree-classic"
-								   tree-model="allSharedDocs"
-								   options="options"
-								   on-selection="showSelected(node)"
-								   selected-node="node1">
-								   {{node.name}}
-								</treecontrol>
-
-							</div>
-						</div>
-					</div>
-				</md-content>
-			</md-tab>
-
-
 			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
-				<md-tab label="Discussion Forum">
 				<md-content class="md-padding main_height">
 				<div ng-repeat="discussion in discussions" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 

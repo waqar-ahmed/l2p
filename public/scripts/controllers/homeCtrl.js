@@ -1,4 +1,3 @@
-
 app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $timeout, fileReader){
 
 	//var REQUEST_USER_CODE = "rest/auth/requestUserCode";
@@ -45,11 +44,11 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
           "Last 15 Days",
           "Last 30 Days"
     ];
-
-
+	  
+	  
 	$scope.breadcrums = [''];
-
-
+	
+ 
     $scope.tree = [{
         id: 1,
         fname: "tree",
@@ -61,7 +60,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     }];
 
 
-
+    
 
     $scope.loadWhatsNew = function(day){
     	var mins;
@@ -84,7 +83,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
       if (res.hasOwnProperty(key)) {
           console.log(key + " = " + res[key]);
       }
-}
+}    
 	}, function(err){
 		console.log("Error occured : " + err);
 	});
@@ -116,7 +115,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     		console.log("error");
     	}
     	$scope.loadWhatsNew(day);
-    }
+    } 
 
     bindData = function(data){
     	var allEmails=[];
@@ -136,51 +135,13 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	}
     }
 
-    $scope.courseNameArr=[];
-
-    $scope.getCourseNameById = function(cid, index){
-    	courseService.getCourseInfo(cid)
-    	.then(function(res){
-		if(res.Status == true)
-		{
-			console.log(res.dataSet[0].courseTitle);
-			$scope.courseNameArr[index] = res.dataSet[0].courseTitle;
-		}
-		else{
-			return cid;
-		}
-	}, function(err){
-		console.log("Error occured : " + err);
-	});
-    }
-
-    var requestArr = [];
-    $scope.loadCourseName = function(dataset){
-    	// for(var i=0;i<dataset.length;i++){
-    	// 	$scope.getCourseNameById(dataset[i].cid, i);
-    	// }
-
-    	for(var i=0;i<dataset.length;i++){
-    		requestArr[i] = $http.get("course/" + dataset[i].cid + "/course_info");
-    	}
-
-    	$q.all(requestArr).then(function (ret) {
-    		for(var i=0;i<ret.length;i++){
-    			console.log(ret[i].data.dataSet[0].courseTitle);
-    			$scope.courseNameArr[i]={"title":ret[i].data.dataSet[0].courseTitle};
-    		}
-
-    		console.log($scope.courseNameArr);
-		});
-    }
-
     $scope.downloadFile = function(subitem){
     	var SERVER_URL = "https://www3.elearning.rwth-aachen.de";
     	// var url = doc.downloadUrl.replace("assessment|", "");
     	window.open(SERVER_URL + subitem.selfUrl, '_blank');
     }
 
-
+	
 
 function readTextFile(file)
 {
@@ -220,7 +181,7 @@ function readTextFile(file)
                            $scope.onFileSelect(result);
                       });
     };
-
+ 
     $scope.$on("fileProgress", function(e, progress) {
         $scope.progress = progress.loaded / progress.total;
     });
@@ -293,5 +254,5 @@ Upload.upload({
           });
 
 }
-
-});
+	
+});	

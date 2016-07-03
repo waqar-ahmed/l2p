@@ -114,6 +114,7 @@
                         </div>
                     </div>
                 </md-toolbar>
+
                 <md-list>
 					<md-item ng-repeat="item in menu">
 						<md-divider ng-if="$last"></md-divider>
@@ -128,7 +129,10 @@
                             </md-item-content>
                         </a>
 					</md-item>
+                </md-list>
+            </md-sidenav>
 
+            <div layout="column" class="relative" layout-fill role="main">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
                         <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
