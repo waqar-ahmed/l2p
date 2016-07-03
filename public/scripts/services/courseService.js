@@ -407,7 +407,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	this.deleteDiscussion = function(cid, selfId){
 		var defer = $q.defer();
 
-		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_DELETE_DISCUSSION)
+		$http.get(URL_GET_COURSE+ "/"+ cid+ URL_DELETE_DISCUSSION+ "/"+selfId)
 		.success(function(res){
 			//console.log(res);
 			defer.resolve(res);

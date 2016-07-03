@@ -32,7 +32,7 @@
 
 		<md-input-container ng-show="authWrite" style="margin-bottom: -14px;">
 	    	<label>Content</label>
-			<textarea style="height:100px !important;" rows="8"  ng-model="currentannoun.body" >{{currentannoun.body}}</textarea>
+			<textarea style="height:100px !important;" rows="8"  ng-model="currentannoun.body" md-detect-hidden>{{currentannoun.body}}</textarea>
 		</md-input-container>
 
 		<div ng-show="!authWrite" class="email-content">
@@ -46,7 +46,7 @@
 		<div layout-align="begin center" layout="row" >
 			<div id="creatinfo" ng-show="authShow">Created at {{currentannoun.created*1000| date:'medium'}}</div>
 			<span flex></span>
-			
+
 			<md-button class="md-raised md-primary" ng-click="isEdit? editAnnoun() : addAnnoun()" style="margin-right:18px;">{{announce_button}}</md-button>
 		</div>
 
