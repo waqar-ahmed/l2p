@@ -90,7 +90,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 
 
-    $scope.loadWhatsNew(1);
+    //$scope.loadWhatsNew(1);
 
     $scope.updateList = function(lastday){
     	var day = 0;
@@ -220,7 +220,7 @@ function readTextFile(file)
           // });
 Upload.upload({
             url: 'course/16ss-55492/upload_in_shared_document',
-            data: {fileName: $scope.file.name, stream: file}
+            data: {sourceDirectory:"/ss16/16ss-55492/collaboration/Lists/SharedDocuments", fileName: $scope.file.name, stream: file}
           }).then(function (response) {
             $timeout(function () {
               file.result = response.data;

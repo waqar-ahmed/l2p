@@ -62,6 +62,7 @@
         <script src="scripts/controllers/singlecourseCtrl.js"></script>
         <script src="scripts/controllers/scheduleCtrl.js"></script>
         <script src="scripts/controllers/emailsCtrl.js"></script>
+        <script src="scripts/controllers/DialogController.js"></script>
 
         <script src="scripts/modules/upload.js"></script>
 

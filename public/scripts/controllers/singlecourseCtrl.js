@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window) {
+app.controller('singlecourseCtrl', function($scope, $stateParams, courseService, $mdDialog, $window, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
@@ -17,6 +17,10 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 
 	if(!courseService.getAuthenticatedValue()){
 		window.location = LOGIN_PAGE;
+	}
+
+	$scope.onTabChanges = function($index){
+		console.log("Tab index : " + $index);
 	}
 
 	console.log("course ID: " + $stateParams.cid);
@@ -67,11 +71,24 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, courseService,
 	});
 
 	/* get Learning Materials by cid*/
-	$scope.learningMaterials = courseService.getAllLearningMaterials($stateParams.cid)
+	courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
 		console.log("get all learningMaterials ");
 		console.log(res.dataSet);
-		parseLearningMaterials(res.dataSet);
+		$scope.roleList = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
+		//console.log(buildHierarchy(items));
+	}, function(){
+		console.log("Error occured");
+	});
+
+	/* get Learning Materials by cid*/
+	courseService.getAllSharedDocs($stateParams.cid)
+	.then(function(res){
+		console.log("get all shared Docs");
+		console.log(res.dataSet);
+		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
 		//console.log(buildHierarchy(items));
 	}, function(){
 		console.log("Error occured");
@@ -443,10 +460,10 @@ function parseLearningMaterials(y){
 	var nested = flatToNested.convert(y);
 	console.log(nested);
 
-	$scope.roleList = nested;
-	$scope.dataLoaded = true;
+	//$scope.roleList = nested;
+	//$scope.dataLoaded = true;
 
-	return;
+	return nested;
 }
 
 
@@ -500,6 +517,78 @@ function parseLearningMaterials(y){
     	
     	window.open(SERVER_URL + url, '_blank');
     }
+
+
+    var uploadSharedDocalert, uploadSharedDocDialog;
+    $scope.uploadSharedDoc = function($event){
+      uploadSharedDocDialog = $mdDialog;
+      var parentEl = angular.element(document.querySelector('md-content'));
+   	 uploadSharedDocalert = uploadSharedDocDialog.alert({
+   	   parent: parentEl,
+      targetEvent: $event,
+      template:
+        '<md-dialog aria-label="List dialog">' +
+        '  <md-toolbar>' +
+        '     <div class="md-toolbar-tools">' +
+        '      <h2>Upload File</h2>' +
+        '      <span flex></span>' +
+        '    </div>' +
+        '  </md-toolbar>' +
+        '  <md-dialog-content>'+
+        '    <br>'+
+        '    <md-input-container>'+
+        '        <label>Title</label>'+
+        '        <input type="text" ng-model="bubbleName">'+
+        '    </md-input-container>'+
+        '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
+        '      Browse' +
+        '    </md-button>' +
+        '  <md-dialog-actions>' +
+        '    <md-button ng-click="uploadFile()" class="md-primary">' +
+        '      Upload' +
+        '    </md-button>' +
+        '    <md-button ng-click="closeDialog()" class="md-primary">' +
+        '      Cancel' +
+        '    </md-button>' +
+        '  </md-dialog-actions>' +
+        '</md-dialog>',
+        locals: {
+          items: $scope.items,
+          selectedFile: $scope.selectedFile,
+          closeDialog: $scope.closeDialog
+        },
+        bindToController: true,
+        controllerAs: 'ctrl',
+        controller: 'DialogController'
+    });
+    
+     $mdDialog
+      .show(uploadSharedDocalert)
+      .finally(function() {
+        uploadSharedDocalert = undefined;
+      });
+  }
+  $scope.closeDialog = function() {
+    uploadSharedDocDialog.hide();
+  };
+
+
+    $scope.getFile = function () {
+    	$scope.dataLoaded = false;
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function(result) {
+                        console.log($scope.file);
+                          //$scope.imageSrc = result;
+                          console.log(result);
+                          $scope.selectedFile = result.split(",")[1];
+                          console.log("next one");
+                          $scope.dataLoaded = true;
+        });
+    };
+
+
+
 });
 
 

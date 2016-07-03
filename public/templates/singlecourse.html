@@ -14,8 +14,8 @@
   	</div>
 
 	<md-content class="singleCourseTabs">
-		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass" >
-			<md-tab label="Learning Material" >
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass">
+			<md-tab label="Learning Material" md-on-select="onTabChanges(0)">
 				<md-content class="md-padding">
 				<!-- <div class="loadingicon" ng-hide="dataLoaded">
 					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
@@ -40,7 +40,7 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Assignments">
+			<md-tab label="Assignments" md-on-select="onTabChanges(1)">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 						<ul>
@@ -82,8 +82,43 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Discussion Forum">
-				<md-content class="md-padding main_height"">
+
+
+			
+			<md-tab label="Shared Documents" md-on-select="onTabChanges(2)">
+				<md-content class="md-padding">
+				<!-- <div class="loadingicon" ng-hide="dataLoaded">
+					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+				</div> -->
+				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
+					<h3>Shared Documents</h3>
+					<div class="row">
+						<div class="span6 main_height">
+							<div class="tree">
+
+								<treecontrol class="tree-classic"
+								   tree-model="allSharedDocs"
+								   options="options"
+								   on-selection="showSelected(node)"
+								   selected-node="node1">
+								   {{node.name}}
+								</treecontrol>
+			
+
+							</div>
+						</div>
+					</div>
+					<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" 	ng-click="uploadSharedDoc($event)">
+					   <ng-md-icon icon="note_add"></ng-md-icon>
+					</md-button>
+				</md-content>
+			</md-tab>
+
+
+
+
+			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
+				<md-content class="md-padding main_height">
 					
 					<ul class="post-grid">
           					<li  class="col-s-4" ng-class="{ 'reset-s' : $index%3==0 }" >
@@ -203,7 +238,7 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Emails">
+			<md-tab label="Emails" md-on-select="onTabChanges(4)">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<ul ng-repeat="email in emails" ng-show="emailsLoaded">
@@ -259,7 +294,7 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Announcements">
+			<md-tab label="Announcements" md-on-select="onTabChanges(5)">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 						<ul ng-repeat="announcement in announcements" ng-show="announcementsLoaded">
@@ -303,10 +338,13 @@
 				</md-content>
 			</md-tab>
 		</md-tabs>
-	</md-content>
+		<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+	</md-content>	
+      	  
+</div>
 
 	 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="dataLoaded" class="loadingicon">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
-</div>
+
 
