@@ -1,5 +1,31 @@
 app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$anchorScroll,$compile, $timeout, uiCalendarConfig) {
 
+	var LOGIN_PAGE = "login.html";
+	console.log("in schedule");
+
+
+	//Checking if user is authenticated or not
+	courseService.isUserAuthenticated()
+	.then(function(res){
+		if(res.Status == true)
+		{
+			console.log("user is authenticated");
+		}
+		else{
+			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
+			gotoAuthorizePage();
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
+
+
+	gotoAuthorizePage = function(){
+		window.location = LOGIN_PAGE;
+	}
+
+
+
 	$scope.scrollTo = function(div) {
 		$timeout(function() {
 			console.log('e-'+div);
@@ -27,6 +53,10 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
+			if(res.status == false){
+				alert(res.body);
+				$location.path('/mycourses');
+			}
 			console.log("got all course events from schedule controller");
 			console.log(res);
 			$scope.eventSource = res.dataSet;
