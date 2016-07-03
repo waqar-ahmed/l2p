@@ -105,8 +105,8 @@ class L2pController extends Controller {
         return view('tester');
     }            
     
-    public function viewAllCounts($cid) {
-        return $this->sendRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);
+    public function viewAllCount($cid) {
+        return $this->sendRequest(self::GET, 'viewAllCount', ['cid'=>$cid]);
     }       
     
     public function viewActiveFeatures($cid) {
