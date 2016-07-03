@@ -46,7 +46,7 @@ class WhatsNewController extends L2pController {
             foreach($allCoursesCurrentSemester["dataSet"] as $course) {                
                 $newMaterials = $this->getLearningMaterials($course["uniqueid"], $pastMinutes);
                 if(!empty($newMaterials)) {
-                    $result += array($course["uniqueid"]=>$newMaterials);
+                    $result += array($course["courseTitle"]=>$newMaterials);
                 }                
             }
         }              
