@@ -3,14 +3,13 @@
 
 	<div class="fabbutton" ng-show="WaitForToast">
 
+		<md-button ng-class="{visible:selectedTab==1}" class="md-fab md-primary md-fab-bottom-right" ng-click="uploadSharedDoc($event)">
+		   <ng-md-icon icon="file_upload"></ng-md-icon>
+		</md-button>
 
 		<md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="addDiscussion()">
 	   		<ng-md-icon icon="note_add"></ng-md-icon>
 	   	</md-button>
-
-		<md-button ng-class="{visible:selectedTab==1}" class="md-fab md-primary md-fab-bottom-right" ng-click="uploadSharedDoc($event)">
-		   <ng-md-icon icon="note_add"></ng-md-icon>
-		</md-button>
 
 	   	<md-button ng-class="{visible:selectedTab==4}" class="md-fab md-primary md-fab-bottom-right" ng-click="viewEmail(undefined,'creat')" ng-show="authCUD">
 	  		<ng-md-icon icon="note_add"></ng-md-icon>
@@ -131,10 +130,10 @@
 								<p style="margin-bottom:5px;margin-top:15px;"  ng-if="assignment.correction.correctionDocuments.length>0"><b>Corrected Solution</b></p>
               			 	 		<hr ng-if="assignment.correction.correctionDocuments.length>0">
 								<div ng-if="assignment.correction.correctionDocuments.length==0"></div>
-							
+
 								<div ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)">
 
-								
+
 									<div style="display: flex;align-items: center;">
 									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
@@ -145,10 +144,10 @@
 								<p style="margin-bottom:5px;margin-top:15px;" ng-if="assignment.SampleSolutionDocuments.length>0"><b>Sample Solution</b></p>
               			 	 	 <hr ng-if="assignment.SampleSolutionDocuments.length>0">
 								<div ng-if="assignment.SampleSolutionDocuments.length==0"></div>
-								
+
 								<div ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)">
 
-								
+
 									<div style="display: flex;align-items: center;">
 									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
@@ -191,7 +190,7 @@
             				</li>
        				</ul>
 
-       				<div ng-show="discussion.showReplies" class="post-grid" style="background:#f1f3f4;">
+       				<div ng-show="discussion.showReplies" class="post-grid" style="background:#F6F9FE;">
 						<div class="replybox_div">
 							<textarea rows="3" name="reply" placeholder="Add you reply.." ng-model="discussion.ReplyToBody">{{discussion.ReplyToBody}}</textarea>
 							<div class="reply_button" layout="row" layout-align="end center">
