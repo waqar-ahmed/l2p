@@ -127,13 +127,32 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 	};
 
 
-	$scope.courseinfos = [
+	/* Display dynamic Course Info by cid*/
+	courseService.getCourseInfo($stateParams.cid)
+		.then(function(res){
+			console.log("got CourseInfo");
+			console.log(res.dataSet); 			 
+			$scope.courseinfos = [
+				{
+					coursetitle: String(res.dataSet[0].courseTitle),
+					description: String(res.dataSet[0].description),
+					url: String(res.dataSet[0].url),
+
+				},
+			];
+		}, function(err){
+			console.log("Error occured : " + err);
+	});
+	
+	
+
+/* 	$scope.courseinfos = [
 	{
 		coursetitle: 'Introduction to Web Technology',
 		description: 'A sample courseroom for sandbox usage. Additional Information SWS: 4 ECTS Credits: 7 Language: Englisch Prerequisites Knowledge in eLearning, and web/mobile technologies is recommended.',
 		url: 'https://www3.elearning.rwth-aachen.de/ws12/12ws-00000',
 	},
-	];
+	]; */
 
 
 	$scope.showSimpleToast= function(message) {
