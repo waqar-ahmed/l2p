@@ -588,3 +588,11 @@ ol.tree
     height: 40px;
     position: relative;
 }
+
+.sub_header_color
+{
+  margin:10px 5px 10px 5px !important; 
+  color: black;
+  background:#e4e4e4 !important;
+  border-radius: 4px;
+}
