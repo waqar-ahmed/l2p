@@ -79,7 +79,7 @@ Upload.upload({
 
   $scope.$on('fileLoaded', function(event, args) {
 	$scope.showFileProg = false;
-    // do what you want to do
+    $scope.fileName = courseService.getFileName();
 });
 
 

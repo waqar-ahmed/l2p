@@ -540,11 +540,11 @@ function parseLearningMaterials(y){
         '      <span flex></span>' +
         '    </div>' +
         '  </md-toolbar>' +
-        '  <md-dialog-content class="sticky-container">'+
+        '  <md-dialog-content class="sticky-container" style="padding:5px;">'+
         '    <br>'+
-        '    <md-input-container>'+
-        '        <label>Folder Name if any</label>'+
-        '        <input type="text" ng-model="folderName">'+
+        '    <md-input-container style="margin-bottom:0px;">'+
+        '        <label>Selected File</label>'+
+        '        <input type="text" ng-model="fileName" ng-disabled=true>'+
         '    </md-input-container>'+
         '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
         '      Browse' +
