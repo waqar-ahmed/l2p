@@ -114,11 +114,11 @@
 									</div>
 								</div>
 
+								<p ng-if="assignment.solution.solutionDocuments.length>0" style="margin-bottom:5px;margin-top:15px;" ><b>Uploaded Solution</b></p>
+              			 	 	 	<hr ng-if="assignment.solution.solutionDocuments.length>0">
 								<div ng-if="assignment.solution.solutionDocuments.length==0"></div>
 								<div ng-repeat="doc in assignment.solution.solutionDocuments" ng-click="downloadAssignment(doc)">
 
-								<p style="margin-bottom:5px;margin-top:15px;" ><b>Uploaded Solution</b></p>
-              			 	 	 <hr>
 									<div style="display: flex;align-items: center;">
 									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
@@ -126,11 +126,13 @@
 								</div>
 
 
+								<p style="margin-bottom:5px;margin-top:15px;"  ng-if="assignment.correction.correctionDocuments.length>0"><b>Corrected Solution</b></p>
+              			 	 		<hr ng-if="assignment.correction.correctionDocuments.length>0">
 								<div ng-if="assignment.correction.correctionDocuments.length==0"></div>
+							
 								<div ng-repeat="doc in assignment.correction.correctionDocuments" ng-click="downloadAssignment(doc)">
 
-								<p style="margin-bottom:5px;margin-top:15px;" ><b>Corrected Solution</b></p>
-              			 	 	 <hr>
+								
 									<div style="display: flex;align-items: center;">
 									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>
@@ -138,11 +140,13 @@
 								</div>
 
 
+								<p style="margin-bottom:5px;margin-top:15px;" ng-if="assignment.SampleSolutionDocuments.length>0"><b>Sample Solution</b></p>
+              			 	 	 <hr ng-if="assignment.SampleSolutionDocuments.length>0">
 								<div ng-if="assignment.SampleSolutionDocuments.length==0"></div>
+								
 								<div ng-repeat="doc in assignment.SampleSolutionDocuments" ng-click="downloadAssignment(doc)">
 
-								<p style="margin-bottom:5px;margin-top:15px;" ><b>Sample Solution</b></p>
-              			 	 	 <hr>
+								
 									<div style="display: flex;align-items: center;">
 									<img src="images/folder_icon.png" alt="icon" height="24" width="24" style="margin-top:8px;">
 									<span style="margin-top:7px;color:darkblue;">{{doc.fileName}}</span>

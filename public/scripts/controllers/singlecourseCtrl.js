@@ -19,6 +19,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
     $scope.colors_email = [];
     $scope.colors_announcement = [];
 
+
 	$scope.show_replies = false;
 
 
@@ -112,6 +113,7 @@ app.controller('singlecourseCtrl', function($scope, $stateParams, $filter, cours
 		console.log("get all assignments ");
 		console.log(res.dataSet);
 		$scope.assignments = res.dataSet;
+		console.log("Assingment length: "+ $scope.assignments.length);
 	}, function(){
 		console.log("Error occured");
 	});
