@@ -394,12 +394,18 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	}
 
 	var fileToUpload = null;
-	this.setFile = function(stream){
+	var fileName = null;
+	this.setFile = function(name, stream){
+		fileName = name;
 		fileToUpload = stream;
 	}
 
 	this.getFile = function(){
 		return fileToUpload;
+	}
+
+	this.getFileName = function(){
+		return fileName;
 	}
 
 }]);

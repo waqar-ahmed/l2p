@@ -82,17 +82,8 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, Up
 		console.log("Error occured");
 	});
 
-	/* get Learning Materials by cid*/
-	courseService.getAllSharedDocs($stateParams.cid)
-	.then(function(res){
-		console.log("get all shared Docs");
-		console.log(res.dataSet);
-		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
-		$scope.dataLoaded = true;
-		//console.log(buildHierarchy(items));
-	}, function(){
-		console.log("Error occured");
-	});
+	
+	loadAllSharedDocs();
 
 
 	/* get Assignments by cid*/
@@ -108,6 +99,20 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, Up
 
 	this.getCurrentCourse = function() {
 
+	}
+
+	function loadAllSharedDocs(){
+		/* get Shared Docs by cid*/
+	courseService.getAllSharedDocs($stateParams.cid)
+	.then(function(res){
+		console.log("get all shared Docs");
+		console.log(res.dataSet);
+		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		$scope.dataLoaded = true;
+		//console.log(buildHierarchy(items));
+	}, function(){
+		console.log("Error occured");
+	});
 	}
 
 	var iconClassMap = {
@@ -522,26 +527,6 @@ function parseLearningMaterials(y){
     var uploadSharedDocalert, uploadSharedDocDialog;
     $scope.uploadSharedDoc = function($event){
     // Appending dialog to document.body to cover sidenav in docs app
-    var confirm = $mdDialog.prompt()
-      .title('What would you name your dog?')
-      .textContent('Bowser is a common name.')
-      .placeholder('Dog name')
-      .ariaLabel('Dog name')
-      .initialValue('Buddy')
-      .targetEvent(ev)
-      .ok('Okay!')
-      .cancel('I\'m a cat person');
-
-
-
-
-
-return;
-
-
-
-
-
       uploadSharedDocDialog = $mdDialog;
       var parentEl = angular.element(document.querySelector('md-content'));
    	 $mdDialog.show({
@@ -557,12 +542,9 @@ return;
         '  </md-toolbar>' +
         '  <md-dialog-content class="sticky-container">'+
         '    <br>'+
-        '    <div >'+
-        '  <md-progress-circular md-mode="indeterminate" style="position:absolute;top:20;left:45%;" ng-show="showFileProg"></md-progress-circular>' +
-        '    </div>'+
         '    <md-input-container>'+
-        '        <label>Title</label>'+
-        '        <input type="text" ng-model="bubbleName">'+
+        '        <label>Folder Name if any</label>'+
+        '        <input type="text" ng-model="folderName">'+
         '    </md-input-container>'+
         '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
         '      Browse' +
@@ -578,7 +560,7 @@ return;
         '</md-dialog>',
         locals: {
           items: $scope.items,
-          selectedFile: $scope.selectedFile,
+           cid: $stateParams.cid,
           closeDialog: $scope.closeDialog
         },
         bindToController: true,
@@ -607,12 +589,30 @@ return;
                           //console.log(result);
                           $scope.selectedFile = result.split(",")[1];
                           // console.log("next one");
-                           courseService.setFile($scope.selectedFile);
+                           courseService.setFile($scope.file.name, $scope.selectedFile);
                           // console.log($scope.selectedFile);
                           $rootScope.$broadcast('fileLoaded');
         });
     };
 
+
+
+  $scope.$on('showProg', function(event, args) {
+  	console.log("setting to true");
+	$scope.dataLoaded = false;
+    // do what you want to do
+});
+
+
+  $scope.$on('hideProg', function(event, args) {
+	$scope.dataLoaded = true;
+    // do what you want to do
+});
+
+    $scope.$on('loadShareDocs', function(event, args) {
+	loadAllSharedDocs();
+    // do what you want to do
+});
 
 
 });
