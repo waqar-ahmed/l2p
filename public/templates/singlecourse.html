@@ -173,7 +173,7 @@
 				<md-content class="md-padding main_height">
 
 				<span ng-if="discussions.length == 0 || discussions === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
-				<div ng-repeat="discussion in discussions | orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
+				<div ng-repeat="discussion in discussions | index| orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
           					<li  class="col-s-4" ng-class="{'reset-s': $index%3==0 }" >
