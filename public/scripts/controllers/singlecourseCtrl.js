@@ -818,7 +818,7 @@ function parseLearningMaterials(y){
    	   parent: parentEl,
       targetEvent: $event,
       template:
-        '<md-dialog aria-label="List dialog">' +
+        '<md-dialog aria-label="List dialog" style="width:90% !important;max-width:90% !important;">' +
         '  <md-toolbar>' +
         '     <div class="md-toolbar-tools">' +
         '      <h2>Upload File</h2>' +

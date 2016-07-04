@@ -30,7 +30,7 @@
 				</div> -->
 					<h3>Learning Material</h3>
 					<div class="row">
-						<h3 ng-if="roleList.length == 0 || roleList === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</h3>
+						<span ng-if="roleList.length == 0 || roleList === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -57,7 +57,7 @@
 				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
 					<h3>Shared Documents</h3>
 					<div class="row">
-						<h3 ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</h3>
+						<span ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -172,7 +172,7 @@
 			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
 
-				<h3 ng-if="discussions.length == 0 || discussions === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</h3>
+				<span ng-if="discussions.length == 0 || discussions === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
 				<div ng-repeat="discussion in discussions | orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
@@ -241,7 +241,7 @@
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 
-						<h3 ng-if="emails.length == 0 || emails === undefined"  ng-show="dataLoaded" class="show_text_center">Nothing to show</h3>
+						<span ng-if="emails.length == 0 || emails === undefined"  ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
 
 						<div class="md-accordion customwidth" ng-repeat="email in emails|orderBy:'created':true" ng-show="emailsLoaded" ng-init="outerIndex = $index">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
@@ -288,7 +288,7 @@
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 
-						<h3 ng-if="announcements.length == 0 || announcements === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</h3>
+						<span ng-if="announcements.length == 0 || announcements === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
 
 						<div class="md-accordion customwidth" ng-repeat="announcement in announcements|orderBy:'created':true" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
