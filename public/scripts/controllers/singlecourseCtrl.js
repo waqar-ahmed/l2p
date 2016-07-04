@@ -674,10 +674,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		// $scope.currentannoun.bodyEdited = $compile(template);
 
 		function parseString(str) {
-			str = str.replace(/<br>/gi, "\n");
-			str = str.replace(/<p.*>/gi, "\n");
-			str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
-			str = str.replace(/<(?:.|\s)*?>/g, "");
+			if (str != null) {
+				str = str.replace(/<br>/gi, "\n");
+				str = str.replace(/<p.*>/gi, "\n");
+				str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
+				str = str.replace(/<(?:.|\s)*?>/g, "");
+			}
 			return str;
 		}
 
@@ -693,7 +695,8 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	  	};
 
 	  	$scope.addAnnoun = function(){
-	  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+	  		console.log($scope.expireEdited.toString());
+	  		var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
 	  		console.log(expireTime);
 	  		var newAnnouncement = {
   				"title": $scope.currentannoun.title,
@@ -719,7 +722,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 
   		$scope.editAnnoun = function(){
 	  		if ($scope.expireEdited != undefined){
-		  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+		  		var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
 		  	}
 		  	else {
 		  		var expireTime = 0;
