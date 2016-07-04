@@ -184,9 +184,10 @@ Route::group(['middleware'=>'l2pApi'], function() {
     }); 
     
     /*
-     * Emails
+     * Inbox
      */    
-    Route::get('inbox', 'EmailController@inbox');                    
+    Route::get('inbox/emails/{pastMinutes}', 'EmailController@inboxEmails');                    
+    Route::get('inbox/announcements/{pastMinutes}', 'AnnouncementController@inboxAnnouncements');                    
     
     /*
      * Routes used for backend

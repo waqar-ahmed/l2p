@@ -513,7 +513,7 @@
                 {
                     cid: "16ss-55492",                                
                 },                
-            },
+            },            
         },        
         learning_materials: {
             all_learning_materials: {
@@ -1074,6 +1074,15 @@
                     fileName: "Lab Kick Off.pptx",
                     downloadUrl: "|/ss16/16ss-55492/Lists/StructuredMaterials/Hello/Lab%20Kick%20Off.pptx",
                 }
+            },
+            inbox: {
+                uri: "inbox/{moduleName}/{pastMinutes}",     
+                method: "get",
+                uri_params :
+                {
+                    moduleName: "announcements",
+                    pastMinutes: 5,                                
+                },                
             },
         }
     }
