@@ -29,6 +29,11 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
             templateUrl: 'templates/emails.html',
             controller: 'emailsCtrl'
         })
+        .state('about', {
+            url: '/about',
+            templateUrl: 'templates/about.html',
+            controller: 'aboutCtrl'
+        })
 
 
 }]);
