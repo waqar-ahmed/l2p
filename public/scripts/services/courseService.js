@@ -34,6 +34,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 	var URL_GET_ALL_COURSE_EVENTS = "all_course_events";
 
 	var URL_GET_ALL_WHATS_NEW = "whats_all_new_since_new";
+	var URL_GET_ALL_WHATS_FOR_INBOX = "whats_all_new_since";
 
 	var URL__GET_ALL_SHARED_DOCS = "/all_shared_documents";
 
@@ -166,6 +167,22 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		var defer = $q.defer();
 
 		$http.get(URL_GET_ALL_WHATS_NEW + "/"+ mins)
+		.success(function(res){
+			// console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.getAllWhatsNewForInbox = function(mins){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_ALL_WHATS_FOR_INBOX + "/"+ mins)
 		.success(function(res){
 			// console.log(res);
 			defer.resolve(res);
