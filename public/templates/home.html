@@ -31,7 +31,7 @@
      <md-content flex layout="row" layout-align="center">
             <md-content flex="100">
 
-
+<h3 ng-if="allWhatsNew.length == 0 || allWhatsNew === undefined" ng-show="dataLoaded">No recent news to show</h3>
 <div class="myTree">
   <!-- Course list -->
   <div ng-repeat="(key,value) in allWhatsNew">
