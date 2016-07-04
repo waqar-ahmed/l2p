@@ -63,7 +63,7 @@
   <!-- detials of courseinfo and other info -->
     <div class="innercontainer innerdetails" ng-show="innershowDetails" height="120%">
       <h3 ng-if="item.learningMaterials.length==0">Nothing to show</h3>
-      <a ng-repeat="subitem in value" ng-click="downloadFile(subitem)">
+      <a ng-repeat="subitem in value" ng-click="downloadFile(subitem)" class="main_title">
         <i class="fa fa-play" aria-hidden="true"></i>
           {{subitem.name}}
       </a>
