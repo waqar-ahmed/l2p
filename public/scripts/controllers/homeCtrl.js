@@ -7,6 +7,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 	$scope.verified = false;
 	$scope.dataLoaded = false;
+  $scope.$parent.setNav("L2P - Dashboard");
 
 
 	//Checking if user is authenticated or not
@@ -44,11 +45,11 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
           "Last 15 Days",
           "Last 30 Days"
     ];
-	  
-	  
+
+
 	$scope.breadcrums = [''];
-	
- 
+
+
     $scope.tree = [{
         id: 1,
         fname: "tree",
@@ -60,7 +61,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     }];
 
 
-    
+
 
     $scope.loadWhatsNew = function(day){
     	var mins;
@@ -83,7 +84,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
       if (res.hasOwnProperty(key)) {
           console.log(key + " = " + res[key]);
       }
-}    
+}
 	}, function(err){
 		console.log("Error occured : " + err);
 	});
@@ -115,7 +116,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     		console.log("error");
     	}
     	$scope.loadWhatsNew(day);
-    } 
+    }
 
     bindData = function(data){
     	var allEmails=[];
@@ -141,7 +142,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	window.open(SERVER_URL + subitem.selfUrl, '_blank');
     }
 
-	
+
 
 function readTextFile(file)
 {
@@ -181,7 +182,7 @@ function readTextFile(file)
                            $scope.onFileSelect(result);
                       });
     };
- 
+
     $scope.$on("fileProgress", function(e, progress) {
         $scope.progress = progress.loaded / progress.total;
     });
@@ -254,5 +255,5 @@ Upload.upload({
           });
 
 }
-	
-});	
+
+});

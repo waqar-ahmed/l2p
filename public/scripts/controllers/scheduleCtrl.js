@@ -2,7 +2,7 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	var LOGIN_PAGE = "login.html";
 	console.log("in schedule");
-
+	$scope.$parent.setNav("L2P - Dashboard");
 
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
@@ -33,8 +33,6 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 			$anchorScroll();
 		});
     }
-    
-
 
 
 	$scope.dataLoading = true;
@@ -44,7 +42,7 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
     var curr_date = date.getDate();
     var curr_month = date.getMonth()+1;
     var curr_year = date.getFullYear();
-    
+
     $scope.dateToday = Date.parse(curr_month + "/" + curr_date + "/" + curr_year);
 	console.log("today "+$scope.dateToday);
 
@@ -118,7 +116,7 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
     //$scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
     //   $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
     //};
-	
+
 
     /* add and removes an event source of choice */
 	/*
@@ -152,7 +150,7 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
     //$scope.remove = function(index) {
     //  $scope.events.splice(index,1);
     //};
-	
+
     /* Change View */
     $scope.changeView = function(view,calendar) {
       uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
@@ -190,5 +188,5 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
         eventRender: $scope.eventRender
       }
     };
-	
+
 });

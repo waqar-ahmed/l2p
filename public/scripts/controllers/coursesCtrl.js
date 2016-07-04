@@ -1,6 +1,7 @@
 app.controller('coursesCtrl', function($scope,courseService,$location, $interval, colorService) {
 
   $scope.coursesLoaded = false;
+  $scope.$parent.setNav("L2P - Courses");
 
   $scope.selectedSemester = {
         sem: 'ss16',
