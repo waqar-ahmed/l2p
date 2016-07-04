@@ -59,7 +59,16 @@ app.config(function($mdThemingProvider) {
         .primaryPalette('grey')
 });
 
-
+app.filter('index', function () {
+    return function (array, index) {
+        if (!index)
+            index = 'index';
+        for (var i = 0; i < array.length; ++i) {
+            array[i][index] = i;
+        }
+        return array;
+    };
+});
 
 app.directive('fileModel', ['$parse', 'fileService', function ($parse, fileService) {
     return {
@@ -127,14 +136,14 @@ app.directive("ngFileSelect",function(){
 
   return {
     link: function($scope,el){
-      
+
       el.bind("change", function(e){
-      
+
         $scope.file = (e.srcElement || e.target).files[0];
         $scope.getFile();
       })
-      
+
     }
-    
+
   }
 });

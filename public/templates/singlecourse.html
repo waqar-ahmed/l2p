@@ -171,8 +171,9 @@
 
 			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
+
 				<span ng-if="discussions.length == 0 || discussions === undefined" class="show_text_center">Nothing to show</span>
-				<div ng-repeat="discussion in discussions | orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
+				<div ng-repeat="discussion in discussions | index| orderBy:'created':true" ng-init="discussion.showReplies=false;" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
           					<li  class="col-s-4" ng-class="{'reset-s': $index%3==0 }" >
@@ -181,7 +182,7 @@
             						<div layout="row" layout-align="end center">
             							<p class="discussion_question" ng-show="discussion.showReplies" ng-class="{'dynamic_height':discussion.byMe}" ng-bind-html="discussion.body"></p>
             							<span flex></span>
-            							<md-button class="md-icon-button" ng-click="showConfirmDiscussion(event,discussion.selfId,outerindex);$event.stopPropagation()" ng-show="discussion.showReplies&&discussion.byMe" style="margin-right:-8px;">
+            							<md-button class="md-icon-button" ng-click="showConfirmDiscussion(event,discussion.selfId,discussion.index);$event.stopPropagation()" ng-show="discussion.showReplies&&discussion.byMe" style="margin-right:-8px;">
 		            						<ng-md-icon icon="delete"></ng-md-icon>
 		         				 		</md-button>
             						</div>
@@ -200,7 +201,7 @@
 						 	</div>
 						</div>
 
-						<div class="reply_from_users" ng-init="reply.showReplies=false; innerindex=$index" ng-repeat="reply in discussions[outerindex].children">
+						<div class="reply_from_users" ng-init="reply.showReplies=false; innerindex=$index" ng-repeat="reply in discussion.children">
 					  		<div layout="row">
 					  			<h4 class="reply_user_name">{{reply.from}}</h4>
 					  			<span flex></span>
@@ -210,7 +211,7 @@
 						  	<p class="reply_body" ng-bind-html="reply.body"></p>
 						  	<div layout="row">
 							  	<p class="reply_date" flex="30" flex-sm="40" flex-gt-sm="45" ng-click="reply.showReplies=!reply.showReplies">Reply</p>
-							  	<p class="reply_date" flex ng-click="showConfirmDiscussionReply(ev,reply.selfId,outerindex,innerindex)" ng-show="reply.byMe">Delete</p>
+							  	<p class="reply_date" flex ng-click="showConfirmDiscussionReply(ev,reply.selfId,discussion.index,innerindex)" ng-show="reply.byMe">Delete</p>
 							  	<span flex></span>
 							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "dd MMM' at' h:mm"}}</p>
 							</div>
