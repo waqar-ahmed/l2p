@@ -1,11 +1,11 @@
 
 <md-subheader class="md-no-sticky" style="margin:18px 8px 18px 8px !important; color: black;">
   <b>What's new</b>
-<div layout="row" class="timeSelect">
+  <div layout="row" class="timeSelect" layout-align:"begin center">
+      <h3 style="margin-top: 30px; margin-right: 6px;"><b>Last: </b></h3>
       <md-input-container style="margin-right: 10px;">
-        <label>Update Since</label>
-        <md-select ng-model="lastday" ng-change="updateList(lastday)">
-          <md-option ng-repeat="lastday in lastdays" value="{{lastday}}">{{lastday}}</md-option>
+        <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value'}" >
+          <md-option ng-repeat="lastday in lastdays" value="{{lastday}}" ng-click="updateList(lastday)">{{lastday}}</md-option>
         </md-select>
       </md-input-container>
     </div>
