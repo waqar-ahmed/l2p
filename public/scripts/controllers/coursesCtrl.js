@@ -2,6 +2,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   $scope.coursesLoaded = false;
   $scope.$parent.setNav("L2P - Courses");
+  var LOGIN_PAGE = "login.html";
 
   $scope.selectedSemester = {
         sem: 'ss16',
@@ -9,6 +10,28 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
       };
 
    console.log($scope.semesters);
+
+
+  //Checking if user is authenticated or not
+  courseService.isUserAuthenticated()
+  .then(function(res){
+    if(res.Status == true)
+    {
+      console.log("user is authenticated");
+    }
+    else{
+      //user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
+      //requestUserCode();
+      gotoAuthorizePage();
+    }
+  }, function(err){
+    console.log("Error occured : " + err);
+  });
+
+
+  gotoAuthorizePage = function(){
+    window.location = LOGIN_PAGE;
+  }
 
   courseService.getSortedSems()
     .then(function(res){

@@ -38,6 +38,10 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var URL__GET_ALL_SHARED_DOCS = "/all_shared_documents";
 
+	var URL_GET_INBOX = "inbox";
+	var URL_INBOX_EMAIL = "/emails";
+	var URL_INBOX_ANNOUN = "/announcements";
+
 	var authenticated = true;
 
 	// template
@@ -468,6 +472,37 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	this.getInboxEmails = function(mins){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_INBOX+ URL_INBOX_EMAIL+ "/"+ mins)
+		.success(function(res){
+			//console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
+
+	this.getInboxAnnouns = function(mins){
+		var defer = $q.defer();
+
+		$http.get(URL_GET_INBOX+ URL_INBOX_ANNOUN+ "/"+ mins)
+		.success(function(res){
+			console.log(res);
+			defer.resolve(res);
+		})
+		.error(function(err, status){
+			console.log(err);
+			defer.reject(err);
+		})
+
+		return defer.promise;
+	};
 
     //trigger onFileSelect method on clickUpload button clicked
     this.clickUpload = function(){

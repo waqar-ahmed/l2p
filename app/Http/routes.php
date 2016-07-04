@@ -82,7 +82,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
          */
         Route::get('all_learning_materials', 'LearningMaterialController@viewAllLearningMaterials');
         Route::get('learning_material/{itemId}', 'LearningMaterialController@viewLearningMaterial');
-        Route::get('learning_material_count', 'LearningMaterialController@viewLearningMaterialsCount');
+        Route::get('learning_material_count', 'LearningMaterialController@viewLearningMaterialCount');
         Route::get('delete_learning_material/{itemId}', 'LearningMaterialController@deleteLearningMaterial');
         Route::post('upload_in_learning_material', 'LearningMaterialController@uploadInLearningMaterial');
 
@@ -114,7 +114,7 @@ Route::group(['middleware'=>'l2pApi'], function() {
          * Media libraries
          */
         Route::get('all_media_libraries', 'MediaLibraryController@viewAllMediaLibraries');
-        Route::get('all_media_library_count', 'MediaLibraryController@viewAllMediaLibraryCount');
+        Route::get('all_media_library_count', 'MediaLibraryController@viewAllMediaLibrariesCount');
         Route::get('delete_media_library/{itemId}', 'MediaLibraryController@deleteMediaLibrary');
         Route::get('media_library/{itemId}', 'MediaLibraryController@viewMediaLibrary');
         Route::post('upload_in_media_library', 'MediaLibraryController@uploadInMediaLibrary');
@@ -172,22 +172,23 @@ Route::group(['middleware'=>'l2pApi'], function() {
          */
         Route::get('view_user_role', 'L2pController@viewUserRole');
         Route::get('active_features', 'L2pController@viewActiveFeatures');
-        Route::get('all_counts', 'L2pController@viewAllCounts');
 
-        Route::get('available_groups_in_group_workspace', 'L2pController@viewAvailableGroupsInGroupWorkspace');
-        Route::get('my_group_workspace', 'L2pController@viewMyGroupWorkspace');
-        Route::get('exam_results', 'L2pController@viewExamResults');
-        Route::get('exam_results_statistics', 'L2pController@viewExamResultsStatistics');
-        Route::get('grade_book', 'L2pController@viewGradeBook');
-        Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');
-        Route::post('createFolder', 'L2pController@createFolder');
-    });
-
+        Route::get('all_count', 'L2pController@viewAllCount');    
+        
+        Route::get('available_groups_in_group_workspace', 'L2pController@viewAvailableGroupsInGroupWorkspace');                              
+        Route::get('my_group_workspace', 'L2pController@viewMyGroupWorkspace');                              
+        Route::get('exam_results', 'L2pController@viewExamResults');        
+        Route::get('exam_results_statistics', 'L2pController@viewExamResultsStatistics');        
+        Route::get('grade_book', 'L2pController@viewGradeBook');                                 
+        Route::get('download_file/{fileName}/{downloadUrl}', 'L2pController@downloadFile');                        
+        Route::post('createFolder', 'L2pController@createFolder');        
+    }); 
+    
     /*
-     * Emails
-     */
-    Route::get('inbox', 'EmailController@inbox');
-
+     * Inbox
+     */    
+    Route::get('inbox/emails/{pastMinutes}', 'EmailController@inboxEmails');                    
+    Route::get('inbox/announcements/{pastMinutes}', 'AnnouncementController@inboxAnnouncements');
     /*
      * Routes used for backend
      */

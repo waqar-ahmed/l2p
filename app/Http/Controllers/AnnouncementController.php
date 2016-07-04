@@ -10,12 +10,18 @@ use Illuminate\Http\Request;
  * @author odgiiv
  */
 class AnnouncementController extends L2pController {
+    
+    use InboxTrait;        
 
     protected $validations = [
         'body' => 'string',
         'expireTime' => 'numeric',
         'title' => 'required|string',
     ];
+    
+    public function inboxAnnouncements($pastMinutes) {
+        return $this->inbox($pastMinutes, 'viewAllAnnouncements');
+    }
 
     public function viewAllAnnouncementCount($cid) {
         return $this->sendRequest(self::GET, 'viewAllAnnouncementCount', ['cid'=>$cid]);
@@ -50,5 +56,5 @@ class AnnouncementController extends L2pController {
             return $this->jsonResponse(self::STATUS_FALSE, 'attachmentDirectory field is required and must be string.');            
         }
         return $this->addToModule($request, 'uploadInAnnouncement', ['cid'=>$cid, 'attachmentDirectory'=>$request->input('attachmentDirectory')], $valid);        
-    }
+    }       
 }
