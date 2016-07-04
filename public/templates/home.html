@@ -39,14 +39,14 @@
 
 <div class="myTree">
   <!-- Course list -->
-  <div ng-repeat="item in allWhatsNew">
+  <div ng-repeat="(key,value) in allWhatsNew">
   <div class='container'>
       <div class="first" ng-click="showDetails = ! showDetails">
         <i class="fa fa-minus" aria-hidden="true" ng-show="showDetails"></i>
         <i class="fa fa-plus" aria-hidden="true" ng-show="!showDetails"></i>
       </div>
       <div class="second">
-        <h3>{{item.cid}}</h3>
+        <h3>{{key}}</h3>
       </div>
       <div class="clear"></div>
   </div>
@@ -68,7 +68,7 @@
   <!-- detials of courseinfo and other info -->
     <div class="innercontainer innerdetails" ng-show="innershowDetails">
       <h3 ng-if="item.learningMaterials.length==0">Nothing to show</h3>
-      <a ng-repeat="subitem in item.learningMaterials" ng-click="downloadFile(subitem)">
+      <a ng-repeat="subitem in value" ng-click="downloadFile(subitem)">
         <i class="fa fa-play" aria-hidden="true"></i>
           {{subitem.name}}
       </a>
@@ -79,38 +79,6 @@
 
 
 </div>   <!-- tree div end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- 
@@ -246,10 +214,16 @@
                     <!-- <input type="file" id="i_file" name="fileattachment[]" ngf-select="onFileSelect($file)" style="display: none;"/> -->
                     <input type="file" file-model="myFile" name="fileattachment[]" id="i_file" style="display: none;" />
                 </div>
+<!-- 
+  <form>
+        <input type="file" ng-file-select="onFileSelect($files)" >
+  
+   </form>
 
 
 
-<!--   <md-button aria-label="file" ng-click="clickUpload()" flex>
+
+  <md-button aria-label="file" ng-click="clickUpload()" flex>
                     <md-icon class="fa fa-file-o fa-2x"></md-icon>
                     <md-tooltip md-direction="right">
                         select file
