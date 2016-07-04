@@ -40,12 +40,13 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 
 	$scope.lastdays = [
-          "Last Day",
-          "Last 7 Days",
-          "Last 15 Days",
-          "Last 30 Days"
+          "3 Days",
+          "7 Days",
+          "two weeks",
+          "one month"
     ];
 
+  $scope.selectedDay = ["3 Days"];  
 
 	$scope.breadcrums = [''];
 
@@ -92,21 +93,21 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 
 
 
-    $scope.loadWhatsNew(1);
+    $scope.loadWhatsNew(3);
 
     $scope.updateList = function(lastday){
     	var day = 0;
     	if(lastday === $scope.lastdays[0]){
     		console.log(1);
-    		day = 1;
+    		day = 3;
     	}
     	else if(lastday === $scope.lastdays[1]){
     		console.log(7);
     		day = 7;
     	}
     	else if(lastday === $scope.lastdays[2]){
-    		console.log(15);
-    		day = 15;
+    		console.log(14);
+    		day = 14;
     	}
     	else if(lastday === $scope.lastdays[3]){
     		console.log(30);

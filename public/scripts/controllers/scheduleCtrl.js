@@ -2,7 +2,7 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	var LOGIN_PAGE = "login.html";
 	console.log("in schedule");
-	$scope.$parent.setNav("L2P - Dashboard");
+	$scope.$parent.setNav("L2P - Calendar");
 
 	//Checking if user is authenticated or not
 	courseService.isUserAuthenticated()
