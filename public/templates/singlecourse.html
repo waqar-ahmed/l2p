@@ -30,7 +30,7 @@
 				</div> -->
 					<h3>Learning Material</h3>
 					<div class="row">
-						<h3 ng-if="roleList.length == 0 || roleList === undefined">Nothing to show</h3>
+						<span ng-if="roleList.length == 0 || roleList === undefined" class="show_text_center">Nothing to show</span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -57,7 +57,7 @@
 				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
 					<h3>Shared Documents</h3>
 					<div class="row">
-						<h3 ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined">Nothing to show</h3>
+						<span ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined" class="show_text_center">Nothing to show</span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -78,7 +78,8 @@
 			<md-tab label="Assignments" md-on-select="onTabChanges(2)">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
-						<h3 ng-if="assignments.length == 0 || assignments === undefined">Nothing to show</h3>
+						<span ng-if="assignments.length == 0 || assignments === undefined" class="show_text_center">Nothing to show</span>
+
 						<div class="md-accordion customwidth" ng-repeat="assignment in assignments|orderBy:'assignmentPublishDate':true">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
 
@@ -170,7 +171,7 @@
 
 			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
-				<h3 ng-if="discussions.length == 0 || discussions === undefined">Nothing to show</h3>
+				<span ng-if="discussions.length == 0 || discussions === undefined" class="show_text_center">Nothing to show</span>
 				<div ng-repeat="discussion in discussions | orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
@@ -238,7 +239,7 @@
 			<md-tab label="Emails" md-on-select="onTabChanges(4)">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<h3 ng-if="emails.length == 0 || emails === undefined">Nothing to show</h3>
+						<span ng-if="emails.length == 0 || emails === undefined" class="show_text_center">Nothing to show</span>
 						<div class="md-accordion customwidth" ng-repeat="email in emails|orderBy:'created':true" ng-show="emailsLoaded" ng-init="outerIndex = $index">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
 
@@ -283,7 +284,7 @@
 			<md-tab label="Announcements" md-on-select="onTabChanges(5)">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
-						<h3 ng-if="announcements.length == 0 || announcements === undefined">Nothing to show</h3>
+						<span ng-if="announcements.length == 0 || announcements === undefined" class="show_text_center">Nothing to show</span>
 						<div class="md-accordion customwidth" ng-repeat="announcement in announcements|orderBy:'created':true" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
 
@@ -330,7 +331,7 @@
 			</md-tab>
 
 
-			<md-tab label="Course Info">
+			<!-- <md-tab label="Course Info">
 				<md-content class="md-padding" layout ="column">
 				<div class="main_height">
 					<h3 ng-if="courseinfos.length == 0 || courseinfos === undefined">Nothing to show</h3>
@@ -347,7 +348,7 @@
 					</md-card>
 					</div>
 				</md-content>
-			</md-tab>
+			</md-tab> -->
 		</md-tabs>
 	</md-content>
 </div>

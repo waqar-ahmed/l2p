@@ -151,22 +151,22 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	};
 
 
-	/* Display dynamic Course Info by cid*/
-	courseService.getCourseInfo($stateParams.cid)
-		.then(function(res){
-			console.log("got CourseInfo");
-			console.log(res.dataSet);
-			$scope.courseinfos = [
-				{
-					coursetitle: String(res.dataSet[0].courseTitle),
-					description: String(res.dataSet[0].description),
-					url: String(res.dataSet[0].url),
+	// /* Display dynamic Course Info by cid*/
+	// courseService.getCourseInfo($stateParams.cid)
+	// 	.then(function(res){
+	// 		console.log("got CourseInfo");
+	// 		console.log(res.dataSet);
+	// 		$scope.courseinfos = [
+	// 			{
+	// 				coursetitle: String(res.dataSet[0].courseTitle),
+	// 				description: String(res.dataSet[0].description),
+	// 				url: String(res.dataSet[0].url),
 
-				},
-			];
-		}, function(err){
-			console.log("Error occured : " + err);
-	});
+	// 			},
+	// 		];
+	// 	}, function(err){
+	// 		console.log("Error occured : " + err);
+	// });
 
 	$scope.showSimpleToast= function(message) {
 	    $mdToast.show(
