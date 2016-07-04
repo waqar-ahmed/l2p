@@ -263,6 +263,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	    		resetLoading: $scope.resetDiscussLoading.bind(self),
 	    		refreshDiscussions: $scope.refreshDiscussions.bind(self),
 	    		refresh: $scope.refresh.bind(self),
+	    		showSimpleToast: $scope.showSimpleToast.bind(self),
 	    	},
 	    	bindToController: true,
 	      	templateUrl:'templates/viewdiscussion.html',
@@ -302,6 +303,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
           .ok('Delete')
           .cancel('Cancel');
     	$mdDialog.show(confirm).then(function() {
+		$scope.resetDiscussLoading();
     	$scope.discussions.splice(outerindex,1);
     	$scope.deleteDiscussion(selfId);
     	$scope.refresh();
@@ -316,7 +318,6 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			.then(function(res){
 				console.log("discussion deleted");
 				console.log(res);
-				$scope.resetDiscussLoading();
 				$scope.refreshDiscussions();
 			}, function(err){
 				console.log("Error occured : " + err);
@@ -333,6 +334,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
           .ok('Delete')
           .cancel('Cancel');
     	$mdDialog.show(confirm).then(function() {
+		$scope.resetDiscussLoading();
     	$scope.discussions[outerindex].children.splice(innerindex);
     	$scope.discussions[outerindex].counts--;
     	$scope.deleteDiscussion(selfId);
@@ -361,7 +363,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		$scope.discussLoaded = false;
 	}
 
-	function DiscussionDialogController($scope, $mdDialog, courseService, cid, resetLoading, refreshDiscussions, refresh) {
+	function DiscussionDialogController($scope, $mdDialog, courseService, cid, resetLoading, refreshDiscussions, refresh, showSimpleToast) {
 	  	$scope.back = function() {
 	    	$mdDialog.hide();
 	  	};

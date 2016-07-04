@@ -493,7 +493,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 		$http.get(URL_GET_INBOX+ URL_INBOX_ANNOUN+ "/"+ mins)
 		.success(function(res){
-			console.log(res);
+			// console.log(res);
 			defer.resolve(res);
 		})
 		.error(function(err, status){
