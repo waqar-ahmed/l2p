@@ -211,7 +211,7 @@
 							  	<p class="reply_date" flex="30" flex-sm="40" flex-gt-sm="45" ng-click="reply.showReplies=!reply.showReplies">Reply</p>
 							  	<p class="reply_date" flex ng-click="showConfirmDiscussionReply(ev,reply.selfId,outerindex,innerindex)" ng-show="reply.byMe">Delete</p>
 							  	<span flex></span>
-							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "MMM dd 'at' h:mm"}}</p>
+							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "dd MMM' at' h:mm"}}</p>
 							</div>
 
 							<div class="replybox_div" ng-show="reply.showReplies">

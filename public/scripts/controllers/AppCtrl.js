@@ -3,7 +3,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
     $mdSidenav(menuId).toggle();
   };
 
-  $scope.navbartitle = "L2p - Home";
+  $scope.navbartitle = "L2P - Home";
   var LOGIN_PAGE = "login.html";
 
  	$scope.menu = [
@@ -80,7 +80,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
 
   $scope.onMenuSelect = function(link,title){
     console.log("on menu select" + link);
-    $scope.navbartitle = "L2p - " + title;
+    $scope.navbartitle = "L2P - " + title;
     $location.path("/" + link);
     $mdSidenav("left").close();
     $scope.resetAuth();

@@ -4,6 +4,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
     $scope.courses = {};
     $scope.combinedData = [];
     $scope.colors = [];
+    $scope.$parent.setNav("L2P - Inbox");
     $scope.emailsLoaded = false;
     $scope.dataLoaded = true;
     $scope.contentTypes = ["email", "announcement"];

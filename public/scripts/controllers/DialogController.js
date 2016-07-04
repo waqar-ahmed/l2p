@@ -1,7 +1,7 @@
-app.controller('DialogController', function($rootScope, $scope, $mdDialog, $mdToast, $timeout, fileReader, cid, courseService, Upload) {
+app.controller('DialogController', function($rootScope, $scope, $mdDialog, $mdToast, $timeout, fileReader, cid, courseService, Upload, refresh, showSimpleToast) {
   //alert( this.closeDialog );
   //this.closeDialog = $scope.closeDialog;
-  
+
   $scope.showFileProg = false;
 
    $scope.selectFileToUpload = function(){
@@ -22,7 +22,7 @@ app.controller('DialogController', function($rootScope, $scope, $mdDialog, $mdTo
     // if($scope.folderName.length != 0){
     //   sourceDirectory += "/" + $scope.folderName;
     // }
-  	
+
 
 Upload.upload({
             url: 'course/16ss-55492/upload_in_shared_document',
@@ -33,31 +33,20 @@ Upload.upload({
             if(response.data.Status){
               $timeout(function () {
                 $rootScope.$broadcast('loadShareDocs');
-              $mdToast.show(
-                      $mdToast.simple()
-                          .textContent('File uploaded successfully')
-                          .position('bottom')
-                          .hideDelay(3000)
-               );
+                refresh();
+                showSimpleToast("File uploaded successfully");
             });
             }
             else{
-              $mdToast.show(
-                      $mdToast.simple()
-                          .textContent('Error Uploading file')
-                          .position('bottom')
-                          .hideDelay(3000)
-                  );
+              refresh();
+              showSimpleToast("Error Uploading file");
             }
-            
+
           }, function (response) {
-            if (response.status > 0)
-            $mdToast.show(
-                      $mdToast.simple()
-                          .textContent('Error Uploading file')
-                          .position('bottom')
-                          .hideDelay(3000)
-                  );
+            if (response.status > 0) {
+              refresh();
+              showSimpleToast("Error Uploading file");
+            }
           }, function (evt) {
           });
 

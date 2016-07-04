@@ -169,13 +169,13 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	});
 
 	$scope.showSimpleToast= function(message) {
-    $mdToast.show(
-      $mdToast.simple()
-        .textContent(message)
-        .position('top')
-        .hideDelay(1200)
-    );
- 		 }
+	    $mdToast.show(
+	      $mdToast.simple()
+	        .textContent(message)
+	        .position('bottom')
+	        .hideDelay(1200)
+	    );
+ 	}
 
 	$scope.trimFirstLetter = function(sentFrom){
     	return String(sentFrom).charAt(0);
@@ -612,6 +612,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			$scope.authShow = true;
 			$scope.isEdit = true;
 			$scope.currentannoun = selectedAnnouncement;
+			$scope.currentannoun.body = parseString($scope.currentannoun.body);
 			if ($scope.currentannoun.expireTime != 0) {
 				var tempDate = new Date();
 				tempDate.setTime($scope.currentannoun.expireTime*1000);
@@ -620,6 +621,14 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		}
 		// var template = angular.element($scope.currentannoun.body);
 		// $scope.currentannoun.bodyEdited = $compile(template);
+
+		function parseString(str) {
+			str = str.replace(/<br>/gi, "\n");
+			str = str.replace(/<p.*>/gi, "\n");
+			str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
+			str = str.replace(/<(?:.|\s)*?>/g, "");
+			return str;
+		}
 
 	  	$scope.back = function() {
 	  		$scope.editannouncement = false;
@@ -836,8 +845,11 @@ function parseLearningMaterials(y){
         '</md-dialog>',
         locals: {
           items: $scope.items,
-           cid: $stateParams.cid,
-          closeDialog: $scope.closeDialog
+          cid: $stateParams.cid,
+          closeDialog: $scope.closeDialog,
+      		refresh: $scope.refresh.bind(self),
+    		showSimpleToast: $scope.showSimpleToast.bind(self),
+
         },
         bindToController: true,
         controllerAs: 'ctrl',
