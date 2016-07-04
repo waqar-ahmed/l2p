@@ -438,7 +438,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			console.log(res);
 			//$window.alert("email is deleted");
 			console.log("email is deleted");
-			$scope.resetEmailLoading();
+			$scope.resetEmailLoading()
 			$scope.refreshEmails();
 		},
 		function(err){
@@ -575,7 +575,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			console.log("announcement is deleted");
 			console.log(res);
 			//$window.alert("announcement is deleted");
-			$scope.resetEmailLoading();
+			$scope.resetAnnounLoading();
 			$scope.refreshAnnouns();
 		},
 		function(err){

@@ -513,11 +513,19 @@
                 {
                     cid: "16ss-55492",                                
                 },                
-            },
+            },            
         },        
         learning_materials: {
             all_learning_materials: {
                 uri: "/course/{cid}/all_learning_materials",     
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                                
+                }, 
+            },
+            all_learning_materials_count: {
+                uri: "/course/{cid}/learning_material_count",     
                 method: "get",
                 uri_params :
                 {
@@ -648,6 +656,14 @@
                     cid: "16ss-55492",                    
                 }
             },
+            all_hyperlinks_count: {
+                uri: "/course/{cid}/all_hyperlink_count",   
+                method: "get",
+                uri_params :
+                {
+                    cid: "16ss-55492",                    
+                }
+            },
             single_hyperlink: {
                 uri: "/course/{cid}/hyperlink/{itemId}",   
                 method: "get",
@@ -698,6 +714,13 @@
         media_libraries: {
             all_media_libraries: {
                 uri: "/course/{cid}/all_media_libraries",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                }
+            },
+            all_media_library_count: {
+                uri: "/course/{cid}/all_media_library_count",
                 method: "get",
                 uri_params: {
                     cid: "16ss-55492",
@@ -1027,7 +1050,40 @@
                     sourceDirectory: "",
                 }
             },
-            
+            view_active_features: {
+                uri: "/course/{cid}/active_features",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                },
+            },
+            view_all_count: {
+                uri: "/course/{cid}/all_count",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",
+                },
+            },
+            download_file: {
+                uri: "/course/{cid}/download_file/{fileName}/{downloadUrl}",
+                method: "get",
+                uri_params: {
+                    cid: "16ss-55492",                    
+                },
+                req_params: {
+                    fileName: "Lab Kick Off.pptx",
+                    downloadUrl: "|/ss16/16ss-55492/Lists/StructuredMaterials/Hello/Lab%20Kick%20Off.pptx",
+                }
+            },
+            inbox: {
+                uri: "inbox/{moduleName}/{pastMinutes}",     
+                method: "get",
+                uri_params :
+                {
+                    moduleName: "announcements",
+                    pastMinutes: 5,                                
+                },                
+            },
         }
     }
 </script>

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
  */
 class EmailController extends L2pController {
     
+    use InboxTrait;
+    
     protected $validations = [
         'attachmentsToUpload' => 'json',
         'body' => 'string',        
@@ -18,41 +20,10 @@ class EmailController extends L2pController {
         'cc' => 'required|string',
         'recipients' => 'required|string',
         'subject' => 'required|string',
-    ];
-        
-    public function inbox() {
-        $allEmails = array();
-        $openCourseIds = $this->getCurrentCourses();
-        if($openCourseIds === false) {
-            return $this->jsonResponse(self::STATUS_FALSE, 'Can not get courses by current semester');
-        }
-        foreach($openCourseIds as $courseId) {
-            $courseEmails = $this->sendRequest(self::GET, 'viewAllEmails', ['cid'=>$courseId]);
-            if($courseEmails['Status']) {
-                $allEmails += $courseEmails['dataSet'];
-            }            
-        }
-        
-        return $this->jsonResponse(self::STATUS_TRUE, array_reverse(array_sort($allEmails, function($val) {
-            return $val['created'];
-        })));
-    }
+    ];     
     
-    private function getCurrentCourses() {        
-        $courseInfoArray = $this->sendRequest(self::GET, 'viewAllCourseInfoByCurrentSemester');        
-        if ($courseInfoArray['Status']) {
-            $courses = array();
-            $dataSet = $courseInfoArray['dataSet'];
-            foreach($dataSet as $data) {
-                if($data['Status']) {
-                    array_push($courses, $data['uniqueid']);                                                            
-                }                                                
-            }
-            return $courses;
-        } else {            
-            //TODO: log error
-            return false;
-        }         
+    public function inboxEmails($pastMinutes) {
+        return $this->inbox($pastMinutes, 'viewAllEmails');
     }
     
     public function addEmail(Request $request, $cid) {                 
