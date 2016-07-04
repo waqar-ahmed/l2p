@@ -1,4 +1,4 @@
-app.controller('scheduleCtrl', function($scope,courseService,colorService,$location,$anchorScroll,$compile, $timeout, uiCalendarConfig) {
+app.controller('scheduleCtrl', function($mdToast, $scope,courseService,colorService,$location,$anchorScroll,$compile, $timeout, uiCalendarConfig) {
 
 	var LOGIN_PAGE = "login.html";
 	console.log("in schedule");
