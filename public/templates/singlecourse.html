@@ -79,7 +79,7 @@
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
 						<h3 ng-if="assignments.length == 0 || assignments === undefined">Nothing to show</h3>
-						<div class="md-accordion customwidth" ng-repeat="assignment in assignments">
+						<div class="md-accordion customwidth" ng-repeat="assignment in assignments|orderBy:'assignmentPublishDate':true">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
 
             				<div class="customcolor_email" layout="row" layout-align="begin center">
@@ -171,7 +171,7 @@
 			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
 				<h3 ng-if="discussions.length == 0 || discussions === undefined">Nothing to show</h3>
-				<div ng-repeat="discussion in discussions" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
+				<div ng-repeat="discussion in discussions | orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
           					<li  class="col-s-4" ng-class="{'reset-s': $index%3==0 }" >
@@ -211,7 +211,7 @@
 							  	<p class="reply_date" flex="30" flex-sm="40" flex-gt-sm="45" ng-click="reply.showReplies=!reply.showReplies">Reply</p>
 							  	<p class="reply_date" flex ng-click="showConfirmDiscussionReply(ev,reply.selfId,outerindex,innerindex)" ng-show="reply.byMe">Delete</p>
 							  	<span flex></span>
-							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "MMM dd 'at' h:mm"}}</p>
+							  	<p class="reply_date" style="margin-right:16px; font-style: italic;" ng-click="reply.showReplies=!reply.showReplies">{{reply.created*1000|date: "dd MMM' at' h:mm"}}</p>
 							</div>
 
 							<div class="replybox_div" ng-show="reply.showReplies">

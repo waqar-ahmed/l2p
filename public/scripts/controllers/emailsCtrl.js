@@ -4,6 +4,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
     $scope.courses = {};
     $scope.combinedData = [];
     $scope.colors = [];
+    $scope.$parent.setNav("L2P - Inbox");
     $scope.emailsLoaded = false;
     $scope.dataLoaded = true;
     $scope.contentTypes = ["email", "announcement"];
@@ -41,7 +42,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
         $scope.smallscreen = false;
     }
 
-    courseService.getAllWhatsNew(mins)
+    courseService.getAllWhatsNewForInbox(mins)
         .then(function(res){
             console.log("got news");
             console.log(res.dataset);
