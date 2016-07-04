@@ -9,6 +9,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
     $scope.dataLoaded = true;
     $scope.contentTypes = ["email", "announcement"];
     $scope.selectedType = ["email", "announcement"];
+    var LOGIN_PAGE = "login.html";
     $scope.days = [
         {
             "name": "3 days",
@@ -41,6 +42,30 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
     } else {
         $scope.smallscreen = false;
     }
+
+
+
+    //Checking if user is authenticated or not
+    courseService.isUserAuthenticated()
+    .then(function(res){
+        if(res.Status == true)
+        {
+            console.log("user is authenticated");
+        }
+        else{
+            //user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
+            //requestUserCode();
+            gotoAuthorizePage();
+        }
+    }, function(err){
+        console.log("Error occured : " + err);
+    });
+
+
+    gotoAuthorizePage = function(){
+        window.location = LOGIN_PAGE;
+    }
+
 
     courseService.getAllWhatsNewForInbox(mins)
         .then(function(res){

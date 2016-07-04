@@ -16,8 +16,6 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 		if(res.Status == true)
 		{
 			console.log("user is authenticated");
-			verified = true;
-			//getAllCourses();
 		}
 		else{
 			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application

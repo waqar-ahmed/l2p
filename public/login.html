@@ -29,6 +29,7 @@
 
 	function AuthenticateUser()
 	{
+		
 		console.log("authenticating user");
 		    var Url = "authenticate";
 
@@ -36,6 +37,7 @@
 		    xmlHttp.onreadystatechange = ProcessRequest;
 		    xmlHttp.open( "GET", Url, true );
 		    xmlHttp.send( null );
+		   
 		}
 
 		function ProcessRequest()
@@ -52,7 +54,8 @@
 		            console.log(info.Status);
 
 		            if(info.Status){
-		            	window.location = window.location.origin;
+		            	//window.location = window.location.origin;
+		            	window.location = "http://localhost/l2p/public/";
 		            	//window.location = "http://134.61.187.137/laravel/l2p/public/";
 		            }
 		        }

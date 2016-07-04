@@ -22,10 +22,27 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 
 	$scope.show_replies = false;
 
+	//Checking if user is authenticated or not
+	courseService.isUserAuthenticated()
+	.then(function(res){
+		if(res.Status == true)
+		{
+			console.log("user is authenticated");
+		}
+		else{
+			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
+			//requestUserCode();
+			gotoAuthorizePage();
+		}
+	}, function(err){
+		console.log("Error occured : " + err);
+	});
 
-	if(!courseService.getAuthenticatedValue()){
+
+	gotoAuthorizePage = function(){
 		window.location = LOGIN_PAGE;
 	}
+
 
 	$scope.onTabChanges = function($index){
 		console.log("Tab index : " + $index);
@@ -124,7 +141,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	.then(function(res){
 		console.log("get all shared Docs");
 		console.log(res.dataSet);
-		$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		if(res.dataSet.length == 0){
+			$scope.allSharedDocs = undefined;
+		}
+		else{
+			$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		}
 		$scope.dataLoaded = true;
 		//console.log(buildHierarchy(items));
 	}, function(){
