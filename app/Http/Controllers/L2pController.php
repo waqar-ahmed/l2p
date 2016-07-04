@@ -103,11 +103,11 @@ class L2pController extends Controller {
 
     public function _viewTesterPage(){
         return view('tester');
-    }
-
-    public function viewAllCounts($cid) {
-        return $this->sendRequest(self::GET, 'viewAllCounts', ['cid'=>$cid]);
-    }
+    }            
+    
+    public function viewAllCount($cid) {
+        return $this->sendRequest(self::GET, 'viewAllCount', ['cid'=>$cid]);
+    }       
 
     public function viewActiveFeatures($cid) {
         return $this->sendRequest(self::GET, 'viewActiveFeatures', ['cid'=>$cid]);
