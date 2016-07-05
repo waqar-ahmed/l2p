@@ -43,6 +43,13 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	}
 	*/
 
+	/* recover from error : log out */
+	function errorRecover(){
+		$scope.showSimpleToast("Time out, please login again");
+		courseService.logout();
+		window.location = LOGIN_PAGE;
+	}
+
 	$scope.onTabChanges = function($index){
 		console.log("Tab index : " + $index);
 	}
@@ -52,8 +59,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get all Discussions */
 	courseService.getAllDiscussions($stateParams.cid)
 		.then(function(res){
-			if(res.dataSet === undefined || res.dataSet.length == 0){
+			if(res.Status === undefined || res.Status == false){
+				errorRecover();
+			}
+			else if(res.dataSet === undefined || res.dataSet.length == 0){
 				console.log("no discussions");
+				console.log(res);
 				orginalDiscussions = undefined;
 			}else{
 				console.log("got discussions");

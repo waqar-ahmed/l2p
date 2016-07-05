@@ -1,4 +1,4 @@
-app.controller('coursesCtrl', function($scope,courseService,$location, $interval, colorService) {
+app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService) {
 
   $scope.coursesLoaded = false;
   $scope.$parent.setNav("L2P - Courses");
@@ -40,11 +40,31 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
       console.log($scope.semesters);
     }, function(err){
       console.log("Error occured : " + err);
+	  $mdToast.show(
+		$mdToast.simple()
+		.textContent("Error occured, please login again!")
+		.position('top')
+		.hideDelay(1200)
+		);
+	  courseService.logout();
+      window.location = LOGIN_PAGE;
+
   });
 
 
   courseService.getAllCourses()
 		.then(function(res){
+			//error recover
+			if(res.Status === undefined){
+				$mdToast.show(
+					$mdToast.simple()
+					.textContent("Error occured, please login again!")
+					.position('top')
+					.hideDelay(1200)
+				);
+				courseService.logout();
+				window.location = LOGIN_PAGE;
+			}
 			//got all courses therefore generate colors
 			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;
