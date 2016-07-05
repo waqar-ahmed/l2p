@@ -9,8 +9,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
         name: 'Summer Semester 2016',
       };
 
-   console.log($scope.semesters);
-
 
   //Checking if user is authenticated or not
   courseService.isUserAuthenticated()
@@ -35,6 +33,10 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   courseService.getSortedSems()
     .then(function(res){
+		console.log(res);
+		if(res.Status === undefined || res.Status == false){
+			window.location.reload();
+		}
       $scope.semesters = res.Body;
       console.log("got sorted semesters");
       console.log($scope.semesters);
@@ -54,16 +56,16 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   courseService.getAllCourses()
 		.then(function(res){
+			console.log(res);
 			//error recover
-			if(res.Status === undefined){
+			if(res.Status != true){
 				$mdToast.show(
 					$mdToast.simple()
 					.textContent("Error occured, please login again!")
 					.position('top')
 					.hideDelay(1200)
 				);
-				courseService.logout();
-				window.location = LOGIN_PAGE;
+				window.location.reload();
 			}
 			//got all courses therefore generate colors
 			$scope.colors = colorService.generateColors(res.dataSet.length);

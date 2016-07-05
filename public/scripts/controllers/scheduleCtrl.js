@@ -54,11 +54,11 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 			if(res.Status === undefined){
 				$mdToast.show(
 					$mdToast.simple()
-					.textContent("Time out, please try it later!")
+					.textContent("Time out, try it again!")
 					.position('top')
 					.hideDelay(1200)
 				);
-				$location.path('/mycourses');
+				window.location.reload();
 			}
 			if(res.Status == false){
 				$mdToast.show(
@@ -96,7 +96,8 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 		}, function(err){
 			console.log("Error occured : " + err);
-			$scope.dataLoading = true;
+			courseService.logout();
+			window.location = LOGIN_PAGE;
 		});
 /*
 	$scope.eventSource =[

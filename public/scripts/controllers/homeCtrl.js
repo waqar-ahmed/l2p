@@ -31,10 +31,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 		window.location = LOGIN_PAGE;
 	}
 
-	// Redirect user to request user code page so user can verify all courses
-	requestUserCode = function(){
-		window.location = LOGIN_USER;
-	}
+
 
 
 	$scope.lastdays = [
@@ -76,6 +73,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	courseService.getAllWhatsNew(mins)
     	.then(function(res){
 			console.log(res);
+
 			$scope.dataLoaded = true;
 			$scope.allWhatsNew = res;
 			for (var key in res) {
