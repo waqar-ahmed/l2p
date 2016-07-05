@@ -59,8 +59,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get all Discussions */
 	courseService.getAllDiscussions($stateParams.cid)
 		.then(function(res){
-			if(res.Status === undefined || res.Status == false){
+			if(res.Status == false){
 				errorRecover();
+			}else if(res.Status === undefined){
+				window.location.reload();
 			}
 			else if(res.dataSet === undefined || res.dataSet.length == 0){
 				console.log("no discussions");
@@ -75,10 +77,15 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			$scope.discussLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
+			errorRecover();
 	});
 	/* get Emails by cid*/
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
 			if(res.dataSet === undefined || res.dataSet.length == 0){
 				console.log("no emails");
 				$scope.emails = undefined;
@@ -95,6 +102,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Announcements by cid*/
 	courseService.getAnnounbyid($stateParams.cid)
 		.then(function(res){
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
 			if(res.dataSet === undefined || res.dataSet.length == 0){
 				console.log("no announcements");
 				$scope.announcements = undefined;
@@ -121,6 +132,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Courses by sem*/
 	courseService.getCurrentSem(sem)
 		.then(function(res){
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
 			console.log("got course by currentsemester");
 			console.log(res.dataSet);
 			$scope.$parent.courseinfo = res.dataSet;
@@ -137,6 +152,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Learning Materials by cid*/
 	courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
 		if(res.dataSet === undefined || res.dataSet.length == 0){
 			console.log("no Learning Materials");
 			$scope.roleList = undefined;
@@ -158,6 +177,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Assignments by cid*/
 	courseService.getAllAssignments($stateParams.cid)
 	.then(function(res){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
 		if(res.dataSet === undefined || res.dataSet.length == 0){
 			console.log("no assignments");
 			$scope.assignments = undefined;
@@ -176,6 +199,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		/* get Shared Docs by cid*/
 	courseService.getAllSharedDocs($stateParams.cid)
 	.then(function(res){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
 		if(res.dataSet === undefined ||res.dataSet.length == 0){
 			console.log("no Share Docs")
 			$scope.allSharedDocs = undefined;
