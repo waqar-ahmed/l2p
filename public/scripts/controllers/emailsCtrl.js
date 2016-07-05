@@ -49,11 +49,18 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
             courseService.getInboxEmails(mins)
                 .then(function(res){
                     console.log("refresh emails");
+					console.log(res);
+					if(res.Status != true){
+						window.location.reload();
+					}
                     console.log(res.Body);
                     $scope.emails = res.Body;
                     courseService.getInboxAnnouns(mins)
                         .then(function(res){
                             console.log("refresh announcements");
+							if(res.Status != true){
+								window.location.reload();
+							}
                             console.log(res.Body);
                             $scope.announcements = res.Body;
                             parseDataSet();
@@ -61,7 +68,9 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
                             console.log("Error occured : " + err);
                     });
                 }, function(err){
-                    console.log("Error occured : " + err);
+                    console.log("Error occured, please login again");
+					courseService.logout();
+					window.location = LOGIN_PAGE;
             });
         }
     }

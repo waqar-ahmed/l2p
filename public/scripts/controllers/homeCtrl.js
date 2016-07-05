@@ -31,10 +31,7 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 		window.location = LOGIN_PAGE;
 	}
 
-	// Redirect user to request user code page so user can verify all courses
-	requestUserCode = function(){
-		window.location = LOGIN_USER;
-	}
+
 
 
 	$scope.lastdays = [
@@ -75,17 +72,26 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
     	$scope.dataLoaded = false;
     	courseService.getAllWhatsNew(mins)
     	.then(function(res){
-        console.log(res);
+			console.log(res);
+
 			$scope.dataLoaded = true;
 			$scope.allWhatsNew = res;
-      console.log(res);
-      for (var key in res) {
-      if (res.hasOwnProperty(key)) {
-          console.log(key + " = " + res[key]);
-      }
-}
+			for (var key in res) {
+				if (res.hasOwnProperty(key)) {
+					console.log(key + " = " + res[key]);
+				}
+			}
 	}, function(err){
 		console.log("Error occured : " + err);
+		//recover from error
+		$mdToast.show(
+		$mdToast.simple()
+		.textContent("Error occured, please login again!")
+		.position('top')
+		.hideDelay(1200)
+		);
+	  courseService.logout();
+      window.location = LOGIN_PAGE;
 	});
     }
 

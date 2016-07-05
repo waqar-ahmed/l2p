@@ -23,6 +23,7 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	$scope.show_replies = false;
 
 	//Checking if user is authenticated or not
+	/*
 	courseService.isUserAuthenticated()
 	.then(function(res){
 		if(res.Status == true)
@@ -30,8 +31,6 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 			console.log("user is authenticated");
 		}
 		else{
-			//user is not authenticated, therefore we need to redirect user to /requestUserCode page so user can verify application
-			//requestUserCode();
 			gotoAuthorizePage();
 		}
 	}, function(err){
@@ -42,7 +41,14 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	gotoAuthorizePage = function(){
 		window.location = LOGIN_PAGE;
 	}
+	*/
 
+	/* recover from error : log out */
+	function errorRecover(){
+		$scope.showSimpleToast("Time out, please login again");
+		courseService.logout();
+		window.location = LOGIN_PAGE;
+	}
 
 	$scope.onTabChanges = function($index){
 		console.log("Tab index : " + $index);
@@ -50,23 +56,45 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 
 	console.log("course ID: " + $stateParams.cid);
 
+	/* get all Discussions */
 	courseService.getAllDiscussions($stateParams.cid)
 		.then(function(res){
-			console.log("got discussions");
-			console.log(res.dataSet);
-			orginalDiscussions = res.dataSet;
-			$scope.parseDiscuss();
+			if(res.Status == false){
+				errorRecover();
+			}else if(res.Status === undefined){
+				window.location.reload();
+			}
+			else if(res.dataSet === undefined || res.dataSet.length == 0){
+				console.log("no discussions");
+				console.log(res);
+				orginalDiscussions = undefined;
+			}else{
+				console.log("got discussions");
+				console.log(res.dataSet);
+				orginalDiscussions = res.dataSet;
+				$scope.parseDiscuss();
+			}
 			$scope.discussLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
+			errorRecover();
 	});
 	/* get Emails by cid*/
 	courseService.getEmailbyid($stateParams.cid)
 		.then(function(res){
-			console.log("got emails");
-			console.log(res.dataSet);
-			$scope.emails = res.dataSet;
-        	$scope.colors_email = colorService.generateColors($scope.emails.length);
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
+			if(res.dataSet === undefined || res.dataSet.length == 0){
+				console.log("no emails");
+				$scope.emails = undefined;
+			}else{
+				console.log("got emails");
+				console.log(res.dataSet);
+				$scope.emails = res.dataSet;
+				$scope.colors_email = colorService.generateColors($scope.emails.length);
+			}
 			$scope.emailsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
@@ -74,10 +102,19 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Announcements by cid*/
 	courseService.getAnnounbyid($stateParams.cid)
 		.then(function(res){
-			console.log("got announcements");
-			console.log(res.dataSet);
-			$scope.announcements = res.dataSet;
-			$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
+			if(res.dataSet === undefined || res.dataSet.length == 0){
+				console.log("no announcements");
+				$scope.announcements = undefined;
+			}else{
+				console.log("got announcements");
+				console.log(res.dataSet);
+				$scope.announcements = res.dataSet;
+				$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
+			}
 			$scope.announcementsLoaded = true;
 		}, function(err){
 			console.log("Error occured : " + err);
@@ -95,6 +132,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Courses by sem*/
 	courseService.getCurrentSem(sem)
 		.then(function(res){
+			if(res.Status === undefined){
+				window.location.reload();
+			}
+
 			console.log("got course by currentsemester");
 			console.log(res.dataSet);
 			$scope.$parent.courseinfo = res.dataSet;
@@ -111,9 +152,18 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Learning Materials by cid*/
 	courseService.getAllLearningMaterials($stateParams.cid)
 	.then(function(res){
-		console.log("get all learningMaterials ");
-		console.log(res.dataSet);
-		$scope.roleList = parseLearningMaterials(res.dataSet);
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no Learning Materials");
+			$scope.roleList = undefined;
+		}else{
+			console.log("get all learningMaterials ");
+			console.log(res.dataSet);
+			$scope.roleList = parseLearningMaterials(res.dataSet);
+		}
 		$scope.dataLoaded = true;
 		//console.log(buildHierarchy(items));
 	}, function(){
@@ -127,10 +177,20 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	/* get Assignments by cid*/
 	courseService.getAllAssignments($stateParams.cid)
 	.then(function(res){
-		console.log("get all assignments ");
-		console.log(res.dataSet);
-		$scope.assignments = res.dataSet;
-		console.log("Assingment length: "+ $scope.assignments.length);
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no assignments");
+			$scope.assignments = undefined;
+		}else{
+			console.log("get all assignments ");
+			console.log(res.dataSet);
+			$scope.assignments = res.dataSet;
+			console.log("Assingment length: "+ $scope.assignments.length);
+		}
+		$scope.dataLoaded = true;
 	}, function(){
 		console.log("Error occured");
 	});
@@ -139,12 +199,17 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		/* get Shared Docs by cid*/
 	courseService.getAllSharedDocs($stateParams.cid)
 	.then(function(res){
-		console.log("get all shared Docs");
-		console.log(res.dataSet);
-		if(res.dataSet.length == 0){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
+		if(res.dataSet === undefined ||res.dataSet.length == 0){
+			console.log("no Share Docs")
 			$scope.allSharedDocs = undefined;
 		}
 		else{
+			console.log("get all shared Docs");
+			console.log(res.dataSet);
 			$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
 		}
 		$scope.dataLoaded = true;
@@ -647,10 +712,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		// $scope.currentannoun.bodyEdited = $compile(template);
 
 		function parseString(str) {
-			str = str.replace(/<br>/gi, "\n");
-			str = str.replace(/<p.*>/gi, "\n");
-			str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
-			str = str.replace(/<(?:.|\s)*?>/g, "");
+			if (str != null) {
+				str = str.replace(/<br>/gi, "\n");
+				str = str.replace(/<p.*>/gi, "\n");
+				str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
+				str = str.replace(/<(?:.|\s)*?>/g, "");
+			}
 			return str;
 		}
 
@@ -666,7 +733,8 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	  	};
 
 	  	$scope.addAnnoun = function(){
-	  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+	  		console.log($scope.expireEdited.toString());
+	  		var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
 	  		console.log(expireTime);
 	  		var newAnnouncement = {
   				"title": $scope.currentannoun.title,
@@ -692,7 +760,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 
   		$scope.editAnnoun = function(){
 	  		if ($scope.expireEdited != undefined){
-		  		var expireTime = Math.floor($scope.expireEdited.getTime()/1000);
+	  			if ($scope.expireEdited != tempDate){
+		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
+		  		}
+		  		else {
+		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000);
+		  		}
 		  	}
 		  	else {
 		  		var expireTime = 0;

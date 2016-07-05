@@ -1,4 +1,4 @@
-app.controller('coursesCtrl', function($scope,courseService,$location, $interval, colorService) {
+app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService) {
 
   $scope.coursesLoaded = false;
   $scope.$parent.setNav("L2P - Courses");
@@ -8,8 +8,6 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
         sem: 'ss16',
         name: 'Summer Semester 2016',
       };
-
-   console.log($scope.semesters);
 
 
   //Checking if user is authenticated or not
@@ -35,16 +33,40 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   courseService.getSortedSems()
     .then(function(res){
+		console.log(res);
+		if(res.Status === undefined || res.Status == false){
+			window.location.reload();
+		}
       $scope.semesters = res.Body;
       console.log("got sorted semesters");
       console.log($scope.semesters);
     }, function(err){
       console.log("Error occured : " + err);
+	  $mdToast.show(
+		$mdToast.simple()
+		.textContent("Error occured, please login again!")
+		.position('top')
+		.hideDelay(1200)
+		);
+	  courseService.logout();
+      window.location = LOGIN_PAGE;
+
   });
 
 
   courseService.getAllCourses()
 		.then(function(res){
+			console.log(res);
+			//error recover
+			if(res.Status != true){
+				$mdToast.show(
+					$mdToast.simple()
+					.textContent("Error occured, please login again!")
+					.position('top')
+					.hideDelay(1200)
+				);
+				window.location.reload();
+			}
 			//got all courses therefore generate colors
 			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;

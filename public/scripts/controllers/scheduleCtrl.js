@@ -51,6 +51,15 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
+			if(res.Status === undefined){
+				$mdToast.show(
+					$mdToast.simple()
+					.textContent("Time out, try it again!")
+					.position('top')
+					.hideDelay(1200)
+				);
+				window.location.reload();
+			}
 			if(res.Status == false){
 				$mdToast.show(
 					$mdToast.simple()
@@ -87,7 +96,8 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 		}, function(err){
 			console.log("Error occured : " + err);
-			$scope.dataLoading = true;
+			courseService.logout();
+			window.location = LOGIN_PAGE;
 		});
 /*
 	$scope.eventSource =[
