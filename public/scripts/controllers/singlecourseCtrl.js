@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
+app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
@@ -42,23 +42,82 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 		window.location = LOGIN_PAGE;
 	}
 	*/
+	window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+    console.log("Error occured: " + errorMsg);//or any message
+    return false;
+}
 
-	/* recover from error : log out */
-	function errorRecover(){
-		$scope.showSimpleToast("Time out, please login again");
-		courseService.logout();
-		window.location = LOGIN_PAGE;
+	$scope.dataLoaded = false;
+
+	var promises = [
+		courseService.getAllLearningMaterials($stateParams.cid),
+		courseService.getAllAssignments($stateParams.cid),
+		courseService.getAllSharedDocs($stateParams.cid),
+		courseService.getAllDiscussions($stateParams.cid),
+		courseService.getEmailbyid($stateParams.cid),
+		courseService.getAnnounbyid($stateParams.cid)
+	];
+
+	$q.all(promises).then((values) => {
+		console.log("promises done");
+	    setLearningMaterials(values[0]);
+	    setAssignments(values[1]); 
+	    setSharedDocs(values[2]);
+	    setDiscussions(values[3]);
+	    setEmails(values[4]);
+	    setAnnouncements(values[5]);
+
+	    $scope.dataLoaded = true;
+	});
+
+	function setLearningMaterials(res){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
+
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no Learning Materials");
+			$scope.roleList = undefined;
+		}else{
+			console.log("get all learningMaterials ");
+			console.log(res.dataSet);
+			$scope.roleList = parseLearningMaterials(res.dataSet);
+		}
 	}
 
-	$scope.onTabChanges = function($index){
-		console.log("Tab index : " + $index);
+	function setAssignments(res){
+				if(res.Status === undefined){
+				window.location.reload();
+			}
+
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no assignments");
+			$scope.assignments = undefined;
+		}else{
+			console.log("get all assignments ");
+			console.log(res.dataSet);
+			$scope.assignments = res.dataSet;
+			console.log("Assingment length: "+ $scope.assignments.length);
+		}
 	}
 
-	console.log("course ID: " + $stateParams.cid);
+	function setSharedDocs(res){
+		if(res.Status === undefined){
+				window.location.reload();
+			}
 
-	/* get all Discussions */
-	courseService.getAllDiscussions($stateParams.cid)
-		.then(function(res){
+		if(res.dataSet === undefined ||res.dataSet.length == 0){
+			console.log("no Share Docs")
+			$scope.allSharedDocs = undefined;
+		}
+		else{
+			console.log("get all shared Docs");
+			console.log(res.dataSet);
+			$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+		}
+	}
+
+	function setDiscussions(res){
 			if(res.Status == false){
 				errorRecover();
 			}else if(res.Status === undefined){
@@ -75,14 +134,10 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 				$scope.parseDiscuss();
 			}
 			$scope.discussLoaded = true;
-		}, function(err){
-			console.log("Error occured : " + err);
-			errorRecover();
-	});
-	/* get Emails by cid*/
-	courseService.getEmailbyid($stateParams.cid)
-		.then(function(res){
-			if(res.Status === undefined){
+	}
+
+	function setEmails(res){
+		if(res.Status === undefined){
 				window.location.reload();
 			}
 
@@ -96,12 +151,9 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 				$scope.colors_email = colorService.generateColors($scope.emails.length);
 			}
 			$scope.emailsLoaded = true;
-		}, function(err){
-			console.log("Error occured : " + err);
-	});
-	/* get Announcements by cid*/
-	courseService.getAnnounbyid($stateParams.cid)
-		.then(function(res){
+	}
+
+	function setAnnouncements(res){
 			if(res.Status === undefined){
 				window.location.reload();
 			}
@@ -116,9 +168,86 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 				$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
 			}
 			$scope.announcementsLoaded = true;
-		}, function(err){
-			console.log("Error occured : " + err);
-	});
+	}
+
+	/* recover from error : log out */
+	function errorRecover(){
+		$scope.showSimpleToast("Time out, please login again");
+		courseService.logout();
+		window.location = LOGIN_PAGE;
+	}
+
+	$scope.onTabChanges = function($index){
+		console.log("Tab index : " + $index);
+	}
+
+	console.log("course ID: " + $stateParams.cid);
+
+	/* get all Discussions */
+	// courseService.getAllDiscussions($stateParams.cid)
+	// 	.then(function(res){
+	// 		if(res.Status == false){
+	// 			errorRecover();
+	// 		}else if(res.Status === undefined){
+	// 			window.location.reload();
+	// 		}
+	// 		else if(res.dataSet === undefined || res.dataSet.length == 0){
+	// 			console.log("no discussions");
+	// 			console.log(res);
+	// 			orginalDiscussions = undefined;
+	// 		}else{
+	// 			console.log("got discussions");
+	// 			console.log(res.dataSet);
+	// 			orginalDiscussions = res.dataSet;
+	// 			$scope.parseDiscuss();
+	// 		}
+	// 		$scope.discussLoaded = true;
+	// 	}, function(err){
+	// 		console.log("Error occured : " + err);
+	// 		errorRecover();
+	// });
+
+
+	/* get Emails by cid*/
+	// courseService.getEmailbyid($stateParams.cid)
+	// 	.then(function(res){
+	// 		if(res.Status === undefined){
+	// 			window.location.reload();
+	// 		}
+
+	// 		if(res.dataSet === undefined || res.dataSet.length == 0){
+	// 			console.log("no emails");
+	// 			$scope.emails = undefined;
+	// 		}else{
+	// 			console.log("got emails");
+	// 			console.log(res.dataSet);
+	// 			$scope.emails = res.dataSet;
+	// 			$scope.colors_email = colorService.generateColors($scope.emails.length);
+	// 		}
+	// 		$scope.emailsLoaded = true;
+	// 	}, function(err){
+	// 		console.log("Error occured : " + err);
+	// });
+	/* get Announcements by cid*/
+	// courseService.getAnnounbyid($stateParams.cid)
+	// 	.then(function(res){
+	// 		if(res.Status === undefined){
+	// 			window.location.reload();
+	// 		}
+
+	// 		if(res.dataSet === undefined || res.dataSet.length == 0){
+	// 			console.log("no announcements");
+	// 			$scope.announcements = undefined;
+	// 		}else{
+	// 			console.log("got announcements");
+	// 			console.log(res.dataSet);
+	// 			$scope.announcements = res.dataSet;
+	// 			$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
+	// 		}
+	// 		$scope.announcementsLoaded = true;
+	// 	}, function(err){
+	// 		console.log("Error occured : " + err);
+	// });
 	/* get User Role by cid*/
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
@@ -150,50 +279,50 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 	});
 
 	/* get Learning Materials by cid*/
-	courseService.getAllLearningMaterials($stateParams.cid)
-	.then(function(res){
-		if(res.Status === undefined){
-				window.location.reload();
-			}
+	// courseService.getAllLearningMaterials($stateParams.cid)
+	// .then(function(res){
+	// 	if(res.Status === undefined){
+	// 			window.location.reload();
+	// 		}
 
-		if(res.dataSet === undefined || res.dataSet.length == 0){
-			console.log("no Learning Materials");
-			$scope.roleList = undefined;
-		}else{
-			console.log("get all learningMaterials ");
-			console.log(res.dataSet);
-			$scope.roleList = parseLearningMaterials(res.dataSet);
-		}
-		$scope.dataLoaded = true;
-		//console.log(buildHierarchy(items));
-	}, function(){
-		console.log("Error occured");
-	});
+	// 	if(res.dataSet === undefined || res.dataSet.length == 0){
+	// 		console.log("no Learning Materials");
+	// 		$scope.roleList = undefined;
+	// 	}else{
+	// 		console.log("get all learningMaterials ");
+	// 		console.log(res.dataSet);
+	// 		$scope.roleList = parseLearningMaterials(res.dataSet);
+	// 	}
+	// 	$scope.dataLoaded = true;
+	// 	//console.log(buildHierarchy(items));
+	// }, function(){
+	// 	console.log("Error occured");
+	// });
 
 
-	loadAllSharedDocs();
+	//loadAllSharedDocs();
 
 
 	/* get Assignments by cid*/
-	courseService.getAllAssignments($stateParams.cid)
-	.then(function(res){
-		if(res.Status === undefined){
-				window.location.reload();
-			}
+	// courseService.getAllAssignments($stateParams.cid)
+	// .then(function(res){
+	// 	if(res.Status === undefined){
+	// 			window.location.reload();
+	// 		}
 
-		if(res.dataSet === undefined || res.dataSet.length == 0){
-			console.log("no assignments");
-			$scope.assignments = undefined;
-		}else{
-			console.log("get all assignments ");
-			console.log(res.dataSet);
-			$scope.assignments = res.dataSet;
-			console.log("Assingment length: "+ $scope.assignments.length);
-		}
-		$scope.dataLoaded = true;
-	}, function(){
-		console.log("Error occured");
-	});
+	// 	if(res.dataSet === undefined || res.dataSet.length == 0){
+	// 		console.log("no assignments");
+	// 		$scope.assignments = undefined;
+	// 	}else{
+	// 		console.log("get all assignments ");
+	// 		console.log(res.dataSet);
+	// 		$scope.assignments = res.dataSet;
+	// 		console.log("Assingment length: "+ $scope.assignments.length);
+	// 	}
+	// 	$scope.dataLoaded = true;
+	// }, function(){
+	// 	console.log("Error occured");
+	// });
 
 	function loadAllSharedDocs(){
 		/* get Shared Docs by cid*/
