@@ -51,6 +51,15 @@ app.controller('scheduleCtrl', function($scope,courseService,colorService,$locat
 
 	courseService.getAllCourseEvents()
 		.then(function(res){
+			if(res.Status === undefined){
+				$mdToast.show(
+					$mdToast.simple()
+					.textContent("Time out, please try it later!")
+					.position('top')
+					.hideDelay(1200)
+				);
+				$location.path('/mycourses');
+			}
 			if(res.Status == false){
 				$mdToast.show(
 					$mdToast.simple()

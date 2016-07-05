@@ -61,7 +61,9 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
                             console.log("Error occured : " + err);
                     });
                 }, function(err){
-                    console.log("Error occured : " + err);
+                    console.log("Error occured, please login again");
+					courseService.logout();
+					window.location = LOGIN_PAGE;
             });
         }
     }
