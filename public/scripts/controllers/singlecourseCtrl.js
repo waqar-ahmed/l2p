@@ -722,7 +722,12 @@ app.controller('singlecourseCtrl', function($rootScope, $scope, $stateParams, $f
 
   		$scope.editAnnoun = function(){
 	  		if ($scope.expireEdited != undefined){
-		  		var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
+	  			if ($scope.expireEdited != tempDate){
+		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
+		  		}
+		  		else {
+		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000);
+		  		}
 		  	}
 		  	else {
 		  		var expireTime = 0;
