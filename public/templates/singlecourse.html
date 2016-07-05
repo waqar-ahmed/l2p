@@ -93,7 +93,7 @@
                 			<div id="wrapper" layout="column" flex="70">
                         		<div class="inner1"><b>{{assignment.title}}</b></div>
         			    		<div class="inner2"><b>Due Date: </b>{{assignment.dueDate * 1000 | date:'dd-MM-yyyy, HH:mm'}} </div>
-								<div class="inner2"><b>Total Points: </b> {{assignment.totalPoint}}</div>
+								<div class="inner2"><b>Total Points: </b>{{(assignment.correction.obtainedPoint!=undefined)?assignment.correction.obtainedPoint+'/':''}}{{assignment.totalPoint}}</div>
 
         					</div>
             					<span flex></span>
