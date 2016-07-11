@@ -26,7 +26,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
     console.log("Error occured : " + err);
   });
 
-
+  // redirect user to the RWTH authorization page
   gotoAuthorizePage = function(){
     window.location = LOGIN_PAGE;
   }
@@ -53,7 +53,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   });
 
-
+  // get course list from local service
   courseService.getAllCourses()
 		.then(function(res){
 			console.log(res);
@@ -67,6 +67,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 				);
 				window.location.reload();
 			}
+
 			//got all courses therefore generate colors
 			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;
@@ -78,6 +79,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 			$scope.coursesLoaded = true;
 		});
 
+  // goto course on course click
   $scope.gotoCourse = function(id,cid){
       console.log("showing single course " + cid);
       $location.path('singlecourse/'+cid);

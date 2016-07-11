@@ -22,33 +22,9 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 
 	$scope.show_replies = false;
 
-	//Checking if user is authenticated or not
-	/*
-	courseService.isUserAuthenticated()
-	.then(function(res){
-		if(res.Status == true)
-		{
-			console.log("user is authenticated");
-		}
-		else{
-			gotoAuthorizePage();
-		}
-	}, function(err){
-		console.log("Error occured : " + err);
-	});
-
-
-	gotoAuthorizePage = function(){
-		window.location = LOGIN_PAGE;
-	}
-	*/
-	window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
-    console.log("Error occured: " + errorMsg);//or any message
-    return false;
-}
-
 	$scope.dataLoaded = false;
 
+	//request created to load all data one by one
 	var promises = [
 		courseService.getAllLearningMaterials($stateParams.cid),
 		courseService.getAllAssignments($stateParams.cid),
@@ -58,6 +34,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		courseService.getAnnounbyid($stateParams.cid)
 	];
 
+	// all requested executed to load data
 	$q.all(promises).then((values) => {
 		console.log("promises done");
 	    setLearningMaterials(values[0]);
@@ -70,6 +47,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 	    $scope.dataLoaded = true;
 	});
 
+	//bind all learning material to view
 	function setLearningMaterials(res){
 		if(res.Status === undefined){
 				window.location.reload();
@@ -85,10 +63,11 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		}
 	}
 
+	//bind all assignments to view
 	function setAssignments(res){
-				if(res.Status === undefined){
-				window.location.reload();
-			}
+		if(res.Status === undefined){
+			window.location.reload();
+		}
 
 		if(res.dataSet === undefined || res.dataSet.length == 0){
 			console.log("no assignments");
@@ -101,10 +80,11 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		}
 	}
 
+	//bind all shared docs to view
 	function setSharedDocs(res){
 		if(res.Status === undefined){
 				window.location.reload();
-			}
+		}
 
 		if(res.dataSet === undefined ||res.dataSet.length == 0){
 			console.log("no Share Docs")
@@ -117,57 +97,59 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		}
 	}
 
+	//bind all discussions to view
 	function setDiscussions(res){
-			if(res.Status == false){
-				errorRecover();
-			}else if(res.Status === undefined){
-				window.location.reload();
-			}
-			else if(res.dataSet === undefined || res.dataSet.length == 0){
-				console.log("no discussions");
-				console.log(res);
-				orginalDiscussions = undefined;
-			}else{
-				console.log("got discussions");
-				console.log(res.dataSet);
-				orginalDiscussions = res.dataSet;
-				$scope.parseDiscuss();
-			}
-			$scope.discussLoaded = true;
+		if(res.Status == false){
+			errorRecover();
+		}else if(res.Status === undefined){
+			window.location.reload();
+		}
+		else if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no discussions");
+			console.log(res);
+			orginalDiscussions = undefined;
+		}else{
+			console.log("got discussions");
+			console.log(res.dataSet);
+			orginalDiscussions = res.dataSet;
+			$scope.parseDiscuss();
+		}
+		$scope.discussLoaded = true;
 	}
 
+	//bind all emails to view
 	function setEmails(res){
 		if(res.Status === undefined){
-				window.location.reload();
-			}
+			window.location.reload();
+		}
 
-			if(res.dataSet === undefined || res.dataSet.length == 0){
-				console.log("no emails");
-				$scope.emails = undefined;
-			}else{
-				console.log("got emails");
-				console.log(res.dataSet);
-				$scope.emails = res.dataSet;
-				$scope.colors_email = colorService.generateColors($scope.emails.length);
-			}
-			$scope.emailsLoaded = true;
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no emails");
+			$scope.emails = undefined;
+		}else{
+			console.log("got emails");
+			console.log(res.dataSet);
+			$scope.emails = res.dataSet;
+			$scope.colors_email = colorService.generateColors($scope.emails.length);
+		}
+		$scope.emailsLoaded = true;
 	}
 
+	//bind all announcments to view
 	function setAnnouncements(res){
-			if(res.Status === undefined){
-				window.location.reload();
-			}
-
-			if(res.dataSet === undefined || res.dataSet.length == 0){
-				console.log("no announcements");
-				$scope.announcements = undefined;
-			}else{
-				console.log("got announcements");
-				console.log(res.dataSet);
-				$scope.announcements = res.dataSet;
-				$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
-			}
-			$scope.announcementsLoaded = true;
+		if(res.Status === undefined){
+			window.location.reload();
+		} view
+		if(res.dataSet === undefined || res.dataSet.length == 0){
+			console.log("no announcements");
+			$scope.announcements = undefined;
+		}else{
+			console.log("got announcements");
+			console.log(res.dataSet);
+			$scope.announcements = res.dataSet;
+			$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
+		}
+		$scope.announcementsLoaded = true;
 	}
 
 	/* recover from error : log out */
@@ -324,28 +306,29 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 	// 	console.log("Error occured");
 	// });
 
+	//load all shared docs and bind to view - it is used to refresh all shared docs after uploading new file
 	function loadAllSharedDocs(){
 		/* get Shared Docs by cid*/
-	courseService.getAllSharedDocs($stateParams.cid)
-	.then(function(res){
-		if(res.Status === undefined){
-				window.location.reload();
-			}
+		courseService.getAllSharedDocs($stateParams.cid)
+		.then(function(res){
+			if(res.Status === undefined){
+					window.location.reload();
+				}
 
-		if(res.dataSet === undefined ||res.dataSet.length == 0){
-			console.log("no Share Docs")
-			$scope.allSharedDocs = undefined;
-		}
-		else{
-			console.log("get all shared Docs");
-			console.log(res.dataSet);
-			$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
-		}
-		$scope.dataLoaded = true;
-		//console.log(buildHierarchy(items));
-	}, function(){
-		console.log("Error occured");
-	});
+			if(res.dataSet === undefined ||res.dataSet.length == 0){
+				console.log("no Share Docs")
+				$scope.allSharedDocs = undefined;
+			}
+			else{
+				console.log("get all shared Docs");
+				console.log(res.dataSet);
+				$scope.allSharedDocs = parseLearningMaterials(res.dataSet);
+			}
+			$scope.dataLoaded = true;
+			//console.log(buildHierarchy(items));
+		}, function(){
+			console.log("Error occured");
+		});
 	}
 
 	var iconClassMap = {
@@ -1036,99 +1019,91 @@ function parseLearningMaterials(y){
 
 
     var uploadSharedDocalert, uploadSharedDocDialog;
+
+    //this method will called when user will select to upload file
     $scope.uploadSharedDoc = function($event){
     // Appending dialog to document.body to cover sidenav in docs app
       uploadSharedDocDialog = $mdDialog;
       var parentEl = angular.element(document.querySelector('md-content'));
-   	 $mdDialog.show({
-   	   parent: parentEl,
-      targetEvent: $event,
-      template:
-        '<md-dialog aria-label="List dialog" >' +
-        '  <md-toolbar>' +
-        '     <div class="md-toolbar-tools">' +
-        '      <h2>Upload File</h2>' +
-        '      <span flex></span>' +
-        '    </div>' +
-        '  </md-toolbar>' +
-        '  <md-dialog-content class="sticky-container" style="padding:5px;">'+
-        '    <br>'+
-        '    <md-input-container style="margin-bottom:0px;">'+
-        '        <label>Selected File</label>'+
-        '        <input type="text" ng-model="fileName" ng-disabled=true>'+
-        '    </md-input-container>'+
-        '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
-        '      Browse' +
-        '    </md-button>' +
-        '  <md-dialog-actions>' +
-        '    <md-button ng-click="uploadFile()" class="md-primary">' +
-        '      Upload' +
-        '    </md-button>' +
-        '    <md-button ng-click="closeDialog()" class="md-primary">' +
-        '      Cancel' +
-        '    </md-button>' +
-        '  </md-dialog-actions>' +
-        '</md-dialog>',
-        locals: {
-          items: $scope.items,
-          cid: $stateParams.cid,
-          closeDialog: $scope.closeDialog,
-      		refresh: $scope.refresh.bind(self),
-    		showSimpleToast: $scope.showSimpleToast.bind(self),
+   	  $mdDialog.show({
+	   	  parent: parentEl,
+	      targetEvent: $event,
+	      template:
+	        '<md-dialog aria-label="List dialog" >' +
+	        '  <md-toolbar>' +
+	        '     <div class="md-toolbar-tools">' +
+	        '      <h2>Upload File</h2>' +
+	        '      <span flex></span>' +
+	        '    </div>' +
+	        '  </md-toolbar>' +
+	        '  <md-dialog-content class="sticky-container" style="padding:5px;">'+
+	        '    <br>'+
+	        '    <md-input-container style="margin-bottom:0px;">'+
+	        '        <label>Selected File</label>'+
+	        '        <input type="text" ng-model="fileName" ng-disabled=true>'+
+	        '    </md-input-container>'+
+	        '    <md-button ng-click="selectFileToUpload()" class="md-primary">' +
+	        '      Browse' +
+	        '    </md-button>' +
+	        '  <md-dialog-actions>' +
+	        '    <md-button ng-click="uploadFile()" class="md-primary">' +
+	        '      Upload' +
+	        '    </md-button>' +
+	        '    <md-button ng-click="closeDialog()" class="md-primary">' +
+	        '      Cancel' +
+	        '    </md-button>' +
+	        '  </md-dialog-actions>' +
+	        '</md-dialog>',
+	        locals: {
+	          items: $scope.items,
+	          cid: $stateParams.cid,
+	          closeDialog: $scope.closeDialog,
+	      		refresh: $scope.refresh.bind(self),
+	    		showSimpleToast: $scope.showSimpleToast.bind(self),
 
-        },
-        bindToController: true,
-        controllerAs: 'ctrl',
-        controller: 'DialogController'
+	        },
+	        bindToController: true,
+	        controllerAs: 'ctrl',
+	        controller: 'DialogController'
     });
-
-     // $mdDialog
-     //  .show(uploadSharedDocalert)
-     //  .finally(function() {
-     //    uploadSharedDocalert = undefined;
-     //  });
   }
+
+  // close file select dialog
   $scope.closeDialog = function() {
     uploadSharedDocDialog.hide();
   };
 
-
-    $scope.getFile = function () {
+  //get file and place it in course service so we can get file in dialog controller to uplaod
+  $scope.getFile = function () {
         $scope.progress = 0;
         $rootScope.$broadcast('loadingFile');
         fileReader.readAsDataUrl($scope.file, $scope)
-                      .then(function(result) {
-                        console.log($scope.file);
-                          //$scope.imageSrc = result;
-                          //console.log(result);
-                          $scope.selectedFile = result.split(",")[1];
-                          // console.log("next one");
-                           courseService.setFile($scope.file.name, $scope.selectedFile);
-                          // console.log($scope.selectedFile);
-                          $rootScope.$broadcast('fileLoaded');
+        .then(function(result) {
+            console.log($scope.file);
+            $scope.selectedFile = result.split(",")[1];
+            courseService.setFile($scope.file.name, $scope.selectedFile);
+            $rootScope.$broadcast('fileLoaded');
         });
-    };
+  };
 
-
-
+  // show progress bar when data is uploading to server - this event will be called from dialog controller when file is uploading
   $scope.$on('showProg', function(event, args) {
   	console.log("setting to true");
 	$scope.dataLoaded = false;
     // do what you want to do
-});
+  });
 
-
+  //hide progress bar once data is loaded - this event will called from dialog controller after uploading file finished
   $scope.$on('hideProg', function(event, args) {
 	$scope.dataLoaded = true;
     // do what you want to do
-});
+  });
 
-    $scope.$on('loadShareDocs', function(event, args) {
+  // when file is uplaoded then refresh the shared docs - this event will be called from dialog controller when file is uploaded to server
+  $scope.$on('loadShareDocs', function(event, args) {
 	loadAllSharedDocs();
     // do what you want to do
-});
-
-
+  });
 });
 
 
