@@ -1,4 +1,4 @@
-app.controller('emailsCtrl', function($scope, $window, colorService, courseService){
+app.controller('emailsCtrl', function($scope, $window, $q, colorService, courseService){
 
     $scope.dataset = {};
     $scope.courses = {};
@@ -41,37 +41,38 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
             mins = value* minPerDay;
             $scope.emailsLoaded = false;
             $scope.combinedData = [];
-            courseService.getInboxEmails(mins)
-                .then(function(res){
-                    console.log("refresh emails");
-					console.log(res);
-					if(res.Status != true){
-						window.location.reload();
-					}
-                    console.log(res.Body);
-                    $scope.emails = res.Body;
-                    // load announcements after emails, could be done better as the method in singlecourseCtrl
-                    courseService.getInboxAnnouns(mins)
-                        .then(function(res){
-                            console.log("refresh announcements");
-							if(res.Status != true){
-								window.location.reload();
-							}
-                            console.log(res.Body);
-                            $scope.announcements = res.Body;
-                            parseDataSet();
-                        }, function(err){
-                            console.log("Error occured : " + err);
-                    });
-                }, function(err){
-                    console.log("Error occured, please login again");
-					courseService.logout();
-					window.location = LOGIN_PAGE;
+            //request created to load all data one by one
+            var promises = [
+                courseService.getInboxEmails(mins),
+                courseService.getInboxAnnouns(mins)
+            ];
+            $q.all(promises).then((values) => {
+            console.log("promises done");
+            setInboxEmails(values[0]);
+            setInboxAnnouns(values[1]);
+            parseDataSet();
             });
         }
     }
 
+    function setInboxEmails(res) {
+        console.log("refresh emails");
+        console.log(res);
+        if(res.Status != true){
+            window.location.reload();
+        }
+        console.log(res.Body);
+        $scope.emails = res.Body;
+    }
 
+     function setInboxAnnouns(res) {
+        console.log("refresh announcements");
+        if(res.Status != true){
+            window.location.reload();
+        }
+        console.log(res.Body);
+        $scope.announcements = res.Body;
+    }
 
     //Checking if user is authenticated or not
     courseService.isUserAuthenticated()
