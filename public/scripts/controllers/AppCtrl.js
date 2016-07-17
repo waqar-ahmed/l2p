@@ -55,17 +55,18 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   $scope.authcourse = false;
   $scope.alert = '';
 
-  $scope.showListBottomSheet = function($event) {
-    $scope.alert = '';
-    $mdBottomSheet.show({
-      template: '<md-bottom-sheet class="md-list md-has-header"> <md-subheader>Settings</md-subheader> <md-list> <md-item ng-repeat="item in items"><md-item-content md-ink-ripple flex class="inset"> <a flex aria-label="{{item.name}}" ng-click="listItemClick($index)"> <span class="md-inline-list-icon-label">{{ item.name }}</span> </a></md-item-content> </md-item> </md-list></md-bottom-sheet>',
-      controller: 'ListBottomSheetCtrl',
-      targetEvent: $event
-    }).then(function(clickedItem) {
-      $scope.alert = clickedItem.name + ' clicked!';
-    });
-  };
+  // $scope.showListBottomSheet = function($event) {
+  //   $scope.alert = '';
+  //   $mdBottomSheet.show({
+  //     template: '<md-bottom-sheet class="md-list md-has-header"> <md-subheader>Settings</md-subheader> <md-list> <md-item ng-repeat="item in items"><md-item-content md-ink-ripple flex class="inset"> <a flex aria-label="{{item.name}}" ng-click="listItemClick($index)"> <span class="md-inline-list-icon-label">{{ item.name }}</span> </a></md-item-content> </md-item> </md-list></md-bottom-sheet>',
+  //     controller: 'ListBottomSheetCtrl',
+  //     targetEvent: $event
+  //   }).then(function(clickedItem) {
+  //     $scope.alert = clickedItem.name + ' clicked!';
+  //   });
+  // };
 
+  // set the navbartitle
   $scope.setNav = function(navTitle) {
       $scope.navbartitle = navTitle;
   }
@@ -91,27 +92,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       courseService.logout();
       window.location = LOGIN_PAGE;
   }
-
 });
 
-app.directive("contenteditable", function() {
-  return {
-    restrict: "A",
-    require: "ngModel",
-    link: function(scope, element, attrs, ngModel) {
 
-      function read() {
-        ngModel.$setViewValue(element.html());
-      }
-
-      ngModel.$render = function() {
-        element.html(ngModel.$viewValue || "");
-      };
-
-      element.bind("blur keyup change", function() {
-        scope.$apply(read);
-      });
-    }
-  };
-});
 

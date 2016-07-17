@@ -32,15 +32,10 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
         "name": "3 days",
         "value": 3,
     };
-    // var sem = "ss16";
+
     var minPerDay = 1440;
     var mins = 0;
 
-    // if ($window.innerWidth < 435) {
-    //      $scope.smallscreen = true;
-    // } else {
-    //     $scope.smallscreen = false;
-    // }
     $scope.refreshNews = function(value) {
         if (mins != value* minPerDay) {
             mins = value* minPerDay;
@@ -55,6 +50,7 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
 					}
                     console.log(res.Body);
                     $scope.emails = res.Body;
+                    // load announcements after emails, could be done better as the method in singlecourseCtrl
                     courseService.getInboxAnnouns(mins)
                         .then(function(res){
                             console.log("refresh announcements");
@@ -98,9 +94,8 @@ app.controller('emailsCtrl', function($scope, $window, colorService, courseServi
         window.location = LOGIN_PAGE;
     }
 
-
+    // load the initial data
     $scope.refreshNews(3);
-
 
     $scope.collapseAll = function(data) {
         for(var i in $scope.accordianData) {

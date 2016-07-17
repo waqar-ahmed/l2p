@@ -2,28 +2,28 @@
 app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
 
 	var LOGIN_PAGE = "login.html";
+	// parse cid to the correct format to get coursesinfo
 	var sem = $stateParams.cid.substring(2,4)+$stateParams.cid.substring(0,2);
 	var orginalDiscussions = [];
 	var countDisucussions = 0;
 	var transferArray = [];
-
+	// boolean variables for loading icon
 	$scope.discussLoaded = false;
 	$scope.emailsLoaded = false;
 	$scope.announcementsLoaded = false;
 	$scope.$parent.authcourse = true;
+	// variable to hide the fab button on the bottom right
 	$scope.WaitForToast = true;
 	$scope.breadcrums = [''];
 	$scope.discussions = [];
 
 	$scope.firstLetter = "";
+	// arrays for color services
     $scope.colors_email = [];
     $scope.colors_announcement = [];
 
-
 	$scope.show_replies = false;
-
 	$scope.dataLoaded = false;
-
 	//request created to load all data one by one
 	var promises = [
 		courseService.getAllLearningMaterials($stateParams.cid),
@@ -38,7 +38,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 	$q.all(promises).then((values) => {
 		console.log("promises done");
 	    setLearningMaterials(values[0]);
-	    setAssignments(values[1]); 
+	    setAssignments(values[1]);
 	    setSharedDocs(values[2]);
 	    setDiscussions(values[3]);
 	    setEmails(values[4]);
@@ -139,7 +139,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 	function setAnnouncements(res){
 		if(res.Status === undefined){
 			window.location.reload();
-		} view
+		}
 		if(res.dataSet === undefined || res.dataSet.length == 0){
 			console.log("no announcements");
 			$scope.announcements = undefined;
@@ -165,71 +165,6 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 
 	console.log("course ID: " + $stateParams.cid);
 
-	/* get all Discussions */
-	// courseService.getAllDiscussions($stateParams.cid)
-	// 	.then(function(res){
-	// 		if(res.Status == false){
-	// 			errorRecover();
-	// 		}else if(res.Status === undefined){
-	// 			window.location.reload();
-	// 		}
-	// 		else if(res.dataSet === undefined || res.dataSet.length == 0){
-	// 			console.log("no discussions");
-	// 			console.log(res);
-	// 			orginalDiscussions = undefined;
-	// 		}else{
-	// 			console.log("got discussions");
-	// 			console.log(res.dataSet);
-	// 			orginalDiscussions = res.dataSet;
-	// 			$scope.parseDiscuss();
-	// 		}
-	// 		$scope.discussLoaded = true;
-	// 	}, function(err){
-	// 		console.log("Error occured : " + err);
-	// 		errorRecover();
-	// });
-
-
-	/* get Emails by cid*/
-	// courseService.getEmailbyid($stateParams.cid)
-	// 	.then(function(res){
-	// 		if(res.Status === undefined){
-	// 			window.location.reload();
-	// 		}
-
-	// 		if(res.dataSet === undefined || res.dataSet.length == 0){
-	// 			console.log("no emails");
-	// 			$scope.emails = undefined;
-	// 		}else{
-	// 			console.log("got emails");
-	// 			console.log(res.dataSet);
-	// 			$scope.emails = res.dataSet;
-	// 			$scope.colors_email = colorService.generateColors($scope.emails.length);
-	// 		}
-	// 		$scope.emailsLoaded = true;
-	// 	}, function(err){
-	// 		console.log("Error occured : " + err);
-	// });
-	/* get Announcements by cid*/
-	// courseService.getAnnounbyid($stateParams.cid)
-	// 	.then(function(res){
-	// 		if(res.Status === undefined){
-	// 			window.location.reload();
-	// 		}
-
-	// 		if(res.dataSet === undefined || res.dataSet.length == 0){
-	// 			console.log("no announcements");
-	// 			$scope.announcements = undefined;
-	// 		}else{
-	// 			console.log("got announcements");
-	// 			console.log(res.dataSet);
-	// 			$scope.announcements = res.dataSet;
-	// 			$scope.colors_announcement = colorService.generateColors($scope.announcements.length);
-	// 		}
-	// 		$scope.announcementsLoaded = true;
-	// 	}, function(err){
-	// 		console.log("Error occured : " + err);
-	// });
 	/* get User Role by cid*/
 	 courseService.viewUserRole($stateParams.cid)
 		.then(function(res){
@@ -240,7 +175,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		}, function(err){
 			console.log("Error occured : " + err);
 	});
-	/* get Courses by sem*/
+	/* get Courses by sem, used for the quick switch button*/
 	courseService.getCurrentSem(sem)
 		.then(function(res){
 			if(res.Status === undefined){
@@ -250,6 +185,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 			console.log("got course by currentsemester");
 			console.log(res.dataSet);
 			$scope.$parent.courseinfo = res.dataSet;
+			// delete the current course from course list
 			var currentCourse = $.grep($scope.$parent.courseinfo, function(n,i) {
   				return n.uniqueid === $stateParams.cid;
 			});
@@ -260,51 +196,6 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 			console.log("Error occured : " + err);
 	});
 
-	/* get Learning Materials by cid*/
-	// courseService.getAllLearningMaterials($stateParams.cid)
-	// .then(function(res){
-	// 	if(res.Status === undefined){
-	// 			window.location.reload();
-	// 		}
-
-	// 	if(res.dataSet === undefined || res.dataSet.length == 0){
-	// 		console.log("no Learning Materials");
-	// 		$scope.roleList = undefined;
-	// 	}else{
-	// 		console.log("get all learningMaterials ");
-	// 		console.log(res.dataSet);
-	// 		$scope.roleList = parseLearningMaterials(res.dataSet);
-	// 	}
-	// 	$scope.dataLoaded = true;
-	// 	//console.log(buildHierarchy(items));
-	// }, function(){
-	// 	console.log("Error occured");
-	// });
-
-
-	//loadAllSharedDocs();
-
-
-	/* get Assignments by cid*/
-	// courseService.getAllAssignments($stateParams.cid)
-	// .then(function(res){
-	// 	if(res.Status === undefined){
-	// 			window.location.reload();
-	// 		}
-
-	// 	if(res.dataSet === undefined || res.dataSet.length == 0){
-	// 		console.log("no assignments");
-	// 		$scope.assignments = undefined;
-	// 	}else{
-	// 		console.log("get all assignments ");
-	// 		console.log(res.dataSet);
-	// 		$scope.assignments = res.dataSet;
-	// 		console.log("Assingment length: "+ $scope.assignments.length);
-	// 	}
-	// 	$scope.dataLoaded = true;
-	// }, function(){
-	// 	console.log("Error occured");
-	// });
 
 	//load all shared docs and bind to view - it is used to refresh all shared docs after uploading new file
 	function loadAllSharedDocs(){
@@ -349,24 +240,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		}
 	};
 
-
-	// /* Display dynamic Course Info by cid*/
-	// courseService.getCourseInfo($stateParams.cid)
-	// 	.then(function(res){
-	// 		console.log("got CourseInfo");
-	// 		console.log(res.dataSet);
-	// 		$scope.courseinfos = [
-	// 			{
-	// 				coursetitle: String(res.dataSet[0].courseTitle),
-	// 				description: String(res.dataSet[0].description),
-	// 				url: String(res.dataSet[0].url),
-
-	// 			},
-	// 		];
-	// 	}, function(err){
-	// 		console.log("Error occured : " + err);
-	// });
-
+	//show inform message at the bottom
 	$scope.showSimpleToast= function(message) {
 	    $mdToast.show(
 	      $mdToast.simple()
@@ -380,6 +254,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
     	return String(sentFrom).charAt(0);
   	};
 
+  	// if user role is manager, change the permission
 	$scope.setRole = function(){
 		if ($scope.userRole.indexOf("manager")!==-1){
 			$scope.authCUD = true;}
@@ -388,14 +263,17 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		console.log($scope.authCUD);
 	}
 
-	$scope.test = function() {
-		console.log("test");
-	}
+	// $scope.test = function() {
+	// 	console.log("test");
+	// }
 
+	// parse the discussions data to a easy used form
 	$scope.parseDiscuss = function() {
 		var index = 0;
 		for (var i=countDisucussions; i<orginalDiscussions.length; i++){
+			// get all root discussions
 			if (orginalDiscussions[i].selfId == orginalDiscussions[i].parentDiscussionId) {
+				// an Array to store the index of root discussions in the new array
 				var tempArray = {
 					"selfId": orginalDiscussions[i].selfId,
 					"value": index,
@@ -405,12 +283,14 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 				orginalDiscussions[i].counts = 0;
 				$scope.discussions.push(orginalDiscussions[i]);
 			}
+			// solve the children discussions
 			else {
 				var master = $filter('filter')(transferArray,{'selfId':orginalDiscussions[i].parentDiscussionId})[0].value;
 				if ($scope.discussions[master].children == undefined) {
 					$scope.discussions[master].children = [];
 				}
 				if (orginalDiscussions[i].replyToId!=orginalDiscussions[i].parentDiscussionId) {
+					// store the infomration of parent post for Reply
 					var fromData =  $filter('filter')($scope.discussions[master].children,{'selfId':orginalDiscussions[i].replyToId})[0];
 					orginalDiscussions[i].fromName = fromData.from;
 					orginalDiscussions[i].fromLevel = fromData.level;
@@ -426,16 +306,11 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		console.log($scope.discussions);
 	}
 
+	/* add Discussion */
 	$scope.addDiscussion = function(){
-		// if (discussion === undefined)
-		// 	{selectedDiscussion = {};}
-		// else
-		// 	{selectedDiscussion = discussion;}
 	    $mdDialog.show({
 	    	controller: DiscussionDialogController,
 	    	locals: {
-	    		// selectedDiscussion: angular.copy(selectedDiscussion),
-	    		// method: method,
 	    		cid: $stateParams.cid,
 	    		resetLoading: $scope.resetDiscussLoading.bind(self),
 	    		refreshDiscussions: $scope.refreshDiscussions.bind(self),
@@ -449,6 +324,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 	    });
 	};
 
+	/* add Discussion Reply*/
 	$scope.addDiscussionReply = function(replyToId, body) {
 		var discussion = {
 			"subject": "Reply",
@@ -469,7 +345,6 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		});
 	}
 
-/* delete Discussion */
 	$scope.showConfirmDiscussion = function(ev,selfId,outerindex) {
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
@@ -490,6 +365,7 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		});
   	};
 
+	/* delete Discussion */
   	$scope.deleteDiscussion = function(selfId) {
   		courseService.deleteDiscussion($stateParams.cid,selfId)
 			.then(function(res){
@@ -536,36 +412,10 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		});
 	}
 
+	/* reset the loading icon to be false */
 	$scope.resetDiscussLoading = function() {
 		$scope.discussLoaded = false;
 	}
-
-	function DiscussionDialogController($scope, $mdDialog, courseService, cid, resetLoading, refreshDiscussions, refresh, showSimpleToast) {
-	  	$scope.back = function() {
-	    	$mdDialog.hide();
-	  	};
-
-	  	$scope.addDisucssion = function(){
-	  		var newDiscussion = {
-	  			"subject": $scope.discussion.subject,
-	  			"body": $scope.discussion.body,
-	  		};
-	  		console.log(newDiscussion);
-	  		courseService.addDiscussion(cid, newDiscussion)
-			.then(function(res){
-				console.log("new email added");
-				console.log(res);
-				$scope.back();
-				resetLoading();
-				refreshDiscussions();
-				refresh();
-				showSimpleToast("New Discussion has been added");
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-	  	}
-	};
 
 	/* view Email details */
 	$scope.viewEmail = function(email,method){
@@ -640,68 +490,10 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		});
 	}
 
+	/* reset the loading icon to be false */
 	$scope.resetEmailLoading = function() {
 		$scope.emailsLoaded = false;
 	}
-
-
-	function EmailDialogController($scope, $mdDialog, courseService, selectedEmail, method, cid, resetLoading, refreshEmail, $mdToast, refresh, showSimpleToast) {
-		$scope.authWrite = false;
-		$scope.authDelete = false;
-		$scope.authShow = false;
-		$scope.recipients = ["extra","tutors","managers","students"];
-
-		if (method == 'creat'){
-			$scope.authWrite = true;
-		}
-		else if (method == 'read'){
-			$scope.authShow = true;
-			$scope.currentemail = selectedEmail;
-		}
-
-	  	$scope.back = function() {
-	    	$mdDialog.hide();
-	  	};
-
-	  	editRecipient = function() {
-	  		var strRecipient = "";
-	  		for (var key in $scope.selectedRecipient) {
-	  			strRecipient = strRecipient+ $scope.selectedRecipient[key]+ ";";
-	  		}
-	  		console.log("edited recipient is "+ strRecipient);
-	  		return strRecipient;
-	  	}
-
-	  	$scope.addEmail = function(){
-	  		$scope.currentemail.replyTo = "Reply to my address";
-	  		$scope.currentemail.recipients = editRecipient();
-	  		var newEmail = {
-	  			"recipients": $scope.currentemail.recipients,
-	  			"subject": $scope.currentemail.subject,
-	  			"body": $scope.currentemail.body,
-	  			"replyTo": $scope.currentemail.replyTo,
-	  			"cc" : $scope.currentemail.cc,
-	  		};
-
-	  		console.log(newEmail);
-
-	  		courseService.addEmail(cid, newEmail)
-			.then(function(res){
-				console.log("new email sent");
-				console.log(res);
-				$scope.back();
-				resetLoading();
-				refreshEmail();
-				//$window.alert("new email is sent");
-				refresh();
-				showSimpleToast("Email has been sent");
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-	  	}
-	};
-
 
 	/* Announcements details */
 	$scope.viewAnnoun = function(announcement,method){
@@ -777,137 +569,12 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 		});
 	}
 
+	/* reset the loading icon to be false */
 	$scope.resetAnnounLoading = function() {
 		$scope.announcementsLoaded = false;
 	}
 
-	function AnnounDialogController($scope, $mdDialog, courseService, selectedAnnouncement, method, cid, resetLoading, refreshAnnouns, $mdToast, refresh, showSimpleToast) {
-		$scope.authWrite = true;
-		$scope.authEdit = true;
-
-		$scope.authShow = false;
-		$scope.announce_heading = '';
-		$scope.isEdit = false;
-		$scope.announce_button = '';
-
-		if (method == 'creat'){
-			$scope.authWrite = true;
-			$scope.announce_heading = 'New Announcement';
-			$scope.expireEdited = new Date();
-			isEdit = false;
-			$scope.announce_button = 'Add';
-		}
-		else if (method == 'read'){
-			$scope.authShow = true;
-			$scope.currentannoun = selectedAnnouncement;
-			if ($scope.currentannoun.expireTime != 0) {
-				var tempDate = new Date();
-				tempDate.setTime($scope.currentannoun.expireTime*1000);
-				$scope.expireEdited = tempDate;
-			}
-		}
-		else if (method == 'edit'){
-			$scope.authEdit = true;
-			$scope.announce_heading = 'Edit Announcement';
-			$scope.announce_button = 'Edit';
-			$scope.authShow = true;
-			$scope.isEdit = true;
-			$scope.currentannoun = selectedAnnouncement;
-			$scope.currentannoun.body = parseString($scope.currentannoun.body);
-			if ($scope.currentannoun.expireTime != 0) {
-				var tempDate = new Date();
-				tempDate.setTime($scope.currentannoun.expireTime*1000);
-				$scope.expireEdited = tempDate;
-			}
-		}
-		// var template = angular.element($scope.currentannoun.body);
-		// $scope.currentannoun.bodyEdited = $compile(template);
-
-		function parseString(str) {
-			if (str != null) {
-				str = str.replace(/<br>/gi, "\n");
-				str = str.replace(/<p.*>/gi, "\n");
-				str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, " $2 (Link->$1) ");
-				str = str.replace(/<(?:.|\s)*?>/g, "");
-			}
-			return str;
-		}
-
-	  	$scope.back = function() {
-	  		$scope.editannouncement = false;
-	  		console.log("On Cancel Edit Announcement: "+ $scope.editannouncement);
-	    	$mdDialog.hide();
-	  	};
-
-	  	$scope.activeEdit = function() {
-	    	$scope.authWrite = true;
-	    	$scope.authEdit = false;
-	  	};
-
-	  	$scope.addAnnoun = function(){
-	  		console.log($scope.expireEdited.toString());
-	  		var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
-	  		console.log(expireTime);
-	  		var newAnnouncement = {
-  				"title": $scope.currentannoun.title,
-				"body": $scope.currentannoun.body,
-				"expireTime": expireTime,
-	  		};
-
-	  		console.log(newAnnouncement);
-	  		courseService.addAnnoun(cid, newAnnouncement)
-			.then(function(res){
-				console.log("new announcement sent");
-				console.log(res);
-				$scope.back();
-				resetLoading();
-				refreshAnnouns();
-				refresh();
-				showSimpleToast("New Announcement has been added");
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-	  	}
-
-  		$scope.editAnnoun = function(){
-	  		if ($scope.expireEdited != undefined){
-	  			if ($scope.expireEdited != tempDate){
-		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000)+7200;
-		  		}
-		  		else {
-		  			var expireTime = Math.ceil($scope.expireEdited.getTime()/1000);
-		  		}
-		  	}
-		  	else {
-		  		var expireTime = 0;
-		  	}
-	  		console.log(expireTime);
-	  		var editedAnnouncement = {
-  				"title": $scope.currentannoun.title,
-				"body": $scope.currentannoun.body,
-				"expireTime": expireTime,
-	  		};
-
-	  		console.log(editedAnnouncement);
-	  		courseService.editAnnoun(cid, editedAnnouncement,$scope.currentannoun.itemId)
-			.then(function(res){
-				console.log("announcement is updated");
-				console.log(res);
-				$scope.back();
-				resetLoading();
-				refreshAnnouns();
-				refresh();
-				//$window.alert("annuncement is updated");
-				showSimpleToast("Announcement has been updated");
-
-			},
-			function(err){
-				console.log("Error occured : " + err);
-			});
-	  	}
-	};
-
+	/* hide the fab button when confirm information is shown*/
 	$scope.refresh = function() {
 		$scope.WaitForToast = false;
 		$timeout(function(){
@@ -942,9 +609,6 @@ function convert(array){
     return map;
 }
 
-
-
-
 function parseLearningMaterials(y){
 
 	flatToNested = new FlatToNested({
@@ -964,8 +628,6 @@ function parseLearningMaterials(y){
 
 	return nested;
 }
-
-
 
     function groupMaterialsByParent(y){
         var x = [];
