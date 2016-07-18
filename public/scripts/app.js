@@ -63,7 +63,7 @@ app.config(['$urlRouterProvider', '$stateProvider','$translateProvider', functio
         $translateProvider.translations('de', {
         'HOME_SUBHEADER': 'Update',
         'HOME_SUBHEADER_SELECTBOX': 'Letzte',
-        'DASHBOARD' : 'DASHBOARD',
+        'DASHBOARD' : 'Dashboard',
         'COURSES'   : 'Veranstaltungen',
         'INBOX' : 'Posteingang',
         'CALENDAR' : 'Kalender',
