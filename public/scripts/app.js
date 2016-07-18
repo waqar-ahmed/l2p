@@ -61,22 +61,22 @@ app.config(['$urlRouterProvider', '$stateProvider','$translateProvider', functio
     });
  
         $translateProvider.translations('de', {
-        'HOME_SUBHEADER': 'asdasd',
-        'HOME_SUBHEADER_SELECTBOX': 'asdasd',
-        'DASHBOARD' : 'asdasd',
-        'COURSES'   : 'asdasd',
-        'INBOX' : 'asdasd',
-        'CALENDAR' : 'asdasdsad',
-        'ABOUT' : 'asdsdas',
-        'SEMESTER' : 'asdsad',
-        'LEARNING_MATERIAL' : 'asdasd',
-        'SHARED_DOCUMENTS' : 'asdasd',
-        'ASSIGN' : 'asdasd',
-        'DISCUSSION' : 'asdasd',
-        'EMAILS' : 'asdasd',
-        'ANNOUNCEMENTS' : 'asdasd',
-        'NOTHING' : 'asdsdas',
-        'NO_RECENT' : 'asdasdsad'    
+        'HOME_SUBHEADER': 'Update',
+        'HOME_SUBHEADER_SELECTBOX': 'Letzte',
+        'DASHBOARD' : 'DASHBOARD',
+        'COURSES'   : 'Veranstaltungen',
+        'INBOX' : 'Posteingang',
+        'CALENDAR' : 'Kalender',
+        'ABOUT' : 'Über',
+        'SEMESTER' : 'Semester',
+        'LEARNING_MATERIAL' : 'Lernmaterial',
+        'SHARED_DOCUMENTS' : 'Gemeinsame Dokumente',
+        'ASSIGN' : 'Aufgaben',
+        'DISCUSSION' : 'Diskussionsforum',
+        'EMAILS' : 'E-Mails',
+        'ANNOUNCEMENTS' : 'Ankündigung',
+        'NOTHING' : 'Nichts zu zeigen',
+        'NO_RECENT' : 'Keine neuen zu zeigen'    
     });
  
     //Setting EN by default
