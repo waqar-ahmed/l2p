@@ -1,4 +1,4 @@
-app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService) {
+app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService, $translate) {
 
   $scope.coursesLoaded = false;
   $scope.$parent.setNav("L2P - Courses");
@@ -8,6 +8,14 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
         sem: 'ss16',
         name: 'Summer Semester 2016',
       };
+
+
+  //Locatlization
+  $scope.updateLanguage = function(language) {
+    $translate.use(language);
+  };
+
+  //Localization Ends here
 
 
   //Checking if user is authenticated or not

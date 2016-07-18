@@ -23,14 +23,14 @@
 
 	<md-content class="singleCourseTabs">
 		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedTab" md-swipe-content="true" class="tabclass">
-			<md-tab label="Learning Material" md-on-select="onTabChanges(0)">
+			<md-tab label="{{ 'LEARNING_MATERIAL' | translate }}" md-on-select="onTabChanges(0)">
 				<md-content class="md-padding">
 				<!-- <div class="loadingicon" ng-hide="dataLoaded">
 					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 				</div> -->
-					<h3>Learning Material</h3>
+					<h3>{{ 'LEARNING_MATERIAL' | translate }}</h3>
 					<div class="row">
-						<span ng-if="roleList.length == 0 || roleList === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
+						<span ng-if="roleList.length == 0 || roleList === undefined" ng-show="dataLoaded" class="show_text_center">{{ 'NOTHING' | translate }}</span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -49,15 +49,15 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Shared Documents" md-on-select="onTabChanges(2)">
+			<md-tab label="{{ 'SHARED_DOCUMENTS' | translate }}" md-on-select="onTabChanges(2)">
 				<md-content class="md-padding">
 				<!-- <div class="loadingicon" ng-hide="dataLoaded">
 					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 				</div> -->
 				 <input type="file" id="upload_file" ng-file-select="onFileSelect($files)" style="display:none;">
-					<h3>Shared Documents</h3>
+					<h3>{{ 'SHARED_DOCUMENTS' | translate }}</h3>
 					<div class="row">
-						<span ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
+						<span ng-if="allSharedDocs.length == 0 || allSharedDocs === undefined" ng-show="dataLoaded" class="show_text_center">{{ 'NOTHING' | translate }}/span>
 						<div class="span6 main_height">
 							<div class="tree">
 
@@ -75,10 +75,10 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Assignments" md-on-select="onTabChanges(2)">
+			<md-tab label="{{ 'ASSIGN' | translate }}" md-on-select="onTabChanges(2)">
 				<md-content class="md-padding">
 					<div class="singlecourse main_height">
-						<span ng-if="assignments.length == 0 || assignments === undefined" class="show_text_center">Nothing to show</span>
+						<span ng-if="assignments.length == 0 || assignments === undefined" class="show_text_center">{{ 'NOTHING' | translate }}</span>
 
 						<div class="md-accordion customwidth" ng-repeat="assignment in assignments|orderBy:'assignmentPublishDate':true">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
@@ -169,10 +169,10 @@
 			</md-tab>
 
 
-			<md-tab label="Discussion Forum" md-on-select="onTabChanges(3)">
+			<md-tab label="{{ 'DISCUSSION' | translate }}" md-on-select="onTabChanges(3)">
 				<md-content class="md-padding main_height">
 
-				<span ng-if="discussions.length == 0 || discussions === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
+				<span ng-if="discussions.length == 0 || discussions === undefined" ng-show="dataLoaded" class="show_text_center">{{ 'NOTHING' | translate }}</span>
 				<div ng-repeat="discussion in discussions | index| orderBy:'created':true" ng-init="discussion.showReplies=false; outerindex=$index" ng-show="discussLoaded">
 
 					<ul class="post-grid" ng-click="discussion.showReplies=!discussion.showReplies">
@@ -237,11 +237,11 @@
 			</md-tab>
 
 
-			<md-tab label="Emails" md-on-select="onTabChanges(4)">
+			<md-tab label="{{ 'EMAILS' | translate }}" md-on-select="onTabChanges(4)">
 				<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 
-						<span ng-if="emails.length == 0 || emails === undefined"  ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
+						<span ng-if="emails.length == 0 || emails === undefined"  ng-show="dataLoaded" class="show_text_center">{{ 'NOTHING' | translate }}</span>
 
 						<div class="md-accordion customwidth" ng-repeat="email in emails|orderBy:'created':true" ng-show="emailsLoaded" ng-init="outerIndex = $index">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
@@ -284,11 +284,11 @@
 				</md-content>
 			</md-tab>
 
-			<md-tab label="Announcements" md-on-select="onTabChanges(5)">
+			<md-tab label="{{ 'ANNOUNCEMENTS' | translate }}" md-on-select="onTabChanges(5)">
 			<md-content class="md-padding">
 					<div class="singlecourse  main_height">
 
-						<span ng-if="announcements.length == 0 || announcements === undefined" ng-show="dataLoaded" class="show_text_center">Nothing to show</span>
+						<span ng-if="announcements.length == 0 || announcements === undefined" ng-show="dataLoaded" class="show_text_center">{{ 'NOTHING' | translate }}</span>
 
 						<div class="md-accordion customwidth" ng-repeat="announcement in announcements|orderBy:'created':true" ng-init="outerIndex = $index" ng-show="announcementsLoaded">
         				<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">

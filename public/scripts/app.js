@@ -1,7 +1,8 @@
 
-var app = angular.module('L2pLabApp', ['ui.tree','ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload', 'ngTextTruncate']);
+var app = angular.module('L2pLabApp', ['ui.tree','ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload', 'ngTextTruncate','pascalprecht.translate']);
 
-app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
+app.config(['$urlRouterProvider', '$stateProvider','$translateProvider', function($urlRouterProvider, $stateProvider,$translateProvider){
+
   $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('main', {
@@ -36,7 +37,55 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
         })
 
 
+
+    //Localization module for EN and DE.
+
+    $translateProvider.translations('en', {
+        'HOME_SUBHEADER': 'Whats New',
+        'HOME_SUBHEADER_SELECTBOX': 'Last',
+        'DASHBOARD' : 'Dashboard',
+        'COURSES'   : 'Courses',
+        'INBOX' : 'Inbox',
+        'CALENDAR' : 'Calendar',
+        'ABOUT' : 'About',
+        'SEMESTER' : 'Semester',
+        'LEARNING_MATERIAL' : 'Learning Material',
+        'SHARED_DOCUMENTS' : 'Shared Documents',
+        'ASSIGN' : 'Assignments',
+        'DISCUSSION' : 'Discussion Forum',
+        'EMAILS' : 'Emails',
+        'ANNOUNCEMENTS' : 'Announcements',
+        'NOTHING' : 'Nothing to show',
+        'NO_RECENT' : 'No recent to show'
+
+    });
+ 
+        $translateProvider.translations('de', {
+        'HOME_SUBHEADER': 'asdasd',
+        'HOME_SUBHEADER_SELECTBOX': 'asdasd',
+        'DASHBOARD' : 'asdasd',
+        'COURSES'   : 'asdasd',
+        'INBOX' : 'asdasd',
+        'CALENDAR' : 'asdasdsad',
+        'ABOUT' : 'asdsdas',
+        'SEMESTER' : 'asdsad',
+        'LEARNING_MATERIAL' : 'asdasd',
+        'SHARED_DOCUMENTS' : 'asdasd',
+        'ASSIGN' : 'asdasd',
+        'DISCUSSION' : 'asdasd',
+        'EMAILS' : 'asdasd',
+        'ANNOUNCEMENTS' : 'asdasd',
+        'NOTHING' : 'asdsdas',
+        'NO_RECENT' : 'asdasdsad'    
+    });
+ 
+    //Setting EN by default
+    $translateProvider.preferredLanguage('en');
+
+
+
 }]);
+
 
 
 

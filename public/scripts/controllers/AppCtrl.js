@@ -1,38 +1,42 @@
-app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $location, courseService){
+app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $location, courseService, $translate){
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
 
   $scope.navbartitle = "L2P - Home";
   var LOGIN_PAGE = "login.html";
+  var en = true;
+
+
 
  	$scope.menu = [
       {
       link : '',
-      title: 'Dashboard',
+      title: ''+$translate.instant('DASHBOARD'),
       icon: 'dashboard'
     },
     {
       link : 'mycourses',
-      title: 'Courses',
+      title: ''+$translate.instant('COURSES'),
       icon: 'import_contacts'
     },
     {
       link : 'emails',
-      title: 'Inbox',
+      title: ''+$translate.instant('INBOX'),
       icon: 'email'
     },
     {
       link : 'schedule',
-      title: 'Calendar',
+      title: ''+$translate.instant('CALENDAR'),
       icon: 'date_range'
     },
 	{
       link : 'about',
-      title: 'About',
+      title: ''+$translate.instant('ABOUT'),
       icon: 'copyright'
     }
   ];
+
   /*
   $scope.admin = [
     {
@@ -54,6 +58,57 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
   */
   $scope.authcourse = false;
   $scope.alert = '';
+
+
+
+  //Locatlization
+
+  $scope.updateLanguage = function(language) {
+    $translate.use(language);
+
+    if(language == 'en')
+      en = true;
+     else
+      en = false;
+
+     $scope.menu = [
+      {
+      link : '',
+      title: ''+$translate.instant('DASHBOARD'),
+      icon: 'dashboard'
+    },
+    {
+      link : 'mycourses',
+      title: ''+$translate.instant('COURSES'),
+      icon: 'import_contacts'
+    },
+    {
+      link : 'emails',
+      title: ''+$translate.instant('INBOX'),
+      icon: 'email'
+    },
+    {
+      link : 'schedule',
+      title: ''+$translate.instant('CALENDAR'),
+      icon: 'date_range'
+    },
+ {
+      link : 'about',
+      title: ''+$translate.instant('ABOUT'),
+      icon: 'copyright'
+    }
+  ];
+
+    //Use this for binded values to update content for language
+    if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+        $scope.$apply();
+       }
+
+  };
+
+  //Localization Ends here
+
+
 
   // $scope.showListBottomSheet = function($event) {
   //   $scope.alert = '';
@@ -92,6 +147,7 @@ app.controller('AppCtrl', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog
       courseService.logout();
       window.location = LOGIN_PAGE;
   }
+
 });
 
 

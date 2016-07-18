@@ -11,6 +11,8 @@
         <script src="bower_components/angular-aria/angular-aria.min.js"></script>
         <script src="bower_components/angular-material/angular-material.min.js"></script>
         <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+        <script src="bower_components/angular-translate/angular-translate.js"></script>
+
 
         <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
@@ -107,14 +109,18 @@
                                     <a class="inset md-hue-1" ng-href="https://oauth.campus.rwth-aachen.de/manage" target="_blank">Click me to authorize</a>
                                   </div> -->
                         <div layout="row" layout-align="start center">
-                            <div class="inset" flex-offset="20" flex="65">Welcome</div>
+                            <div class="inset" flex-offset="20" flex="100" style="margin-right:50px !important; margin-top:30px;"></div>
                             <div flex="10">
                                 <md-button ng-click="logout()" class="md-icon-button">
                                     <ng-md-icon icon="logout"></ng-md-icon>
                                 </md-button>
                             </div>
-                        </div>
+                        </div>                   
                     </div>
+                               <code>
+                                     <span  style="float:left" ng-click="updateLanguage('en')"> EN </span>
+                                     <span style="float:left;margin-left:5px;" ng-click="updateLanguage('de')"> DE </span>
+                                </code>
                 </md-toolbar>
 
                 <md-list>
@@ -128,9 +134,13 @@
                                 </div>
                                 <div class="inset" ng-click="onMenuSelect(item.link,item.title)">{{item.title}}
                                 </div>
+
                             </md-item-content>
                         </a>
 					</md-item>
+                        
+        
+
                 </md-list>
             </md-sidenav>
 

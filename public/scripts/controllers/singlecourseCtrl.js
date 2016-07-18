@@ -1,5 +1,5 @@
 
-app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader) {
+app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams, $filter, courseService, $mdDialog, $window, colorService, $mdToast, $timeout, fileReader,$translate) {
 
 	var LOGIN_PAGE = "login.html";
 	// parse cid to the correct format to get coursesinfo
@@ -24,6 +24,15 @@ app.controller('singlecourseCtrl', function($q, $rootScope, $scope, $stateParams
 
 	$scope.show_replies = false;
 	$scope.dataLoaded = false;
+
+	 //Locatlization
+	 $scope.updateLanguage = function(language) {
+    	$translate.use(language);
+  	};
+
+  	//Localization Ends here
+
+
 	//request created to load all data one by one
 	var promises = [
 		courseService.getAllLearningMaterials($stateParams.cid),

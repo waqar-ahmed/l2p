@@ -1,5 +1,5 @@
 //when app will start, this controller will load first
-app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $timeout, fileReader){
+app.controller('homeCtrl', function($scope, courseService, $location, fileService, Upload, $mdToast, $timeout, fileReader,$translate){
 
 	var LOGIN_USER = "login";
 	var LOGIN_PAGE = "login.html";
@@ -8,6 +8,14 @@ app.controller('homeCtrl', function($scope, courseService, $location, fileServic
 	$scope.verified = false;
 	$scope.dataLoaded = false;
   $scope.$parent.setNav("L2P - Dashboard");
+
+
+  //Locatlization
+  $scope.updateLanguage = function(language) {
+    $translate.use(language);
+  };
+
+  //Localization Ends here
 
 
 	//Checking if user is authenticated or not
