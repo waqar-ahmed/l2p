@@ -1,7 +1,7 @@
 app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService, $translate) {
 
   $scope.coursesLoaded = false;
-  $scope.$parent.setNav("L2P - Courses");
+  $scope.$parent.setNav("L2P - "+$translate.instant('COURSES'));
   var LOGIN_PAGE = "login.html";
 
   $scope.selectedSemester = {
