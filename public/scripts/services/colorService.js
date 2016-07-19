@@ -1,5 +1,5 @@
+//service to get random list of colors for course list
 app.service('colorService', function(){
-
 
    	var candidateColors = [
     '#4183D7',

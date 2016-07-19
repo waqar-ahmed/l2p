@@ -1,3 +1,4 @@
+//this is the heart of application, it is getting data from server and every controller is calling this for data or to talk to server
 app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var courses;
@@ -44,23 +45,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 
 	var authenticated = true;
 
-	// template
-	// this. = function(){
-	// 	var defer = $q.defer();
-
-	// 	$http.get()
-	// 	.success(function(res){
-	// 		//console.log(res);
-	// 		defer.resolve(res);
-	// 	})
-	// 	.error(function(err, status){
-	// 		console.log(err);
-	// 		defer.reject(err);
-	// 	})
-
-	// 	return defer.promise;
-	// };
-
+	// authenticate user from server whether user is authenticated or not
 	this.isUserAuthenticated = function(){
 		var defer = $q.defer();
 
@@ -83,10 +68,12 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	//return if user is authenticated
 	this.getAuthenticatedValue = function(){
 		return authenticated;
 	}
 
+	//get all courses list from server
 	this.getAllCourses = function(){
 		var defer = $q.defer();
 
@@ -103,6 +90,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	//get current semester from server
 	this.getCurrentSem = function(sem){
 		var defer = $q.defer();
 
@@ -119,6 +107,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	//get sorted list of semester from server
 	this.getSortedSems = function(){
 		var defer = $q.defer();
 
@@ -135,6 +124,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	//get list of courses by semester from server
     this.getCourseBySem = function(){
 		var defer = $q.defer();
 
@@ -167,6 +157,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	//get all whats new by mins from server
 	this.getAllWhatsNew = function(mins){
 		var defer = $q.defer();
 
@@ -199,6 +190,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	//get all learning materials by course from server
 	this.getAllLearningMaterials = function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_LEARNING_MATERIALS)
@@ -214,6 +206,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	//get all shared docs by course from server
 	this.getAllSharedDocs = function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL__GET_ALL_SHARED_DOCS)
@@ -228,6 +221,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	//get all assignments by course from server
 	this.getAllAssignments = function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_ASSIGNMENTS)
@@ -243,6 +237,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	}
 
+	//log out user from server
     this.logout = function(){
         var defer = $q.defer();
 
@@ -259,6 +254,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
     }
 
+    //see user whether he/she is student, teacher or manager
     this.viewUserRole = function(cid){
         var defer = $q.defer();
 
@@ -457,6 +453,7 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
+	//get single course information from server
     this.getCourseInfo= function(cid){
 		var defer = $q.defer();
 		$http.get(URL_GET_COURSE + "/" + cid + URL_GET_COURSE_INFO)
@@ -504,73 +501,22 @@ app.service('courseService', ['$http', '$q', function ($http, $q) {
 		return defer.promise;
 	};
 
-    //trigger onFileSelect method on clickUpload button clicked
-    this.clickUpload = function(){
-        document.getElementById('i_file').click();
-    };
-
-     this.onFileSelect = function(file) {
-      if(!file) return;
-      console.log("in file select");
-      console.log(file.name);
-      $scope.showProgressBar = true;
-      file.upload = Upload.upload({
-        url: '/admin/bubblePLE/fileAttachments/rest',
-        data: {fileattachment: {filename: file, title: file.name}},
-      });
-
-      file.upload.progress(function(evt){
-          console.log('percent: ' +parseInt(100.0 * evt.loaded / evt.total));
-      });
-
-      file.upload.then(function (response) {
-        $timeout(function () {
-          file.result = response.data;
-          console.log(response);
-          $mdToast.show(
-                  $mdToast.simple()
-                      .textContent('File uploaded successfully')
-                      .position('bottom')
-                      .hideDelay(3000)
-           );
-          console.log(response.data.item.filename);
-
-          var filePath = String(response.data.item.filename);
-          var res = filePath.split("/files/fileattachment/");
-          addFileNode(res[1], filePath);
-          $scope.showProgressBar = false;
-        });
-      }, function (response) {
-        if (response.status > 0)
-          $scope.errorMsg = response.status + ': ' + response.data;
-        console.log("in response");
-        console.log(response);
-        $mdToast.show(
-                  $mdToast.simple()
-                      .textContent('Error Uploading file')
-                      .position('bottom')
-                      .hideDelay(3000)
-              );
-        $scope.showProgressBar = false;
-      }, function (evt) {
-        // Math.min is to fix IE which reports 200% sometimes
-        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        console.log(file.progress);
-        $scope.progressBarValue = file.progress;
-      });
-	}
-
+	//File uploading related data
 	var fileToUpload = null;
 	var fileName = null;
+
+	//set file here so it can access from anywhere
 	this.setFile = function(name, stream){
 		fileName = name;
 		fileToUpload = stream;
 	}
 
+	//return file stream
 	this.getFile = function(){
 		return fileToUpload;
 	}
 
+	//return file name
 	this.getFileName = function(){
 		return fileName;
 	}

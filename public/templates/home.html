@@ -1,8 +1,10 @@
 
+
 <md-subheader class="md-no-sticky" style="margin:18px 8px 18px 8px !important; color: black;">
-  <b>What's new</b>
+
+  <b>{{ 'HOME_SUBHEADER' | translate }}</b>
   <div layout="row" class="timeSelect" layout-align:"begin center">
-      <h3 style="margin-top: 30px; margin-right: 6px;"><b>Last: </b></h3>
+      <h3 style="margin-top: 30px; margin-right: 6px;"><b>{{ 'HOME_SUBHEADER_SELECTBOX' | translate }}</b></h3>
       <md-input-container style="margin-right: 10px;">
         <md-select ng-model="selectedDay" ng-model-options="{trackBy:'$value'}" >
           <md-option ng-repeat="lastday in lastdays" value="{{lastday}}" ng-click="updateList(lastday)">{{lastday}}</md-option>
@@ -11,7 +13,7 @@
     </div>
     <div class="clear"></div>
 </md-subheader>
-<div ng-cloak>
+  <div ng-cloak>
 	<div class="fabbutton">
 	   <md-button ng-class="{visible:selectedTab==3}" class="md-fab md-primary md-fab-bottom-right" ng-click="test()">
 	   add
@@ -31,7 +33,7 @@
      <md-content flex layout="row" layout-align="center">
             <md-content flex="100">
 
-<h3 ng-if="allWhatsNew.length == 0 || allWhatsNew === undefined" ng-show="dataLoaded">No recent news to show</h3>
+<h3 ng-if="allWhatsNew.length == 0 || allWhatsNew === undefined" ng-show="dataLoaded" class="show_text_center">{{ 'NO_RECENT' | translate }}</h3>
 <div class="myTree">
   <!-- Course list -->
   <div ng-repeat="(key,value) in allWhatsNew">
@@ -55,7 +57,7 @@
         <i class="fa fa-plus" aria-hidden="true" ng-show="!innershowDetails"></i>
       </div>
       <div class="innersecond">
-        <h3>Learning Materials</h3>
+        <h3>{{ 'LEARNING_MATERIAL' | translate }}</h3>
       </div>
       <div class="clear"></div>
     </div>

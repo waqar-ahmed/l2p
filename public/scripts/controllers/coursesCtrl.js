@@ -1,13 +1,21 @@
-app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService) {
+app.controller('coursesCtrl', function($scope,courseService,$location, $interval, $mdToast,colorService, $translate) {
 
   $scope.coursesLoaded = false;
-  $scope.$parent.setNav("L2P - Courses");
+  $scope.$parent.setNav("L2P - "+$translate.instant('COURSES'));
   var LOGIN_PAGE = "login.html";
 
   $scope.selectedSemester = {
         sem: 'ss16',
         name: 'Summer Semester 2016',
       };
+
+
+  //Locatlization
+  $scope.updateLanguage = function(language) {
+    $translate.use(language);
+  };
+
+  //Localization Ends here
 
 
   //Checking if user is authenticated or not
@@ -26,7 +34,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
     console.log("Error occured : " + err);
   });
 
-
+  // redirect user to the RWTH authorization page
   gotoAuthorizePage = function(){
     window.location = LOGIN_PAGE;
   }
@@ -53,7 +61,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 
   });
 
-
+  // get course list from local service
   courseService.getAllCourses()
 		.then(function(res){
 			console.log(res);
@@ -67,6 +75,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 				);
 				window.location.reload();
 			}
+
 			//got all courses therefore generate colors
 			$scope.colors = colorService.generateColors(res.dataSet.length);
 			$scope.courses = res.dataSet;
@@ -78,6 +87,7 @@ app.controller('coursesCtrl', function($scope,courseService,$location, $interval
 			$scope.coursesLoaded = true;
 		});
 
+  // goto course on course click
   $scope.gotoCourse = function(id,cid){
       console.log("showing single course " + cid);
       $location.path('singlecourse/'+cid);

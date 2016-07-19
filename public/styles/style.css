@@ -127,3 +127,8 @@ md-menu-content md-menu-item button.course_selector span {
   display: block;
   overflow: hidden;
 }
+
+.select-style {
+    position: fixed;
+    bottom: 0px;
+}

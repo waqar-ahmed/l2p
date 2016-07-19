@@ -4,7 +4,7 @@
 
         <md-subheader style="margin:10px 0 10px 0 !important; color: black;" flex>
           <div layout="row" layout-align="begin center" ng-model="selectedSemester" style="height:40px !important; ">
-            <h4 style="margin-right:10px;font-size:16px!important;"><b>Semester: </b></h4>
+            <h4 style="margin-right:10px;font-size:16px!important;"><b>{{ 'SEMESTER' | translate }} </b></h4>
             <span flex></span>
             <md-input-container>
               <md-select ng-model="selectedSemester" ng-model-options="{trackBy: '$value.sem'}">

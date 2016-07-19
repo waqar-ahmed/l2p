@@ -1,7 +1,8 @@
 
-var app = angular.module('L2pLabApp', ['ui.tree','ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload', 'ngTextTruncate']);
+var app = angular.module('L2pLabApp', ['ui.tree','ngMaterial','ngMdIcons','ui.router','ngSanitize','treeControl','ui.calendar', 'ui.bootstrap','ngFileUpload', 'ngTextTruncate','pascalprecht.translate']);
 
-app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
+app.config(['$urlRouterProvider', '$stateProvider','$translateProvider', function($urlRouterProvider, $stateProvider,$translateProvider){
+
   $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('main', {
@@ -36,7 +37,55 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
         })
 
 
+
+    //Localization module for EN and DE.
+
+    $translateProvider.translations('en', {
+        'HOME_SUBHEADER': 'Whats New',
+        'HOME_SUBHEADER_SELECTBOX': 'Last',
+        'DASHBOARD' : 'Dashboard',
+        'COURSES'   : 'Courses',
+        'INBOX' : 'Inbox',
+        'CALENDAR' : 'Calendar',
+        'ABOUT' : 'About',
+        'SEMESTER' : 'Semester',
+        'LEARNING_MATERIAL' : 'Learning Material',
+        'SHARED_DOCUMENTS' : 'Shared Documents',
+        'ASSIGN' : 'Assignments',
+        'DISCUSSION' : 'Discussion Forum',
+        'EMAILS' : 'Emails',
+        'ANNOUNCEMENTS' : 'Announcements',
+        'NOTHING' : 'Nothing to show',
+        'NO_RECENT' : 'No recent to show'
+
+    });
+ 
+        $translateProvider.translations('de', {
+        'HOME_SUBHEADER': 'Update',
+        'HOME_SUBHEADER_SELECTBOX': 'Letzte',
+        'DASHBOARD' : 'Dashboard',
+        'COURSES'   : 'Veranstaltungen',
+        'INBOX' : 'Posteingang',
+        'CALENDAR' : 'Kalender',
+        'ABOUT' : 'Über',
+        'SEMESTER' : 'Semester',
+        'LEARNING_MATERIAL' : 'Lernmaterial',
+        'SHARED_DOCUMENTS' : 'Gemeinsame Dokumente',
+        'ASSIGN' : 'Aufgaben',
+        'DISCUSSION' : 'Diskussionsforum',
+        'EMAILS' : 'E-Mails',
+        'ANNOUNCEMENTS' : 'Ankündigung',
+        'NOTHING' : 'Nichts zu zeigen',
+        'NO_RECENT' : 'Keine neuen zu zeigen'    
+    });
+ 
+    //Setting EN by default
+    $translateProvider.preferredLanguage('en');
+
+
+
 }]);
+
 
 
 
@@ -59,10 +108,11 @@ app.config(function($mdThemingProvider) {
         .primaryPalette('grey')
 });
 
-app.filter('index', function () {
+
+app.filter('index', function () {    // index --> index
     return function (array, index) {
         if (!index)
-            index = 'index';
+            index = 'index';  // index --> index
         for (var i = 0; i < array.length; ++i) {
             array[i][index] = i;
         }
@@ -70,18 +120,18 @@ app.filter('index', function () {
     };
 });
 
-app.directive('fileModel', ['$parse', 'fileService', function ($parse, fileService) {
+app.directive('fileModel', ['$parse', 'fileService', function ($parse, fileService) { // fileModel --> dateiModell    fileService --> dateiService
     return {
-        restrict: 'A',
+        restrict: 'A',  // A--> A
         link: function(scope, element, attrs, rootScope) {
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
 
-console.log("in directive");
+console.log("in directive");  // in directive --> in Direktive
 
-            element.bind('change', function(){
+            element.bind('change', function(){  // change --> veraenderen
                 modelSetter(scope, element[0].files[0]);
-                    console.log("binding file");
+                    console.log("binding file"); // binding file --> Datei einbinden
                     //fileService.push(element[0].files[0]);
                     fileService.setUploadedFile(element[0].files[0]);
             });
@@ -89,13 +139,13 @@ console.log("in directive");
     };
 }]);
 
-app.service('fileUpload', ['$http', function ($http) {
+app.service('fileUpload', ['$http', function ($http) { // fileupload --> Datei hochladen
 
-console.log("service called");
+console.log("service called");  // service called --> service angerufen
 
     this.uploadFileToUrl = function(file, req, uploadUrl){
         var fd = new FormData();
-        fd.append('file', file);
+        fd.append('file', file);  // file --> Datei
         fd.append('file', file);
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
@@ -108,11 +158,11 @@ console.log("service called");
     }
 }]);
 
-app.factory('fileService', function() {
+app.factory('fileService', function() {  // fileservice --> Datei Service
     // var files = [];
     // return files;
 
-console.log("factory called");
+console.log("factory called"); // Fabrik angerufen
 
     var uploadedFile;
     return{
@@ -132,12 +182,12 @@ console.log("factory called");
 
 
 
-app.directive("ngFileSelect",function(){
+app.directive("ngFileSelect",function(){   // ngDateiWaehlen
 
   return {
     link: function($scope,el){
 
-      el.bind("change", function(e){
+      el.bind("change", function(e){  // change --> veraenderen
 
         $scope.file = (e.srcElement || e.target).files[0];
         $scope.getFile();
